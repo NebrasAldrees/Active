@@ -11,7 +11,9 @@ namespace Nashet.Data.Models
     {
          [Key] public int PRId { get; set; }
          public int MembershipID { get; set; }
+         public tblMembership Membership { get; set; }
          public int ClubRoleID { get; set; }
+         public tblClubRole ClubRole { get; set; }
          public string RequestedPosition { get; set; }
          public DateTime RequestedDate { get; set; }
         
