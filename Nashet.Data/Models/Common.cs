@@ -14,12 +14,7 @@ namespace Nashet.Data.Models
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
         public bool IsActive { get; set; } = true;
-        public bool is_sent { get; set; } = true;
+        public bool isSent { get; set; } = true;
 
-        [StringLength(30)]
-        public string Title { get; set; }
-
-        [StringLength(30)]
-        public string content { get; set; }
     }
 }
