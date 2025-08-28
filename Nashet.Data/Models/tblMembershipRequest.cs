@@ -28,6 +28,7 @@ namespace Nashet.Data.Models
         public string RequestReason { get; set; }
         public DateTime RequestDate { get; set; }
 
+
         
 
     }
