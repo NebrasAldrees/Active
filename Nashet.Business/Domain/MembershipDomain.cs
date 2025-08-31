@@ -1,4 +1,5 @@
-﻿using Nashet.Business.Domain.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Nashet.Business.Domain.Common;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
@@ -19,6 +20,18 @@ namespace Nashet.Business.Domain
         public async Task<IList<tblMembership>> GetMember()
         {
             return await _MembershipRepository.GetAllMembers();
+        }
+        public virtual async Task<int> InsertMember(tblMembership Member)
+        {
+            try
+            {
+                await _MembershipRepository.InsertMember(Member);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

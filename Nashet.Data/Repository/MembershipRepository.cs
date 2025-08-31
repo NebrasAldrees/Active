@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Repository
 {
-    public class MembershipRepository : BaseRepository<tblStudent>
+    public class MembershipRepository : BaseRepository<tblMembership>
     {
         public MembershipRepository(NashetContext dbContext) : base(dbContext)
         {
@@ -23,7 +23,11 @@ namespace Nashet.Data.Repository
         {
             try
             {
-
+                await dbSet.AddAsync(Member);
+                return 1;
+            }
+            catch { 
+                return 0;
             }
         }
     }

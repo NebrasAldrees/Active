@@ -1,20 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Nashet.Data.Repository.Common;
 using Nashet.Data;
 using Nashet.Data;
+using Nashet.Data.Repository.Common;
 
-using Nashet.Data.Models;
-using Nashet.Data.Repository.Common;
-using Nashet.Data.Repository.Common;
 using System.Linq.Expressions;
+using Nashet.Data.Models;
 
 namespace Nashet.Data.Repository.Common
 {
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        internal NashetContext context;
-        internal DbSet<TEntity> dbSet;
+        public NashetContext context;
+        public DbSet<TEntity> dbSet;
         //Apply if needed Contact Developement Team Lead//internal IUnitOfWork<TEntity> _repositories = new UnitOfWork<TEntity>();
         public BaseRepository(NashetContext context)
         {
