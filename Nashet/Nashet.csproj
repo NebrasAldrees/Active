@@ -33,6 +33,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\ClubLeader\Data\" />
     <Folder Include="Areas\ClubLeader\Models\" />
+    <Folder Include="Areas\ClubSupervisor\Views\Home\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
   </ItemGroup>
