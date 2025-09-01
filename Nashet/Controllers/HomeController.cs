@@ -44,6 +44,7 @@ namespace Nashet.Controllers
                 else
                     ViewBag.Failed = "Failed";
             }
+            catch { }
             return View(Member);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

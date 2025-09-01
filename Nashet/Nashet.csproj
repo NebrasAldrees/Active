@@ -18,11 +18,23 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Nashet.Business\Nashet.Business.csproj" />
     <ProjectReference Include="..\Nashet.Data\Nashet.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\ActivitiesSupervisor\Data\" />
+    <Folder Include="Areas\ActivitiesSupervisor\Models\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\ClubLeader\Data\" />
+    <Folder Include="Areas\ClubLeader\Models\" />
+    <Folder Include="Areas\Student\Data\" />
+    <Folder Include="Areas\Student\Models\" />
   </ItemGroup>
 
 </Project>
