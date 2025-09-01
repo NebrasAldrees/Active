@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class MembershipDomain :BaseDomain
+    public class MembershipDomain : BaseDomain
     {
         private readonly MembershipRepository _MembershipRepository;
         public MembershipDomain(MembershipRepository Repository)

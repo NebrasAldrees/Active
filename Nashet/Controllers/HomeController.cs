@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Nashet.Business.Domain;
 using Nashet.Data.Models;
 using Nashet.Models;
@@ -18,6 +19,14 @@ namespace Nashet.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Login(LoginVIewModel)
         {
             return View();
         }
