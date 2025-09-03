@@ -9,21 +9,20 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Repository
 {
-    public class ClubRepository : BaseRepository<tblClub>
+    public class TeamRepository : BaseRepository<tblTeam>
     {
-        public ClubRepository(NashetContext dbContext) : base(dbContext)
+        public TeamRepository(NashetContext dbContext) : base(dbContext)
         {
         }
-
-        public virtual async Task<IList<tblClub>> GetAllClubs()
+        public virtual async Task<IList<tblTeam>> GetAllTeams()
         {
-            return await dbSet.Where(m => m.IsActive == true).ToListAsync(); // m for club
+            return await dbSet.Where(team => team.IsActive == true).ToListAsync(); 
         }
-        public virtual async Task<int> InsertClub(tblClub Club)
+        public virtual async Task<int> InsertTeam(tblTeam Team)
         {
             try
             {
-                await dbSet.AddAsync(Club);
+                await dbSet.AddAsync(Team);
                 return 1;
             }
             catch
