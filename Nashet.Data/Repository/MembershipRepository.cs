@@ -23,11 +23,8 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Member);
-                return 1;
-            }
-            catch { 
-                return 0;
+                
+ 
             }
         }
     }

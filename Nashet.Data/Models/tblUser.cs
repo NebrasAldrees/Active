@@ -10,7 +10,7 @@ namespace Nashet.Data.Models
     public class tblUser : Common
     {
 
-        [Key] public int UserId { get; set; }
+    980    [Key] public int UserId { get; set; }
         
         public int SystemRoleId { get; set; }
         [StringLength(30)]
