@@ -9,17 +9,25 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class ClubDomain
+    public class ClubDomain(ClubRepository Repository) : BaseDomain
     {
-     
-            private readonly ClubRepository _ClubRepository;
-            public ClubDomain(MembershipRepository Repository)
+        private readonly ClubRepository _ClubRepository = Repository;
+
+        public async Task<IList<tblClub>> GetMember()
+        {
+            return await _ClubRepository.GetAllClubs();
+        }
+        public virtual async Task<int> InsertClub(tblClub Club)
+        {
+            try
             {
-                _ClubRepository = Repository;
+                await _ClubRepository.InsertClub(Club);
+                return 1;
             }
-            public async Task<IList<tblMembership>> GetClub()
+            catch
             {
-                return await _ClubRepository.GetAllClub();
+                return 0;
             }
         }
     }
+}
