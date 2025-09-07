@@ -26,10 +26,10 @@ namespace Nashet.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Login(LoginVIewModel)
-        {
-            return View();
-        }
+       // public async Task<IActionResult> Login(LoginVIewModel)
+       //{
+       //     return View();
+       // }
 
         public IActionResult Privacy()
         {

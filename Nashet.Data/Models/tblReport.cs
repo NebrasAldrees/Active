@@ -9,6 +9,7 @@ namespace Nashet.Data.Models
 {
     public class tblReport : Common
     {
+        [Key]
         public int ReportId { get; set; }
         public int ClubId { get; set; }
         public tblClub Club { get; set; }
