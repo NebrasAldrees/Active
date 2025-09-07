@@ -26,7 +26,12 @@ namespace Nashet.Data.Models
         public DbSet<tblSystemLogs> tblSystemLogs { get; set; }
         public DbSet<tblSystemNotification> tblSystemNotification { get; set; }
         public DbSet<tblSystemRole> tblSystemRole { get; set; }
-        public DbSet<tblUser> tblUsers { get; set; }
+        public DbSet<tblUser> tblUser { get; set; }
+        public DbSet<tblMembershipRequest> TblMembershipRequest { get; set; }
+        public DbSet<tblPositionRequest> tblPositionRequest { get; set; }
+        public DbSet<tblActivityRequest> tblActivityRequest { get; set; }
+        public DbSet<tblRequest> tblRequest { get; set; }
+        public DbSet<tblRequest_type> tblRequest_type { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

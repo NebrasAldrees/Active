@@ -22,14 +22,14 @@ namespace Nashet.Controllers
         {
             return View();
         }
-        public IActionResult Login()
-        {
-            return View();
-        }
-       // public async Task<IActionResult> Login(LoginVIewModel)
-       //{
-       //     return View();
-       // }
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
+        //public async Task<IActionResult> Login(LoginVIewModel)
+        //{
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {
@@ -61,5 +61,9 @@ namespace Nashet.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    public class LoginVIewModel
+    {
     }
 }

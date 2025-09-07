@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Models
 {
-    internal class tblPositionRequest:Common
+    public class tblPositionRequest:Common
     {
          [Key] public int PRId { get; set; }
          public int MembershipID { get; set; }

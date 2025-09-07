@@ -68,6 +68,24 @@ namespace Nashet.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tblRequest_type",
+                columns: table => new
+                {
+                    TypeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblRequest_type", x => x.TypeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tblSite",
                 columns: table => new
                 {
@@ -183,7 +201,7 @@ namespace Nashet.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblUsers",
+                name: "tblUser",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -202,15 +220,15 @@ namespace Nashet.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tblUsers", x => x.UserId);
+                    table.PrimaryKey("PK_tblUser", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_tblUsers_tblSite_SiteId",
+                        name: "FK_tblUser_tblSite_SiteId",
                         column: x => x.SiteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_tblUsers_tblSystemRole_SystemRoleId",
+                        name: "FK_tblUser_tblSystemRole_SystemRoleId",
                         column: x => x.SystemRoleId,
                         principalTable: "tblSystemRole",
                         principalColumn: "SystemRoleId",
@@ -327,6 +345,74 @@ namespace Nashet.Data.Migrations
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
                         onDelete: ReferentialAction.NoAction);
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.cs
+========
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblActivityRequest",
+                columns: table => new
+                {
+                    ARId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    SiteID = table.Column<int>(type: "int", nullable: false),
+                    ClubID = table.Column<int>(type: "int", nullable: false),
+                    ActivityTopic = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ActivityDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActivityTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    ActivityLocation = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ActivityPoster = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblActivityRequest", x => x.ARId);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblClub_ClubID",
+                        column: x => x.ClubID,
+                        principalTable: "tblClub",
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblSite_SiteID",
+                        column: x => x.SiteID,
+                        principalTable: "tblSite",
+                        principalColumn: "SiteId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblUser_UserID",
+                        column: x => x.UserID,
+                        principalTable: "tblUser",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblRequest",
+                columns: table => new
+                {
+                    RequestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SentBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    AttachedFile = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblRequest", x => x.RequestId);
+                    table.ForeignKey(
+                        name: "FK_tblRequest_tblUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "tblUser",
+                        principalColumn: "UserId");
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -354,9 +440,9 @@ namespace Nashet.Data.Migrations
                 {
                     table.PrimaryKey("PK_tblSystemLogs", x => x.LogsId);
                     table.ForeignKey(
-                        name: "FK_tblSystemLogs_tblUsers_UserId",
+                        name: "FK_tblSystemLogs_tblUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "tblUsers",
+                        principalTable: "tblUser",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -398,12 +484,106 @@ namespace Nashet.Data.Migrations
                         column: x => x.TeamId,
                         principalTable: "tblTeam",
                         principalColumn: "TeamId");
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.cs
+========
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TblMembershipRequest",
+                columns: table => new
+                {
+                    MRId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentID = table.Column<int>(type: "int", nullable: false),
+                    ClubID = table.Column<int>(type: "int", nullable: false),
+                    TeamID = table.Column<int>(type: "int", nullable: false),
+                    RequestTeam1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestTeam2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestTeam3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestReason = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TblMembershipRequest", x => x.MRId);
+                    table.ForeignKey(
+                        name: "FK_TblMembershipRequest_tblClub_ClubID",
+                        column: x => x.ClubID,
+                        principalTable: "tblClub",
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_TblMembershipRequest_tblStudent_StudentID",
+                        column: x => x.StudentID,
+                        principalTable: "tblStudent",
+                        principalColumn: "StudentId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_TblMembershipRequest_tblTeam_TeamID",
+                        column: x => x.TeamID,
+                        principalTable: "tblTeam",
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.NoAction);
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.cs
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblPositionRequest",
+                columns: table => new
+                {
+                    PRId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MembershipID = table.Column<int>(type: "int", nullable: false),
+                    ClubRoleID = table.Column<int>(type: "int", nullable: false),
+                    RequestedPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblPositionRequest", x => x.PRId);
+                    table.ForeignKey(
+                        name: "FK_tblPositionRequest_tblClubRole_ClubRoleID",
+                        column: x => x.ClubRoleID,
+                        principalTable: "tblClubRole",
+                        principalColumn: "ClubRoleId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblPositionRequest_tblMembership_MembershipID",
+                        column: x => x.MembershipID,
+                        principalTable: "tblMembership",
+                        principalColumn: "MembershipId",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblActivity_ClubId",
                 table: "tblActivity",
                 column: "ClubId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblActivityRequest_ClubID",
+                table: "tblActivityRequest",
+                column: "ClubID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblActivityRequest_SiteID",
+                table: "tblActivityRequest",
+                column: "SiteID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblActivityRequest_UserID",
+                table: "tblActivityRequest",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblAnnouncement_ClubId",
@@ -431,9 +611,39 @@ namespace Nashet.Data.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TblMembershipRequest_ClubID",
+                table: "TblMembershipRequest",
+                column: "ClubID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TblMembershipRequest_StudentID",
+                table: "TblMembershipRequest",
+                column: "StudentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TblMembershipRequest_TeamID",
+                table: "TblMembershipRequest",
+                column: "TeamID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblPositionRequest_ClubRoleID",
+                table: "tblPositionRequest",
+                column: "ClubRoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblPositionRequest_MembershipID",
+                table: "tblPositionRequest",
+                column: "MembershipID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tblReport_ClubId",
                 table: "tblReport",
                 column: "ClubId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblRequest_UserId",
+                table: "tblRequest",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblStudent_SiteId",
@@ -451,13 +661,13 @@ namespace Nashet.Data.Migrations
                 column: "ClubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblUsers_SiteId",
-                table: "tblUsers",
+                name: "IX_tblUser_SiteId",
+                table: "tblUser",
                 column: "SiteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblUsers_SystemRoleId",
-                table: "tblUsers",
+                name: "IX_tblUser_SystemRoleId",
+                table: "tblUser",
                 column: "SystemRoleId");
         }
 
@@ -466,6 +676,9 @@ namespace Nashet.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "tblActivity");
+
+            migrationBuilder.DropTable(
+                name: "tblActivityRequest");
 
             migrationBuilder.DropTable(
                 name: "tblAnnouncement");
@@ -477,16 +690,31 @@ namespace Nashet.Data.Migrations
                 name: "tblKFUuser");
 
             migrationBuilder.DropTable(
-                name: "tblMembership");
+                name: "TblMembershipRequest");
+
+            migrationBuilder.DropTable(
+                name: "tblPositionRequest");
 
             migrationBuilder.DropTable(
                 name: "tblReport");
+
+            migrationBuilder.DropTable(
+                name: "tblRequest");
+
+            migrationBuilder.DropTable(
+                name: "tblRequest_type");
 
             migrationBuilder.DropTable(
                 name: "tblSystemLogs");
 
             migrationBuilder.DropTable(
                 name: "tblSystemNotification");
+
+            migrationBuilder.DropTable(
+                name: "tblMembership");
+
+            migrationBuilder.DropTable(
+                name: "tblUser");
 
             migrationBuilder.DropTable(
                 name: "tblClubRole");
@@ -498,13 +726,10 @@ namespace Nashet.Data.Migrations
                 name: "tblTeam");
 
             migrationBuilder.DropTable(
-                name: "tblUsers");
+                name: "tblSystemRole");
 
             migrationBuilder.DropTable(
                 name: "tblClub");
-
-            migrationBuilder.DropTable(
-                name: "tblSystemRole");
 
             migrationBuilder.DropTable(
                 name: "tblSite");

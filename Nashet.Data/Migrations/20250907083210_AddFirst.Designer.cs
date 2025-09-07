@@ -12,8 +12,13 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.Designer.cs
     [Migration("20250907080127_Addfirst")]
     partial class Addfirst
+========
+    [Migration("20250907083210_AddFirst")]
+    partial class AddFirst
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +86,54 @@ namespace Nashet.Data.Migrations
                     b.HasIndex("ClubId");
 
                     b.ToTable("tblActivity");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblActivityRequest", b =>
+                {
+                    b.Property<int>("ARId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ARId"));
+
+                    b.Property<DateTime>("ActivityDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ActivityLocation")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ActivityPoster")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("ActivityTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("ActivityTopic")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ClubID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SiteID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ARId");
+
+                    b.HasIndex("ClubID");
+
+                    b.HasIndex("SiteID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("tblActivityRequest");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblAnnouncement", b =>
@@ -329,12 +382,125 @@ namespace Nashet.Data.Migrations
                     b.ToTable("tblMembership");
                 });
 
+            modelBuilder.Entity("Nashet.Data.Models.tblMembershipRequest", b =>
+                {
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.Designer.cs
+                    b.Property<int>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+========
+                    b.Property<int>("MRId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MRId"));
+
+                    b.Property<int>("ClubID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RequestReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("RequestTeam1")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RequestTeam2")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RequestTeam3")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isSent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MRId");
+
+                    b.HasIndex("ClubID");
+
+                    b.HasIndex("StudentID");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("TblMembershipRequest");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblPositionRequest", b =>
+                {
+                    b.Property<int>("PRId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PRId"));
+
+                    b.Property<int>("ClubRoleID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MembershipID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RequestedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RequestedPosition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isSent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("PRId");
+
+                    b.HasIndex("ClubRoleID");
+
+                    b.HasIndex("MembershipID");
+
+                    b.ToTable("tblPositionRequest");
+                });
+
             modelBuilder.Entity("Nashet.Data.Models.tblReport", b =>
                 {
                     b.Property<int>("ReportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.Designer.cs
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
 
                     b.Property<int>("ClubId")
@@ -371,6 +537,83 @@ namespace Nashet.Data.Migrations
                     b.HasIndex("ClubId");
 
                     b.ToTable("tblReport");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblRequest", b =>
+                {
+                    b.Property<int>("RequestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
+
+                    b.Property<string>("AttachedFile")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SentBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isSent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("RequestId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("tblRequest");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblRequest_type", b =>
+                {
+                    b.Property<int>("TypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeId"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TypeName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("isSent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TypeId");
+
+                    b.ToTable("tblRequest_type");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblSite", b =>
@@ -691,7 +934,7 @@ namespace Nashet.Data.Migrations
 
                     b.HasIndex("SystemRoleId");
 
-                    b.ToTable("tblUsers");
+                    b.ToTable("tblUser");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblActivity", b =>
@@ -703,6 +946,33 @@ namespace Nashet.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Club");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblActivityRequest", b =>
+                {
+                    b.HasOne("Nashet.Data.Models.tblClub", "Club")
+                        .WithMany()
+                        .HasForeignKey("ClubID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Nashet.Data.Models.tblSite", "Site")
+                        .WithMany()
+                        .HasForeignKey("SiteID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Nashet.Data.Models.tblUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Club");
+
+                    b.Navigation("Site");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblAnnouncement", b =>
@@ -752,6 +1022,52 @@ namespace Nashet.Data.Migrations
                     b.Navigation("Team");
                 });
 
+            modelBuilder.Entity("Nashet.Data.Models.tblMembershipRequest", b =>
+                {
+                    b.HasOne("Nashet.Data.Models.tblClub", "Club")
+                        .WithMany()
+                        .HasForeignKey("ClubID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Nashet.Data.Models.tblStudent", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Nashet.Data.Models.tblTeam", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Club");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblPositionRequest", b =>
+                {
+                    b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
+                        .WithMany()
+                        .HasForeignKey("ClubRoleID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Nashet.Data.Models.tblMembership", "Membership")
+                        .WithMany()
+                        .HasForeignKey("MembershipID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ClubRole");
+
+                    b.Navigation("Membership");
+                });
+
             modelBuilder.Entity("Nashet.Data.Models.tblReport", b =>
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
@@ -761,6 +1077,15 @@ namespace Nashet.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Club");
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblRequest", b =>
+                {
+                    b.HasOne("Nashet.Data.Models.tblUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblStudent", b =>
