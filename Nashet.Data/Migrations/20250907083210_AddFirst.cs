@@ -17,15 +17,12 @@ namespace Nashet.Data.Migrations
                 {
                     ClubRoleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    RoleType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,15 +35,12 @@ namespace Nashet.Data.Migrations
                 {
                     EmailNotificationsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserEmail = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,21 +53,36 @@ namespace Nashet.Data.Migrations
                 {
                     KFUUserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    UserType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    UserType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblKFUuser", x => x.KFUUserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblRequest_type",
+                columns: table => new
+                {
+                    TypeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblRequest_type", x => x.TypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,17 +92,14 @@ namespace Nashet.Data.Migrations
                     SiteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SiteCode = table.Column<int>(type: "int", nullable: false),
-                    SiteNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SiteNameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SiteNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SiteNameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     isUpdated = table.Column<bool>(type: "bit", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,14 +114,11 @@ namespace Nashet.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,15 +131,12 @@ namespace Nashet.Data.Migrations
                 {
                     SystemRoleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    RoleType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,17 +150,14 @@ namespace Nashet.Data.Migrations
                     ClubId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     siteId = table.Column<int>(type: "int", nullable: false),
-                    ClubNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClubNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClubVision = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    ClubNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ClubNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ClubVision = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,7 +167,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.siteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,20 +177,17 @@ namespace Nashet.Data.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AcademicId = table.Column<int>(type: "int", nullable: false),
-                    StudentNameAr = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    StudentNameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    StudentEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StudentNameAr = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    StudentNameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    StudentEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     StudentPhone = table.Column<int>(type: "int", nullable: false),
                     SiteId = table.Column<int>(type: "int", nullable: false),
-                    StudentSkills = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    StudentSkills = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,45 +197,42 @@ namespace Nashet.Data.Migrations
                         column: x => x.SiteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblUsers",
+                name: "tblUser",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SystemRoleId = table.Column<int>(type: "int", nullable: false),
-                    UserNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    UserNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    UserEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    UserNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    UserEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserPhone = table.Column<int>(type: "int", maxLength: 30, nullable: false),
                     SiteId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tblUsers", x => x.UserId);
+                    table.PrimaryKey("PK_tblUser", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_tblUsers_tblSite_SiteId",
+                        name: "FK_tblUser_tblSite_SiteId",
                         column: x => x.SiteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_tblUsers_tblSystemRole_SystemRoleId",
+                        name: "FK_tblUser_tblSystemRole_SystemRoleId",
                         column: x => x.SystemRoleId,
                         principalTable: "tblSystemRole",
                         principalColumn: "SystemRoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,21 +242,18 @@ namespace Nashet.Data.Migrations
                     ActivityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClubId = table.Column<int>(type: "int", nullable: false),
-                    ActivityTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ActivityDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    ActivityTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ActivityDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     ActivityStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ActivityEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ActivityTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ActivityLocation = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    ActivityPoster = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    ActivityLocation = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    ActivityPoster = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -275,7 +263,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -285,18 +273,15 @@ namespace Nashet.Data.Migrations
                     AnnouncementId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClubId = table.Column<int>(type: "int", nullable: false),
-                    AnnouncementType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AnnouncementTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AnnouncementDetails = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    AnnouncementType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AnnouncementTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AnnouncementDetails = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     AnnouncementImage = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -306,37 +291,34 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
                 name: "tblReport",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReportId = table.Column<int>(type: "int", nullable: false),
                     ClubId = table.Column<int>(type: "int", nullable: false),
-                    Topic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Topic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     IsAdded = table.Column<bool>(type: "bit", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tblReport", x => x.Id);
+                    table.PrimaryKey("PK_tblReport", x => x.ReportId);
                     table.ForeignKey(
                         name: "FK_tblReport_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -346,16 +328,13 @@ namespace Nashet.Data.Migrations
                     TeamId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClubId = table.Column<int>(type: "int", nullable: false),
-                    TeamNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    TeamNameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    TeamNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    TeamNameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,7 +344,72 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblActivityRequest",
+                columns: table => new
+                {
+                    ARId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    SiteID = table.Column<int>(type: "int", nullable: false),
+                    ClubID = table.Column<int>(type: "int", nullable: false),
+                    ActivityTopic = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ActivityDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActivityTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    ActivityLocation = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ActivityPoster = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblActivityRequest", x => x.ARId);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblClub_ClubID",
+                        column: x => x.ClubID,
+                        principalTable: "tblClub",
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblSite_SiteID",
+                        column: x => x.SiteID,
+                        principalTable: "tblSite",
+                        principalColumn: "SiteId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblUser_UserID",
+                        column: x => x.UserID,
+                        principalTable: "tblUser",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblRequest",
+                columns: table => new
+                {
+                    RequestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SentBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    AttachedFile = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblRequest", x => x.RequestId);
+                    table.ForeignKey(
+                        name: "FK_tblRequest_tblUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "tblUser",
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -375,32 +419,29 @@ namespace Nashet.Data.Migrations
                     LogsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    username = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Table = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    username = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Table = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     RecordId = table.Column<int>(type: "int", nullable: false),
-                    operation_type = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    operation_type = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     operation_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OldValue = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    NewValue = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    other_details = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    OldValue = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    NewValue = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    other_details = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblSystemLogs", x => x.LogsId);
                     table.ForeignKey(
-                        name: "FK_tblSystemLogs_tblUsers_UserId",
+                        name: "FK_tblSystemLogs_tblUser_UserId",
                         column: x => x.UserId,
-                        principalTable: "tblUsers",
+                        principalTable: "tblUser",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -412,16 +453,13 @@ namespace Nashet.Data.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     ClubRoleId = table.Column<int>(type: "int", nullable: false),
                     TeameId = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: true),
                     JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    is_sent = table.Column<bool>(type: "bit", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    content = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -442,7 +480,82 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblMembership_tblTeam_TeamId",
                         column: x => x.TeamId,
                         principalTable: "tblTeam",
+                        principalColumn: "TeamId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TblMembershipRequest",
+                columns: table => new
+                {
+                    MRId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentID = table.Column<int>(type: "int", nullable: false),
+                    ClubID = table.Column<int>(type: "int", nullable: false),
+                    TeamID = table.Column<int>(type: "int", nullable: false),
+                    RequestTeam1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestTeam2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestTeam3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestReason = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TblMembershipRequest", x => x.MRId);
+                    table.ForeignKey(
+                        name: "FK_TblMembershipRequest_tblClub_ClubID",
+                        column: x => x.ClubID,
+                        principalTable: "tblClub",
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_TblMembershipRequest_tblStudent_StudentID",
+                        column: x => x.StudentID,
+                        principalTable: "tblStudent",
+                        principalColumn: "StudentId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_TblMembershipRequest_tblTeam_TeamID",
+                        column: x => x.TeamID,
+                        principalTable: "tblTeam",
                         principalColumn: "TeamId",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblPositionRequest",
+                columns: table => new
+                {
+                    PRId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MembershipID = table.Column<int>(type: "int", nullable: false),
+                    ClubRoleID = table.Column<int>(type: "int", nullable: false),
+                    RequestedPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblPositionRequest", x => x.PRId);
+                    table.ForeignKey(
+                        name: "FK_tblPositionRequest_tblClubRole_ClubRoleID",
+                        column: x => x.ClubRoleID,
+                        principalTable: "tblClubRole",
+                        principalColumn: "ClubRoleId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_tblPositionRequest_tblMembership_MembershipID",
+                        column: x => x.MembershipID,
+                        principalTable: "tblMembership",
+                        principalColumn: "MembershipId",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -450,6 +563,21 @@ namespace Nashet.Data.Migrations
                 name: "IX_tblActivity_ClubId",
                 table: "tblActivity",
                 column: "ClubId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblActivityRequest_ClubID",
+                table: "tblActivityRequest",
+                column: "ClubID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblActivityRequest_SiteID",
+                table: "tblActivityRequest",
+                column: "SiteID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblActivityRequest_UserID",
+                table: "tblActivityRequest",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblAnnouncement_ClubId",
@@ -477,9 +605,39 @@ namespace Nashet.Data.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TblMembershipRequest_ClubID",
+                table: "TblMembershipRequest",
+                column: "ClubID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TblMembershipRequest_StudentID",
+                table: "TblMembershipRequest",
+                column: "StudentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TblMembershipRequest_TeamID",
+                table: "TblMembershipRequest",
+                column: "TeamID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblPositionRequest_ClubRoleID",
+                table: "tblPositionRequest",
+                column: "ClubRoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblPositionRequest_MembershipID",
+                table: "tblPositionRequest",
+                column: "MembershipID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tblReport_ClubId",
                 table: "tblReport",
                 column: "ClubId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblRequest_UserId",
+                table: "tblRequest",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblStudent_SiteId",
@@ -497,13 +655,13 @@ namespace Nashet.Data.Migrations
                 column: "ClubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblUsers_SiteId",
-                table: "tblUsers",
+                name: "IX_tblUser_SiteId",
+                table: "tblUser",
                 column: "SiteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblUsers_SystemRoleId",
-                table: "tblUsers",
+                name: "IX_tblUser_SystemRoleId",
+                table: "tblUser",
                 column: "SystemRoleId");
         }
 
@@ -512,6 +670,9 @@ namespace Nashet.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "tblActivity");
+
+            migrationBuilder.DropTable(
+                name: "tblActivityRequest");
 
             migrationBuilder.DropTable(
                 name: "tblAnnouncement");
@@ -523,16 +684,31 @@ namespace Nashet.Data.Migrations
                 name: "tblKFUuser");
 
             migrationBuilder.DropTable(
-                name: "tblMembership");
+                name: "TblMembershipRequest");
+
+            migrationBuilder.DropTable(
+                name: "tblPositionRequest");
 
             migrationBuilder.DropTable(
                 name: "tblReport");
+
+            migrationBuilder.DropTable(
+                name: "tblRequest");
+
+            migrationBuilder.DropTable(
+                name: "tblRequest_type");
 
             migrationBuilder.DropTable(
                 name: "tblSystemLogs");
 
             migrationBuilder.DropTable(
                 name: "tblSystemNotification");
+
+            migrationBuilder.DropTable(
+                name: "tblMembership");
+
+            migrationBuilder.DropTable(
+                name: "tblUser");
 
             migrationBuilder.DropTable(
                 name: "tblClubRole");
@@ -544,13 +720,10 @@ namespace Nashet.Data.Migrations
                 name: "tblTeam");
 
             migrationBuilder.DropTable(
-                name: "tblUsers");
+                name: "tblSystemRole");
 
             migrationBuilder.DropTable(
                 name: "tblClub");
-
-            migrationBuilder.DropTable(
-                name: "tblSystemRole");
 
             migrationBuilder.DropTable(
                 name: "tblSite");
