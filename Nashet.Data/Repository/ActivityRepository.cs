@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nashet.Data.Models;
+using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Repository
 {
-    public class ActivityRepository
+    public class ActivityRepository: BaseRepository<tblActivity>
     {
         public ActivityRepository(NashetContext dbContext) : base(dbContext)
         {

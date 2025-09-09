@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Models
 {
-    internal class tblActivityRequest
+    public class tblActivityRequest:Common 
     {
 
         [Key] public int ARId { get; set; }
