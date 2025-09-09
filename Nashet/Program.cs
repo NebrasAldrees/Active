@@ -10,6 +10,13 @@ builder.Services.AddScoped<MembershipDomain>();
 builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddDbContext<Nashet.Data.Models.NashetContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NashetContext")));
+
+
+
+
+
+
+
 builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddScoped<MembershipDomain>();
 builder.Services.AddScoped<AnnouncementRepository>();
@@ -38,12 +45,14 @@ builder.Services.AddScoped<TeamRepository>();
 builder.Services.AddScoped<TeamDomain>();
 builder.Services.AddScoped<ActivityRepository>();
 builder.Services.AddScoped<ActivityDomain>();
-
-
 builder.Services.AddScoped<PositionRequestRepository>();
-builder.Services.AddScoped<SiteDomain>();
-builder.Services.AddScoped<SiteRepository>();
-builder.Services.AddScoped<SiteDomain>();
+builder.Services.AddScoped<PositionRequestDomain>();
+builder.Services.AddScoped<MembershipRequestRepository>();
+builder.Services.AddScoped<MembershipRequesteDomain>();
+builder.Services.AddScoped<PositionRequestRepository>();
+builder.Services.AddScoped<PositionRequestDomain>();
+builder.Services.AddScoped<MembershipRequestRepository>();
+builder.Services.AddScoped<MembershipRequesteDomain>();
 
 
 
