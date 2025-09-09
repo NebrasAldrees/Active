@@ -15,11 +15,12 @@ namespace Nashet.Data.Repository
         {
         }
 
-        public virtual async Task<IList<tblStudent>> GetAllStudents()
+        public virtual async Task<tblStudent> GetStudentByIdAsync(int id)
         {
-            return await dbSet.Where(stu => stu.IsDeleted == false).ToListAsync(); 
+            return await dbSet.Where(Student => Student.IsDeleted == false && Student.StudentId == id)
+                            .FirstOrDefaultAsync();
         }
-        
-        
+
+
     }
 }

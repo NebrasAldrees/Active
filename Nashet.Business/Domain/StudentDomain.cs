@@ -11,14 +11,16 @@ namespace Nashet.Business.Domain
 {
     public class StudentDomain : BaseDomain
     {
-        private readonly StudentRepository _StudentRepository;
-        public StudentDomain(StudentRepository Repository)
+        public async Task<tblStudent> GetStudentByIdAsync(int id)
         {
-            _StudentRepository = Repository;
-        }
-        public async Task<IList<tblStudent>> GetStudent()
-        {
-            return await _StudentRepository.GetAllStudents();
+            var Student = await _Student.GetStudentByIdAsync(id);
+
+            if (Student == null)
+            {
+                throw new KeyNotFoundException($"Position request with ID {id} was not found.");
+            }
+
+            return Student;
         }
 
     }
