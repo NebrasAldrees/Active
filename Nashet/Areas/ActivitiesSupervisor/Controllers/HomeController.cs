@@ -2,6 +2,7 @@
 
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
+    [Area("ActivitiesSupervisor")]
     public class HomeController : Controller
     {
         public IActionResult Index()
