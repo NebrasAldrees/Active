@@ -36,6 +36,25 @@ namespace Nashet.Controllers
             return View();
         }
 
+        public IActionResult users()
+        {
+            return View();
+        }
+
+        public IActionResult add_order()
+        {
+            return View();
+        }
+        public IActionResult orders()
+        {
+            return View();
+        }
+        public IActionResult rules()
+        {
+            return View();
+        }
+
+
         public IActionResult InsertMember()
         {
             return View();

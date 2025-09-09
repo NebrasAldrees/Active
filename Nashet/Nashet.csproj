@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\add_order.cshtml" />
+    <Content Remove="Views\Home\index.cshtml" />
+    <Content Remove="Views\Home\orders.cshtml" />
+    <Content Remove="Views\Home\rules.cshtml" />
+    <Content Remove="Views\Home\users.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -36,6 +44,46 @@
     <Folder Include="Areas\ClubSupervisor\Views\Home\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\add_order.cshtml" />
+    <None Include="Views\Home\index.cshtml" />
+    <None Include="Views\Home\orders.cshtml" />
+    <None Include="Views\Home\rules.cshtml" />
+    <None Include="Views\Home\users.cshtml" />
+    <None Include="wwwroot\Assets\.DS_Store" />
+    <None Include="wwwroot\Assets\css\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\DINNext\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\Poppins\.DS_Store" />
+    <None Include="wwwroot\Assets\fonts\tabler-icons\.DS_Store" />
+    <None Include="wwwroot\Assets\imgs\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\bootstrap-multiselect\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\bootstrap-multiselect\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\bootstrap-multiselect\js\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\DataTable\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\DataTable\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\DataTable\js\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\datepicker\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\datepicker\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\datepicker\js\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\easepick\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\multiSelect\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\multiSelect\css\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\select2\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\selectize\.DS_Store" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\codeql\codeql-config.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\dependabot.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\FUNDING.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\codeql-analysis.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\node.js.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\stale.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\.github\workflows\UpdateContributors.yml" />
+    <None Include="wwwroot\Assets\lib\selectize\css\.DS_Store" />
+    <None Include="wwwroot\css\.DS_Store" />
   </ItemGroup>
 
 </Project>
