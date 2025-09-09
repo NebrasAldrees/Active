@@ -18,7 +18,7 @@ namespace Nashet.Data.Repository
         {
         }
 
-        public virtual async Task<IList<tblUser>> GetAllMembers()
+        public virtual async Task<IList<tblUser>> GetAllUsers()
         {
             return await dbSet.Where(U => U.IsDeleted == false).ToListAsync(); // U for User
         }

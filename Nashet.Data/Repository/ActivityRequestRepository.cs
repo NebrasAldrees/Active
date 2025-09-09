@@ -17,7 +17,7 @@ namespace Nashet.Data.Repository
         {
         }
 
-        public virtual async Task<IList<tblActivityRequest>> GetAllARequest()
+        public virtual async Task<IList<tblActivityRequest>> GetAllRequests()
         {
             return await dbSet.Where(AReq => AReq.IsDeleted == false).ToListAsync();
 
