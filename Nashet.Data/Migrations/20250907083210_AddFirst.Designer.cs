@@ -12,8 +12,13 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.Designer.cs
+    [Migration("20250907080127_Addfirst")]
+    partial class Addfirst
+========
     [Migration("20250907083210_AddFirst")]
     partial class AddFirst
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -379,6 +384,12 @@ namespace Nashet.Data.Migrations
 
             modelBuilder.Entity("Nashet.Data.Models.tblMembershipRequest", b =>
                 {
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.Designer.cs
+                    b.Property<int>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+========
                     b.Property<int>("MRId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -489,6 +500,7 @@ namespace Nashet.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.Designer.cs
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
 
                     b.Property<int>("ClubId")

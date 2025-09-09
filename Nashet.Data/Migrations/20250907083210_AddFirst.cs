@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddFirst : Migration
+    public partial class Addfirst : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -345,6 +345,8 @@ namespace Nashet.Data.Migrations
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
                         onDelete: ReferentialAction.NoAction);
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.cs
+========
                 });
 
             migrationBuilder.CreateTable(
@@ -410,6 +412,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "tblUser",
                         principalColumn: "UserId");
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -481,6 +484,8 @@ namespace Nashet.Data.Migrations
                         column: x => x.TeamId,
                         principalTable: "tblTeam",
                         principalColumn: "TeamId");
+<<<<<<<< HEAD:Nashet.Data/Migrations/20250907080127_Addfirst.cs
+========
                 });
 
             migrationBuilder.CreateTable(
@@ -524,6 +529,7 @@ namespace Nashet.Data.Migrations
                         principalTable: "tblTeam",
                         principalColumn: "TeamId",
                         onDelete: ReferentialAction.NoAction);
+>>>>>>>> 94070bc14195b3ec0f01eeec028505d7901cced5:Nashet.Data/Migrations/20250907083210_AddFirst.cs
                 });
 
             migrationBuilder.CreateTable(
