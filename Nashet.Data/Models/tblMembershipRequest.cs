@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Models
 {
-    internal class tblMembershipRequest :Common
+    public class tblMembershipRequest :Common
     {
         [Key] public int MRId { get; set; }
         
