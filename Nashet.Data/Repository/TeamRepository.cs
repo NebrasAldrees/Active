@@ -30,5 +30,10 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+        public virtual async Task<tblTeam> GetTeamByIdAsync(int id)
+        {
+            return await dbSet.Where(team => team.IsDeleted == false && team.TeamId == id)
+                            .FirstOrDefaultAsync();
+        }
     }
 }
