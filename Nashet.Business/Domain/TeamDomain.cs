@@ -21,5 +21,17 @@ namespace Nashet.Business.Domain
         {
             return await _TeamRepository.GetAllTeams();
         }
+        public virtual async Task<int> InsertTeam(tblTeam team)
+        {
+            try
+            {
+                await _TeamRepository.InsertTeam(team);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }
