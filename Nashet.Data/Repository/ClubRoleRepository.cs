@@ -19,6 +19,11 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(ClubR => ClubR.IsDeleted == false).ToListAsync(); 
         }
-        
+
+        public virtual async Task<tblClubRole> GetClubRoleById(int id)
+        {
+            return await dbSet.Where(ClubRole => ClubRole.IsDeleted == false && ClubRole.ClubRoleId == id)
+            .FirstOrDefaultAsync();
+        }
     }
 }

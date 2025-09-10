@@ -17,7 +17,13 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblActivity>> GetAllActivities()
         {
-            return await dbSet.Where(a => a.IsDeleted == false).ToListAsync(); //a for activity
+            return await dbSet.Where(Activity => Activity.IsDeleted == false).ToListAsync(); //a for activity
+        }
+
+        public virtual async Task<tblActivity> GetActivityById(int id)
+        {
+            return await dbSet.Where(Activity => Activity.IsDeleted == false && Activity.ActivityId == id)
+            .FirstOrDefaultAsync();
         }
 
         public virtual async Task<int> InsertActivity(tblActivity activity)

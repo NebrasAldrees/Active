@@ -27,6 +27,6 @@ namespace Nashet.Data.Models
         [StringLength(100)]
         public string ActivityLocation { get; set; }
         public ImageFileMachine ActivityPoster { get; set; }
-
+        public int ActivityRequestId { get; internal set; }
     }
 }

@@ -19,15 +19,10 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(PositionRequest => PositionRequest.IsDeleted == false).ToListAsync(); 
         }
 
-        public virtual async Task<tblPositionRequest> GetPositionRequestById(int id)
+        public virtual async Task<tblPositionRequest> GetPositionRequestByIdAsync(int id)
         {
-            return await dbSet.Where(PositionRequest => PositionRequest.IsDeleted == false && PositionRequest.PRId == id)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<tblPositionRequest> GetPositionRequestByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            return await dbSet.Where(PositionRequest => PositionRequest.IsDeleted == false && PositionRequest.SystemPositionRequest == id)
+                            .FirstOrDefaultAsync();
         }
 
         public virtual async Task<int> InsertPositionRequest(tblPositionRequest positionRequest)

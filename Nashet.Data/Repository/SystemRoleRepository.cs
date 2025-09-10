@@ -21,5 +21,6 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(SR => SR.IsDeleted == false).ToListAsync();
         }
+
     }
 }
