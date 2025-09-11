@@ -19,6 +19,12 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(report => report.IsDeleted == false && report.ClubId == id).ToListAsync(); 
         }
+
+        public async Task<IList<tblReport>> GetAllReports()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual async Task<tblReport> GetReportByIdAsync(int id)
         {
             return await dbSet.Where(report => report.IsDeleted == false && report.ReportId == id)

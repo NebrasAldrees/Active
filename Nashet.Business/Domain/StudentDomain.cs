@@ -11,9 +11,14 @@ namespace Nashet.Business.Domain
 {
     public class StudentDomain : BaseDomain
     {
+        private readonly StudentRepository _StudentRepository;
+        public StudentDomain(StudentRepository Repository)
+        {
+            _StudentRepository = Repository;
+        }
         public async Task<tblStudent> GetStudentByIdAsync(int id)
         {
-            var Student = await _Student.GetStudentByIdAsync(id);
+            var Student = await _StudentRepository.GetStudentByIdAsync(id);
 
             if (Student == null)
             {
