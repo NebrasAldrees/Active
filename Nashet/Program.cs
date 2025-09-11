@@ -27,16 +27,16 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserDomain>();
 builder.Services.AddScoped<ActivityRequestRepository>();
 builder.Services.AddScoped<ActivityRequestDomain>();
-builder.Services.AddScoped<Request_typeRepository>();
-builder.Services.AddScoped<Request_typeDomain>();
+builder.Services.AddScoped<ReportDomain>();
+builder.Services.AddScoped<ReportRepository>();
+builder.Services.AddScoped<SystemNotificationDomain>();
+builder.Services.AddScoped<SystemNotificationRepository>();
 builder.Services.AddScoped<ClubRepository>();
 builder.Services.AddScoped<ClubDomain>();
 builder.Services.AddScoped<ClubRoleRepository>();
 builder.Services.AddScoped<ClubRoleDomain>();
 builder.Services.AddScoped<ReportRepository>();
 builder.Services.AddScoped<ReportDomain>();
-builder.Services.AddScoped<Request_typeRepository>();
-builder.Services.AddScoped<Request_typeDomain>();
 builder.Services.AddScoped<SiteRepository>();
 builder.Services.AddScoped<SiteDomain>();
 builder.Services.AddScoped<StudentRepository>();
@@ -48,11 +48,8 @@ builder.Services.AddScoped<ActivityDomain>();
 builder.Services.AddScoped<PositionRequestRepository>();
 builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
-builder.Services.AddScoped<MembershipRequesteDomain>();
-builder.Services.AddScoped<PositionRequestRepository>();
-builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
-builder.Services.AddScoped<MembershipRequesteDomain>();
+
 
 
 
