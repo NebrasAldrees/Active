@@ -21,11 +21,34 @@ namespace Nashet.Business.Domain
         {
             return await _TeamRepository.GetAllTeams();
         }
+        public async Task<tblTeam> GetTeamById(int id)
+        {
+            var Team= await _TeamRepository.GetTeamByIdAsync(id);
+
+            if (Team == null)
+            {
+                throw new KeyNotFoundException($"Team request with ID {id} was not found.");
+            }
+
+            return Team;
+        }
         public virtual async Task<int> InsertTeam(tblTeam team)
         {
             try
             {
                 await _TeamRepository.InsertTeam(team);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public int DeleteTeam(int id)
+        {
+            try
+            {
+                _TeamRepository.Delete(id);
                 return 1;
             }
             catch

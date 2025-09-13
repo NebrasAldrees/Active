@@ -32,7 +32,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(activityRequest);
+                await InsertAsync(activityRequest);
                 return 1;
             }
             catch

@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Home\rules.cshtml" />
-    <Content Remove="Areas\Admin\Views\Home\users.cshtml" />
     <Content Remove="Views\Home\add_order.cshtml" />
     <Content Remove="Views\Home\index.cshtml" />
     <Content Remove="Views\Home\orders.cshtml" />
@@ -49,8 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\Admin\Views\Home\rules.cshtml" />
-    <None Include="Areas\Admin\Views\Home\users.cshtml" />
     <None Include="Views\Home\add_order.cshtml" />
     <None Include="Views\Home\index.cshtml" />
     <None Include="Views\Home\orders.cshtml" />

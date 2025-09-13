@@ -21,11 +21,34 @@ namespace Nashet.Business.Domain
         {
             return await _MembershipRepository.GetAllMembers();
         }
+        public async Task<tblMembership> GetMemberByIdAsync(int id)
+        {
+            var Member = await _MembershipRepository.GetMemberByIdAsync(id);
+
+            if (Member == null)
+            {
+                throw new KeyNotFoundException($"Membership request with ID {id} was not found.");
+            }
+
+            return Member;
+        }
         public virtual async Task<int> InsertMember(tblMembership Member)
         {
             try
             {
                 await _MembershipRepository.InsertMember(Member);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public int DeleteMember(int id)
+        {
+            try
+            {
+                _MembershipRepository.Delete(id);
                 return 1;
             }
             catch

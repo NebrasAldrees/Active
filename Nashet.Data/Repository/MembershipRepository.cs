@@ -17,7 +17,7 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblMembership>> GetAllMembers()
         {
-            return await dbSet.Where(member => member.IsDeleted == false).ToListAsync(); // m for member
+            return await dbSet.Where(member => member.IsDeleted == false).ToListAsync(); 
         }
         public virtual async Task<tblMembership> GetMemberByIdAsync(int id)
         {
@@ -29,7 +29,7 @@ namespace Nashet.Data.Repository
             try
             {
 
-                await dbSet.AddAsync(Member);
+                await InsertAsync(Member);
                 return 1;
 
 

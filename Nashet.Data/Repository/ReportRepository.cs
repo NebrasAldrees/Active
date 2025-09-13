@@ -34,7 +34,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Report);
+                await InsertAsync(Report);
                 return 1;
             }
             catch

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Repository
 {
-    public class SystemNotificationRepository :BaseRepository<tblSystemNotification>
+    public class SystemNotificationRepository : BaseRepository<tblSystemNotification>
     {
         public SystemNotificationRepository(NashetContext dbContext) : base(dbContext)
         { }
@@ -29,26 +29,15 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Notification);
+                await InsertAsync(Notification);
                 return 1;
             }
             catch
             {
                 return 0;
             }
-        }
-        //public virtual async Task<int> DeleteNotification(tblSystemNotification Notification)
-        //{
-        //    try
-        //    {
-        //        await dbSet.Delete(Notification);
-        //        return 1;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
 
+
+        }
     }
 }

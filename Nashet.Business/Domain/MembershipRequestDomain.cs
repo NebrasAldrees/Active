@@ -16,7 +16,7 @@ namespace Nashet.Business.Domain
         {
             _MembershipRequestRepository = Repository;
         }
-        public async Task<IList<tblMembershipRequest>> GetMembershipRequest()
+        public async Task<IList<tblMembershipRequest>> GetMembershipRequest(int id)
         {
             return await _MembershipRequestRepository.GetAllMembershipRequest();
         }
@@ -36,6 +36,18 @@ namespace Nashet.Business.Domain
             try
             {
                 await _MembershipRequestRepository.InsertMembershipRequest(MembershipRequest);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public int DeleteUser(int id)
+        {
+            try
+            {
+                _MembershipRequestRepository.Delete(id);
                 return 1;
             }
             catch

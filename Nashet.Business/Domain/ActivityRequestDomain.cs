@@ -1,4 +1,5 @@
-﻿using Nashet.Business.Domain.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Nashet.Business.Domain.Common;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
@@ -17,5 +18,29 @@ namespace Nashet.Business.Domain
         {
             return await _ActivityRequestRepository.GetAllRequests();
         }
+        public async Task<tblActivityRequest> GetActivityRequestById(int id)
+        {
+            var ActivityRequest = await _ActivityRequestRepository.GetActivityRequestById(id);
+
+            if (ActivityRequest == null)
+            {
+                throw new KeyNotFoundException($"Activity Request requested with ID {id} was not found.");
+            }
+
+            return ActivityRequest;
+        }
+        public int DeleteActivityRequest(int id)
+        {
+            try
+            {
+                _ActivityRequestRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }

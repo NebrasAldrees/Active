@@ -21,5 +21,10 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(SR => SR.IsDeleted == false).ToListAsync();
         }
+        public virtual async Task<tblSystemRole> GetSystemRoleByIdAsync(int id)
+        {
+            return await dbSet.Where(SR => SR.IsDeleted == false && SR.SystemRoleId == id)
+                            .FirstOrDefaultAsync();
+        }
     }
 }

@@ -20,6 +20,17 @@ namespace Nashet.Business.Domain
         {
             return await _SiteRepository.GetAllSites();
         }
-        
+        public async Task<tblSite> GetSiteByIdAsync(int id)
+        {
+            var Site = await _SiteRepository.GetSiteByIdAsync(id);
+
+            if (Site == null)
+            {
+                throw new KeyNotFoundException($"Site request with ID {id} was not found.");
+            }
+
+            return Site;
+        }
+
     }
 }

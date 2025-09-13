@@ -14,10 +14,16 @@ namespace Nashet.Data.Repository
         public MembershipRequestRepository(NashetContext dbContext) : base(dbContext)
         {
         }
+        public virtual async Task<IList<tblMembershipRequest>> GetAllMembershipRequest(int id)
+        {
+            return await dbSet.Where(MembershipRequest => MembershipRequest.IsDeleted == false && MembershipRequest.ClubID == id).ToListAsync();
+        }
+
         public virtual async Task<IList<tblMembershipRequest>> GetAllMembershipRequest()
         {
-            return await dbSet.Where(MembershipRequest => MembershipRequest.IsDeleted == false).ToListAsync();
+            throw new NotImplementedException();
         }
+
         public virtual async Task<tblMembershipRequest> GetMembershipRequestById(int id)
         {
             return await dbSet.Where(MembershipRequest => MembershipRequest.IsDeleted == false && MembershipRequest.MRId == id)
@@ -27,7 +33,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(MembershipRequest);
+                await InsertAsync(MembershipRequest);
                 return 1;
             }
             catch

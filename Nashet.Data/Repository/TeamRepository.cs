@@ -22,7 +22,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Team);
+                await InsertAsync(Team);
                 return 1;
             }
             catch

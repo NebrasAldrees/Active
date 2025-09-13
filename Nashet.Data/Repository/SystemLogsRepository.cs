@@ -18,7 +18,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Log);
+                await InsertAsync(Log);
                 return 1;
             }
             catch

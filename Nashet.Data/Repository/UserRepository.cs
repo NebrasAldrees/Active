@@ -20,7 +20,25 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblUser>> GetAllUsers()
         {
-            return await dbSet.Where(U => U.IsDeleted == false).ToListAsync(); // U for User
+            return await dbSet.Where(user => user.IsDeleted == false).ToListAsync(); 
         }
+        public virtual async Task<tblUser> GetUserByIdAsync(int id)
+        {
+            return await dbSet.Where(user => user.IsDeleted == false && user.UserId == id)
+                            .FirstOrDefaultAsync();
+        }
+        public virtual async Task<int> InsertUser(tblUser user)
+        {
+            try
+            {
+                await InsertAsync(user);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }

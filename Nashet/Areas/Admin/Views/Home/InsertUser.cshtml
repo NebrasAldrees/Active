@@ -1,0 +1,51 @@
+﻿@model tblUser
+<!-- Start Page Wrap -->
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-3">
+                <h5 class="m-0">ادارةالمستخدمين</h5>
+                <div class="d-flex gap-2">
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="form-group">
+                                <label for="">اسم المستخدم باللغة العربية</label>
+                                <input asp-for="UserNameAR" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for=""> اسم المستخدم باللغة الانجليزية</label>
+                                <input asp-for="UserNameEN" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">رقم الهاتف</label>
+                                <input asp-for="UserPhone" class="form-control" />
+                            </div>
+                            @* <div class="form-group">
+                                        <label for="">الجهة التابعة له</label>
+                                        <input asp-for="SiteName" class="form-control" />
+                                    </div> *@
+                            <div class="form-group">
+                                <label for="">البريد الإلكتروني</label>
+                                <input asp-for="UserEmail" class="form-control" />
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                إلغاء
+                            </button>
+                            <button type="button" class="btn btn-primary">حفظ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+
+    </div>
+</section><!-- End Page Wrap -->

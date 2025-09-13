@@ -21,6 +21,29 @@ namespace Nashet.Business.Domain
         {
             return await _ClubRoleRepository.GetAllClubRole();
         }
-        
+        public async Task<tblClubRole> GetClubRoleById(int id)
+        {
+            var ClubRole = await _ClubRoleRepository.GetClubRoleById(id);
+
+            if (ClubRole == null)
+            {
+                throw new KeyNotFoundException($"Club Role requested with ID {id} was not found.");
+            }
+
+            return ClubRole;
+        }
+        public int DeleteClubRole(int id)
+        {
+            try
+            {
+                _ClubRoleRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }

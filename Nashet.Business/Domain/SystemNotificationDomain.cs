@@ -43,5 +43,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        public int DeleteSystemNotification(int id)
+        {
+            try
+            {
+                _SystemNotificationRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

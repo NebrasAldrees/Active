@@ -45,5 +45,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        public int DeletePositionRequest(int id)
+        {
+            try
+            {
+                _PositionRequestRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

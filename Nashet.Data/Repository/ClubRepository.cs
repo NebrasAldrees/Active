@@ -29,7 +29,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Club);
+                await InsertAsync(Club);
                 return 1;
             }
             catch
