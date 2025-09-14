@@ -24,7 +24,7 @@ namespace Nashet.Areas.Admin.Controllers
         }
         public IActionResult UpdateUserRole()
         {
-            return View();
+            return View(); // adding update
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

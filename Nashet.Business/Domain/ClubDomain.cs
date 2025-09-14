@@ -13,7 +13,7 @@ namespace Nashet.Business.Domain
     {
         private readonly ClubRepository _ClubRepository = Repository;
 
-        public async Task<IList<tblClub>> GetMember()
+        public async Task<IList<tblClub>> GetClub()
         {
             return await _ClubRepository.GetAllClubs();
         }
