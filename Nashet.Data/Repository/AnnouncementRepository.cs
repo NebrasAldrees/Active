@@ -12,7 +12,7 @@ namespace Nashet.Data.Repository
     public class AnnouncementRepository : BaseRepository<tblAnnouncement>
     {
 
-        //retrive the photo   
+        //retrive the photo v  
 
         public AnnouncementRepository(NashetContext dbContext) : base(dbContext)
         {
