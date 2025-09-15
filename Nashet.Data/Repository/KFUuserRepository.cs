@@ -24,5 +24,18 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(user => user.IsDeleted == false && user.KFUUserId == id)
                 .FirstOrDefaultAsync();
         }
+        public virtual async Task<int> InsertKfuUser(tblKFUuser KFUuser)
+        {
+            try
+            {
+                await InsertAsync(KFUuser);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }

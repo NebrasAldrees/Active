@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nashet.Data.Models
 {
-    public class tblSystemLogs : Common
+    public class tblSystemLogs
     {
         [Key]
         public int LogsId { get; set; }

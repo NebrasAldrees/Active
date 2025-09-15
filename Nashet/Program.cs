@@ -17,6 +17,8 @@ builder.Services.AddScoped<SystemRoleRepository>();
 builder.Services.AddScoped<SystemRoleDomain>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserDomain>();
+builder.Services.AddScoped<KFUuserRepository>();
+builder.Services.AddScoped<KfuUserDomain>();
 builder.Services.AddScoped<ActivityRequestRepository>();
 builder.Services.AddScoped<ActivityRequestDomain>();
 builder.Services.AddScoped<ReportDomain>();

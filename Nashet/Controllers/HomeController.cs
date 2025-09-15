@@ -21,7 +21,7 @@ namespace Nashet.Controllers
             _userDomain = userDomain;
         }
 
-        public IActionResult index()
+        public IActionResult Index()
         {
             return View();
         }

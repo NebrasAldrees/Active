@@ -149,7 +149,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.siteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,7 +179,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.SiteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,13 +208,13 @@ namespace Nashet.Data.Migrations
                         column: x => x.SiteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblUser_tblSystemRole_SystemRoleId",
                         column: x => x.SystemRoleId,
                         principalTable: "tblSystemRole",
                         principalColumn: "SystemRoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,7 +246,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,7 +274,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,7 +301,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -327,7 +327,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -360,19 +360,19 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubID,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblActivityRequest_tblSite_SiteID",
                         column: x => x.SiteID,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblActivityRequest_tblUser_UserID",
                         column: x => x.UserID,
                         principalTable: "tblUser",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -404,7 +404,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "tblUser",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -432,13 +432,13 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubRoleId,
                         principalTable: "tblClubRole",
                         principalColumn: "ClubRoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblMembership_tblStudent_StudentId",
                         column: x => x.StudentId,
                         principalTable: "tblStudent",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblMembership_tblTeam_TeamId",
                         column: x => x.TeamId,
@@ -474,19 +474,19 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubID,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_TblMembershipRequest_tblStudent_StudentID",
                         column: x => x.StudentID,
                         principalTable: "tblStudent",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_TblMembershipRequest_tblTeam_TeamID",
                         column: x => x.TeamID,
                         principalTable: "tblTeam",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -514,13 +514,13 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubRoleID,
                         principalTable: "tblClubRole",
                         principalColumn: "ClubRoleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_tblPositionRequest_tblMembership_MembershipID",
                         column: x => x.MembershipID,
                         principalTable: "tblMembership",
                         principalColumn: "MembershipId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
