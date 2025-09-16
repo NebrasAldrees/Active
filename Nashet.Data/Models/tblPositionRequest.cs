@@ -16,7 +16,6 @@ namespace Nashet.Data.Models
          public tblClubRole ClubRole { get; set; }
          public string RequestedPosition { get; set; }
          public DateTime RequestedDate { get; set; }
-        
-
+        public int SystemPositionRequest { get; internal set; }
     }
 }

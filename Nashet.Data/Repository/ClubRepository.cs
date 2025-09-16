@@ -19,11 +19,17 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(m => m.IsActive == true).ToListAsync(); // m for club
         }
+
+        public virtual async Task<tblClub> GetClubById(int id)
+        {
+            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == id)
+            .FirstOrDefaultAsync();
+        }
         public virtual async Task<int> InsertClub(tblClub Club)
         {
             try
             {
-                await dbSet.AddAsync(Club);
+                await InsertAsync(Club);
                 return 1;
             }
             catch

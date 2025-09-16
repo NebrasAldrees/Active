@@ -20,9 +20,26 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblAnnouncement>> GetAllAnnouncement()
         {
-            return await dbSet.Where(A => A.IsDeleted == false).ToListAsync();
+            return await dbSet.Where(Announcement => Announcement.IsDeleted == false).ToListAsync();
 
 
+        }
+        public virtual async Task<tblAnnouncement> GetAnnouncementByIdAsync(int id)
+        {
+            return await dbSet.Where(Announcement => Announcement.IsDeleted == false && Announcement.AnnouncementId== id)
+                            .FirstOrDefaultAsync();
+        }
+        public virtual async Task<int> InsertAnnouncement(tblAnnouncement Announcement)
+        {
+            try
+            {
+                await InsertAsync(Announcement);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

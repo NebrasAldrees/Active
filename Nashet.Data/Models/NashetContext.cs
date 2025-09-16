@@ -30,8 +30,7 @@ namespace Nashet.Data.Models
         public DbSet<tblMembershipRequest> TblMembershipRequest { get; set; }
         public DbSet<tblPositionRequest> tblPositionRequest { get; set; }
         public DbSet<tblActivityRequest> tblActivityRequest { get; set; }
-        public DbSet<tblRequest> tblRequest { get; set; }
-        public DbSet<tblRequest_type> tblRequest_type { get; set; }
+      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

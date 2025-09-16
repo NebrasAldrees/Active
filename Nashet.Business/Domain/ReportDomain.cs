@@ -21,6 +21,17 @@ namespace Nashet.Business.Domain
         {
             return await _ReportRepository.GetAllReports();
         }
+        public async Task<tblReport> GetReportByIdAsync(int id)
+        {
+            var Report = await _ReportRepository.GetReportByIdAsync(id);
+
+            if (Report == null)
+            {
+                throw new KeyNotFoundException($"Report request with ID {id} was not found.");
+            }
+
+            return Report;
+        }
         public virtual async Task<int> InsertReport(tblReport Report)
         {
             try

@@ -6,14 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<MembershipDomain>();
-builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddDbContext<Nashet.Data.Models.NashetContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NashetContext")));
+
 builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddScoped<MembershipDomain>();
-builder.Services.AddScoped<EmailNotificationLogRepository>();
-builder.Services.AddScoped<EmailNotificationLogDomain>();
 builder.Services.AddScoped<AnnouncementRepository>();
 builder.Services.AddScoped<AnnouncementDomain>();
 builder.Services.AddScoped<SystemRoleRepository>();
@@ -22,16 +19,16 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserDomain>();
 builder.Services.AddScoped<ActivityRequestRepository>();
 builder.Services.AddScoped<ActivityRequestDomain>();
-builder.Services.AddScoped<Request_typeRepository>();
-builder.Services.AddScoped<Request_typeDomain>();
+builder.Services.AddScoped<ReportDomain>();
+builder.Services.AddScoped<ReportRepository>();
+builder.Services.AddScoped<SystemNotificationDomain>();
+builder.Services.AddScoped<SystemNotificationRepository>();
 builder.Services.AddScoped<ClubRepository>();
 builder.Services.AddScoped<ClubDomain>();
 builder.Services.AddScoped<ClubRoleRepository>();
 builder.Services.AddScoped<ClubRoleDomain>();
 builder.Services.AddScoped<ReportRepository>();
 builder.Services.AddScoped<ReportDomain>();
-builder.Services.AddScoped<Request_typeRepository>();
-builder.Services.AddScoped<Request_typeDomain>();
 builder.Services.AddScoped<SiteRepository>();
 builder.Services.AddScoped<SiteDomain>();
 builder.Services.AddScoped<StudentRepository>();
@@ -40,19 +37,10 @@ builder.Services.AddScoped<TeamRepository>();
 builder.Services.AddScoped<TeamDomain>();
 builder.Services.AddScoped<ActivityRepository>();
 builder.Services.AddScoped<ActivityDomain>();
-builder.Services.AddScoped<RequestRepository>();
-builder.Services.AddScoped<RequestDomain>();
 builder.Services.AddScoped<PositionRequestRepository>();
 builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
-builder.Services.AddScoped<MembershipRequesteDomain>();
-builder.Services.AddScoped<SystemNotificationRepository>(); 
-builder.Services.AddScoped<SystemNotificationDomain>();
-
-
-
-builder.Services.AddScoped<SystemlogsRepository>(); // no domain
-builder.Services.AddScoped<KFUuserRepository>(); // no domain
+builder.Services.AddScoped<MembershipRequestRepository>();
 
 
 

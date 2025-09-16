@@ -2,6 +2,8 @@
 
 namespace Nashet.Areas.ClubLeader.Controllers
 {
+    [Area("ClubLeader")]
+
     public class HomeController : Controller
     {
         public IActionResult Index()

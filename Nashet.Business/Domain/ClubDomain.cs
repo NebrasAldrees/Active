@@ -13,9 +13,20 @@ namespace Nashet.Business.Domain
     {
         private readonly ClubRepository _ClubRepository = Repository;
 
-        public async Task<IList<tblClub>> GetMember()
+        public async Task<IList<tblClub>> GetClub()
         {
             return await _ClubRepository.GetAllClubs();
+        }
+        public async Task<tblClub> GetClubById(int id)
+        {
+            var Club = await _ClubRepository.GetClubById(id);
+
+            if (Club == null)
+            {
+                throw new KeyNotFoundException($"Club request with ID {id} was not found.");
+            }
+
+            return Club;
         }
         public virtual async Task<int> InsertClub(tblClub Club)
         {

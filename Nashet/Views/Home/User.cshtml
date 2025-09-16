@@ -1,0 +1,33 @@
+﻿@model IList<tblUser>
+<div class="card">
+    <div class="card-header">
+        <h1>Users</h1>
+    </div>
+    <div class="card-body">
+        <table class="table border-1">
+            <thead>
+                <tr>
+                <th>NameAR</th>
+                <th>NameEN</th>
+                <th>Id</th>
+                <th>Phone No.</th>
+                <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach(var item in Model)
+                    {
+                        <tr>
+                            <td>@item.UserNameAR</td>
+                            <td>@item.UserNameEN</td>
+                            <td>@item.UserId</td>
+                            <td>@item.UserPhone</td>
+                            <td>@item.UserEmail</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

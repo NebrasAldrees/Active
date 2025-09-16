@@ -30,7 +30,30 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        
+        public async Task<tblActivity> GetActivityById(int id)
+        {
+            var Activity = await _ActivityRepository.GetActivityById(id);
+
+            if (Activity == null)
+            {
+                throw new KeyNotFoundException($"Activity requested with ID {id} was not found.");
+            }
+
+            return Activity;
+        }
+        public int DeleteActivity(int id)
+        {
+            try
+            {
+                _ActivityRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
 
 
     }

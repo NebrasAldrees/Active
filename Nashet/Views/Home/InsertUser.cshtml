@@ -1,0 +1,43 @@
+﻿@model tblUser
+<div class="card">
+    <div class="card-header">
+        <h1>اضافة مشرف</h1>
+    </div>
+    <div class="card-body">
+        <form asp-action="InsertUser">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="UserId">الرقم الوظيفي</label>"
+                    <input asp-for="UserId" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="UserNameAR">اسم المستخدم باللغة العربية</label>"
+                    <input asp-for="UserNameAR" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="UserNameEN">اسم المستخدم باللغة الانجليزية</label>"
+                    <input asp-for="UserNameEN" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="UserEmail">البريد الالكتروني</label>"
+                    <input asp-for="UserEmail" class="form-control" />
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="UserPhone">رقم الهاتف</label>"
+                    <input asp-for="UserPhone" class="form-control" />
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-warning">اضافة</button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>

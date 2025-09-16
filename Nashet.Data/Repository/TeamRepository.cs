@@ -22,13 +22,18 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await dbSet.AddAsync(Team);
+                await InsertAsync(Team);
                 return 1;
             }
             catch
             {
                 return 0;
             }
+        }
+        public virtual async Task<tblTeam> GetTeamByIdAsync(int id)
+        {
+            return await dbSet.Where(team => team.IsDeleted == false && team.TeamId == id)
+                            .FirstOrDefaultAsync();
         }
     }
 }

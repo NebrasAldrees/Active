@@ -18,6 +18,19 @@ namespace Nashet.Business.Domain
             {
                 return await _SystemRoleRepository.GetAllSystemRole();
             }
+            public async Task<tblSystemRole> GetSystemRoleByIdAsync(int id)
+            {
+                var SystemRole = await _SystemRoleRepository.GetSystemRoleByIdAsync(id);
+                
+                if (SystemRole == null)
+                {
+                 throw new KeyNotFoundException($"System Role request with ID {id} was not found.");
+                }
+    
+                return SystemRole;
+            }
+
         }
+    
     }
 
