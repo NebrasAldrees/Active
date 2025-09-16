@@ -1,0 +1,99 @@
+﻿@model tblActivity
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة نشاط</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="Insert">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="" class="mb-1">الجهة التابعة للنشاط</label>
+                                    </div>
+                                    <select id="Sites" name="Sites">
+                                        <option value="ccsit" selected>كلية علوم الحاسب وتقنية المعلومات</option>
+                                        <option value="Engineering">كلية الهندسة</option>
+                                        <option value="Business">كلية الإدارة</option>
+                                        <option value="students">عمادة شؤون الطلاب</option>
+                                    </select>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="ClubId" for="" class="mb-1">  </label>
+                                    </div>
+                                    <select asp-for="ClubId" id="Clubs" name="Clubs">
+                                        <option value="AI" selected>نادي الذكاء الإصطناعي</option>
+                                        <option value="CS">نادي الأمن السيبراني</option>
+                                        <option value="PTI">نادي تعلم الأقران</option>
+                                        <option value="Sanid">نادي ساند تيك</option>
+                                    </select>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label asp-for="ActivityTopic" class="mb-1">عنوان النشاط</label>
+                                        <input asp-for="ActivityTopic" type="text" placeholder="عنوان النشاط" class="form-control">
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-12">
+                                    <div class="mb-4">
+                                        <label for="" class="mb-1">تفاصيل النشاط</label>
+                                        <textarea asp-for="ActivityDescription" name="" class="form-control" placeholder="تفاصيل النشاط"
+                                                  rows="3" id=""></textarea>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="activity-start-time">تاريخ بدء النشاط</label>
+                                        <input asp-for="ActivityStartDate" type="date" id="activity-start-date" name="activity-start-date">
+                                        <input asp-for="ActivityTime" type="time" id="activity-time" name="activity-time">
+
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="activity-end-time">تاريخ انتهاء النشاط</label>
+                                        <input asp-for="ActivityEndDate" type="date" id="activity-start-date" name="activity-end-date">
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="" class="mb-1">عنوان النشاط</label>
+                                        <input asp-for="ActivityTopic" type="text" placeholder="عنوان النشاط" class="form-control">
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="" class="mb-1">إرفاق صورة</label>
+                                        <input asp-for="ActivityPoster" type="file" id="PosterUpload" name="ActivityPoster" accept="image/*  class="form-control">
+                                    </div>
+                                </div><!-- END ITEM -->
+
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section><!-- End Page Wrap -->

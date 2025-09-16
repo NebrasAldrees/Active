@@ -16,7 +16,6 @@ namespace Nashet.Data.Models
         public string SiteNameAR { get; set; }
         [StringLength(50)]
         public string SiteNameEn { get; set; }
-        public bool isUpdated { get; set; }
 
 
     }

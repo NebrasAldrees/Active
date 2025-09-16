@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\add_order.cshtml" />
-    <Content Remove="Views\Home\index.cshtml" />
-    <Content Remove="Views\Home\orders.cshtml" />
     <Content Remove="Views\Home\rules.cshtml" />
     <Content Remove="Views\Home\users.cshtml" />
   </ItemGroup>
@@ -48,8 +46,6 @@
 
   <ItemGroup>
     <None Include="Views\Home\add_order.cshtml" />
-    <None Include="Views\Home\index.cshtml" />
-    <None Include="Views\Home\orders.cshtml" />
     <None Include="Views\Home\rules.cshtml" />
     <None Include="Views\Home\users.cshtml" />
     <None Include="wwwroot\Assets\.DS_Store" />

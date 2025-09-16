@@ -11,7 +11,7 @@ namespace Nashet.Data.Models
     {
         [Key] 
         public int TeamId { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
         public tblClub Club { get; set; }
         [StringLength(50)]
         public string TeamNameAR { get; set; }

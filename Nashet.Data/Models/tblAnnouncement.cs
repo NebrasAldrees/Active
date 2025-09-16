@@ -23,7 +23,7 @@ namespace Nashet.Data.Models
 
         [StringLength(500)]
         public string AnnouncementDetails { get; set; }
-        public ImageFileMachine AnnouncementImage { get; set; }
+        public string AnnouncementImage { get; set; }
 
     }
 }

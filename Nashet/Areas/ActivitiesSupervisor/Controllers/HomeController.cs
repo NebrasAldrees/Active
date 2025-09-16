@@ -33,6 +33,12 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             _ClubDomain = clubDomain;
             _ReportDomain = reportDomain;
         }
+        
+        
+        public IActionResult ActivitiesSupervisorHome()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
@@ -41,10 +47,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View();
         }
-        public IActionResult ActivitiesSupervisorHome()
-        {
-            return View();
-        }
+        
         public IActionResult Clubs()
         {
             return View();
@@ -58,58 +61,12 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View();
         }
-        public IActionResult InsertAnnouncement()
-        {
-            return View();
-        }
-        public IActionResult Requests()
-        {
-            return View();
-        }
+        
         
         public async Task<IActionResult> ViewUsers()
         {
             return View(await _UserDomain.GetUserByIdAsync(UserId));
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public IActionResult InsertUser()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        
-        public async Task<IActionResult> ViewTeams()
-        {
-            return View(await _TeamDomain.GetTeam());
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> InsertActivity(tblActivity Activity)
-        {
-            try
-            {
-                int check = await _ActivityDomain.InsertActivity(Activity);
-                if (check == 1)
-                    ViewBag.Successful = "Successful";
-                else
-                    ViewBag.Failed = "Failed";
-            }
-            catch { }
-            return View(Activity);
-        }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IActionResult> ViewActivities()
-        {
-            return View(await _ActivityDomain.GetActivity());
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-
         public async Task<IActionResult> InsertAnnouncement(tblAnnouncement Announcement)
         {
             try
@@ -128,8 +85,8 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _AnnouncementDomain.GetAnnouncement());
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
+
 
 
         public async Task<IActionResult> InsertClub(tblClub Club)
@@ -145,20 +102,13 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             catch { }
             return View(Club);
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
         public async Task<IActionResult> ViewClubs()
         {
             return View(await _ClubDomain.GetClub());
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Requests()
-        //{
-        //    return View(await _ActivityRequestDomain.GetActivityRequest());
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

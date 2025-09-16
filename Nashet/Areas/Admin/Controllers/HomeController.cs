@@ -7,7 +7,6 @@ using System.Diagnostics;
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,10 +17,7 @@ namespace Nashet.Areas.Admin.Controllers
             _logger = logger;
             _userDomain = userDomain;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
         public IActionResult UpdateUserRole()
         {
             return View(); // adding update

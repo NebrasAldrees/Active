@@ -19,7 +19,16 @@ namespace Nashet.Data.Models
         public string Password { get; set; }
         [StringLength(30)]
         public string UserType { get; set; }
-        
+        [StringLength(50)]
+        public string NameAR { get; set; }
+        [StringLength(50)]
+        public string NameEN { get; set; }
+        [StringLength(50)]
+        public string UserEmail { get; set; }
+        [StringLength(30)]
+        public string UserPhone { get; set; }
+
+
 
     }
 }
