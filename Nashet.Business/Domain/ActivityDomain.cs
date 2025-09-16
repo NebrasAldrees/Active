@@ -1,4 +1,5 @@
 ﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using Nashet.Data.Repository.Common;
@@ -14,16 +15,44 @@ namespace Nashet.Business.Domain
     {
         private readonly ActivityRepository _ActivityRepository = Repository;
 
-        public async Task<IList<tblActivity>> GetActivity()
+        public async Task<IList<ActivityViewModel>> GetActivity()
         {
-            return await _ActivityRepository.GetAllActivities();
+            return _ActivityRepository.GetAllActivities().Result.Select(a => new ActivityViewModel
+            {
+                ActivityId = a.ActivityId,
+                ClubId = a.ClubId,
+                ActivityTopic = a.ActivityTopic,
+                ActivityDescription = a.ActivityDescription,
+                ActivityStartDate = a.ActivityStartDate,
+                ActivityEndDate = a.ActivityEndDate,
+                ActivityTime = a.ActivityTime,
+                ActivityLocation = a.ActivityLocation,
+                ActivityPoster = a.ActivityPoster,
+                Guid = a.Guid,
+
+            }).ToList();
         }
-        public virtual async Task<int> InsertActivity(tblActivity activity)
+        public virtual async Task<int> InsertActivity(ActivityViewModel viewModel)
         {
             try
             {
-                await _ActivityRepository.InsertActivity(activity);
-                return 1;
+                tblActivity activity = new tblActivity
+                {
+                    ClubId = viewModel.ClubId,
+                    ActivityTopic = viewModel.ActivityTopic,
+                    ActivityDescription = viewModel.ActivityDescription,
+                    ActivityStartDate = viewModel.ActivityStartDate,
+                    ActivityEndDate = viewModel.ActivityEndDate,
+                    ActivityTime = viewModel.ActivityTime,
+                    ActivityLocation = viewModel.ActivityLocation,
+                    ActivityPoster = viewModel.ActivityPoster,
+                    Guid = viewModel.Guid,
+                };
+                int check = await _ActivityRepository.InsertActivity(activity);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {

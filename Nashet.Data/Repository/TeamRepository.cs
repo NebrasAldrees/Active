@@ -16,7 +16,7 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<IList<tblTeam>> GetAllTeams()
         {
-            return await dbSet.Where(team => team.IsActive == true).ToListAsync(); 
+            return await dbSet.Where(team => team.IsDeleted == false).ToListAsync(); 
         }
         public virtual async Task<int> InsertTeam(tblTeam Team)
         {

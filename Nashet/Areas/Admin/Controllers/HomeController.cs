@@ -17,10 +17,7 @@ namespace Nashet.Areas.Admin.Controllers
             _logger = logger;
             _userDomain = userDomain;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
         public IActionResult UpdateUserRole()
         {
             return View(); // adding update

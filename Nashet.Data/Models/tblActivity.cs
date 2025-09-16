@@ -11,7 +11,7 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int ActivityId { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
         public tblClub Club { get; set; }
 
         [StringLength(50)]
@@ -28,6 +28,5 @@ namespace Nashet.Data.Models
 
         [StringLength(200)]
         public string ActivityPoster { get; set; }
-        public int SystemPositionRequest { get; internal set; }
     }
 }
