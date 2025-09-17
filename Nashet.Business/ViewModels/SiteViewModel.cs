@@ -12,16 +12,17 @@ namespace Nashet.Business.ViewModels
     {
         public int SiteId { get; set; }
 
+        [StringLength(10)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("رمز الجهة")]
-        public int SiteCode { get; set; }
+        public string SiteCode { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("اسم الجهة باللغة العربية")]
         public string SiteNameAR { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("اسم الجهة باللغة الانجليزية")]
         public string SiteNameEn { get; set; }

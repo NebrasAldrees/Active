@@ -54,10 +54,10 @@
                         <ul>
                             <li><a href="Requests"><span>مراجعة الطلبات</span></a></li>
                             <li><a href="InsertAnnouncement"><span>إنشاء إعلان</span></a></li>
-                            <li><a href="InsertClub"><span>إنشاء نادي</span></a></li>
-                            
-                            <li><a asp-action="InsertActivity" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="active">
-                                <span>إنشاء نشاط</span></a></li>
+                            <li><a asp-action="InsertClub" asp-controller="Home" asp-area="ActivitiesSupervisor"><span>إنشاء نادي</span></a></li>
+                            <li><a asp-action="InsertActivity" asp-controller="Activity" asp-area="ActivitiesSupervisor" >
+                                    <span>إنشاء نشاط</span></a>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -78,7 +78,7 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="active">
+                        <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" >
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
@@ -226,7 +226,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="ss_req_${sections_item_length}">
                             <label class="form-check-label" for="ss_req_${sections_item_length}">
-                                مطلوب اجباري
+                                حقل اجباري
                             </label>
                         </div>
                     </div>

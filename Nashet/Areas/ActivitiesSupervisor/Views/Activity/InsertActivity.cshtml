@@ -13,18 +13,13 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="Club.siteId" class="mb-1">الجهة التابعة للنشاط</label>
-                                    <select asp-for="Club.siteId" name="Sites">
-                                        <option value="ccsit" selected>كلية علوم الحاسب وتقنية المعلومات</option>
-                                        <option value="Engineering">كلية الهندسة</option>
-                                        <option value="Business">كلية إدارة الأعمال</option>
-                                        <option value="students">عمادة شؤون الطلاب</option>
-                                    </select>
+                                    <label asp-for="Club.Site.SiteCode" for="" class="mb-1">الجهة التابعة للنشاط</label>
+                                    <input asp-for="Club.Site.SiteCode" type="text" class="form-control">
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="Club" class="mb-1"></label>
-                                    <select asp-for="ClubId" class="form-control" name="Clubs">
+                                    <label asp-for="ClubId" class="mb-1"></label>
+                                    <select asp-for="ClubId" class="form-control">
                                         <option value="AI" selected>نادي الذكاء الإصطناعي</option>
                                         <option value="CS">نادي الأمن السيبراني</option>
                                         <option value="PTI">نادي تعلم الأقران</option>
@@ -38,60 +33,51 @@
                                     <label asp-for="ActivityTopic" class="mb-1"></label>
                                     <input asp-for="ActivityTopic" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="ActivityTopic"></span>
-
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-12">
-                                    <label asp-for="ActivityDescription" class="mb-1"></label>
-                                    <textarea asp-for="ActivityDescription" class="form-control"
-                                              rows="3"></textarea>
-                                    <span style="color:red" asp-validation-for="ActivityDescription"></span>
-
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="activity-start-time"></label>
+                                    <label asp-for="ActivityDescription" class="mb-1"></label>
+                                    <input asp-for="ActivityDescription" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ActivityDescription"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityStartDate"></label>
                                     <input asp-for="ActivityStartDate" type="date" class="form-control">
                                     <span style="color:red" asp-validation-for="ActivityStartDate"></span>
 
                                     <input asp-for="ActivityTime" type="time" class="form-control">
                                     <span style="color:red" asp-validation-for="ActivityTime"></span>
-
-
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ActivityEndDate"></label>
                                     <input asp-for="ActivityEndDate" type="date" class="form-control">
                                     <span style="color:red" asp-validation-for="ActivityEndDate"></span>
-
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="ActivityTopic" class="mb-1"></label>
-                                    <input asp-for="ActivityTopic" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="ActivityTopic"></span>
-
+                                    <label asp-for="ActivityLocation" class="mb-1"></label>
+                                    <input asp-for="ActivityLocation" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ActivityLocation"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ActivityPoster" class="mb-1"></label>
-                                    <input asp-for="ActivityPoster" type="file" accept="image/* class="form-control">
+                                    <input asp-for="ActivityPoster" type="file" id="ImageUpload" 
+                                         name="AnnouncementImage" accept="image/* class=" form-control"></input>
+                                    <span style="color:red" asp-validation-for="ActivityPoster"></span>
                                 </div><!-- END ITEM -->
 
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                </div>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </section><!-- End Page Wrap -->
