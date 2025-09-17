@@ -41,7 +41,7 @@ namespace Nashet.Business.ViewModels
 
         [StringLength(300)]
         [Required(ErrorMessage = "*حقل مطلوب*")]
-        [DisplayName("عنوان النشاط")]
+        [DisplayName("موقع النشاط")]
         public string ActivityLocation { get; set; }
 
         [StringLength(200)]

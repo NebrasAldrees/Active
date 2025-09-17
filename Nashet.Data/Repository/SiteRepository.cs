@@ -14,6 +14,18 @@ namespace Nashet.Data.Repository
         public SiteRepository(NashetContext dbContext) : base(dbContext)
         {
         }
+        public virtual async Task<int> InsertSite(tblSite site)
+        {
+            try
+            {
+                await InsertAsync(site);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         public virtual async Task<IList<tblSite>> GetAllSites()
         {
             return await dbSet.Where(site => site.IsActive == true).ToListAsync(); 

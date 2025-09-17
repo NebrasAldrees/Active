@@ -46,7 +46,7 @@ namespace Nashet.Business.Domain
                     ActivityTime = viewModel.ActivityTime,
                     ActivityLocation = viewModel.ActivityLocation,
                     ActivityPoster = viewModel.ActivityPoster,
-                    Guid = viewModel.Guid,
+                    Guid = viewModel.Guid
                 };
                 int check = await _ActivityRepository.InsertActivity(activity);
                 if (check == 0)
