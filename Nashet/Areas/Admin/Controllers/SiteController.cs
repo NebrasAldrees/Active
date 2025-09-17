@@ -2,33 +2,33 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
-namespace Nashet.Areas.ClubLeader.Controllers
+namespace Nashet.Areas.Admin.Controllers
 {
-    [Area("ClubLeader")]
-    public class TeamController : Controller
+    [Area("Admin")]
+    public class SiteController : Controller
     {
-        private readonly TeamDomain _TeamDomain;
-        public TeamController(TeamDomain teamDomain)
+        private readonly SiteDomain _SiteDomain;
+        public SiteController(SiteDomain siteDomain)
         {
-            _TeamDomain = teamDomain;
+            _SiteDomain = siteDomain;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> ViewSites()
         {
-            return View();
+            return View(await _SiteDomain.GetSite());
         }
-        public async Task<IActionResult> InsertTeam()
+        public async Task<IActionResult> InsertSite()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertTeam(TeamViewModel viewModel)
+        public async Task<IActionResult> InsertSite(SiteViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _TeamDomain.InsertTeam(viewModel);
+                    int check = await _SiteDomain.InsertSite(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else
