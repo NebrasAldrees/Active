@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
+using Nashet.Models;
+using System.Diagnostics;
 
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
@@ -18,13 +20,13 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _ActivityDomain.GetActivity());
         }
-        public async Task<IActionResult> AddActivity()
+        public async Task<IActionResult> InsertActivity()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddActivity(ActivityViewModel viewModel)
+        public async Task<IActionResult> InsertActivity(ActivityViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -42,6 +44,11 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 }
             }
             return View(viewModel);
+        }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

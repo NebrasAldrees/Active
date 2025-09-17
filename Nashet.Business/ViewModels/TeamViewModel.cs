@@ -11,7 +11,7 @@ namespace Nashet.Business.ViewModels
 {
     public class TeamViewModel
     {
-        public int? TeamId { get; set; }
+        public int TeamId { get; set; }
 
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("اسم النادي")]

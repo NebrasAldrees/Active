@@ -22,8 +22,7 @@ namespace Nashet.Business.Domain
                 ClubId = t.ClubId,
                 TeamNameAR = t.TeamNameAR,
                 TeamNameEn = t.TeamNameEn,
-                Guid = t.Guid,
-
+                Guid = t.Guid
             }).ToList();
         }
 

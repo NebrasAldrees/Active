@@ -43,10 +43,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View();
         }
-        public IActionResult Activities()
-        {
-            return View();
-        }
+        
         
         public IActionResult Clubs()
         {
@@ -57,10 +54,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View();
         }
-        public IActionResult InsertActivity()
-        {
-            return View();
-        }
+        
         
         
         public async Task<IActionResult> ViewUsers()

@@ -55,19 +55,14 @@
                             <li><a href="Requests"><span>مراجعة الطلبات</span></a></li>
                             <li><a href="InsertAnnouncement"><span>إنشاء إعلان</span></a></li>
                             <li><a href="InsertClub"><span>إنشاء نادي</span></a></li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            <li><a href="AddActivity"><span>إنشاء نشاط</span></a></li>
-=======
-                            <li><a href="InsertActivity"><span>إنشاء نشاط</span></a></li>
->>>>>>> 5da93367c7711c4edcd5cf0ec7e041a8627bd7c6
-=======
-                            <li><a href="InsertActivity"><span>إنشاء نشاط</span></a></li>
->>>>>>> 5da93367c7711c4edcd5cf0ec7e041a8627bd7c6
+                            
+                            <li><a asp-action="InsertActivity" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="active">
+                                <span>إنشاء نشاط</span></a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="Clubs.cshtml">
+
+                        <a href="Clubs">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
@@ -83,7 +78,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="Activities.cshtml" >
+                        <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="active">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
