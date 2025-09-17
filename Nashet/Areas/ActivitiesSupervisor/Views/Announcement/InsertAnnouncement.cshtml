@@ -1,0 +1,71 @@
+﻿@using Nashet.Business.ViewModels
+@model AnnouncementViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إنشاء إعلان جديد</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="InsertAnnouncement">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="Site.SiteNameAR" class="mb-1">الجهة</label>
+                                    <select asp-for="Site.SiteNameAR" class="form-control">
+                                        <option value="X">عمادة شؤون الطلاب</option>
+                                        <option value="CC">كلية علوم الحاسب وتقنية المعلومات</option>
+                                        <option value="MC">كلية الطب</option>
+                                        <option value="FC">كلية الصيدلة</option>
+                                        <option value="SC">كلية العلوم</option>
+                                    </select>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="Club.ClubNameAR" class="mb-1">الجهة</label>
+                                    <select asp-for="Club.ClubNameAR" class="form-control">
+                                        <option value="X">نادي الذكاء الإصطناعي</option>
+                                        <option value="CC">نادي هواوي</option>
+                                        <option value="MC">نادي قوقل</option>
+                                        <option value="FC">نادي التعلم بالأقران</option>
+                                    </select>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="AnnouncementType" class="mb-1">نوع الإعلان</label>
+                                    <select asp-for="AnnouncementType" class="form-control">
+                                        <option value="X">إعلان  نشاط</option>
+                                        <option value="CC">إنشاء نادي جديد</option>
+                                    </select>
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <label for="" class="mb-1">موضوع الإعلان </label>
+                                        <input asp-for="AnnouncementTopic" type="text" class="form-control">
+                                        <span style="color:red" asp-validation-for="AnnouncementTopic"></span>
+                                    </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">تفاصيل الإعلان</label>
+                                        <textarea asp-for="AnnouncementDetails" class="form-control"></textarea>
+                                        <span style="color:red" asp-validation-for="AnnouncementDetails"></span>
+                                </div><!-- END ITEM -->
+                                    <!-- START ITEM -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4">
+                                            <label for="" class="mb-1">إرفاق صورة الإعلان</label>
+                                            <input asp-for="AnnouncementImage" type="file" id="ImageUpload" name="AnnouncementImage" accept="image/* class="form-control">
+                                        </div>
+                                    </div><!-- END ITEM -->
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->

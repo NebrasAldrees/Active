@@ -1,4 +1,5 @@
 ﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using Nashet.Data.Repository.Common;
@@ -17,9 +18,17 @@ namespace Nashet.Business.Domain
         {
             _ReportRepository = Repository;
         }
-        public async Task<IList<tblReport>> GetReport()
+        public async Task<IList<ReportViewModel>> GetReport()
         {
-            return await _ReportRepository.GetAllReports();
+            return _ReportRepository.GetAllReports().Result.Select(a => new ReportViewModel
+            {
+                ReportId = a.ReportId,
+                ClubId = a.ClubId,
+                Topic = a.Topic,
+                Path = a.Path,
+                Guid = a.Guid
+
+            }).ToList();
         }
         public async Task<tblReport> GetReportByIdAsync(int id)
         {
@@ -32,12 +41,23 @@ namespace Nashet.Business.Domain
 
             return Report;
         }
-        public virtual async Task<int> InsertReport(tblReport Report)
+        public virtual async Task<int> InsertReport(ReportViewModel viewModel)
         {
             try
             {
-                await _ReportRepository.InsertReport(Report);
-                return 1;
+                tblReport Report = new tblReport
+                {
+                    ReportId = viewModel.ReportId,
+                    ClubId = viewModel.ClubId,
+                    Topic = viewModel.Topic,
+                    Path = viewModel.Path,
+                    Guid = viewModel.Guid
+                };
+                int check = await _ReportRepository.InsertReport(Report);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {

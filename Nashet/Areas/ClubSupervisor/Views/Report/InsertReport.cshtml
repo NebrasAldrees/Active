@@ -1,0 +1,37 @@
+﻿@using Nashet.Business.ViewModels
+@model ReportViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">رفع التقارير</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="InsertReport">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">موضوع التقرير</label>
+                                    <input asp-for="Topic" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="Topic"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="" class="mb-1">إرفاق الملف</label>
+                                        <input asp-for="Path" type="file" id="ImageUpload" name="Path" accept="image/* class="form-control">
+                                    </div>
+                                </div><!-- END ITEM -->
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->

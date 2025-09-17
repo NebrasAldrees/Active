@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ClubSupervisor\Views\Home\**" />
+    <Content Remove="Areas\ClubSupervisor\Views\Home\**" />
+    <EmbeddedResource Remove="Areas\ClubSupervisor\Views\Home\**" />
+    <None Remove="Areas\ClubSupervisor\Views\Home\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Home\add_order.cshtml" />
     <Content Remove="Views\Home\rules.cshtml" />
     <Content Remove="Views\Home\users.cshtml" />
@@ -39,7 +46,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\ClubLeader\Data\" />
     <Folder Include="Areas\ClubLeader\Models\" />
-    <Folder Include="Areas\ClubSupervisor\Views\Home\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
   </ItemGroup>

@@ -1,0 +1,66 @@
+﻿@using Nashet.Business.ViewModels
+@model ClubViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إنشاء نادي جديد</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="InsertClub">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1"> اسم النادي باللغة العربية</label>
+                                    <input asp-for="ClubNameAR" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ClubNameAR"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">اسم النادي باللغة الإنجليزية </label>
+                                    <input asp-for="ClubNameEN" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ClubNameEN"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="Site.SiteNameAR" class="mb-1">الجهة</label>
+                                    <select asp-for="Site.SiteNameAR" class="form-control">
+                                        <option value="X">عمادة شؤون الطلاب</option>
+                                        <option value="CC">كلية علوم الحاسب وتقنية المعلومات</option>
+                                        <option value="MC">كلية الطب</option>
+                                        <option value="FC">كلية الصيدلة</option>
+                                        <option value="SC">كلية العلوم</option>
+                                    </select>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">الرؤية</label>
+                                    <textarea asp-for="ClubVision" class="form-control"></textarea>
+                                    <span style="color:red" asp-validation-for="ClubVision"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">نبذة عن النادي</label>
+                                    <textarea asp-for="ClubOverview" class="form-control"></textarea>
+                                    <span style="color:red" asp-validation-for="ClubOverview"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <div class="mb-4">
+                                        <label for="" class="mb-1">إرفاق صورة لشعار النادي</label>
+                                        <input asp-for="ClubIcon" type="file" id="ImageUpload" name="ClubIcon" accept="image/* class="form-control">
+                                    </div>
+                                </div><!-- END ITEM -->
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->
