@@ -11,10 +11,11 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int SiteId { get; set; }
-        public int SiteCode { get; set; }
-        [StringLength(50)]
+        [StringLength(10)]
+        public string SiteCode { get; set; }
+        [StringLength(100)]
         public string SiteNameAR { get; set; }
-        [StringLength(50)]
+        [StringLength(100)]
         public string SiteNameEn { get; set; }
 
 

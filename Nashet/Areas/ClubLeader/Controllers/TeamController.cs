@@ -16,6 +16,10 @@ namespace Nashet.Areas.ClubLeader.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Teams()
+        {
+            return View(await _TeamDomain.GetTeam());
+        }
         public async Task<IActionResult> InsertTeam()
         {
             return View();

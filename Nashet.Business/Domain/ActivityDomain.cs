@@ -28,8 +28,7 @@ namespace Nashet.Business.Domain
                 ActivityTime = a.ActivityTime,
                 ActivityLocation = a.ActivityLocation,
                 ActivityPoster = a.ActivityPoster,
-                Guid = a.Guid,
-
+                Guid = a.Guid
             }).ToList();
         }
         public virtual async Task<int> InsertActivity(ActivityViewModel viewModel)

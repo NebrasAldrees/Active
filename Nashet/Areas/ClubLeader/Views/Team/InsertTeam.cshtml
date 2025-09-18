@@ -14,24 +14,23 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ClubId" class="mb-1"></label>
-                                    <select asp-for="ClubId" class="form-control" name="Clubs">
-                                        <option value="AI" selected>نادي الذكاء الإصطناعي</option>
+                                    <select asp-for="ClubId" class="form-control">
+                                        <option value="01" selected>نادي الذكاء الإصطناعي</option>
                                         <option value="CS">نادي الأمن السيبراني</option>
                                         <option value="PTI">نادي تعلم الأقران</option>
                                         <option value="Sanid">نادي ساند تيك</option>
                                     </select>
                                     <span style="color:red" asp-validation-for="ClubId"></span>
-
                                 </div><!-- END ITEM -->
                             </div>
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <!-- START ITEM -->
                                     <label asp-for="TeamNameAR" class="mb-1"></label>
                                     <input asp-for="TeamNameAR" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="TeamNameAR"></span>
                                 </div><!-- END ITEM -->
+
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="TeamNameEn" class="mb-1"></label>
@@ -41,6 +40,7 @@
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
