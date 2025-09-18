@@ -1,4 +1,5 @@
 ﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using Nashet.Data.Repository.Common;
@@ -30,5 +31,9 @@ namespace Nashet.Business.Domain
             return Student;
         }
 
+        public async Task<int> InsertStudent(StudentViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
