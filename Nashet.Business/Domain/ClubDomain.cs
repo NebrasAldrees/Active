@@ -1,4 +1,5 @@
 ﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
@@ -13,9 +14,20 @@ namespace Nashet.Business.Domain
     {
         private readonly ClubRepository _ClubRepository = Repository;
 
-        public async Task<IList<tblClub>> GetClub()
+        public async Task<IList<ClubViewModel>> GetClub()
         {
-            return await _ClubRepository.GetAllClubs();
+            return _ClubRepository.GetAllClubs().Result.Select(a => new ClubViewModel
+            {
+                ClubId = a.ClubId,
+                siteId = a.siteId,
+                ClubNameAR = a.ClubNameAR,
+                ClubNameEN = a.ClubNameEN,
+                ClubVision = a.ClubVision,
+                ClubOverview = a.ClubOverview,
+                ClubIcon = a.ClubIcon,
+                Guid = a.Guid
+
+            }).ToList();
         }
         public async Task<tblClub> GetClubById(int id)
         {
@@ -28,12 +40,26 @@ namespace Nashet.Business.Domain
 
             return Club;
         }
-        public virtual async Task<int> InsertClub(tblClub Club)
+        public virtual async Task<int> InsertClub(ClubViewModel viewModel)
         {
             try
             {
-                await _ClubRepository.InsertClub(Club);
-                return 1;
+                tblClub Club = new tblClub
+                {
+                    ClubId = viewModel.ClubId,
+                    siteId = viewModel.siteId,
+                    ClubNameAR = viewModel.ClubNameAR,
+                    ClubNameEN = viewModel.ClubNameEN,
+                    ClubVision = viewModel.ClubVision,
+                    ClubOverview = viewModel.ClubOverview,
+                    ClubIcon = viewModel.ClubIcon,
+                    Guid = viewModel.Guid
+                };
+                int check = await _ClubRepository.InsertClub(Club);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {

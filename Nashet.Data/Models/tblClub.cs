@@ -23,6 +23,8 @@ namespace Nashet.Data.Models
         [StringLength(500)]
         public string ClubVision { get; set; }
         [StringLength(500)]
+        public string ClubOverview { get; set; }
+        [StringLength(500)]
         public string ClubIcon { get; set; }
     }
 }
