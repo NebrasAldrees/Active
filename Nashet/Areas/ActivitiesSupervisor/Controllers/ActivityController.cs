@@ -8,10 +8,10 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
     [Area("ActivitiesSupervisor")]
 
-    public class ActivitiesController : Controller
+    public class ActivityController : Controller
     {
         private readonly ActivityDomain _ActivityDomain;
-        public ActivitiesController(ActivityDomain activityDomain)
+        public ActivityController(ActivityDomain activityDomain)
         {
             _ActivityDomain = activityDomain;
         }

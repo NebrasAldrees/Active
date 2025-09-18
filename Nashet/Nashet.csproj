@@ -7,10 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\ClubSupervisor\Views\Home\**" />
-    <Content Remove="Areas\ClubSupervisor\Views\Home\**" />
-    <EmbeddedResource Remove="Areas\ClubSupervisor\Views\Home\**" />
-    <None Remove="Areas\ClubSupervisor\Views\Home\**" />
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\ClubLeader\Data\**" />
+    <Compile Remove="Areas\ClubLeader\Models\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\ClubLeader\Data\**" />
+    <Content Remove="Areas\ClubLeader\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\ClubLeader\Data\**" />
+    <EmbeddedResource Remove="Areas\ClubLeader\Models\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\ClubLeader\Data\**" />
+    <None Remove="Areas\ClubLeader\Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,10 +54,7 @@
   <ItemGroup>
     <Folder Include="Areas\ActivitiesSupervisor\Data\" />
     <Folder Include="Areas\ActivitiesSupervisor\Models\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\ClubLeader\Data\" />
-    <Folder Include="Areas\ClubLeader\Models\" />
+    <Folder Include="Areas\ClubSupervisor\Views\Home\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
   </ItemGroup>

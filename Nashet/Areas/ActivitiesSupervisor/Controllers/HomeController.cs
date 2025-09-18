@@ -10,30 +10,29 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        //private readonly UserDomain _UserDomain;
-        //private readonly TeamDomain _TeamDomain;
-        //private readonly ActivityDomain _ActivityDomain;
-        //private readonly ActivityRequestDomain _ActivityRequestDomain;
-        //private readonly AnnouncementDomain _AnnouncementDomain;
-        //private readonly ClubDomain _ClubDomain;
-        //private readonly ReportDomain _ReportDomain;
+        private readonly UserDomain _UserDomain;
+        private readonly TeamDomain _TeamDomain;
+        private readonly ActivityDomain _ActivityDomain;
+        private readonly ActivityRequestDomain _ActivityRequestDomain;
+        private readonly AnnouncementDomain _AnnouncementDomain;
+        private readonly ClubDomain _ClubDomain;
+        private readonly ReportDomain _ReportDomain;
 
         //public int UserId { get; private set; }
 
-        //public HomeController(ILogger<HomeController> logger
-        //    , UserDomain userDomain, TeamDomain teamDomain,
-        //    ActivityDomain activityDomain, ActivityRequestDomain activityRequestDomain, AnnouncementDomain announcementDomain,
-        //    ClubDomain clubDomain, ReportDomain reportDomain)
-        //{
-        //    _logger = logger;
-        //    _UserDomain = userDomain;
-        //    _TeamDomain = teamDomain;
-        //    _ActivityDomain = activityDomain;
-        //    _ActivityRequestDomain = activityRequestDomain;
-        //    _AnnouncementDomain = announcementDomain;
-        //    _ClubDomain = clubDomain;
-        //    _ReportDomain = reportDomain;
-        //}
+        public HomeController(ILogger<HomeController> logger, UserDomain userDomain, TeamDomain teamDomain,
+            ActivityDomain activityDomain, ActivityRequestDomain activityRequestDomain, AnnouncementDomain announcementDomain,
+            ClubDomain clubDomain, ReportDomain reportDomain)
+        {
+            _logger = logger;
+            _UserDomain = userDomain;
+            _TeamDomain = teamDomain;
+            _ActivityDomain = activityDomain;
+            _ActivityRequestDomain = activityRequestDomain;
+            _AnnouncementDomain = announcementDomain;
+            _ClubDomain = clubDomain;
+            _ReportDomain = reportDomain;
+        }
         
         
         //public IActionResult ActivitiesSupervisorHome()

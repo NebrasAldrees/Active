@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Nashet.Business.Domain.Common;
+﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
+using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,51 +11,54 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class MembershipDomain : BaseDomain
+    public class MembershipDomain(MembershipRepository Repository) : BaseDomain
     {
-        private readonly MembershipRepository _MembershipRepository;
-        public MembershipDomain(MembershipRepository Repository)
+        private readonly MembershipRepository _MembershipRepository = Repository;
+        public async Task<IList<MembershipViewModel>> GetMembership()
         {
-            _MembershipRepository = Repository;
-        }
-        public async Task<IList<tblMembership>> GetMember()
-        {
-            return await _MembershipRepository.GetAllMembers();
-        }
-        public async Task<tblMembership> GetMemberByIdAsync(int id)
-        {
-            var Member = await _MembershipRepository.GetMemberByIdAsync(id);
-
-            if (Member == null)
+            return _MembershipRepository.GetAllMembers().Result.Select(m => new MembershipViewModel
             {
-                throw new KeyNotFoundException($"Membership request with ID {id} was not found.");
-            }
+                MembershipId = m.MembershipId,
+                StudentId = m.StudentId,
+                Student = m.Student,
+                ClubRoleId = m.ClubRoleId,
+                ClubRole = m.ClubRole,
+                TeameId = m.TeameId,
+                Team = m.Team,
+                JoinDate = m.JoinDate,
+                Guid = m.Guid,
 
-            return Member;
+            }).ToList();
         }
-        public virtual async Task<int> InsertMember(tblMembership Member)
+
+       
+        public async Task<int> InsertMembership(MembershipViewModel viewModel)
         {
             try
             {
-                await _MembershipRepository.InsertMember(Member);
-                return 1;
+                tblMembership membership = new tblMembership
+                {
+                    MembershipId = viewModel.MembershipId,
+                    StudentId = viewModel.StudentId,
+                    Student = viewModel.Student,
+                    ClubRoleId = viewModel.ClubRoleId,
+                    ClubRole = viewModel.ClubRole,
+                    TeameId = viewModel.TeameId,
+                    Team = viewModel.Team,
+                    JoinDate = viewModel.JoinDate,
+                    Guid = viewModel.Guid
+                };
+                int check = await _MembershipRepository.InsertMember (membership);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {
                 return 0;
             }
         }
-        public int DeleteMember(int id)
-        {
-            try
-            {
-                _MembershipRepository.Delete(id);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
+        
     }
 }
