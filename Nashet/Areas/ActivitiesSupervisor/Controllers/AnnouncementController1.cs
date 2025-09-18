@@ -2,37 +2,34 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
-namespace Nashet.Areas.ClubLeader.Controllers
+namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
-    [Area("ClubLeader")]
-    public class TeamController : Controller
+    [Area("ActivitiesSupervisor")]
+    public class AnnouncementController1 : Controller
     {
-        private readonly TeamDomain _TeamDomain;
-        public TeamController(TeamDomain teamDomain)
+        private readonly AnnouncementDomain _AnnouncementDomain;
+        public AnnouncementController1(AnnouncementDomain announcementDomain)
         {
-            _TeamDomain = teamDomain;
+            _AnnouncementDomain = announcementDomain;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> GetAnnouncement()
         {
-            return View();
+            return View(await _AnnouncementDomain.GetAnnouncement());
         }
-        public async Task<IActionResult> Teams()
-        {
-            return View(await _TeamDomain.GetTeam());
-        }
-        public async Task<IActionResult> InsertTeam()
+        public async Task<IActionResult> InsertAnnouncement()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertTeam(TeamViewModel viewModel)
+        public async Task<IActionResult> InsertAnnouncement(AnnouncementViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _TeamDomain.InsertTeam(viewModel);
+                    int check = await _AnnouncementDomain.InsertAnnouncement(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else

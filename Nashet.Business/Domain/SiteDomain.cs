@@ -32,11 +32,11 @@ namespace Nashet.Business.Domain
             {
                 tblSite site = new tblSite
                 {
+                    Guid = viewModel.Guid,
                     SiteId = viewModel.SiteId,
                     SiteCode = viewModel.SiteCode,
                     SiteNameAR = viewModel.SiteNameAR,
-                    SiteNameEn = viewModel.SiteNameEn,
-                    Guid = viewModel.Guid
+                    SiteNameEn = viewModel.SiteNameEn
                 };
                 int check = await _SiteRepository.InsertSite(site);
                 if (check == 0)

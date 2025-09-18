@@ -5,6 +5,7 @@ using Nashet.Data.Repository;
 using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,17 +20,50 @@ namespace Nashet.Business.Domain
         {
             return await _StudentRepository.GetAllStudents();
         }
-        public async Task<tblStudent> GetStudentByIdAsync(int id)
-        {
-            var Student = await _StudentRepository.GetStudentByIdAsync(id);
 
-            if (Student == null)
-            {
-                throw new KeyNotFoundException($"Position request with ID {id} was not found.");
-            }
+        //public async Task<IList<StudentViewModel>> GetStudent()
+        //{
+        //    return _StudentRepository.GetAllStudents).Result.Select(t => new StudentViewModel
+        //    {
+        //        StudentId = S.StudentId,
+                //            AcademicId = S.AcademicId,
+                //            StudentNameAr = S.StudentNameAr,
+                //            StudentNameEn  = S.StudentNameEn,
+                //            StudentEmail  = S.StudentEmail,
+                //            StudentPhone = S.StudentPhone,
+                //            StudentSkills = S.StudentSkills,
+                //            SiteId = S.SiteId,
+                //            Site = S.Site
 
-            return Student;
-        }
+        //    }).ToList();
+        //}
+
+        //public async Task<int> InsertStudent(StudentViewModel viewModel)
+        //{
+        //    try
+        //    {
+        //        tblStudent Student = new tblStudent
+        //        {
+        //            StudentId= viewModel.StudentId,
+        //            AcademicId = viewModel.AcademicId,
+        //            StudentNameAr = viewModel.StudentNameAr,
+        //            StudentNameEn  = viewModel.StudentNameEn,
+        //            StudentEmail  = viewModel.StudentEmail,
+        //            StudentPhone = viewModel.StudentPhone,
+        //            StudentSkills = viewModel.StudentSkills,
+        //            SiteId = viewModel.SiteId,
+        //            Site = viewModel.Site
+        //        };
+        //        int check = await _StudentRepository.InsertStudent(Student);
+        //        if (check == 0)
+        //            return 0;
+        //        else
+        //            return 1;
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
 
         public async Task<int> InsertStudent(StudentViewModel viewModel)
         {
@@ -37,3 +71,6 @@ namespace Nashet.Business.Domain
         }
     }
 }
+
+
+

@@ -1,8 +1,10 @@
 ﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,29 +21,48 @@ namespace Nashet.Business.Domain
             {
                 return await _UserRepository.GetAllUsers();
             }
-            public async Task<tblUser> GetUserByIdAsync(int id)
+
+        public async Task<IList<UserViewModel>> GetGetUser()
+        {
+            return _UserRepository.GetAllUsers().Result.Select(U => new UserViewModel
             {
-                var UserRepository = await _UserRepository.GetUserByIdAsync(id);
-                
-                if (UserRepository == null)
-                {
-                     throw new KeyNotFoundException($"User request with ID {id} was not found.");
-                }
-    
-                return UserRepository;
-            }
-            public virtual async Task<int> InsertUser(tblUser user)
+                guid = U.Guid,
+                UserId = U.UserId,
+                UserNameAR = U.UserNameAR,
+                UserNameEN = U.UserNameEN,
+                UserEmail = U.UserEmail,
+                UserPhone = U.UserPhone,
+                SiteId = U.SiteId,
+               
+            }).ToList();
+        }
+      
+        public async Task<int> InsertUser(UserViewModel viewModel)
+        {
+            try
             {
-                try
+                tblUser User = new tblUser
                 {
-                    await _UserRepository.InsertUser(user);
-                    return 1;
-                }
-                catch
-                {
+                    UserId = viewModel.UserId,
+                    UserNameAR = viewModel.UserNameAR,
+                    UserNameEN = viewModel.UserNameEN,
+                    UserEmail = viewModel.UserEmail,
+                    UserPhone = viewModel.UserPhone,
+                    SiteId = viewModel.SiteId,
+
+                };
+                int check = await _UserRepository.InsertUser(User);
+                if (check == 0)
                     return 0;
-                }
+                else
+                    return 1;
             }
+            catch
+            {
+                return 0;
+            }
+        }
+            
         public int DeleteUser(int id)
             {
                 try

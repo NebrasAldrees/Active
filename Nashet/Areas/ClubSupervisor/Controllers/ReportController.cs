@@ -2,37 +2,34 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
-namespace Nashet.Areas.ClubLeader.Controllers
+namespace Nashet.Areas.ClubSupervisor.Controllers
 {
-    [Area("ClubLeader")]
-    public class TeamController : Controller
+    [Area("ClubSupervisor")]
+    public class ReportController : Controller
     {
-        private readonly TeamDomain _TeamDomain;
-        public TeamController(TeamDomain teamDomain)
+        private readonly ReportDomain _ReportDomain;
+        public ReportController(ReportDomain reportDomain)
         {
-            _TeamDomain = teamDomain;
+            _ReportDomain = reportDomain;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Report()
         {
-            return View();
+            return View(await _ReportDomain.GetReport());
         }
-        public async Task<IActionResult> Teams()
-        {
-            return View(await _TeamDomain.GetTeam());
-        }
-        public async Task<IActionResult> InsertTeam()
+        public async Task<IActionResult> InsertReport()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertTeam(TeamViewModel viewModel)
+        public async Task<IActionResult> InsertReport(ReportViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _TeamDomain.InsertTeam(viewModel);
+                    int check = await _ReportDomain.InsertReport(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else

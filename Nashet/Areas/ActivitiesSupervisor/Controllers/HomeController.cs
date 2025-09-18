@@ -18,7 +18,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         private readonly ClubDomain _ClubDomain;
         private readonly ReportDomain _ReportDomain;
 
-        public int UserId { get; private set; }
+        //public int UserId { get; private set; }
 
         public HomeController(ILogger<HomeController> logger, UserDomain userDomain, TeamDomain teamDomain,
             ActivityDomain activityDomain, ActivityRequestDomain activityRequestDomain, AnnouncementDomain announcementDomain,
@@ -35,77 +35,77 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         
         
-        public IActionResult ActivitiesSupervisorHome()
-        {
-            return View();
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult ActivitiesSupervisorHome()
+        //{
+        //    return View();
+        //}
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
         
         
-        public IActionResult Clubs()
-        {
-            return View();
-        }
+        //public IActionResult Clubs()
+        //{
+        //    return View();
+        //}
         
-        public IActionResult InsertClub()
-        {
-            return View();
-        }
+        //public IActionResult InsertClub()
+        //{
+        //    return View();
+        //}
         
         
         
-        public async Task<IActionResult> ViewUsers()
-        {
-            return View(await _UserDomain.GetUserByIdAsync(UserId));
-        }
-        public async Task<IActionResult> InsertAnnouncement(tblAnnouncement Announcement)
-        {
-            try
-            {
-                int check = await _AnnouncementDomain.InsertAnnouncement(Announcement);
-                if (check == 1)
-                    ViewBag.Successful = "Successful";
-                else
-                    ViewBag.Failed = "Failed";
-            }
-            catch { }
-            return View(Announcement);
-        }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<IActionResult> ViewAnnouncements()
-        {
-            return View(await _AnnouncementDomain.GetAnnouncement());
-        }
+        //public async Task<IActionResult> ViewUsers()
+        //{
+        //    return View(await _UserDomain.GetUserByIdAsync(UserId));
+        //}
+        //public async Task<IActionResult> InsertAnnouncement(tblAnnouncement announcement)
+        //{
+        //    try
+        //    {
+        //        int check = await _AnnouncementDomain.InsertAnnouncement(announcement);
+        //        if (check == 1)
+        //            ViewBag.Successful = "Successful";
+        //        else
+        //            ViewBag.Failed = "Failed";
+        //    }
+        //    catch { }
+        //    return View(announcement);
+        //}
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public async Task<IActionResult> ViewAnnouncements()
+        //{
+        //    return View(await _AnnouncementDomain.GetAnnouncement());
+        //}
 
 
 
 
-        public async Task<IActionResult> InsertClub(tblClub Club)
-        {
-            try
-            {
-                int check = await _ClubDomain.InsertClub(Club);
-                if (check == 1)
-                    ViewBag.Successful = "Successful";
-                else
-                    ViewBag.Failed = "Failed";
-            }
-            catch { }
-            return View(Club);
-        }
+        //public async Task<IActionResult> InsertClub(tblClub Club)
+        //{
+        //    try
+        //    {
+        //        int check = await _ClubDomain.InsertClub(Club);
+        //        if (check == 1)
+        //            ViewBag.Successful = "Successful";
+        //        else
+        //            ViewBag.Failed = "Failed";
+        //    }
+        //    catch { }
+        //    return View(Club);
+        //}
 
-        public async Task<IActionResult> ViewClubs()
-        {
-            return View(await _ClubDomain.GetClub());
-        }
+        //public async Task<IActionResult> ViewClubs()
+        //{
+        //    return View(await _ClubDomain.GetClub());
+        //}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }
