@@ -11,21 +11,23 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int StudentId { get; set; }
-        public int AcademicId { get; set; }
+        [StringLength(10)]
+        public string AcademicId { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string StudentNameAr { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string StudentNameEn { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string StudentEmail { get; set; }
-        public int StudentPhone { get; set; }
+        [StringLength(10)]
+        public string StudentPhone { get; set; }
         public int SiteId { get; set; }
         public tblSite Site { get; set; }
 
-        [StringLength(150)]
+        [StringLength(250)]
         public string StudentSkills { get; set; } //update 
     }
 }
