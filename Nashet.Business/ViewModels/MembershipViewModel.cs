@@ -27,7 +27,7 @@ namespace Nashet.Business.ViewModels
 
         [StringLength(50)]
         [DisplayName("نوع عضوية الطالب")]
-        public int TeameId { get; set; }
+        public int TeamId { get; set; }
 
         public tblTeam Team { get; set; }
         [StringLength(50)]

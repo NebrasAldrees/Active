@@ -15,7 +15,7 @@ namespace Nashet.Data.Models
         public tblStudent Student { get; set; }
         public int ClubRoleId { get; set; }
         public tblClubRole ClubRole { get; set; }
-        public int TeameId { get;set; }
+        public int TeamId { get;set; }
         public tblTeam Team { get; set; }
         public DateTime JoinDate { get; set; }
     }

@@ -23,7 +23,7 @@ namespace Nashet.Business.Domain
                 Student = m.Student,
                 ClubRoleId = m.ClubRoleId,
                 ClubRole = m.ClubRole,
-                TeameId = m.TeameId,
+                TeamId = m.TeamId,
                 Team = m.Team,
                 JoinDate = m.JoinDate,
                 Guid = m.Guid,
@@ -43,7 +43,7 @@ namespace Nashet.Business.Domain
                     Student = viewModel.Student,
                     ClubRoleId = viewModel.ClubRoleId,
                     ClubRole = viewModel.ClubRole,
-                    TeameId = viewModel.TeameId,
+                    TeamId = viewModel.TeamId,
                     Team = viewModel.Team,
                     JoinDate = viewModel.JoinDate,
                     Guid = viewModel.Guid
