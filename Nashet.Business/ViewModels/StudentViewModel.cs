@@ -39,7 +39,7 @@ namespace Nashet.Business.ViewModels
 
         [StringLength(50)]
         [DisplayName(" الجهة")]
-        public int? SiteId { get; set; }
+        public int SiteId { get; set; }
         public tblSite Site { get; set; }
 
         [StringLength(250)]

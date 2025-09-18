@@ -62,10 +62,7 @@ namespace Nashet.Business.Domain
                 return 0;
             }
 
-        public async Task<int> InsertStudent(StudentViewModel viewModel)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
 
