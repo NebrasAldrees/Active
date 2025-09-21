@@ -9,7 +9,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertClub">
+                        <form asp-action="InsertClub" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -50,7 +50,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="" class="mb-1">إرفاق صورة لشعار النادي</label>
-                                        <input asp-for="ClubIcon" type="file" id="ImageUpload" name="ClubIcon" accept="image/* class="form-control">
+                                        <input asp-for="ClubIcon" type="file" id="ImageUpload" name="ClubIcon" accept="image/*" class="form-control">
                                     </div>
                                 </div><!-- END ITEM -->
                             </div>

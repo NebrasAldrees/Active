@@ -12,7 +12,6 @@ namespace Nashet.Areas.Admin.Controllers
         {
             _domain = domain;
         }
-
         public async Task<IActionResult> Index()
         {
             return View(await _domain.GetGetKfuUser());
