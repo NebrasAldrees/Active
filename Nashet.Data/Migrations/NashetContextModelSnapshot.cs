@@ -217,6 +217,10 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ClubOverview")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("ClubVision")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
