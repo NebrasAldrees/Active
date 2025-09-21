@@ -2,13 +2,13 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
-namespace Nashet.Areas.ActivitiesSupervisor.Controllers
+namespace Nashet.Areas.ClubSupervisor.Controllers
 {
-    [Area("ActivitiesSupervisor")]
-    public class AnnouncementController1 : Controller
+    [Area("ClubSupervisor")]
+    public class AnnouncementController : Controller
     {
         private readonly AnnouncementDomain _AnnouncementDomain;
-        public AnnouncementController1(AnnouncementDomain announcementDomain)
+        public AnnouncementController(AnnouncementDomain announcementDomain)
         {
             _AnnouncementDomain = announcementDomain;
         }

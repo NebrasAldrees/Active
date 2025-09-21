@@ -17,6 +17,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _ReportDomain.GetReport());
         }
+
         //public async Task<IActionResult> InsertReport()
         //{
         //    return View();

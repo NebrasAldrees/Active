@@ -44,10 +44,6 @@ builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 
-
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
