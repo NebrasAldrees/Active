@@ -12,6 +12,7 @@ namespace Nashet.Business.ViewModels
     public class ClubViewModel
     {
         public int ClubId { get; set; }
+
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("اسم الجهة")]
         public int? siteId { get; set; }
@@ -21,14 +22,17 @@ namespace Nashet.Business.ViewModels
         [DisplayName("اسم النادي باللغة العربية")]
         [StringLength(50)]
         public string ClubNameAR { get; set; }
+
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("اسم النادي باللغة الإنجليزية")]
         [StringLength(50)]
         public string ClubNameEN { get; set; }
+
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("الرؤية")]
         [StringLength(500)]
         public string ClubVision { get; set; }
+
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("نبذة عن النادي")]
         [StringLength(500)]

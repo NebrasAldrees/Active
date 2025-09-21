@@ -13,7 +13,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             _AnnouncementDomain = announcementDomain;
         }
 
-        public async Task<IActionResult> GetAnnouncement()
+        public async Task<IActionResult> ViewAnnouncement()
         {
             return View(await _AnnouncementDomain.GetAnnouncement());
         }

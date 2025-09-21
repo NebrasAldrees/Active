@@ -9,38 +9,29 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="Insert">
-                            <div class="row">
-                              
-                            </div>
+                        <form asp-action="InsertUser">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"> الاسم بالعربي</label>
+                                    <label asp-for="UserNameAR" class="mb-1"></label>
                                     <input asp-for="UserNameAR" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="UserNameAR"></span>
-
                                 </div><!-- END ITEM -->
-
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <!-- START ITEM -->
-                                    <label for="" class="mb-1">الاسم بالانجليزي</label>
+                                    <label for="" class="mb-1"></label>
                                     <input asp-for="UserNameEN" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="UserNameEN"></span>
-
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <!-- START ITEM -->
-                                    <label for="" class="mb-1">البريد الإلكتروني</label>
+                                    <label for="" class="mb-1"></label>
                                     <input asp-for="UserEmail" type="email" class="form-control">
                                     <span style="color:red" asp-validation-for="UserEmail"></span>
-
                                 </div><!-- END ITEM -->
                             </div>
                             <div class="row">
-                          
+
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <!-- START ITEM -->
