@@ -14,14 +14,9 @@ namespace Nashet.Data.Repository
         public StudentRepository(NashetContext dbContext) : base(dbContext)
         {
         }
-        public virtual async Task<IList<tblStudent>> GetAllStudents(int id)
-        {
-            return await dbSet.Where(Student => Student.IsDeleted == false && Student.SiteId == id).ToListAsync(); 
-        }
-
         public virtual async Task<IList<tblStudent>> GetAllStudents()
         {
-            throw new NotImplementedException();
+            return await dbSet.Where(Student => Student.IsDeleted == false ).ToListAsync(); 
         }
 
         public virtual async Task<tblStudent> GetStudentByIdAsync(int id)
