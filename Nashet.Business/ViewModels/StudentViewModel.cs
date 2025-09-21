@@ -13,36 +13,40 @@ namespace Nashet.Business.ViewModels
     {
         public int StudentId { get; set; }
 
+        [StringLength(10)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("رقم الطالب المرجعي")]
-        public int AcademicId { get; set; }
-        public tblStudent StudentNameAr { get; set; }
+        public string AcademicId { get; set; }
 
-        [StringLength(50)]
+        [StringLength(70)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName(" اسم الطالب باللغة العربية")]
-        public int StudentNameEn { get; set; }
-        [StringLength(50)]
+        public string StudentNameAr { get; set; }
+
+        [StringLength(70)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName(" اسم الطالب باللغة الإنجليزية")]
-        public tblClubRole StudentEmail { get; set; }
+        public String StudentNameEn { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         [DisplayName("البريد الإلكتروني")]
-        public int StudentPhone { get; set; }
-        [StringLength(50)]
+        public string StudentEmail { get; set; }
+
+        [StringLength(10)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("رقم الجوال")]
-        public tblTeam SiteId { get; set; }
+        public string StudentPhone { get; set; }
 
-        public tblSite Site { get; set; }
         [StringLength(50)]
         [DisplayName(" الجهة")]
+        public int SiteId { get; set; }
+        public tblSite Site { get; set; }
 
-        public string StudentSkills { get; set; }
-        [StringLength(50)]
+        [StringLength(250)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName(" مهارات الطالب")]
+        public string StudentSkills { get; set; }
+        
         public Guid Guid { get; set; }
 
 

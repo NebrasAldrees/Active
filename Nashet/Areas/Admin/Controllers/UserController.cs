@@ -2,35 +2,36 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
-namespace Nashet.Areas.ClubSupervisor.Controllers
+namespace Nashet.Areas.Admin.Controllers
 {
-    public class MemberShipController
-    {
-        [Area("ClubSupervisor")]
-        public class MembershipController : Controller
+
+    [Area("Admin")]
+   
+        public class UserController : Controller
         {
-            private readonly MembershipDomain _MembershipDomain;
-            public MembershipController(MembershipDomain MembershipDomain)
+            private readonly UserDomain _domain;
+            public UserController(UserDomain domain)
             {
-                _MembershipDomain = MembershipDomain;
+                _domain = domain;
             }
-            public async Task<IActionResult> ViewMembers()
+
+            public async Task<IActionResult> Index()
             {
-                return View(await _MembershipDomain.GetMembership());
+                return View(await _domain.GetGetUser());
             }
-            public async Task<IActionResult> InsertMembership()
+            public async Task<IActionResult> Insert()
             {
                 return View();
             }
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> InsertMembership(MembershipViewModel viewModel)
+            public async Task<IActionResult> Insert(UserViewModel viewModel)
             {
                 if (ModelState.IsValid)
                 {
                     try
                     {
-                        int check = await _MembershipDomain.InsertMembership(viewModel);
+                        int check = await _domain.InsertUser(viewModel);
                         if (check == 1)
                             ViewData["Successful"] = "Successful";
                         else
@@ -45,5 +46,4 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             }
         }
     }
-}
 
