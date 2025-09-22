@@ -76,6 +76,10 @@ namespace Nashet.Business.Domain
                 }
             }
 
+        public async Task<int> InsertUser(tblUser user)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

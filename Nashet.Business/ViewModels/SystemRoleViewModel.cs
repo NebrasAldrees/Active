@@ -10,7 +10,7 @@ namespace Nashet.Business.ViewModels
 {
     public class SystemRoleViewModel 
     {
-        [Key] public int? SystemRoleId { get; set; }
+        [Key] public int SystemRoleId { get; set; }
         
         public string RoleType { get; set; }
         [StringLength(50)]

@@ -15,8 +15,6 @@ namespace Nashet.Data.Repository
         {
 
         }
-
-
         public virtual async Task<IList<tblSystemRole>> GetAllSystemRole()
         {
             return await dbSet.Where(SR => SR.IsDeleted == false).ToListAsync();
