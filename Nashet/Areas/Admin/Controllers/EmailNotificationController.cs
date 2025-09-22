@@ -24,13 +24,13 @@ namespace Nashet.Areas.Admin.Controllers
         }
            [HttpPost]
          [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertEmailNotification(EmailNotificationViewModel viewModel)
+        public async Task<IActionResult> InsertEmail(EmailNotificationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _EmailNotificationDomain.InsertEmailNotification(viewModel);
+                    int check = await _EmailNotificationDomain.InsertEmail(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else

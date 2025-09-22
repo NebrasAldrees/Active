@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Nashet.Business.Domain.Common;
+﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
+using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +11,37 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class ClubRoleDomain : BaseDomain
+    public class ClubRoleDomain(ClubRoleRepository Repository) : BaseDomain
     {
-        private readonly ClubRoleRepository _ClubRoleRepository;
-        public ClubRoleDomain(ClubRoleRepository Repository)
+        private readonly ClubRoleRepository _ClubRoleRepository = Repository;
+        public async Task<IList<ClubRoleViewModel>> GetClubRole()
         {
-            _ClubRoleRepository = Repository;
-        }
-        public async Task<IList<tblClubRole>> GetClubRole()
-        {
-            return await _ClubRoleRepository.GetAllClubRole();
-        }
-        public async Task<tblClubRole> GetClubRoleById(int id)
-        {
-            var ClubRole = await _ClubRoleRepository.GetClubRoleById(id);
-
-            if (ClubRole == null)
+            return _ClubRoleRepository.GetAllClubRole().Result.Select(c => new ClubRoleViewModel
             {
-                throw new KeyNotFoundException($"Club Role requested with ID {id} was not found.");
-            }
+                ClubRoleId = c.ClubRoleId,
+                RoleType = c.RoleType,
+                Guid = c.Guid,
 
-            return ClubRole;
+            }).ToList();
         }
-        public int DeleteClubRole(int id)
+
+
+        public async Task<int> InsertClubRole(ClubRoleViewModel viewModel)
         {
             try
             {
-                _ClubRoleRepository.Delete(id);
-                return 1;
+                tblClubRole clubrole = new tblClubRole
+                {
+
+                    ClubRoleId = viewModel.ClubRoleId,
+                    RoleType = viewModel.RoleType,
+                    Guid = viewModel.Guid
+                };
+                int check = await _ClubRoleRepository.InsertClubRole(clubrole);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {

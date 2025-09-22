@@ -25,7 +25,7 @@ namespace Nashet.Business.Domain
             }).ToList();
 
         }
-        public async Task<int> InsertEmailNotification(EmailNotificationViewModel viewModel)
+        public async Task<int> InsertEmail(EmailNotificationViewModel viewModel)
         {
             try
             {
