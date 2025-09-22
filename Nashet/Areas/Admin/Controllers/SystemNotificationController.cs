@@ -23,7 +23,7 @@ namespace Nashet.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertNotification(StudentViewModel viewModel)
+        public async Task<IActionResult> InsertNotification(SystemNotificationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
