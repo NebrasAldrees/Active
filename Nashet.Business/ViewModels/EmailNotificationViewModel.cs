@@ -9,7 +9,7 @@ namespace Nashet.Business.ViewModels
 {
     public class EmailNotificationViewModel
     {
-        public int? EmailNotificationsId { get; set; }
+        public int EmailNotificationsId { get; set; }
 
         [StringLength(30)]
         public string UserEmail { get; set; }
