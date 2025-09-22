@@ -32,7 +32,7 @@ namespace Nashet.Business.Domain
             {
                 tblSystemRole SystemRole = new tblSystemRole
                 {
-                    SystemRoleId = (int)viewModel.SystemRoleId,
+                    SystemRoleId = viewModel.SystemRoleId,
                     RoleType = viewModel.RoleType,
 
                 };
@@ -41,13 +41,14 @@ namespace Nashet.Business.Domain
                     return 0;
                 else
                     return 1;
-                {
-                    return 0;
-                }
 
             }
+            catch
+            {
+                return 0;
+            }
 
-    }
+        }
 
         public async Task<int> InsertSystemRole(UserViewModel viewModel)
         {

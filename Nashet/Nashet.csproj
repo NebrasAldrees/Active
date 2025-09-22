@@ -11,18 +11,22 @@
     <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Areas\ClubLeader\Data\**" />
     <Compile Remove="Areas\ClubLeader\Models\**" />
+    <Compile Remove="Areas\ClubSupervisor\Views\Home\**" />
     <Content Remove="Areas\Admin\Data\**" />
     <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="Areas\ClubLeader\Data\**" />
     <Content Remove="Areas\ClubLeader\Models\**" />
+    <Content Remove="Areas\ClubSupervisor\Views\Home\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
     <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Areas\ClubLeader\Data\**" />
     <EmbeddedResource Remove="Areas\ClubLeader\Models\**" />
+    <EmbeddedResource Remove="Areas\ClubSupervisor\Views\Home\**" />
     <None Remove="Areas\Admin\Data\**" />
     <None Remove="Areas\Admin\Models\**" />
     <None Remove="Areas\ClubLeader\Data\**" />
     <None Remove="Areas\ClubLeader\Models\**" />
+    <None Remove="Areas\ClubSupervisor\Views\Home\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,7 +58,6 @@
   <ItemGroup>
     <Folder Include="Areas\ActivitiesSupervisor\Data\" />
     <Folder Include="Areas\ActivitiesSupervisor\Models\" />
-    <Folder Include="Areas\ClubSupervisor\Views\Home\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
   </ItemGroup>
@@ -95,6 +98,12 @@
     <None Include="wwwroot\Assets\lib\selectize\.github\workflows\UpdateContributors.yml" />
     <None Include="wwwroot\Assets\lib\selectize\css\.DS_Store" />
     <None Include="wwwroot\css\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>

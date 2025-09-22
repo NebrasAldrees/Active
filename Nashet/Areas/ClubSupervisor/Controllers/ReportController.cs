@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
+using Nashet.Models;
+using System.Diagnostics;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
@@ -13,10 +15,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             _ReportDomain = reportDomain;
         }
 
-        public async Task<IActionResult> Report()
-        {
-            return View(await _ReportDomain.GetReport());
-        }
         public async Task<IActionResult> InsertReport()
         {
             return View();

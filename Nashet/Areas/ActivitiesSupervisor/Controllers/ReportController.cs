@@ -13,10 +13,11 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             _ReportDomain = reportDomain;
         }
 
-        public async Task<IActionResult> Report()
+        public async Task<IActionResult> ViewAllReports()
         {
             return View(await _ReportDomain.GetReport());
         }
+
         //public async Task<IActionResult> InsertReport()
         //{
         //    return View();

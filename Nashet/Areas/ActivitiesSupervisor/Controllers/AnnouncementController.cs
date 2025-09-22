@@ -5,15 +5,15 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
     [Area("ActivitiesSupervisor")]
-    public class AnnouncementController1 : Controller
+    public class AnnouncementController : Controller
     {
         private readonly AnnouncementDomain _AnnouncementDomain;
-        public AnnouncementController1(AnnouncementDomain announcementDomain)
+        public AnnouncementController(AnnouncementDomain announcementDomain)
         {
             _AnnouncementDomain = announcementDomain;
         }
 
-        public async Task<IActionResult> GetAnnouncement()
+        public async Task<IActionResult> ViewAnnouncement()
         {
             return View(await _AnnouncementDomain.GetAnnouncement());
         }

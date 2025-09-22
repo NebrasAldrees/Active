@@ -21,7 +21,7 @@ namespace Nashet.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Insert(UserViewModel viewModel)
+        public async Task<IActionResult> InsertSystemRole(UserViewModel viewModel)
         {
             if (ModelState.IsValid)
             {

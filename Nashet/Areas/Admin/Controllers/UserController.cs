@@ -17,15 +17,15 @@ namespace Nashet.Areas.Admin.Controllers
 
             public async Task<IActionResult> Index()
             {
-                return View(await _domain.GetGetUser());
+                return View(await _domain.GetUser());
             }
-            public async Task<IActionResult> Insert()
+            public async Task<IActionResult> InsertUser()
             {
                 return View();
             }
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Insert(UserViewModel viewModel)
+            public async Task<IActionResult> InsertUser(UserViewModel viewModel)
             {
                 if (ModelState.IsValid)
                 {

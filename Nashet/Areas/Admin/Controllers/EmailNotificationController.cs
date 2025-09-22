@@ -5,30 +5,32 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class KfuUserController : Controller
+    public class EmailNotificationController : Controller
     {
-        private readonly KfuUserDomain _domain;
-        public KfuUserController(KfuUserDomain domain)
+        private readonly EmailNotificationDomain _EmailNotificationDomain;
+
+        public EmailNotificationController(EmailNotificationDomain emailNotificationDomain )
         {
-            _domain = domain;
+            _EmailNotificationDomain = emailNotificationDomain ;
         }
-        public async Task<IActionResult> Index()
+        public async Task <IActionResult> ViewEmail()
         {
-            return View(await _domain.GetGetKfuUser());
+            return View(await _EmailNotificationDomain.GetEmailNotification());
         }
-        public async Task<IActionResult> Insert()
+
+        public async Task<IActionResult> InsertEmail()
         {
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Insert(KfuUserViewModel viewModel)
+           [HttpPost]
+         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InsertEmail(EmailNotificationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _domain.InsertKfuUser(viewModel);
+                    int check = await _EmailNotificationDomain.InserEmail(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else
@@ -41,5 +43,7 @@ namespace Nashet.Areas.Admin.Controllers
             }
             return View(viewModel);
         }
+
+
     }
 }

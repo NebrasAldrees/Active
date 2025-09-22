@@ -1,5 +1,61 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<ClubViewModel>
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-3">
+                <h5 class="m-0">الأندية الطلابية</h5>
+                <div class="d-flex gap-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control table__quick_search"
+                               placeholder="البحث السريع ...">
+                    </div>
+                    <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor" class="btn btn-primary">إضافة نادي</a>
+                </div>
+            </div>
+            <div class="block-body">
+
+                <!-- Add debug information -->
+                @if (ViewData["Error"] != null)
+                {
+                    <div class="alert alert-danger">@ViewData["Error"]</div>
+                }
+
+                @if (ViewData["Message"] != null)
+                {
+                    <div class="alert alert-info">@ViewData["Message"]</div>
+                }
+
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-warning">لا توجد أندية مسجلة حالياً</div>
+                }
+                else
+                {
+                    <table class="table table-hover js-dataTable">
+                        <thead>
+                            <tr>
+                                <th>اسم النادي</th>
+                                <th>الاسم بالإنجليزية</th>
+                                <th class="text-end">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ClubNameAR</td>
+                                    <td>@item.ClubNameEN</td>
+                                    <td class="action_td text-end">
+                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
+                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
+                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</section>

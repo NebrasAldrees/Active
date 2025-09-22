@@ -12,12 +12,14 @@ namespace Nashet.Data.Repository
     public class EmailNotificationRepository : BaseRepository<tblEmailNotificationLog>
     {
         public EmailNotificationRepository(NashetContext dbContext):base(dbContext)
-        { }
+        {
         
-        //public virtual async Task<IList<tblEmailNotificationLog>>GetAllEmailNotifications()
-        //{
-        //    return await dbSet.Where(email => email.IsDeleted == false).ToListAsync(); // email as email notification
-        //}
+        }
+        
+        public virtual async Task<IList<tblEmailNotificationLog>>GetAllEmailNotifications()
+         {
+            return await dbSet.Where(email => email.IsDeleted == false).ToListAsync(); // email as email notification
+         }
         public virtual async Task<int> InsertEmailNotification(tblEmailNotificationLog emailNotification)
         {
             try

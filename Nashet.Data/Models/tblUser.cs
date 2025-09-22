@@ -15,8 +15,6 @@ namespace Nashet.Data.Models
         public int SystemRoleId { get; set; }
         [StringLength(30)]
         public tblSystemRole SystemRole { get; set; }
-        [StringLength(50)]
-
         public string UserNameAR { get; set; }
         [StringLength(50)]
         public string UserNameEN { get; set; }
@@ -24,7 +22,6 @@ namespace Nashet.Data.Models
         public string UserEmail { get; set; }
         [StringLength(30)]
         public string UserPhone { get; set; }
-        
         public int? SiteId { get; set; } 
         public tblSite Site { get; set; }
     }

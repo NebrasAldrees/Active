@@ -19,7 +19,7 @@ namespace Nashet.Business.Domain
             return _ClubRepository.GetAllClubs().Result.Select(a => new ClubViewModel
             {
                 ClubId = a.ClubId,
-                siteId = a.siteId,
+                SiteId = a.siteId,
                 ClubNameAR = a.ClubNameAR,
                 ClubNameEN = a.ClubNameEN,
                 ClubVision = a.ClubVision,
@@ -47,7 +47,7 @@ namespace Nashet.Business.Domain
                 tblClub Club = new tblClub
                 {
                     ClubId = viewModel.ClubId,
-                    siteId = viewModel.siteId,
+                    siteId = viewModel.SiteId,
                     ClubNameAR = viewModel.ClubNameAR,
                     ClubNameEN = viewModel.ClubNameEN,
                     ClubVision = viewModel.ClubVision,
