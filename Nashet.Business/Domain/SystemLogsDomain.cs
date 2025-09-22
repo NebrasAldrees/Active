@@ -12,6 +12,8 @@ namespace Nashet.Business.Domain
 {
     public class SystemLogsDomain(SystemLogsRepository Repository) : BaseDomain 
     {
+        private readonly SystemLogsRepository _SystemLogsRepository = Repository;
+
 
         public async Task<int> InsertLog(SystemLogsViewModel viewModel)
         {
@@ -30,7 +32,7 @@ namespace Nashet.Business.Domain
                     other_details = viewModel.other_details
 
                 };
-                int check = await _SystemLogsRepository .InsertLog(Log);
+                int check = await _SystemLogsRepository.InsertLog(Log);
                 if (check == 0)
                     return 0;
                 else

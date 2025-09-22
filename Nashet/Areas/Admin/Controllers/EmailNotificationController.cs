@@ -30,7 +30,7 @@ namespace Nashet.Areas.Admin.Controllers
             {
                 try
                 {
-                    int check = await _EmailNotificationDomain.InserEmail(viewModel);
+                    int check = await _EmailNotificationDomain.InsertEmail(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else

@@ -17,7 +17,7 @@ namespace Nashet.Business.Domain
 
         public async Task<IList<EmailNotificationViewModel>> GetEmailNotification()
         {
-            return _EmailNotificationRepository.GetAllEmailNotification().Result.Select(e => new EmailNotificationViewModel
+            return _EmailNotificationRepository.GetAllEmailNotifications().Result.Select(e => new EmailNotificationViewModel
             {
                 EmailNotificationsId = e.EmailNotificationsId,
                 UserEmail = e.UserEmail
@@ -25,7 +25,7 @@ namespace Nashet.Business.Domain
             }).ToList();
 
         }
-        public async Task<int> InsertMember(EmailNotificationViewModel viewModel)
+        public async Task<int> InsertEmail(EmailNotificationViewModel viewModel)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace Nashet.Business.Domain
                     UserEmail = viewModel.UserEmail,
 
                 };
-                    int check = await  _EmailNotificationRepository.InsertMember(email);
+                    int check = await  _EmailNotificationRepository.InsertEmailNotification(email);
                 if (check == 0)
                  
                     return 0;
