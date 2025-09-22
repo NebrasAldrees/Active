@@ -66,7 +66,6 @@ namespace Nashet.Business.Domain
 
         }
     }
-}
 
 
 
