@@ -4,31 +4,31 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class KfuUserController : Controller
+    [Area("ClubLeader")]
+    public class ClubRoleController : Controller
     {
-        private readonly KfuUserDomain _domain;
-        public KfuUserController(KfuUserDomain domain)
+        private readonly ClubRoleDomain _ClubRoleDomain;
+        public ClubRoleController(ClubRoleDomain clubroleDomain)
         {
-            _domain = domain;
+            _ClubRoleDomain = clubroleDomain;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ViewClubRole()
         {
-            return View(await _domain.GetGetKfuUser());
+            return View(await _ClubRoleDomain.GetClubRole());
         }
-        public async Task<IActionResult> Insert()
+        public async Task<IActionResult> InsertClubRole()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Insert(KfuUserViewModel viewModel)
+        public async Task<IActionResult> InsertClubRole(ClubRoleViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _domain.InsertKfuUser(viewModel);
+                    int check = await _ClubRoleDomain.InsertClubRole(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else

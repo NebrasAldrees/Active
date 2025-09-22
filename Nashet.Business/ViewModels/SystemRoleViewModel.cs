@@ -10,12 +10,13 @@ namespace Nashet.Business.ViewModels
 {
     public class SystemRoleViewModel 
     {
-        [Key] public int SystemRoleId { get; set; }
-        
-        public string RoleType { get; set; }
+        public int SystemRoleId { get; set; }
+
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("اسم المنصب")]
+        public string RoleType { get; set; }
+        
 
         public Guid guid { get; set; }
 

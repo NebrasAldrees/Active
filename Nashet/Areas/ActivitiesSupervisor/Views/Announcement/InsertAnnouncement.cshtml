@@ -1,5 +1,4 @@
-﻿@using Nashet.Business.ViewModels
-@model AnnouncementViewModel
+﻿@model AnnouncementViewModel
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
@@ -9,7 +8,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertAnnouncement">
+                        <form asp-action="InsertAnnouncement" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -39,7 +38,8 @@
                                         <option value="X">إعلان  نشاط</option>
                                         <option value="CC">إنشاء نادي جديد</option>
                                     </select>
-                                    <!-- START ITEM -->
+                                </div>
+                                <!-- START ITEM -->
                                     <div class="col-md-6">
                                         <label for="" class="mb-1">موضوع الإعلان </label>
                                         <input asp-for="AnnouncementTopic" type="text" class="form-control">
@@ -53,10 +53,8 @@
                                 </div><!-- END ITEM -->
                                     <!-- START ITEM -->
                                     <div class="col-md-6">
-                                        <div class="mb-4">
                                             <label for="" class="mb-1">إرفاق صورة الإعلان</label>
                                             <input asp-for="AnnouncementImage" type="file" id="ImageUpload" name="AnnouncementImage" accept="image/* class="form-control">
-                                        </div>
                                     </div><!-- END ITEM -->
                             </div>
                             <div class="d-flex justify-content-end">

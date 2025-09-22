@@ -14,14 +14,14 @@ namespace Nashet.Business.ViewModels
         public int AnnouncementId { get; set; }
         public int ClubId { get; set; }
         public tblClub Club { get; set; }
-        [Required(ErrorMessage = "*حقل مطلوب*")]
-        [DisplayName("نوع الإعلان")]
-        [StringLength(50)]
         public int siteId { get; set; }
         public tblSite Site { get; set; }
         [DisplayName("اسم النادي")]
         [StringLength(50)]
         public string ClubNameAR { get; set; }
+        [Required(ErrorMessage = "*حقل مطلوب*")]
+        [DisplayName("نوع الإعلان")]
+        [StringLength(50)]
         public string AnnouncementType { get; set; }
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("موضوع الإعلان")]

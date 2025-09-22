@@ -5,10 +5,10 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
     [Area("ClubSupervisor")]
-    public class AnnouncementController1 : Controller
+    public class AnnouncementController : Controller
     {
         private readonly AnnouncementDomain _AnnouncementDomain;
-        public AnnouncementController1(AnnouncementDomain announcementDomain)
+        public AnnouncementController(AnnouncementDomain announcementDomain)
         {
             _AnnouncementDomain = announcementDomain;
         }

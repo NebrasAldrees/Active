@@ -61,11 +61,11 @@ namespace Nashet.Business.Domain
             {
                 return 0;
             }
+        }
 
 
         }
     }
-}
 
 
 

@@ -5,30 +5,31 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class KfuUserController : Controller
+    public class SystemNotificationController : Controller
     {
-        private readonly KfuUserDomain _domain;
-        public KfuUserController(KfuUserDomain domain)
+
+        private readonly SystemNotificationDomain _SystemNotificationDomain;
+        public SystemNotificationController(SystemNotificationDomain SystemNotificationDomain)
         {
-            _domain = domain;
+            _SystemNotificationDomain = SystemNotificationDomain;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ViewNotification()
         {
-            return View(await _domain.GetGetKfuUser());
+            return View(await _SystemNotificationDomain.GetAllNotifications());
         }
-        public async Task<IActionResult> Insert()
+        public async Task<IActionResult> InsertNotification()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Insert(KfuUserViewModel viewModel)
+        public async Task<IActionResult> InsertNotification(SystemNotificationViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _domain.InsertKfuUser(viewModel);
+                    int check = await _SystemNotificationDomain.InsertNotification(viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Successful";
                     else
@@ -41,5 +42,8 @@ namespace Nashet.Areas.Admin.Controllers
             }
             return View(viewModel);
         }
+
+
+
     }
 }
