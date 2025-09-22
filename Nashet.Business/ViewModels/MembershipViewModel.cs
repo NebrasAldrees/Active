@@ -19,23 +19,22 @@ namespace Nashet.Business.ViewModels
         public tblStudent Student { get; set; }
 
         [StringLength(50)]
-        [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
-        [DisplayName("اسم الطالب")]
+        [DisplayName("نوع عضوية الطالب")]
         public int ClubRoleId { get; set; }
+
 
         public tblClubRole ClubRole { get; set; }
 
         [StringLength(50)]
-        [DisplayName("نوع عضوية الطالب")]
+        [DisplayName("الفريق")]
         public int TeamId { get; set; }
 
         public tblTeam Team { get; set; }
-        [StringLength(50)]
-        [DisplayName("الفريق")]
 
-        public DateTime JoinDate { get; set; }
         [StringLength(50)]
         [DisplayName("تاريخ الإنضمام")]
+        public DateTime JoinDate { get; set; }
+        
         public Guid Guid { get; set; }
 
         
