@@ -15,8 +15,8 @@ namespace Nashet.Business.Domain
     public class StudentDomain(StudentRepository Repository) : BaseDomain
     {
         private readonly StudentRepository _StudentRepository = Repository;
-        
-        
+
+
 
         public async Task<IList<StudentViewModel>> GetStudent()
         {
@@ -64,8 +64,8 @@ namespace Nashet.Business.Domain
         }
 
 
+        }
     }
-}
 
 
 

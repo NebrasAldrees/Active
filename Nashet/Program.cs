@@ -29,8 +29,6 @@ builder.Services.AddScoped<ClubRepository>();
 builder.Services.AddScoped<ClubDomain>();
 builder.Services.AddScoped<ClubRoleRepository>();
 builder.Services.AddScoped<ClubRoleDomain>();
-builder.Services.AddScoped<ReportRepository>();
-builder.Services.AddScoped<ReportDomain>();
 builder.Services.AddScoped<SiteRepository>();
 builder.Services.AddScoped<SiteDomain>();
 builder.Services.AddScoped<StudentRepository>();
@@ -43,6 +41,10 @@ builder.Services.AddScoped<PositionRequestRepository>();
 builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 builder.Services.AddScoped<MembershipRequestRepository>();
+
+
+
+
 
 var app = builder.Build();
 
