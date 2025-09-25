@@ -12,8 +12,8 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20250915084325_addByAbdulrahman1")]
-    partial class addByAbdulrahman1
+    [Migration("20250911110019_Nebras")]
+    partial class Nebras
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,8 +164,8 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("AnnouncementImage")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AnnouncementImage")
+                        .HasColumnType("int");
 
                     b.Property<string>("AnnouncementTopic")
                         .HasMaxLength(50)
@@ -207,10 +207,6 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClubId"));
-
-                    b.Property<string>("ClubIcon")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ClubNameAR")
                         .HasMaxLength(50)
@@ -333,25 +329,9 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameAR")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NameEN")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("Password")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserEmail")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserPhone")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("UserType")
                         .HasMaxLength(30)
@@ -605,6 +585,9 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("isUpdated")
+                        .HasColumnType("bit");
+
                     b.HasKey("SiteId");
 
                     b.ToTable("tblSite");
@@ -673,6 +656,18 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogsId"));
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NewValue")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -690,6 +685,9 @@ namespace Nashet.Data.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isSent")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("operation_date")
                         .HasColumnType("datetime2");
@@ -840,7 +838,7 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("SiteId")
+                    b.Property<int>("SiteId")
                         .HasColumnType("int");
 
                     b.Property<int>("SystemRoleId")
@@ -858,9 +856,9 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("UserPhone")
+                    b.Property<int>("UserPhone")
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("int");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -1053,7 +1051,9 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
-                        .HasForeignKey("SiteId");
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblSystemRole", "SystemRole")
                         .WithMany()

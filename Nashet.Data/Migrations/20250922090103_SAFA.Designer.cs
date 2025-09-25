@@ -12,8 +12,8 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20250915084325_addByAbdulrahman1")]
-    partial class addByAbdulrahman1
+    [Migration("20250922090103_SAFA")]
+    partial class SAFA
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ClubId")
+                    b.Property<int?>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -72,9 +72,6 @@ namespace Nashet.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("SystemPositionRequest")
-                        .HasColumnType("int");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -178,6 +175,10 @@ namespace Nashet.Data.Migrations
                     b.Property<int>("ClubId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ClubNameAR")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -193,9 +194,14 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
 
+                    b.Property<int>("siteId")
+                        .HasColumnType("int");
+
                     b.HasKey("AnnouncementId");
 
                     b.HasIndex("ClubId");
+
+                    b.HasIndex("siteId");
 
                     b.ToTable("tblAnnouncement");
                 });
@@ -219,6 +225,10 @@ namespace Nashet.Data.Migrations
                     b.Property<string>("ClubNameEN")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ClubOverview")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ClubVision")
                         .HasMaxLength(500)
@@ -591,16 +601,17 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SiteCode")
-                        .HasColumnType("int");
+                    b.Property<string>("SiteCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("SiteNameAR")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SiteNameEn")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -618,8 +629,9 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
-                    b.Property<int>("AcademicId")
-                        .HasColumnType("int");
+                    b.Property<string>("AcademicId")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -637,23 +649,24 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StudentEmail")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("StudentNameAr")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("StudentNameEn")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("StudentPhone")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StudentSkills")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("StudentNameAr")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("StudentNameEn")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("StudentPhone")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("StudentSkills")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -787,7 +800,7 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"));
 
-                    b.Property<int>("ClubId")
+                    b.Property<int?>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -878,9 +891,7 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ClubId");
 
                     b.Navigation("Club");
                 });
@@ -920,7 +931,15 @@ namespace Nashet.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Nashet.Data.Models.tblSite", "Site")
+                        .WithMany()
+                        .HasForeignKey("siteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Club");
+
+                    b.Navigation("Site");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblClub", b =>
@@ -1042,9 +1061,7 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ClubId");
 
                     b.Navigation("Club");
                 });

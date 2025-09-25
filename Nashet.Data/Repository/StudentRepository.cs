@@ -38,6 +38,9 @@ namespace Nashet.Data.Repository
                             .FirstOrDefaultAsync();
         }
 
-
+        public async Task<int> InsertStudent(tblStudent student)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

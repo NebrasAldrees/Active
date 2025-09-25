@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserViewModel>
+﻿@model IEnumerable<SystemRoleViewModel>
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
@@ -8,16 +8,14 @@
                     <div class="form-group">
                         <input type="text" class="form-control table__quick_search"
                                placeholder="البحث السريع ...">
-                    </div>
-                    <a asp-action="InsertSite" asp-controller="User" asp-area="Admin" class="btn btn-primary">إضافة مستخدم</a>
-                </div>
+
             </div>
             <div class="block-body">
                 <table class="table table-hover js-dataTable">
                     <thead>
                         <tr>
                             <th>رمز الجهة</th>
-                            <th>اسم الجهة باللغة العربية</th>
+                            <th> المسمى الوظيفي</th>
                             <th class=""></th>
                         </tr>
                     </thead>
@@ -26,10 +24,8 @@
                             foreach (var item in Model)
                             {
                                 <tr class="cursor-pointer" goto="order_details.cshtml">
-                                    <td>@item.UserNameAR</td>
-                                    <td>@item.UserNameEN</td>
-                                    <td>@item.UserEmail</td>
-                                    <td>@item.UserPhone</td>
+                                    <td>@item.SystemRoleId</td>
+                                    <td>@item.RoleType</td>
                                     <td class="action_td text-end">
                                         <a href="" class="btn btn-sm btn-primary">عرض</a>
                                         <a href="" class="btn btn-sm btn-success">تعديل</a>
