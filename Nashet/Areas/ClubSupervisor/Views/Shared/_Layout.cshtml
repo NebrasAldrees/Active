@@ -52,10 +52,11 @@
                             <span>الرئيسية</span>
                         </a>
                         <ul>
-                            <li><a href="Requests"><span> مراجعة الطلبات العضوية</span></a></li>
+
+                            <li><a asp-action ="InsertMember" asp-controller="Membership" asp-area="ClubSupervisor"><span> مراجعة الطلبات العضوية</span></a></li>
                             <li><a href="Requests"><span>رفع التقارير</span></a></li>
                             <li><a href="Requests"><span>تقديم طلب إنشاء نشاط</span></a></li>
-                            <li><a href="Requests"><span>عرض معلومات الأعضاء</span></a></li>
+                            <li><a asp-action="ViewMember" asp-controller="Membership" asp-area="ClubSupervisor"><span>عرض معلومات الأعضاء</span></a></li>
                         </ul>
                     </li>
                     <li>

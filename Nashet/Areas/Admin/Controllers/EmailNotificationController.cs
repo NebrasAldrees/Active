@@ -1,0 +1,49 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Nashet.Business.Domain;
+using Nashet.Business.ViewModels;
+
+namespace Nashet.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class EmailNotificationController : Controller
+    {
+        private readonly EmailNotificationDomain _EmailNotificationDomain;
+
+        public EmailNotificationController(EmailNotificationDomain emailNotificationDomain )
+        {
+            _EmailNotificationDomain = emailNotificationDomain ;
+        }
+        public async Task <IActionResult> ViewEmail()
+        {
+            return View(await _EmailNotificationDomain.GetEmailNotification());
+        }
+
+        public async Task<IActionResult> InsertEmail()
+        {
+            return View();
+        }
+           [HttpPost]
+         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InsertEmail(EmailNotificationViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int check = await _EmailNotificationDomain.InsertEmail(viewModel);
+                    if (check == 1)
+                        ViewData["Successful"] = "Successful";
+                    else
+                        ViewData["Failed"] = "Failed";
+                }
+                catch
+                {
+                    ViewData["Failed"] = "Failed";
+                }
+            }
+            return View(viewModel);
+        }
+
+
+    }
+}
