@@ -4,8 +4,7 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
-    public class MemberShipController
-    {
+    
         [Area("ClubSupervisor")]
         public class MembershipController : Controller
         {
@@ -14,17 +13,17 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             {
                 _MembershipDomain = MembershipDomain;
             }
-            public async Task<IActionResult> ViewMembers()
+            public async Task<IActionResult> ViewMember()
             {
                 return View(await _MembershipDomain.GetMembership());
             }
-            public async Task<IActionResult> InsertMembership()
+            public async Task<IActionResult> InsertMember()
             {
                 return View();
             }
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> InsertMembership(MembershipViewModel viewModel)
+            public async Task<IActionResult> InsertMember(MembershipViewModel viewModel)
             {
                 if (ModelState.IsValid)
                 {
@@ -43,7 +42,12 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 }
                 return View(viewModel);
             }
+
+            public IActionResult Index()
+            {
+                return View();
+            }
         }
     }
-}
+
 

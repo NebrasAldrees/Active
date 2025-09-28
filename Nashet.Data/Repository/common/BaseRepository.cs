@@ -8,6 +8,7 @@ using Nashet.Data.Repository.Common;
 
 using System.Linq.Expressions;
 using Nashet.Data.Models;
+using System.Threading.Tasks;
 
 namespace Nashet.Data.Repository.Common
 {
@@ -194,6 +195,21 @@ namespace Nashet.Data.Repository.Common
             catch (Exception)
             {
 
+            }
+        }
+
+        public virtual async Task<int> UpdateAsync(TEntity entityToUpdate)
+        {
+            try
+            {
+                //context.Entry(entityToUpdate).State = EntityState.Modified;
+                dbSet.Update(entityToUpdate);
+                await context.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception)
+            {
+                return 0;
             }
         }
     }
