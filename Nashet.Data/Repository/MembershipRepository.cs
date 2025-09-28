@@ -28,11 +28,20 @@ namespace Nashet.Data.Repository
         {
             try
             {
-
                 await InsertAsync(Member);
                 return 1;
-
-
+            }
+            catch 
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> updateMember(tblMembership Member)
+        {
+            try
+            {
+                await UpdateAsync(Member);
+                return 1;
             }
             catch 
             {

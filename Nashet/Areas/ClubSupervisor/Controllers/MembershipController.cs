@@ -4,46 +4,50 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
-    public class MemberShipController
+
+    [Area("ClubSupervisor")]
+    public class MembershipController : Controller
     {
-        [Area("ClubSupervisor")]
-        public class MembershipController : Controller
+        private readonly MembershipDomain _MembershipDomain;
+        public MembershipController(MembershipDomain MembershipDomain)
         {
-            private readonly MembershipDomain _MembershipDomain;
-            public MembershipController(MembershipDomain MembershipDomain)
+            _MembershipDomain = MembershipDomain;
+        }
+        public async Task<IActionResult> ViewMember()
+        {
+            return View(await _MembershipDomain.GetMembership());
+        }
+        public async Task<IActionResult> InsertMember()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InsertMember(MembershipViewModel viewModel)
+        {
+            if (ModelState.IsValid)
             {
-                _MembershipDomain = MembershipDomain;
-            }
-            public async Task<IActionResult> ViewMembers()
-            {
-                return View(await _MembershipDomain.GetMembership());
-            }
-            public async Task<IActionResult> InsertMembership()
-            {
-                return View();
-            }
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> InsertMembership(MembershipViewModel viewModel)
-            {
-                if (ModelState.IsValid)
+                try
                 {
-                    try
-                    {
-                        int check = await _MembershipDomain.InsertMembership(viewModel);
-                        if (check == 1)
-                            ViewData["Successful"] = "Successful";
-                        else
-                            ViewData["Failed"] = "Failed";
-                    }
-                    catch
-                    {
+                    int check = await _MembershipDomain.InsertMembership(viewModel);
+                    if (check == 1)
+                        ViewData["Successful"] = "Successful";
+                    else
                         ViewData["Failed"] = "Failed";
-                    }
                 }
-                return View(viewModel);
+                catch
+                {
+                    ViewData["Failed"] = "Failed";
+                }
             }
+            return View(viewModel);
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }
+
 
