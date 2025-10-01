@@ -1,12 +1,13 @@
-﻿using Nashet.Business.Domain.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
+using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nashet.Data.Models;
-using Nashet.Business.ViewModels;
 
 namespace Nashet.Business.Domain
 {
@@ -30,6 +31,24 @@ namespace Nashet.Business.Domain
                 UserPhone = x.UserPhone,
                 UserType = x.UserType
             }).ToList();
+        }
+        public virtual async Task<tblKFUuser> GetKfuUserByUsername(string username)
+
+        {
+            var Site = await _KFUuserRepository.GetKFUuserByUsername(username);
+
+            if (Site == null)
+            {
+                throw new KeyNotFoundException($"User request with username {username} was not found.");
+            }
+
+            return Site;
+        }
+       
+        public virtual async Task<tblKFUuser> checkUser(string username, string password)
+        {
+            return await _KFUuserRepository.checkUser(username,password);
+
         }
         public async Task<int> InsertKfuUser(KfuUserViewModel viewModel)
         {
@@ -56,11 +75,11 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public int DeleteKFUuser(int id)
+        public int DeleteKFUuser(string username)
         {
             try
             {
-                _KFUuserRepository.Delete(id); 
+                _KFUuserRepository.Delete(username); 
                 return 1;
             }
             catch
