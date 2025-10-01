@@ -12,8 +12,8 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20250928083830_AddedByNebras")]
-    partial class AddedByNebras
+    [Migration("20250915084325_addByAbdulrahman1")]
+    partial class addByAbdulrahman1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ClubId")
+                    b.Property<int>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -72,6 +72,9 @@ namespace Nashet.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("SystemPositionRequest")
+                        .HasColumnType("int");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -175,10 +178,6 @@ namespace Nashet.Data.Migrations
                     b.Property<int>("ClubId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ClubNameAR")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -194,14 +193,9 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
 
-                    b.Property<int>("siteId")
-                        .HasColumnType("int");
-
                     b.HasKey("AnnouncementId");
 
                     b.HasIndex("ClubId");
-
-                    b.HasIndex("siteId");
 
                     b.ToTable("tblAnnouncement");
                 });
@@ -226,10 +220,6 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("ClubOverview")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("ClubVision")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -249,7 +239,7 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("siteId")
+                    b.Property<int>("siteId")
                         .HasColumnType("int");
 
                     b.HasKey("ClubId");
@@ -408,7 +398,10 @@ namespace Nashet.Data.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeameId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isSent")
@@ -598,17 +591,16 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SiteCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int>("SiteCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("SiteNameAR")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SiteNameEn")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -626,9 +618,8 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
-                    b.Property<string>("AcademicId")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int>("AcademicId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -646,24 +637,23 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StudentEmail")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("StudentNameAr")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("StudentNameEn")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("StudentPhone")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int>("StudentPhone")
+                        .HasColumnType("int");
 
                     b.Property<string>("StudentSkills")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -797,7 +787,7 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"));
 
-                    b.Property<int?>("ClubId")
+                    b.Property<int>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -861,7 +851,8 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserNameAR")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserNameEN")
                         .HasMaxLength(50)
@@ -887,7 +878,9 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Club");
                 });
@@ -897,19 +890,19 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblUser", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Club");
@@ -924,25 +917,19 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Nashet.Data.Models.tblSite", "Site")
-                        .WithMany()
-                        .HasForeignKey("siteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Club");
-
-                    b.Navigation("Site");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblClub", b =>
                 {
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
-                        .HasForeignKey("siteId");
+                        .HasForeignKey("siteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Site");
                 });
@@ -952,20 +939,18 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
                         .WithMany()
                         .HasForeignKey("ClubRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblTeam", "Team")
                         .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamId");
 
                     b.Navigation("ClubRole");
 
@@ -979,19 +964,19 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblTeam", "Team")
                         .WithMany()
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Club");
@@ -1006,13 +991,13 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
                         .WithMany()
                         .HasForeignKey("ClubRoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblMembership", "Membership")
                         .WithMany()
                         .HasForeignKey("MembershipID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ClubRole");
@@ -1025,7 +1010,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Club");
@@ -1036,7 +1021,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Site");
@@ -1047,7 +1032,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1057,7 +1042,9 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Club");
                 });
@@ -1071,7 +1058,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblSystemRole", "SystemRole")
                         .WithMany()
                         .HasForeignKey("SystemRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Site");

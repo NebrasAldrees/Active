@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedByNebras : Migration
+    public partial class AddMuntaha : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
