@@ -15,7 +15,15 @@ namespace Nashet.Areas.Admin.Controllers
         }
         public async Task <IActionResult> ViewEmail()
         {
-            return View(await _EmailNotificationDomain.GetEmailNotification());
+            var emails = await _EmailNotificationDomain.GetEmailNotification();
+
+            // لو رجع null، حوله لقائمة فاضية
+            return View(emails ?? new List<EmailNotificationViewModel>());
+        }
+        public IActionResult Index()
+        {
+
+            return View();
         }
 
         public async Task<IActionResult> InsertEmail()

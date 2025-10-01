@@ -5,7 +5,7 @@
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class ByHudaAziz : Migration
+    public partial class Najd1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

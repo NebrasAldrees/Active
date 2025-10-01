@@ -15,14 +15,15 @@ namespace Nashet.Business.Domain
             private readonly SystemNotificationRepository _SystemNotificationRepository = Repository;
             public async Task<IList<SystemNotificationViewModel>> GetAllNotifications()
             {
-                return _SystemNotificationRepository.GetAllNotifications().Result.Select(n => new SystemNotificationViewModel
-                {
-                    SystemNotificationId = n.SystemNotificationId,  
-                    date = n.date,
-                    Time = n.Time
+            var notifications = await _SystemNotificationRepository.GetAllNotifications();
 
-                }).ToList();
-            }
+            return notifications?.Select(n => new SystemNotificationViewModel
+            {
+                SystemNotificationId = n.SystemNotificationId,
+                date = n.date,
+                Time = n.Time
+            }).ToList() ?? new List<SystemNotificationViewModel>();
+        }
 
         //public async Task<tblSystemNotification> GetNotificationByIdAsync(int id)
         //{

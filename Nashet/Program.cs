@@ -41,7 +41,10 @@ builder.Services.AddScoped<PositionRequestRepository>();
 builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 builder.Services.AddScoped<MembershipRequestRepository>();
-
+builder.Services.AddScoped<EmailNotificationDomain>();
+builder.Services.AddScoped<EmailNotificationRepository>();
+builder.Services.AddScoped<SystemLogsRepository>();
+builder.Services.AddScoped<SystemLogsDomain>();
 
 
 
