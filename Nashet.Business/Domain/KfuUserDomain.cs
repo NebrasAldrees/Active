@@ -56,5 +56,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        public int DeleteKFUuser(int id)
+        {
+            try
+            {
+                _KFUuserRepository.Delete(id); 
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }
