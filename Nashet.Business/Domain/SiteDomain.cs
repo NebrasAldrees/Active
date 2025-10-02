@@ -49,6 +49,21 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        //public virtual async Task<int> DeleteSite(Guid siteGuid)
+        //{
+        //    try
+        //    {
+        //        int check = await _SiteRepository.DeleteSite(siteGuid);
+        //        if (check == 0)
+        //            return 0;
+        //        else
+        //            return 1;
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        
         public async Task<tblSite> GetSiteByIdAsync(int id)
         {
             var Site = await _SiteRepository.GetSiteByIdAsync(id);

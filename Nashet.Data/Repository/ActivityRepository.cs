@@ -38,7 +38,20 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        
+
+        public virtual async Task<int> updateActivity(tblActivity activity)
+        {
+            try
+            {
+                await UpdateAsync(activity);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
 
     }
 }

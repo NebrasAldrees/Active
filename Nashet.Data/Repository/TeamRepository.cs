@@ -18,6 +18,11 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(team => team.IsDeleted == false).ToListAsync(); 
         }
+        public virtual async Task<tblTeam> GetTeamByIdAsync(int id)
+        {
+            return await dbSet.Where(team => team.IsDeleted == false && team.TeamId == id)
+                            .FirstOrDefaultAsync();
+        }
         public virtual async Task<int> InsertTeam(tblTeam Team)
         {
             try
@@ -30,10 +35,19 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        public virtual async Task<tblTeam> GetTeamByIdAsync(int id)
+
+        public virtual async Task<int> updateTeam(tblTeam Team)
         {
-            return await dbSet.Where(team => team.IsDeleted == false && team.TeamId == id)
-                            .FirstOrDefaultAsync();
+            try
+            {
+                await UpdateAsync(Team);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
+        
     }
 }

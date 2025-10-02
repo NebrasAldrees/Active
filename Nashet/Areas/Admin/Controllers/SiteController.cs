@@ -41,5 +41,24 @@ namespace Nashet.Areas.Admin.Controllers
             }
             return View(viewModel);
         }
+        public async Task<IActionResult> DeleteSite(SiteViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int check = await _SiteDomain.DeleteSite(viewModel);
+                    if (check == 1)
+                        ViewData["Successful"] = "Successful";
+                    else
+                        ViewData["Failed"] = "Failed";
+                }
+                catch
+                {
+                    ViewData["Failed"] = "Failed";
+                }
+            }
+            return View(viewModel);
+        }
     }
 }
