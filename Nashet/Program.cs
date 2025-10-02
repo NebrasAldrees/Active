@@ -14,7 +14,6 @@ builder.Services.AddScoped<MembershipDomain>();
 builder.Services.AddScoped<AnnouncementRepository>();
 builder.Services.AddScoped<AnnouncementDomain>();
 builder.Services.AddScoped<SystemRoleRepository>();
-//builder.Services.AddScoped<SystemRoleDomain>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserDomain>();
 builder.Services.AddScoped<KFUuserRepository>();

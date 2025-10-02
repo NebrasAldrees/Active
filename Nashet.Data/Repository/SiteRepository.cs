@@ -47,18 +47,7 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        public virtual async Task<int> DeleteSite(tblSite site)
-        {
-            try
-            {
-                await Delete(site);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
+        
         
 
     }
