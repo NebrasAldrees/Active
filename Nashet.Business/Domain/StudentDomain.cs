@@ -63,8 +63,21 @@ namespace Nashet.Business.Domain
             }
         }
 
-
+        public int DeleteStudent(int id)
+        {
+            try
+            {
+                _StudentRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
+
+
+    }
     }
 
 

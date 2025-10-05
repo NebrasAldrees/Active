@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
@@ -11,10 +11,12 @@ namespace Nashet.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly KfuUserDomain _KfuUserdomain;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, KfuUserDomain kfuUserdomain)
         {
             _logger = logger;
+            _KfuUserdomain = kfuUserdomain;
         }
 
         public IActionResult Index()
@@ -43,6 +45,25 @@ namespace Nashet.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Login(string Username, string Password)
+        {
+            try
+            {
+                var kfuUser = await _KfuUserdomain.checkUser(Username, Password);
+                if ((kfuUser != null)
+                {
+                    if (kfuUser.UserType != Student) ;
+                }
+                return View();
+            }
+            catch
+            {
+                ViewData["Login_error"] = "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة";
+            }
+           
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

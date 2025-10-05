@@ -59,17 +59,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        //public int DeleteTeam(int id)
-        //{
-        //    try
-        //    {
-        //        _TeamRepository.Delete(id);
-        //        return 1;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public int DeleteTeam(int id)
+        {
+            try
+            {
+                _TeamRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -48,6 +48,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-
+        public int DeleteClubRole(int id)
+        {
+            try
+            {
+                _ClubRoleRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

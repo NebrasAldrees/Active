@@ -15,10 +15,10 @@ namespace Nashet.Business.Domain
     {
         private readonly SystemRoleRepository _SystemRoleRepository = Repository;
 
-       
+
         public async Task<IList<SystemRoleViewModel>> GetSystemRole()
         {
-            return _SystemRoleRepository.GetAllSystemRole().Result.Select(sr=> new SystemRoleViewModel
+            return _SystemRoleRepository.GetAllSystemRole().Result.Select(sr => new SystemRoleViewModel
             {
                 guid = sr.Guid,
                 SystemRoleId = sr.SystemRoleId,
@@ -53,6 +53,18 @@ namespace Nashet.Business.Domain
         public async Task<int> InsertSystemRole(UserViewModel viewModel)
         {
             throw new NotImplementedException();
+        }
+        public int DeleteSystemRole(int id)
+        {
+            try
+            {
+                _SystemRoleRepository.Delete(id); 
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

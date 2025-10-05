@@ -31,7 +31,7 @@ namespace Nashet.Business.Domain
             }).ToList();
         }
 
-       
+
         public async Task<int> InsertMembership(MembershipViewModel viewModel)
         {
             try
@@ -48,7 +48,7 @@ namespace Nashet.Business.Domain
                     JoinDate = viewModel.JoinDate,
                     Guid = viewModel.Guid
                 };
-                int check = await _MembershipRepository.InsertMember (membership);
+                int check = await _MembershipRepository.InsertMember(membership);
                 if (check == 0)
                     return 0;
                 else
@@ -59,6 +59,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        
+        public int DeleteMembership(int id)
+        {
+            try
+            {
+                _MembershipRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }
