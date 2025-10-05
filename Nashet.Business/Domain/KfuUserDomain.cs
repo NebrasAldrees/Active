@@ -1,12 +1,13 @@
-﻿using Nashet.Business.Domain.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
+using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nashet.Data.Models;
-using Nashet.Business.ViewModels;
 
 namespace Nashet.Business.Domain
 {
@@ -30,6 +31,10 @@ namespace Nashet.Business.Domain
                 UserPhone = x.UserPhone,
                 UserType = x.UserType
             }).ToList();
+        }
+        public virtual async Task<tblKFUuser> CheckUser(String username, String password)
+        {
+            return await _KFUuserRepository.CheckUser(username,password);
         }
         public async Task<int> InsertKfuUser(KfuUserViewModel viewModel)
         {

@@ -14,7 +14,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         {
             _ReportDomain = reportDomain;
         }
-
         public async Task<IActionResult> InsertReport()
         {
             return View();

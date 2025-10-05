@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Nashet.Business.Domain;
 using Nashet.Data.Repository;
@@ -42,8 +43,31 @@ builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 
+.AddCookie(options =>
 
+{
+
+    options.AccessDeniedPath = "/Home/Error";
+
+    options.LoginPath = "/account/login";
+
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+    //options.LoginPath = "/accounts/ErrorNotLoggedIn";
+
+    //options.LogoutPath = "account/logout";
+
+});
+
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddAuthorization(Option=>
+{
+    Option.AddPolicy("MustBeAdmin", P => P.RequireAuthenticatedUser().RequireRole("Admin"));
+});
 
 
 var app = builder.Build();
@@ -60,8 +84,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "Admin",

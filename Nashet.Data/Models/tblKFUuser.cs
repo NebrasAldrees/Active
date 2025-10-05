@@ -11,11 +11,9 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int KFUUserId { get; set; }
-
         [StringLength(10)]
         public string Username { get; set; }
         [StringLength(20)]
-
         public string Password { get; set; }
         [StringLength(30)]
         public string UserType { get; set; }
@@ -27,8 +25,5 @@ namespace Nashet.Data.Models
         public string UserEmail { get; set; }
         [StringLength(30)]
         public string UserPhone { get; set; }
-
-
-
     }
 }
