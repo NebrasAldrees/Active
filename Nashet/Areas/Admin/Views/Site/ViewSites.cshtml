@@ -29,9 +29,89 @@
                                     <td>@item.SiteCode</td>
                                     <td>@item.SiteNameAR</td>
                                     <td class="action_td text-end">
-                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                        <a class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                           data-bs-target="#View_section">عرض</a>
+                                        <!-- View Section Modal -->
+                                        <div class="modal fade" id="view_section" tabindex="-1"
+                                             aria-labelledby="view_sectionLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="view_sectionLabel">عرض بيانات الجهة</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <div class="row">
+                                                                <!-- START ITEM -->
+                                                                <div class="col-md-6">
+                                                                    <label asp-for="@item.SiteNameAR" class="mb-1"></label>
+                                                                    <p asp-for="@item.SiteNameAR"></p>
+                                                                </div><!-- END ITEM -->
+                                                                <!-- START ITEM -->
+                                                                <div class="col-md-6">
+                                                                    <label asp-for="@item.SiteNameEn" class="mb-1"></label>
+                                                                    <p asp-for="@item.SiteNameEn"></p>
+                                                                </div><!-- END ITEM -->
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">
+                                                                        إلغاء
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a asp-action="UpdateSite"  class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                           data-bs-target="#update_section">تعديل</a>
+                                        <!-- Update Section Modal -->
+                                        <div class="modal fade" id="update_section" tabindex="-1"
+                                             aria-labelledby="update_sectionLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="add_sectionLabel">تعديل بيانات جهة</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form asp-action="UpdateSite">
+                                                            <div class="row">
+                                                                <!-- START ITEM -->
+                                                                <div class="col-md-6">
+                                                                    <!-- START ITEM -->
+                                                                    <label asp-for="@item.SiteNameAR" class="mb-1"></label>
+                                                                    <input asp-for="@item.SiteNameAR" type="text" class="form-control">
+                                                                    <span style="color:red" asp-validation-for="@item.SiteNameAR"></span>
+                                                                </div><!-- END ITEM -->
+                                                                <!-- START ITEM -->
+                                                                <div class="col-md-6">
+                                                                    <label asp-for="@item.SiteNameEn" class="mb-1"></label>
+                                                                    <input asp-for="@item.SiteNameEn" type="text" class="form-control">
+                                                                    <span style="color:red" asp-validation-for="@item.SiteNameEn"></span>
+                                                                </div><!-- END ITEM -->
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">
+                                                                        إلغاء
+                                                                    </button>
+
+                                                                    <button type="button" class="btn btn-primary" title="save">حفظ</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a asp-action="DeleteSite" asp-for="@item.SiteId" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }
