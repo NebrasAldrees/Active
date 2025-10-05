@@ -19,10 +19,10 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(user => user.IsDeleted == false).ToListAsync();
         }
-        public virtual async Task<tblKFUuser> GetKFUuserById(int id)
+        public virtual async Task<tblKFUuser> GetKFUuserByUsername(string Username)
         {
-            return await dbSet.Where(user => user.IsDeleted == false && user.KFUUserId == id)
-                .FirstOrDefaultAsync();
+            return await dbSet.Where(user => user.IsDeleted == false && user.Username == Username)
+                .SingleOrDefaultAsync();
         }
         public virtual async Task<tblKFUuser> CheckUser(String username, String password)
         {
@@ -39,6 +39,11 @@ namespace Nashet.Data.Repository
             {
                 return 0;
             }
+        }
+        public virtual async Task<tblKFUuser> checkUser(string Username, string Password)
+        {
+            return await dbSet.Where(user => user.Username == Username && user.Password == Password).SingleOrDefaultAsync();
+
         }
 
     }

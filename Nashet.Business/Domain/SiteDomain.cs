@@ -49,17 +49,57 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public async Task<tblSite> GetSiteByIdAsync(int id)
+        public virtual async Task<int> UpdateSite(SiteViewModel viewModel)
         {
-            var Site = await _SiteRepository.GetSiteByIdAsync(id);
+            try
+            {
+                var site = await _SiteRepository.GetSiteBySiteCode(viewModel.SiteCode);
+                if (site == null)
+                {
+                    return 0; // Site not found
+                }
+
+                site.SiteCode = viewModel.SiteCode;
+                site.SiteNameAR = viewModel.SiteNameAR;
+                site.SiteNameEn = viewModel.SiteNameEn;
+
+                int check = await _SiteRepository.updateSite(site);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+        public int DeleteSite(int id)
+        {
+            try
+            {
+                _SiteRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public async Task<tblSite> GetSiteBySiteCode(string siteCode)
+        {
+            var Site = await _SiteRepository.GetSiteBySiteCode(siteCode);
 
             if (Site == null)
             {
-                throw new KeyNotFoundException($"Site request with ID {id} was not found.");
+                throw new KeyNotFoundException($"Site request with site code {siteCode} was not found.");
             }
 
             return Site;
         }
 
+        
     }
 }
