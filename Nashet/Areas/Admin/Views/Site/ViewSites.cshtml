@@ -9,7 +9,7 @@
                         <input type="text" class="form-control table__quick_search"
                                placeholder="البحث السريع ...">
                     </div>
-                    <a asp-action="InsertSite" asp-controller="Site" asp-area="Admin" class="btn btn-primary">إضافة جهة</a>
+                    <a asp-action="InsertSite" class="btn btn-primary">إضافة جهة</a>
                 </div>
             </div>
             <div class="block-body">
@@ -29,11 +29,11 @@
                                     <td>@item.SiteCode</td>
                                     <td>@item.SiteNameAR</td>
                                     <td class="action_td text-end">
-                                        <a class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                           data-bs-target="#View_section">عرض</a>
+                                        <a asp-action="ViewSiteById" asp-route-id="@item.SiteId" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                           data-bs-target="#view_section_@item.SiteId">عرض</a>
                                         <!-- View Section Modal -->
-                                        <div class="modal fade" id="view_section" tabindex="-1"
-                                             aria-labelledby="view_sectionLabel" aria-hidden="true">
+                                        <div class="modal fade" id="view_section_@item.SiteId" tabindex="-1"
+                                             aria-labelledby="view_sectionLabel_@item.SiteId" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -46,12 +46,27 @@
                                                                 <!-- START ITEM -->
                                                                 <div class="col-md-6">
                                                                     <label asp-for="@item.SiteNameAR" class="mb-1"></label>
-                                                                    <p asp-for="@item.SiteNameAR"></p>
                                                                 </div><!-- END ITEM -->
+                                                                <div class ="col-md-6">
+                                                                    <label class="mb-1">@item.SiteNameAR</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
                                                                 <!-- START ITEM -->
                                                                 <div class="col-md-6">
                                                                     <label asp-for="@item.SiteNameEn" class="mb-1"></label>
-                                                                    <p asp-for="@item.SiteNameEn"></p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="mb-1">@item.SiteNameEn</label>
+                                                                </div><!-- END ITEM -->
+                                                            </div>
+                                                            <div class="row">
+                                                                <!-- START ITEM -->
+                                                                <div class="col-md-6">
+                                                                    <label asp-for="@item.SiteCode" class="mb-1"></label>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>@item.SiteCode</label>
                                                                 </div><!-- END ITEM -->
                                                             </div>
                                                             <div class="row">
@@ -66,7 +81,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a asp-action="UpdateSite"  class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        <a asp-action="UpdateSite" asp-route-id="@item.SiteId" class="btn btn-sm btn-success" data-bs-toggle="modal"
                                            data-bs-target="#update_section">تعديل</a>
                                         <!-- Update Section Modal -->
                                         <div class="modal fade" id="update_section" tabindex="-1"
@@ -81,6 +96,8 @@
                                                     <div class="modal-body">
                                                         <form asp-action="UpdateSite">
                                                             <div class="row">
+                                                                <input type="hidden" name="id" value="@item.SiteId" />
+
                                                                 <!-- START ITEM -->
                                                                 <div class="col-md-6">
                                                                     <!-- START ITEM -->
@@ -102,7 +119,7 @@
                                                                         إلغاء
                                                                     </button>
 
-                                                                    <button type="button" class="btn btn-primary" title="save">حفظ</button>
+                                                                    <button type="submit" class="btn btn-primary" title="save">حفظ</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -111,7 +128,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a asp-action="DeleteSite" asp-for="@item.SiteId" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="DeleteSite" asp-route-id="@item.SiteId" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }
