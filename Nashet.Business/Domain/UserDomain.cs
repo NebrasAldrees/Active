@@ -20,11 +20,14 @@ namespace Nashet.Business.Domain
             {
                 guid = U.Guid,
                 UserId = U.UserId,
+                Username = U.Username,
                 UserNameAR = U.UserNameAR,
                 UserNameEN = U.UserNameEN,
                 UserEmail = U.UserEmail,
                 UserPhone = U.UserPhone,
-                SiteId = U.SiteId,
+                SystemRoles = U.SystemRoles,
+                SystemRoleId = U.SystemRoleId,
+                SiteId = (int)U.SiteId,
             }).ToList();
         }
 
@@ -40,7 +43,7 @@ namespace Nashet.Business.Domain
                     UserNameEN = viewModel.UserNameEN,
                     UserEmail = viewModel.UserEmail,
                     UserPhone = viewModel.UserPhone,
-                    SystemRole = viewModel.SystemRole,
+                    SystemRoleId = viewModel.SystemRoleId,
                     SiteId = viewModel.SiteId,
                 };
                 int check = await _UserRepository.InsertUser(User);
@@ -79,8 +82,8 @@ namespace Nashet.Business.Domain
                 UserNameEN = user.UserNameEN,
                 UserEmail = user.UserEmail,
                 UserPhone = user.UserPhone,
-                SystemRole = user.SystemRole,
-                SiteId = user.SiteId,
+                SystemRoleId = user.SystemRoleId,
+                SiteId = (int)user.SiteId,
             };
             return viewModel;
         }

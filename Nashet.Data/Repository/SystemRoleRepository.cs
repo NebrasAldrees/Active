@@ -36,8 +36,6 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-
-       
         }
     }
     

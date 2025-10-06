@@ -1,5 +1,61 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ClubViewModel
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">تفاصيل النادي: @Model.ClubNameAR</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Club Icon -->
+                                @if (!string.IsNullOrEmpty(Model.ClubIcon))
+                                {
+                                    <div class="text-center mb-4">
+                                        <img src="@Model.ClubIcon" alt="@Model.ClubNameAR" class="img-fluid" style="max-height: 200px;">
+                                    </div>
+                                }
+
+                                <!-- Club Details -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>اسم النادي بالعربية:</h6>
+                                        <p class="text-muted">@Model.ClubNameAR</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>اسم النادي بالإنجليزية:</h6>
+                                        <p class="text-muted">@Model.ClubNameEN</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6>الرؤية:</h6>
+                                        <p class="text-muted">@Model.ClubVision</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6>نبذة عن النادي:</h6>
+                                        <p class="text-muted">@Model.ClubOverview</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-12 text-center">
+                                        <a href="@Url.Action("ViewAllClubs")" class="btn btn-secondary">العودة إلى القائمة</a>
+                                        <a href="@Url.Action("EditClub", new { id = Model.ClubId })" class="btn btn-primary">تعديل</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

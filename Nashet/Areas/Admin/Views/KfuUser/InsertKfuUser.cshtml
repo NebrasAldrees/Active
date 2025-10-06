@@ -9,7 +9,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="Insert">
+                        <form asp-action="InsertKfuUser" method="post">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -63,9 +63,11 @@
                                 <div class="col-md-6">
                                     <label for="" class="mb-1"> نوع المستخدم</label>
                                     <select asp-for="UserType" class="form-control">
-                                        <option value="Student">Student</option>
-                                        <option value="Sttuf">Sttuf</option>
-                                        <option value="Faclity">Faclity</option>
+                                        <option value="4">طالب</option>
+                                        <option value="5">مشرف الأنشطة</option>
+                                        <option value="6">مشرف النادي</option>
+                                        <option value="7">مدير النادي</option>
+                                        <option value="8">قائد النادي</option>
                                     </select>
                                     <span style="color:red" asp-validation-for="UserType"></span>
                                 </div><!-- END ITEM -->

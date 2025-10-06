@@ -29,16 +29,26 @@ namespace Nashet.Business.Domain
 
             }).ToList();
         }
-        public async Task<tblClub> GetClubById(int id)
+        public async Task<ClubViewModel> GetClubById(int id)
         {
-            var Club = await _ClubRepository.GetClubById(id);
+            var club = await _ClubRepository.GetClubById(id);
 
-            if (Club == null)
+            if (club == null)
             {
-                throw new KeyNotFoundException($"Club request with ID {id} was not found.");
+                throw new KeyNotFoundException($"Club with ID {id} was not found.");
             }
 
-            return Club;
+            return new ClubViewModel
+            {
+                ClubId = club.ClubId,
+                SiteId = club.siteId,
+                ClubNameAR = club.ClubNameAR,
+                ClubNameEN = club.ClubNameEN,
+                ClubVision = club.ClubVision,
+                ClubOverview = club.ClubOverview,
+                ClubIcon = club.ClubIcon,
+                Guid = club.Guid
+            };
         }
         public virtual async Task<int> InsertClub(ClubViewModel viewModel)
         {
@@ -66,5 +76,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        //public async Task<int> DeleteClub(int id)
+        //{
+        //    try
+        //    {
+        //        int check = await _ClubRepository.DeleteClub(id);
+        //        return check;
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        //}
     }
 }

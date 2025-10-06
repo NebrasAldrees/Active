@@ -1,31 +1,54 @@
-﻿@using Nashet.Business.ViewModels
-@model SystemRoleViewModel
+﻿@model SystemRoleViewModel
 <section class="page_wrap">
     <div class="page_content">
-
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
                 <h5 class="m-0">إضافة نوع مستخدم</h5>
             </div>
             <div class="block-body py-5">
+
+                <!-- Success/Error Messages -->
+                @if (ViewData["Successful"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @ViewData["Successful"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                @if (ViewData["Failed"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @ViewData["Failed"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
                 <div class="row justify-content-center">
                     <div class="col-md-8">
+                        <!-- FIX: Correct form action -->
                         <form asp-action="InsertSystemRole" method="post">
+                            @Html.AntiForgeryToken()
+
                             <div class="row">
-                                <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="RoleType" class="mb-1"></label>
                                     <input asp-for="RoleType" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="RoleType"></span>
-                                </div><!-- END ITEM -->
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-     </div>
-        
-     
-    
-</section><!-- End Page Wrap -->
+    </div>
+</section>
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

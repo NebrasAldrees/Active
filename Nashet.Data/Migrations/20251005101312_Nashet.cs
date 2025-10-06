@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddMuntaha : Migration
+    public partial class Nashet : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -195,6 +195,7 @@ namespace Nashet.Data.Migrations
                     SystemRoleId = table.Column<int>(type: "int", nullable: false),
                     UserNameAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserPhone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     SiteId = table.Column<int>(type: "int", nullable: true),
@@ -256,7 +257,7 @@ namespace Nashet.Data.Migrations
                 {
                     AnnouncementId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClubId = table.Column<int>(type: "int", nullable: false),
+                    ClubId = table.Column<int>(type: "int", nullable: true),
                     siteId = table.Column<int>(type: "int", nullable: false),
                     ClubNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AnnouncementType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -276,8 +277,7 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblAnnouncement_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
-                        principalColumn: "ClubId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "ClubId");
                     table.ForeignKey(
                         name: "FK_tblAnnouncement_tblSite_siteId",
                         column: x => x.siteId,
@@ -292,7 +292,7 @@ namespace Nashet.Data.Migrations
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClubId = table.Column<int>(type: "int", nullable: false),
+                    ClubId = table.Column<int>(type: "int", nullable: true),
                     Topic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Path = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     IsAdded = table.Column<bool>(type: "bit", nullable: false),
@@ -309,8 +309,7 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblReport_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
-                        principalColumn: "ClubId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "ClubId");
                 });
 
             migrationBuilder.CreateTable(
