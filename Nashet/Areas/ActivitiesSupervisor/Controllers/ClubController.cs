@@ -12,8 +12,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             _ClubDomain = clubDomain;
         }
-
-        public async Task<IActionResult> Club()
+        public async Task<IActionResult> ViewAllClubs()
         {
             return View(await _ClubDomain.GetClub());
         }

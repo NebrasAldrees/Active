@@ -12,7 +12,7 @@ namespace Nashet.Business.ViewModels
     public class ReportViewModel
     {
         public int ReportId { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
         public tblClub Club { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("موضوع التقرير")]
@@ -21,7 +21,7 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("إرفاق التقرير")]
         [StringLength(50)]
-        public string Path { get; set; }
+        public string Path { get; set; } = null;
         public Guid Guid { get; set; }
         public bool IsAdded { get; set; }
     }

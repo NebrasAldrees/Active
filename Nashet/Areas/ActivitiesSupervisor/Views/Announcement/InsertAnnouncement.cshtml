@@ -23,20 +23,20 @@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="Club.ClubNameAR" class="mb-1">الجهة</label>
-                                    <select asp-for="Club.ClubNameAR" class="form-control">
-                                        <option value="X">نادي الذكاء الإصطناعي</option>
-                                        <option value="CC">نادي هواوي</option>
-                                        <option value="MC">نادي قوقل</option>
-                                        <option value="FC">نادي التعلم بالأقران</option>
+                                    <label asp-for="ClubNameAR" class="mb-1">النادي</label>
+                                    <select asp-for="ClubNameAR" class="form-control">
+                                        <option value="1">نادي الذكاء الإصطناعي</option>
+                                        <option value="2">نادي هواوي</option>
+                                        <option value="3">نادي قوقل</option>
+                                        <option value="4">نادي التعلم بالأقران</option>
                                     </select>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="AnnouncementType" class="mb-1">نوع الإعلان</label>
                                     <select asp-for="AnnouncementType" class="form-control">
-                                        <option value="X">إعلان  نشاط</option>
-                                        <option value="CC">إنشاء نادي جديد</option>
+                                        <option value="x">إعلان  نشاط</option>
+                                        <option value="y">إنشاء نادي جديد</option>
                                     </select>
                                 </div>
                                 <!-- START ITEM -->
@@ -53,8 +53,8 @@
                                 </div><!-- END ITEM -->
                                     <!-- START ITEM -->
                                     <div class="col-md-6">
-                                            <label for="" class="mb-1">إرفاق صورة الإعلان</label>
-                                            <input asp-for="AnnouncementImage" type="file" id="ImageUpload" name="AnnouncementImage" accept="image/* class="form-control">
+                                    <label for="" class="mb-1">إرفاق صورة للإعلان</label>
+                                    <input asp-for="AnnouncementImage" type="file" id="ImageUpload" name="ClubIcon" accept="image/*" class="form-control">
                                     </div><!-- END ITEM -->
                             </div>
                             <div class="d-flex justify-content-end">

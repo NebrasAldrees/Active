@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles ="Admin,User")]
     public class KfuUserController : Controller
     {
         private readonly KfuUserDomain _domain;
