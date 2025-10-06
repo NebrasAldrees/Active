@@ -15,7 +15,7 @@ namespace Nashet.Areas.Admin.Controllers
             _domain = domain;
         }
 
-        public async Task<IActionResult> Insert()
+        public async Task<IActionResult> InsertSystemRole()
         {
             return View();
         }

@@ -11,69 +11,78 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
- 
-    
-        public class UserDomain(UserRepository Repository) : BaseDomain
+    public class UserDomain(UserRepository Repository) : BaseDomain
+    {
+        private readonly UserRepository _UserRepository = Repository;
+        public async Task<IList<UserViewModel>> GetUser()
         {
-            private readonly UserRepository _UserRepository = Repository;
-
-            
-
-            public async Task<IList<UserViewModel>> GetUser()
+            return _UserRepository.GetAllUsers().Result.Select(U => new UserViewModel
             {
-                return _UserRepository.GetAllUsers().Result.Select(U => new UserViewModel
-                {
-                    guid = U.Guid,
-                    UserId = U.UserId,
-                    UserNameAR = U.UserNameAR,
-                    UserNameEN = U.UserNameEN,
-                    UserEmail = U.UserEmail,
-                    UserPhone = U.UserPhone,
-                    SiteId = U.SiteId,
-               
-                }).ToList();
-            }
-      
-            public async Task<int> InsertUser(UserViewModel viewModel)
-            {
-                try
-                {
-                    tblUser User = new tblUser
-                    {
-                        UserId = viewModel.UserId,
-                        UserNameAR = viewModel.UserNameAR,
-                        UserNameEN = viewModel.UserNameEN,
-                        UserEmail = viewModel.UserEmail,
-                        UserPhone = viewModel.UserPhone,
-                        SiteId = viewModel.SiteId,
-
-                    };
-                    int check = await _UserRepository.InsertUser(User);
-                    if (check == 0)
-                        return 0;
-                    else
-                        return 1;
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-            
-            public int DeleteUser(int id)
-            {
-                    try
-                    {
-                        _UserRepository.Delete(id);
-                        return 1;
-                    }
-                    catch
-                    {
-                        return 0;
-                    }
-            }
-
-
+                guid = U.Guid,
+                UserId = U.UserId,
+                UserNameAR = U.UserNameAR,
+                UserNameEN = U.UserNameEN,
+                UserEmail = U.UserEmail,
+                UserPhone = U.UserPhone,
+                SiteId = U.SiteId,
+            }).ToList();
         }
 
+        public async Task<int> InsertUser(UserViewModel viewModel)
+        {
+            try
+            {
+                tblUser User = new tblUser
+                {
+                    UserId = viewModel.UserId,
+                    Username = viewModel.Username,
+                    UserNameAR = viewModel.UserNameAR,
+                    UserNameEN = viewModel.UserNameEN,
+                    UserEmail = viewModel.UserEmail,
+                    UserPhone = viewModel.UserPhone,
+                    SystemRole = viewModel.SystemRole,
+                    SiteId = viewModel.SiteId,
+                };
+                int check = await _UserRepository.InsertUser(User);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public int DeleteUser(int id)
+        {
+            try
+            {
+                _UserRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public async Task<UserViewModel> GetUserByUsername(String username)
+        {
+            var user = await _UserRepository.GetUserByUsername(username);
+            UserViewModel viewModel = new UserViewModel
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                UserNameAR = user.UserNameAR,
+                UserNameEN = user.UserNameEN,
+                UserEmail = user.UserEmail,
+                UserPhone = user.UserPhone,
+                SystemRole = user.SystemRole,
+                SiteId = user.SiteId,
+            };
+            return viewModel;
+        }
+    }
 }

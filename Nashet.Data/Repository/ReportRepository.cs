@@ -14,21 +14,14 @@ namespace Nashet.Data.Repository
         public ReportRepository(NashetContext dbContext) : base(dbContext)
         {
         }
-
-        public virtual async Task<IList<tblReport>> GetAllReports(int id)
+        public virtual async Task<IList<tblReport>> GetAllReports()
         {
-            return await dbSet.Where(report => report.IsDeleted == false && report.ClubId == id).ToListAsync(); 
+            return await dbSet.Where(Report => Report.IsDeleted == false).ToListAsync();
         }
-
-        public async Task<IList<tblReport>> GetAllReports()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual async Task<tblReport> GetReportByIdAsync(int id)
         {
             return await dbSet.Where(report => report.IsDeleted == false && report.ReportId == id)
-                            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync();
         }
         public virtual async Task<int> InsertReport(tblReport Report)
         {

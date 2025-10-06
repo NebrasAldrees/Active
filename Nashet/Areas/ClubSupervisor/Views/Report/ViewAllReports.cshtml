@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ReportViewModel>
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-3">
+                <h5 class="m-0">التقارير</h5>
+                <div class="d-flex gap-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control table__quick_search"
+                               placeholder="البحث السريع ...">
+                    </div>
+                    <a asp-action="InsertReport" asp-controller="Report" asp-area="ClubSupervisor" class="btn btn-primary">إضافة تقرير</a>
+                </div>
+            </div>
+            <div class="block-body">
+                <table class="table table-hover js-dataTable">
+                    <thead>
+                        <tr>
+                            <th>الرقم المرجعي للتقرير</th>
+                            <th>عنوان التقرير</th>
+                            <th class=""></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tr class="cursor-pointer" goto="order_details.html">
+                                    <td>@item.ReportId</td>
+                                    <td>@item.Topic</td>
+                                    <td class="action_td text-end">
+                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
+                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
+                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</section><!-- End Page Wrap -->

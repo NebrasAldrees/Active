@@ -11,7 +11,6 @@ namespace Nashet.Business.ViewModels
 {
     public class UserViewModel  
     {
-
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
@@ -43,7 +42,9 @@ namespace Nashet.Business.ViewModels
         [DisplayName("الجهة")]
         public int? SiteId { get; set; }
         public tblSite Site { get; set; }
-        
         public Guid guid { get; set; }
+        public string Username { get; set; }
+        public string RoleName { get; set; }
+        public string SiteName { get; set; }
     }
 }

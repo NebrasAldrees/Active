@@ -8,7 +8,8 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertReport" method="post">
+                        <form asp-action="InsertReport" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -19,8 +20,9 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label for="" class="mb-1">إرفاق الملف</label>
-                                        <input asp-for="Path" type="file" id="ImageUpload" name="Path" accept="image/* class="form-control">
+                                        <label for="FileUpload" class="mb-1">إرفاق الملف</label>
+                                        <input type="file" id="FileUpload" name="File" accept=".pdf,.docx,.doc" class="form-control">
+                                        <span style="color:red" id="fileValidation"></span>
                                     </div>
                                 </div><!-- END ITEM -->
                             </div>

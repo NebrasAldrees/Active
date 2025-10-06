@@ -11,9 +11,6 @@ namespace Nashet.Data.Repository
 {
     public class UserRepository: BaseRepository<tblUser>
     {
-
-        // retrive thier data to display
-
         public UserRepository(NashetContext dbContext) : base(dbContext)
         {
         }
@@ -26,6 +23,10 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(user => user.IsDeleted == false && user.UserId == id)
                             .FirstOrDefaultAsync();
+        }
+        public virtual async Task<tblUser> GetUserByUsername(String username)
+        {
+            return await dbSet.SingleOrDefaultAsync(user => user.Username == username && !user.IsDeleted);
         }
         public virtual async Task<int> InsertUser(tblUser user)
         {

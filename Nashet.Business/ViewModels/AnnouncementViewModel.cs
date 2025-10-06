@@ -12,7 +12,7 @@ namespace Nashet.Business.ViewModels
     public class AnnouncementViewModel
     {
         public int AnnouncementId { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
         public tblClub Club { get; set; }
         public int siteId { get; set; }
         public tblSite Site { get; set; }
