@@ -4,9 +4,7 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Admin.Controllers
 {
-
     [Area("Admin")]
-
     public class SystemRoleController : Controller
     {
         private readonly SystemRoleDomain _domain;
@@ -14,14 +12,14 @@ namespace Nashet.Areas.Admin.Controllers
         {
             _domain = domain;
         }
-
-        public async Task<IActionResult> InsertSystemRole()
+        public async Task<IActionResult> Insert()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertSystemRole(UserViewModel viewModel)
+        //public async Task<IActionResult> InsertSystemRole(UserViewModel viewModel)
+        public async Task<IActionResult> InsertSystemRole(SystemRoleViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -38,7 +36,7 @@ namespace Nashet.Areas.Admin.Controllers
                     ViewData["Failed"] = "Failed";
                 }
             }
-            return View(viewModel);
+            return View("Insert", viewModel);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Nashet.Data.Models
         public string UserEmail { get; set; }
         [StringLength(30)]
         public string UserPhone { get; set; }
+        public string SystemROles { get; set; }
         public int? SiteId { get; set; } 
         public tblSite Site { get; set; }
     }

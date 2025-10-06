@@ -7,7 +7,7 @@
                 <div class="d-flex gap-2">
                     <div class="form-group">
                         <input type="text" class="form-control table__quick_search"
-                               placeholder="البحث السريع ...">
+                               placeholder="البحس السريع ...">
                     </div>
                     <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor" class="btn btn-primary">إضافة نادي</a>
                 </div>
@@ -19,9 +19,14 @@
                     <div class="alert alert-danger">@ViewData["Error"]</div>
                 }
 
-                @if (ViewData["Message"] != null)
+                @if (TempData["Error"] != null)
                 {
-                    <div class="alert alert-info">@ViewData["Message"]</div>
+                    <div class="alert alert-danger">@TempData["Error"]</div>
+                }
+
+                @if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-success">@TempData["Message"]</div>
                 }
 
                 @if (Model == null || !Model.Any())
@@ -39,10 +44,17 @@
                                         <h5 class="card-title text-center mb-1 club-name-title">@item.ClubNameAR</h5>
                                         <p class="card-text text-center mb-2 club-name-subtitle">@item.ClubNameEN</p>
                                         <div class="d-flex justify-content-center gap-1 club-actions">
-                                            @* You'll need to fill in the correct href/asp-routes for these links *@
                                             <a href="#" class="btn btn-sm btn-light">عرض</a>
                                             <a href="#" class="btn btn-sm btn-success">تعديل</a>
-                                            <a href="#" class="btn btn-sm btn-danger">حذف</a>
+
+                                            @* زر الحذف مع تأكيد *@
+                                            <form asp-action="DeleteClub" asp-controller="Club"
+                                                  asp-area="ActivitiesSupervisor" method="post"
+                                                  class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف النادي؟');">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@item.ClubId" />
+                                                <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -55,22 +67,18 @@
     </div>
 </section>
 
-@* --- Add a style block for better visual effect --- *@
 <style>
-    /* Ensures the card has a fixed height for consistency */
     .card {
-        min-height: 200px; /* Adjust as needed */
+        min-height: 200px;
         position: relative;
         overflow: hidden;
     }
 
-    /* Dark overlay for text readability */
     .club-overlay {
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        background-color: rgba(0, 0, 0, 0.5);
         transition: background-color 0.3s ease;
     }
 
-    /* Make text bold and legible */
     .club-name-title {
         font-weight: bold;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
@@ -81,8 +89,12 @@
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     }
 
-    /* Optional: Hover effect to reveal actions or lighten overlay */
     .card:hover .club-overlay {
         background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* تحسين شكل الزر في الفورم */
+    .club-actions form {
+        display: inline;
     }
 </style>
