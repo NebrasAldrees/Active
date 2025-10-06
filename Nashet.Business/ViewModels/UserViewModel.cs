@@ -40,11 +40,11 @@ namespace Nashet.Business.ViewModels
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("الجهة")]
-        public int? SiteId { get; set; }
+        public int SiteId { get; set; }
         public tblSite Site { get; set; }
         public Guid guid { get; set; }
         public string Username { get; set; }
-        public string RoleName { get; set; }
-        public string SiteName { get; set; }
+        public List<SystemRoleViewModel> SystemRoles { get; set; }
+        public List<SiteViewModel> Sites { get; set; }
     }
 }

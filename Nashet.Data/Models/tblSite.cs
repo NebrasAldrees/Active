@@ -17,7 +17,5 @@ namespace Nashet.Data.Models
         public string SiteNameAR { get; set; }
         [StringLength(100)]
         public string SiteNameEn { get; set; }
-
-
     }
 }

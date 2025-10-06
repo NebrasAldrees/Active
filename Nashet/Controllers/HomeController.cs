@@ -1,13 +1,14 @@
-using System.Diagnostics;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Nashet.Business.Domain;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Models;
+using System.Diagnostics;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Nashet.Controllers
 {
@@ -101,7 +102,7 @@ namespace Nashet.Controllers
                             var identity = new ClaimsIdentity(new[]
                             {
                                 new Claim(ClaimTypes.Name, user.Username),
-                                new Claim(ClaimTypes.Role, user.RoleName),
+                                new Claim(ClaimTypes.Role, user.SystemRole),
                                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                                 new Claim(ClaimTypes.GivenName, user.UserNameAR)
                             }, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -109,16 +110,16 @@ namespace Nashet.Controllers
 
                             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                 principal);
-                            if (user.RoleName == "Admin")
+                            if (user.SystemRoles == "Admin")
                                 return RedirectToAction("Index", "Home", new { area = "Admin" });
-                            else if (user.RoleName == "ActivitiesSupervisor")
-                                return RedirectToAction("Index", "Home", "ActivitiesSupervisor");
-                            else if (user.RoleName == "ClubSupervisor")
-                                return RedirectToAction("Index", "Home", "ClubSupervisor");
-                            else if (user.RoleName == "Student")
+                            else if (user.SystemRoles == "ActivitiesSupervisor")
+                                return RedirectToAction("Index", "Home", new { area = "ActivitiesSupervisor" });
+                            else if (user.SystemRoles == "ClubSupervisor")
+                                return RedirectToAction("Index", "Home", new { area = "ClubSupervisor" });
+                            else if (user.SystemRoles == "Student")
                                 return RedirectToAction("Index", "Home", new { area = "Student" });
-                            else if (user.RoleName == "ClubLeader")
-                                return RedirectToAction("Index", "Home", "ClubLeader");
+                            else if (user.SystemRoles == "ClubLeader")
+                                return RedirectToAction("Index", "Home", new { area = "ClubLeader" });
                         }
                         else
                         {
