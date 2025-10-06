@@ -45,25 +45,7 @@ namespace Nashet.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Login(string Username, string Password)
-        {
-            try
-            {
-                var kfuUser = await _KfuUserdomain.checkUser(Username, Password);
-                if ((kfuUser != null)
-                {
-                    if (kfuUser.UserType != Student) ;
-                }
-                return View();
-            }
-            catch
-            {
-                ViewData["Login_error"] = "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة";
-            }
-           
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

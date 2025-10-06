@@ -20,6 +20,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _ActivityDomain.GetActivity());
         }
+
         public async Task<IActionResult> InsertActivity()
         {
             return View();
@@ -45,6 +46,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             }
             return View(viewModel);
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
