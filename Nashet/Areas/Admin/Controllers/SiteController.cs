@@ -16,8 +16,7 @@ namespace Nashet.Areas.Admin.Controllers
         {
             return View(await _SiteDomain.GetSite());
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> InsertSite()
         {
             return View();
