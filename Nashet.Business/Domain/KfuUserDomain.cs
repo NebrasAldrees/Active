@@ -32,23 +32,9 @@ namespace Nashet.Business.Domain
                 UserType = x.UserType
             }).ToList();
         }
-        public virtual async Task<tblKFUuser> GetKfuUserByUsername(string username)
-
+        public virtual async Task<tblKFUuser> CheckUser(String username, String password)
         {
-            var Site = await _KFUuserRepository.GetKFUuserByUsername(username);
-
-            if (Site == null)
-            {
-                throw new KeyNotFoundException($"User request with username {username} was not found.");
-            }
-
-            return Site;
-        }
-       
-        public virtual async Task<tblKFUuser> checkUser(string username, string password)
-        {
-            return await _KFUuserRepository.checkUser(username,password);
-
+            return await _KFUuserRepository.CheckUser(username,password);
         }
         public async Task<int> InsertKfuUser(KfuUserViewModel viewModel)
         {
@@ -69,18 +55,6 @@ namespace Nashet.Business.Domain
                     return 0;
                 else
                     return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-        public int DeleteKFUuser(string username)
-        {
-            try
-            {
-                _KFUuserRepository.Delete(username); 
-                return 1;
             }
             catch
             {

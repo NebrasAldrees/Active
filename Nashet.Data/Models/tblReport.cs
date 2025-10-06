@@ -11,12 +11,12 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int ReportId { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
         public tblClub Club { get; set; }
         [StringLength(50)]
         public string Topic { get; set; }
         [StringLength(50)]
-        public string Path { get; set; }
+        public string Path { get; set; } = null;
         public bool IsAdded { get; set; }
     }
 }

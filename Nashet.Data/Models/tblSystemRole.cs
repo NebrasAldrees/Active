@@ -12,7 +12,5 @@ namespace Nashet.Data.Models
         [Key] public int SystemRoleId { get; set; }
         [StringLength(30)]
         public string RoleType { get; set; }
-
-
     }
 }

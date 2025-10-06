@@ -16,8 +16,6 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("اسم المنصب")]
         public string RoleType { get; set; }
-        
-
         public Guid guid { get; set; }
 
     }

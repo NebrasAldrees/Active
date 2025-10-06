@@ -45,7 +45,6 @@ namespace Nashet.Business.ViewModels
         public string ActivityLocation { get; set; }
 
         [StringLength(200)]
-        [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("إرفاق صورة")]
         public string ActivityPoster { get; set; }
         public Guid Guid { get; set; }

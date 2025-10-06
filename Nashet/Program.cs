@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Nashet.Business.Domain;
 using Nashet.Data.Repository;
@@ -40,12 +41,19 @@ builder.Services.AddScoped<PositionRequestRepository>();
 builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 builder.Services.AddScoped<MembershipRequestRepository>();
-builder.Services.AddScoped<EmailNotificationDomain>();
-builder.Services.AddScoped<EmailNotificationRepository>();
-builder.Services.AddScoped<SystemLogsRepository>();
-builder.Services.AddScoped<SystemLogsDomain>();
 
 
+    //options.LogoutPath = "account/logout";
+
+});
+
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddAuthorization(Option=>
+{
+    Option.AddPolicy("MustBeAdmin", P => P.RequireAuthenticatedUser().RequireRole("Admin"));
+});
 
 
 var app = builder.Build();
@@ -62,8 +70,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "Admin",

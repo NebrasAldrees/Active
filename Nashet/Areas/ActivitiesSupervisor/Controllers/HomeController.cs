@@ -18,9 +18,10 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             _logger = logger;
         }
-
-
-
+        public IActionResult ActivitiesSupervisorHome()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
