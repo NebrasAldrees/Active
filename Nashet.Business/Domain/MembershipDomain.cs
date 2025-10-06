@@ -38,15 +38,11 @@ namespace Nashet.Business.Domain
             {
                 tblMembership membership = new tblMembership
                 {
-                    MembershipId = viewModel.MembershipId,
                     StudentId = viewModel.StudentId,
-                    Student = viewModel.Student,
+                    //Student = viewModel.Student,
                     ClubRoleId = viewModel.ClubRoleId,
-                    ClubRole = viewModel.ClubRole,
                     TeamId = viewModel.TeamId,
-                    Team = viewModel.Team,
                     JoinDate = viewModel.JoinDate,
-                    Guid = viewModel.Guid
                 };
                 int check = await _MembershipRepository.InsertMember(membership);
                 if (check == 0)

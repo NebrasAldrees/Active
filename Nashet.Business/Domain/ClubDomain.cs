@@ -56,14 +56,12 @@ namespace Nashet.Business.Domain
             {
                 tblClub Club = new tblClub
                 {
-                    ClubId = viewModel.ClubId,
                     siteId = viewModel.SiteId,
                     ClubNameAR = viewModel.ClubNameAR,
                     ClubNameEN = viewModel.ClubNameEN,
                     ClubVision = viewModel.ClubVision,
                     ClubOverview = viewModel.ClubOverview,
-                    ClubIcon = viewModel.ClubIcon,
-                    Guid = viewModel.Guid
+                    ClubIcon = viewModel.ClubIcon                
                 };
                 int check = await _ClubRepository.InsertClub(Club);
                 if (check == 0)
@@ -76,17 +74,17 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        //public async Task<int> DeleteClub(int id)
-        //{
-        //    try
-        //    {
-        //        int check = await _ClubRepository.DeleteClub(id);
-        //        return check;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public async Task<int> DeleteClub(int id)
+        {
+            try
+            {
+                _ClubRepository.Delete(id);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

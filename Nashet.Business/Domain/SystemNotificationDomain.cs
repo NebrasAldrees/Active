@@ -41,7 +41,6 @@ namespace Nashet.Business.Domain
                 {
                 tblSystemNotification  notification = new tblSystemNotification
                 {
-                        SystemNotificationId = viewModel.SystemNotificationId,
                          date = viewModel.date,
                          Time = viewModel.Time
 

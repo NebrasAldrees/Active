@@ -47,11 +47,9 @@ namespace Nashet.Business.Domain
             {
                 tblReport Report = new tblReport
                 {
-                    ReportId = viewModel.ReportId,
                     ClubId = viewModel.ClubId,
                     Topic = viewModel.Topic,
-                    Path = viewModel.Path,
-                    Guid = viewModel.Guid
+                    Path = viewModel.Path
                 };
                 int check = await _ReportRepository.InsertReport(Report);
                 if (check == 0)

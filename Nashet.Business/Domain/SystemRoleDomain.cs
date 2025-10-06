@@ -32,7 +32,6 @@ namespace Nashet.Business.Domain
             {
                 tblSystemRole SystemRole = new tblSystemRole
                 {
-                    SystemRoleId = viewModel.SystemRoleId,
                     RoleType = viewModel.RoleType,
 
                 };

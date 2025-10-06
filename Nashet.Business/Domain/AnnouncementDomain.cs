@@ -38,8 +38,7 @@ namespace Nashet.Business.Domain
                     AnnouncementType = viewModel.AnnouncementType,
                     AnnouncementTopic = viewModel.AnnouncementTopic,
                     AnnouncementDetails = viewModel.AnnouncementDetails,
-                    AnnouncementImage = viewModel.AnnouncementImage,
-                    Guid = viewModel.Guid
+                    AnnouncementImage = viewModel.AnnouncementImage
                 };
                 int check = await _AnnouncementRepository.InsertAnnouncement(announcement);
                 if (check == 0)

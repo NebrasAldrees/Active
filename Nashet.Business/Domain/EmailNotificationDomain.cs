@@ -31,9 +31,7 @@ namespace Nashet.Business.Domain
             {
                 tblEmailNotificationLog email = new tblEmailNotificationLog
                 {
-
-                    // EmailNotificationsId = viewModel.EmailNotificationsId,
-                    UserEmail = viewModel.UserEmail,
+                    UserEmail = viewModel.UserEmail
 
                 };
                     int check = await  _EmailNotificationRepository.InsertEmailNotification(email);
