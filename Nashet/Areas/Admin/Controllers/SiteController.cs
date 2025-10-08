@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize]
     public class SiteController : Controller
     {
         private readonly SiteDomain _SiteDomain;
@@ -16,8 +18,12 @@ namespace Nashet.Areas.Admin.Controllers
         {
             return View(await _SiteDomain.GetSite());
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        public async Task<IActionResult> ViewSiteById(int id)
+        {
+            return View(await _SiteDomain.GetSiteBySiteId(id));
+        }
+        
         public async Task<IActionResult> InsertSite()
         {
             return View();
@@ -43,13 +49,15 @@ namespace Nashet.Areas.Admin.Controllers
             }
             return View(viewModel);
         }
-        public async Task<IActionResult> UpdateSite(SiteViewModel viewModel)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateSite(int id, SiteViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _SiteDomain.UpdateSite(viewModel);
+                    int check = await _SiteDomain.UpdateSite(id, viewModel);
                     if (check == 1)
                         ViewData["Successful"] = "Site Update successfully.";
                     else
@@ -60,7 +68,7 @@ namespace Nashet.Areas.Admin.Controllers
                     ViewData["Failed"] = "Failed";
                 }
             }
-            return View(viewModel);
+            return RedirectToAction("ViewSites");
         }
         public ActionResult DeleteSite(int id)
         {

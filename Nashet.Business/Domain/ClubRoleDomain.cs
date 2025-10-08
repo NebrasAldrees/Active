@@ -32,10 +32,7 @@ namespace Nashet.Business.Domain
             {
                 tblClubRole clubrole = new tblClubRole
                 {
-
-                    ClubRoleId = viewModel.ClubRoleId,
-                    RoleType = viewModel.RoleType,
-                    Guid = viewModel.Guid
+                    RoleType = viewModel.RoleType                
                 };
                 int check = await _ClubRoleRepository.InsertClubRole(clubrole);
                 if (check == 0)

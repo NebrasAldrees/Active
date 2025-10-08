@@ -24,7 +24,7 @@ namespace Nashet.Business.Domain
                 SystemRoleId = sr.SystemRoleId,
                 RoleType = sr.RoleType,
 
-            }).ToList();
+            }).ToList() ?? new List<SystemRoleViewModel>();
         }
         public async Task<int> InsertSystemRole(SystemRoleViewModel viewModel)
         {
@@ -32,7 +32,6 @@ namespace Nashet.Business.Domain
             {
                 tblSystemRole SystemRole = new tblSystemRole
                 {
-                    SystemRoleId = viewModel.SystemRoleId,
                     RoleType = viewModel.RoleType,
 
                 };
@@ -67,10 +66,10 @@ namespace Nashet.Business.Domain
 
         }
 
-        public async Task<int> InsertSystemRole(UserViewModel viewModel)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<int> InsertSystemRole(UserViewModel viewModel)
+        //{
+        //    throw new NotImplementedException();
+        //}
         public int DeleteSystemRole(int id)
         {
             try

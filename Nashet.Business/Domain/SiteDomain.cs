@@ -32,8 +32,6 @@ namespace Nashet.Business.Domain
             {
                 tblSite site = new tblSite
                 {
-                    Guid = viewModel.Guid,
-                    SiteId = viewModel.SiteId,
                     SiteCode = viewModel.SiteCode,
                     SiteNameAR = viewModel.SiteNameAR,
                     SiteNameEn = viewModel.SiteNameEn
@@ -66,11 +64,11 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public virtual async Task<int> UpdateSite(SiteViewModel viewModel)
+        public virtual async Task<int> UpdateSite(int id,SiteViewModel viewModel)
         {
             try
             {
-                var site = await _SiteRepository.GetSiteBySiteCode(viewModel.SiteCode);
+                var site = await _SiteRepository.GetSiteBySiteId(id);
                 if (site == null)
                 {
                     return 0; // Site not found
@@ -105,13 +103,13 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public async Task<tblSite> GetSiteBySiteCode(string siteCode)
+        public async Task<tblSite> GetSiteBySiteId(int siteId)
         {
-            var Site = await _SiteRepository.GetSiteBySiteCode(siteCode);
+            var Site = await _SiteRepository.GetSiteBySiteId(siteId);
 
             if (Site == null)
             {
-                throw new KeyNotFoundException($"Site request with site code {siteCode} was not found.");
+                throw new KeyNotFoundException($"Site request with site code {siteId} was not found.");
             }
 
             return Site;

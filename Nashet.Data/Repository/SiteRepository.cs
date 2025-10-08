@@ -31,9 +31,9 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(site => site.IsActive == true).ToListAsync(); 
         }
-        public virtual async Task<tblSite> GetSiteBySiteCode(string siteCode)
+        public virtual async Task<tblSite> GetSiteBySiteId(int siteId)
         {
-            return await dbSet.Where(site => site.IsDeleted == false && site.SiteCode == siteCode)
+            return await dbSet.Where(site => site.IsDeleted == false && site.SiteId == siteId)
                             .FirstOrDefaultAsync();
         }
         public virtual async Task<int> updateSite(tblSite site)

@@ -29,16 +29,26 @@ namespace Nashet.Business.Domain
 
             }).ToList();
         }
-        public async Task<tblClub> GetClubById(int id)
+        public async Task<ClubViewModel> GetClubById(int id)
         {
-            var Club = await _ClubRepository.GetClubById(id);
+            var club = await _ClubRepository.GetClubById(id);
 
-            if (Club == null)
+            if (club == null)
             {
-                throw new KeyNotFoundException($"Club request with ID {id} was not found.");
+                throw new KeyNotFoundException($"Club with ID {id} was not found.");
             }
 
-            return Club;
+            return new ClubViewModel
+            {
+                ClubId = club.ClubId,
+                SiteId = club.siteId,
+                ClubNameAR = club.ClubNameAR,
+                ClubNameEN = club.ClubNameEN,
+                ClubVision = club.ClubVision,
+                ClubOverview = club.ClubOverview,
+                ClubIcon = club.ClubIcon,
+                Guid = club.Guid
+            };
         }
         public virtual async Task<int> InsertClub(ClubViewModel viewModel)
         {
@@ -46,14 +56,12 @@ namespace Nashet.Business.Domain
             {
                 tblClub Club = new tblClub
                 {
-                    ClubId = viewModel.ClubId,
                     siteId = viewModel.SiteId,
                     ClubNameAR = viewModel.ClubNameAR,
                     ClubNameEN = viewModel.ClubNameEN,
                     ClubVision = viewModel.ClubVision,
                     ClubOverview = viewModel.ClubOverview,
-                    ClubIcon = viewModel.ClubIcon,
-                    Guid = viewModel.Guid
+                    ClubIcon = viewModel.ClubIcon                
                 };
                 int check = await _ClubRepository.InsertClub(Club);
                 if (check == 0)
@@ -76,6 +84,18 @@ namespace Nashet.Business.Domain
                     await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
                 }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<int> DeleteClub(int id)
+        {
+            try
+            {
+                _ClubRepository.Delete(id);
+                return 1;
             }
             catch
             {

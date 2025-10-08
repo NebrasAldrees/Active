@@ -26,17 +26,19 @@ namespace Nashet.Business.Domain
             }).ToList();
         }
 
-        //public async Task<tblTeam> GetTeamById(int id)
-        //{
-        //    var Team= await _TeamRepository.GetTeamByIdAsync(id);
+        public async Task<tblTeam> GetTeamById(int id)
+        {
+            var Team = await _TeamRepository.GetTeamByIdAsync(id);
 
-        //    if (Team == null)
-        //    {
-        //        throw new KeyNotFoundException($"Team request with ID {id} was not found.");
-        //    }
+            if (Team == null)
+            {
+                throw new KeyNotFoundException($"Team request with ID {id} was not found.");
+            }
 
-        //    return Team;
-        //}
+            return Team;
+        }
+
+
         public async Task<int> InsertTeam(TeamViewModel viewModel)
         {
             try
@@ -45,8 +47,7 @@ namespace Nashet.Business.Domain
                 {
                     ClubId = viewModel.ClubId,
                     TeamNameAR = viewModel.TeamNameAR,
-                    TeamNameEn = viewModel.TeamNameEn,
-                    Guid = viewModel.Guid
+                    TeamNameEn = viewModel.TeamNameEn
                 };
                 int check = await _TeamRepository.InsertTeam(team);
                 if (check == 0)

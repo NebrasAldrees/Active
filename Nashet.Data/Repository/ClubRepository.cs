@@ -25,6 +25,24 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == id)
             .FirstOrDefaultAsync();
         }
+            //public virtual async Task<int> DeleteClub(int id)
+            //{
+            //    try
+            //    {
+            //        var club = await dbSet.FindAsync(id);
+            //        if (club != null)
+            //        {
+            //            club.IsDeleted = true;
+            //            await NashetContext.SaveChangesAsync();
+            //            return 1;
+            //        }
+            //        return 0; 
+            //    }
+            //    catch
+            //    {
+            //        return 0;
+            //    }
+            //}
         public virtual async Task<int> InsertClub(tblClub Club)
         {
             try
