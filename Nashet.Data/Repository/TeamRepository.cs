@@ -30,8 +30,9 @@ namespace Nashet.Data.Repository
                 await InsertAsync(Team);
                 return 1;
             }
-            catch
+            catch (Exception ex) 
             {
+                Console.WriteLine($"Error inserting system:{ex.Message}");
                 return 0;
             }
         }

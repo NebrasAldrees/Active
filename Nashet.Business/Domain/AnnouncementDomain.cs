@@ -43,9 +43,25 @@ namespace Nashet.Business.Domain
                 };
                 int check = await _AnnouncementRepository.InsertAnnouncement(announcement);
                 if (check == 0)
+                {
                     return 0;
+                }
                 else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblAnnouncement",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
+                }
             }
             catch
             {
