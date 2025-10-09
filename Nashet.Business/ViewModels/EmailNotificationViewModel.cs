@@ -12,9 +12,10 @@ namespace Nashet.Business.ViewModels
         public int EmailNotificationsId { get; set; }
 
         [StringLength(30)]
+        [Required(ErrorMessage = "هذا الحقل مطلوب")]
+        //[DisplayName("username")]
         public string UserEmail { get; set; }
-
-       // public Guid guid { get; set; }
+        public Guid guid { get; set; }
 
     }
 }
