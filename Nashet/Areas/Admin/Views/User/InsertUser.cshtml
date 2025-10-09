@@ -35,19 +35,19 @@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1">اسم المستخدم بالأنجليزية</label>
+                                    <label asp-for="UserNameEN" class="mb-1">اسم المستخدم بالأنجليزية</label>
                                     <input asp-for="UserNameEN" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="UserNameEN"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"></label>
+                                    <label asp-for="Username" class="mb-1">اسم المستخدم</label>
                                     <input asp-for="Username" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="Username"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1">البريد الالكتروني</label>
+                                    <label asp-for="UserEmail" class="mb-1">البريد الالكتروني</label>
                                     <input asp-for="UserEmail" type="email" class="form-control">
                                     <span style="color:red" asp-validation-for="UserEmail"></span>
                                 </div><!-- END ITEM -->
@@ -55,7 +55,7 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1">رقم الجوال </label>
+                                    <label asp-for="UserPhone" class="mb-1">رقم الجوال </label>
                                     <input asp-for="UserPhone" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="UserPhone"></span>
                                 </div><!-- END ITEM -->
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"> الجهة </label>
+                                    <label asp-for="SiteId" class="mb-1"> الجهة </label>
                                     <select asp-for="SiteId" class="form-control">
                                         <option value="">-- اختر الجهة --</option>
                                         @foreach (SiteViewModel site in Model.Sites)
@@ -75,7 +75,7 @@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1">نوع المستخدم </label>
+                                    <label asp-for="SystemRoleId" class="mb-1">نوع المستخدم </label>
                                     <select asp-for="SystemRoleId" class="form-control">
                                         <option value="">-- اختر نوع المستخدم --</option>
                                         @foreach (SystemRoleViewModel role in Model.SystemRoles)

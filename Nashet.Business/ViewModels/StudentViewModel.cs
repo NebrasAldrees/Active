@@ -26,7 +26,7 @@ namespace Nashet.Business.ViewModels
         [StringLength(70)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName(" اسم الطالب باللغة الإنجليزية")]
-        public String StudentNameEn { get; set; }
+        public string StudentNameEn { get; set; }
 
         [StringLength(150)]
         [DisplayName("البريد الإلكتروني")]
@@ -40,7 +40,7 @@ namespace Nashet.Business.ViewModels
         [StringLength(50)]
         [DisplayName(" الجهة")]
         public int SiteId { get; set; }
-        public tblSite Site { get; set; }
+        public SiteViewModel Site { get; set; }
 
         [StringLength(250)]
         [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
@@ -48,6 +48,7 @@ namespace Nashet.Business.ViewModels
         public string StudentSkills { get; set; }
         
         public Guid Guid { get; set; }
+        //public List<SiteViewModel> Sites { get; set; }
 
 
     }

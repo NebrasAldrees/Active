@@ -1,22 +1,23 @@
-﻿@model IEnumerable<UserViewModel>
+﻿@model IEnumerable<StudentViewModel>
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-3">
-                <h5 class="m-0">المستخدمين</h5>
+                <h5 class="m-0">الطلاب</h5>
                 <div class="d-flex gap-2">
                     <div class="form-group">
                         <input type="text" class="form-control table__quick_search"
                                placeholder="البحث السريع ...">
                     </div>
-                    <a asp-action="InsertUser" asp-controller="User" asp-area="Admin" class="btn btn-primary">إضافة مستخدم</a>
+                    <a asp-action="InsertStudent" asp-controller="Student" asp-area="Student" class="btn btn-primary">إضافة طالب</a>
                 </div>
             </div>
             <div class="block-body">
                 <table class="table table-hover js-dataTable">
                     <thead>
                         <tr>
-                            <th>اسم المستخدم</th>
+                            <th>اسم الطالب باللغة العربية</th>
+                            <th>اسم الطالب باللغة الإنجليزية</th>
                             <th class=""></th>
                         </tr>
                     </thead>
@@ -25,10 +26,11 @@
                             foreach (var item in Model)
                             {
                                 <tr class="cursor-pointer" goto="order_details.cshtml">
-                                    <td>@item.UserNameAR</td>
-                                    <td>@item.UserNameEN</td>
-                                    <td>@item.UserEmail</td>
-                                    <td>@item.UserPhone</td>
+                                    <td>@item.StudentNameAr</td>
+                                    <td>@item.StudentNameEn</td>
+                                    <td>@item.StudentEmail</td>
+                                    <td>@item.StudentPhone</td>
+                                    <td>@item.StudentSkills</td>
                                     <td class="action_td text-end">
                                         <a href="" class="btn btn-sm btn-primary">عرض</a>
                                         <a href="" class="btn btn-sm btn-success">تعديل</a>

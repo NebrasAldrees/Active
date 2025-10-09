@@ -4,9 +4,7 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Admin.Controllers
 {
-
     [Area("Admin")]
-   
         public class UserController : Controller
         {
             private readonly UserDomain _domain;
@@ -26,11 +24,11 @@ namespace Nashet.Areas.Admin.Controllers
             }
 
 
-        public async Task<IActionResult> InsertUser()
-        {
-            var viewModel = await CreateUserViewModelWithDropdowns();
-            return View(viewModel);
-        }
+            public async Task<IActionResult> InsertUser()
+            {
+                var viewModel = await CreateUserViewModelWithDropdowns();
+                return View(viewModel);
+            }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

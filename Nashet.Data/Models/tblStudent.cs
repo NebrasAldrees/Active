@@ -24,10 +24,12 @@ namespace Nashet.Data.Models
         public string StudentEmail { get; set; }
         [StringLength(10)]
         public string StudentPhone { get; set; }
+
         public int SiteId { get; set; }
         public tblSite Site { get; set; }
 
         [StringLength(250)]
         public string StudentSkills { get; set; } //update 
+
     }
 }

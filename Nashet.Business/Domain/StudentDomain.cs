@@ -29,9 +29,7 @@ namespace Nashet.Business.Domain
                 StudentEmail = S.StudentEmail,
                 StudentPhone = S.StudentPhone,
                 StudentSkills = S.StudentSkills,
-                SiteId = S.SiteId,
-                Site = S.Site
-
+            
             }).ToList();
         }
 
@@ -41,15 +39,14 @@ namespace Nashet.Business.Domain
             {
                 tblStudent Student = new tblStudent
                 {
-                    StudentId = viewModel.StudentId,
                     AcademicId = viewModel.AcademicId,
                     StudentNameAr = viewModel.StudentNameAr,
                     StudentNameEn = viewModel.StudentNameEn,
                     StudentEmail = viewModel.StudentEmail,
                     StudentPhone = viewModel.StudentPhone,
                     StudentSkills = viewModel.StudentSkills,
-                    SiteId = viewModel.SiteId,
-                    Site = viewModel.Site
+             
+
                 };
                 int check = await _StudentRepository.InsertStudent(Student);
                 if (check == 0)

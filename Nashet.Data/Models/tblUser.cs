@@ -23,6 +23,7 @@ namespace Nashet.Data.Models
         [StringLength(30)]
         public string UserPhone { get; set; }
         public string SystemROles { get; set; }
+        //public List<Nashet.Business.ViewModels.SystemRoleViewModel> SystemRoles { get; set; }
         public int? SiteId { get; set; } 
         public tblSite Site { get; set; }
     }
