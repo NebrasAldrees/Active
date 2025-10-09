@@ -10,7 +10,7 @@ namespace Nashet.Data.Repository.Common
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        void Delete(TEntity entityToDelete);
+        void IsDeleted(TEntity entityToDelete);
         void Delete(object id);
         IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,

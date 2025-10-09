@@ -60,12 +60,23 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public int DeleteTeam(int id)
+        
+        public virtual async Task<int> DeleteTeam(int Id)
         {
             try
             {
-                _TeamRepository.Delete(id);
-                return 1;
+                var team = await _TeamRepository.GetTeamByIdAsync(Id);
+                if (team == null)
+                {
+                    return 0; // Site not found
+                }
+
+                int check = await _TeamRepository.DeleteTeam(team);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+
             }
             catch
             {

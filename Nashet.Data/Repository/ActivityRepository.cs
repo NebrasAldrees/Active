@@ -52,6 +52,24 @@ namespace Nashet.Data.Repository
             }
         }
 
+        public virtual async Task<int> DeleteActivity(tblActivity activity)
+        {
+            try
+            {
+                if (activity == null || activity.IsDeleted == true)
+                {
+                    return 0;
+                }
+
+                IsDeleted(activity);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
 
     }
 }

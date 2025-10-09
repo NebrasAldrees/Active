@@ -27,6 +27,8 @@ namespace Nashet.Business.ViewModels
         [DisplayName("اسم الفريق باللغة الانجليزية")]
         public string TeamNameEn { get; set; }
         public Guid Guid { get; set; }
+        public List<ClubViewModel> clubs { get; set; }
+
 
     }
 }

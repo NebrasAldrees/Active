@@ -28,12 +28,29 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<IList<tblSite>> GetAllSites()
         {
-            return await dbSet.Where(site => site.IsActive == true).ToListAsync(); 
+            return await dbSet.Where(site => site.IsActive == true && site.IsDeleted == false).ToListAsync(); 
         }
         public virtual async Task<tblSite> GetSiteBySiteId(int siteId)
         {
             return await dbSet.Where(site => site.IsDeleted == false && site.SiteId == siteId)
                             .FirstOrDefaultAsync();
+        }
+        public virtual async Task<int> DeleteSite(tblSite site)
+        {
+            try
+            {
+                if (site == null || site.IsDeleted == true)
+                {
+                    return 0;
+                }
+
+                IsDeleted(site);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
         public virtual async Task<int> updateSite(tblSite site)
         {
@@ -47,6 +64,7 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+        
         
         
 

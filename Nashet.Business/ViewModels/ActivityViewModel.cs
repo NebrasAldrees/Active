@@ -15,7 +15,7 @@ namespace Nashet.Business.ViewModels
 
         [DisplayName("النادي التابع للنشاط")]
         public int? ClubId { get; set; }
-        public tblClub Club { get; set; }
+        public ClubViewModel Club { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("عنوان النشاط")]
@@ -48,6 +48,7 @@ namespace Nashet.Business.ViewModels
         [DisplayName("إرفاق صورة")]
         public string ActivityPoster { get; set; }
         public Guid Guid { get; set; }
+
 
     }
 }

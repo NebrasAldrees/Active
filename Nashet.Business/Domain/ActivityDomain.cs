@@ -68,12 +68,24 @@ namespace Nashet.Business.Domain
 
             return Activity;
         }
-        public int DeleteActivity(int id)
+        
+
+        public virtual async Task<int> DeleteActivity(int Id)
         {
             try
             {
-                _ActivityRepository.Delete(id);
-                return 1;
+                var activity = await _ActivityRepository.GetActivityById(Id);
+                if (activity == null)
+                {
+                    return 0; // Site not found
+                }
+
+                int check = await _ActivityRepository.DeleteActivity(activity);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+
             }
             catch
             {

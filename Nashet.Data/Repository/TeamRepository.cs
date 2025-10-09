@@ -48,6 +48,24 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        
+
+        public virtual async Task<int> DeleteTeam(tblTeam team)
+        {
+            try
+            {
+                if (team == null || team.IsDeleted == true)
+                {
+                    return 0;
+                }
+
+                IsDeleted(team);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }
