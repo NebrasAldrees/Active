@@ -12,7 +12,7 @@ namespace Nashet.Business.ViewModels
     public class ActivityViewModel
     {
         public int ActivityId { get; set; }
-
+        [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("النادي التابع للنشاط")]
         public int? ClubId { get; set; }
         public ClubViewModel Club { get; set; }
