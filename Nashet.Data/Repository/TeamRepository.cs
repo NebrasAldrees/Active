@@ -30,8 +30,9 @@ namespace Nashet.Data.Repository
                 await InsertAsync(Team);
                 return 1;
             }
-            catch
+            catch (Exception ex) 
             {
+                Console.WriteLine($"Error inserting system:{ex.Message}");
                 return 0;
             }
         }
@@ -48,6 +49,24 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        
+
+        public virtual async Task<int> DeleteTeam(tblTeam team)
+        {
+            try
+            {
+                if (team == null || team.IsDeleted == true)
+                {
+                    return 0;
+                }
+
+                IsDeleted(team);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }

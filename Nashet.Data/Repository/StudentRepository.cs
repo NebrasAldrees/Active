@@ -14,6 +14,11 @@ namespace Nashet.Data.Repository
         public StudentRepository(NashetContext dbContext) : base(dbContext)
         {
         }
+
+        public async Task<tblStudent> GetByAcademicIdAsync(String academicId)
+        {
+            return await dbSet.FirstOrDefaultAsync(student => student.AcademicId == academicId && student.IsDeleted == false);
+        }
         public virtual async Task<IList<tblStudent>> GetAllStudents()
         {
             return await dbSet.Where(Student => Student.IsDeleted == false).ToListAsync(); 
@@ -26,11 +31,43 @@ namespace Nashet.Data.Repository
                 await InsertAsync(student);
                 return 1;
             }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Error inserting system:{ex.Message}");
+                return 0;
+            }
+        }
+
+        public virtual async Task<int> updateStudent(tblStudent student)
+        {
+            try
+            {
+                await UpdateAsync(student);
+                return 1;
+            }
             catch
             {
                 return 0;
             }
         }
+        //public virtual async Task<int> DeleteStudent(tblStudent student)
+        //{
+        //    try
+        //    {
+        //        if (student == null || student.IsDeleted == true)
+        //        {
+        //            return 0;
+        //        }
+
+        //        IsDeleted(student);
+        //        return 1;
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        //}
+    
 
         public virtual async Task<tblStudent> GetStudentByIdAsync(int id)
         {

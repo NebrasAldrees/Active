@@ -15,14 +15,15 @@ namespace Nashet.Business.Domain
             private readonly SystemNotificationRepository _SystemNotificationRepository = Repository;
             public async Task<IList<SystemNotificationViewModel>> GetAllNotifications()
             {
-                return _SystemNotificationRepository.GetAllNotifications().Result.Select(n => new SystemNotificationViewModel
-                {
-                    SystemNotificationId = n.SystemNotificationId,  
-                    date = n.date,
-                    Time = n.Time
+            var notifications = await _SystemNotificationRepository.GetAllNotifications();
 
-                }).ToList();
-            }
+            return notifications?.Select(n => new SystemNotificationViewModel
+            {
+                SystemNotificationId = n.SystemNotificationId,
+                date = n.date,
+                Time = n.Time
+            }).ToList() ?? new List<SystemNotificationViewModel>();
+        }
 
         //public async Task<tblSystemNotification> GetNotificationByIdAsync(int id)
         //{
@@ -41,16 +42,32 @@ namespace Nashet.Business.Domain
                 {
                 tblSystemNotification  notification = new tblSystemNotification
                 {
-                        SystemNotificationId = viewModel.SystemNotificationId,
                          date = viewModel.date,
                          Time = viewModel.Time
 
                 };
                     int check = await _SystemNotificationRepository.InsertNotification(notification);
-                    if (check == 0)
-                        return 0;
-                    else
-                        return 1;
+                if (check == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblSystemNotification",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
+                    return 1;
+                }
+                
                 }
                 catch
                 {

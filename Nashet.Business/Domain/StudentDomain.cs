@@ -16,7 +16,10 @@ namespace Nashet.Business.Domain
     {
         private readonly StudentRepository _StudentRepository = Repository;
 
-
+        public async Task<tblStudent> GetByAcademicId(String academicId)
+        {
+            return await _StudentRepository.GetByAcademicIdAsync(academicId); 
+        }
 
         public async Task<IList<StudentViewModel>> GetStudent()
         {
@@ -39,16 +42,60 @@ namespace Nashet.Business.Domain
             {
                 tblStudent Student = new tblStudent
                 {
-                    AcademicId = viewModel.AcademicId,
                     StudentNameAr = viewModel.StudentNameAr,
                     StudentNameEn = viewModel.StudentNameEn,
+                    AcademicId = viewModel.AcademicId,
                     StudentEmail = viewModel.StudentEmail,
                     StudentPhone = viewModel.StudentPhone,
                     StudentSkills = viewModel.StudentSkills,
-             
+                    SiteId = viewModel.SiteId,
+
 
                 };
                 int check = await _StudentRepository.InsertStudent(Student);
+                if (check == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblSite",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
+                    return 1;
+                }
+               
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public virtual async Task<int> UpdateStudent(int id, StudentViewModel viewModel)
+        {
+            try
+            {
+                var student = await _StudentRepository.GetStudentByIdAsync(id);
+                if (student == null)
+                {
+                    return 0; // Site not found
+                }
+
+                student.StudentId = viewModel.StudentId;
+                student.StudentNameAr = viewModel.StudentNameAr;
+                student.StudentNameEn = viewModel.StudentNameEn;
+
+                int check = await _StudentRepository.updateStudent(student);
                 if (check == 0)
                     return 0;
                 else
@@ -58,20 +105,30 @@ namespace Nashet.Business.Domain
             {
                 return 0;
             }
-        }
 
-        public int DeleteStudent(int id)
-        {
-            try
-            {
-                _StudentRepository.Delete(id);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
         }
+        //public virtual async Task<int> DeleteStudent(int StudentId)
+        //{
+        //    try
+        //    {
+        //        var site = await _StudentRepository.GetStudentByIdAsync(StudentId);
+        //        if (site == null)
+        //        {
+        //            return 0; // Site not found
+        //        }
+
+        //        int check = await _StudentRepository.DeleteStudent()
+        //        if (check == null)
+        //            return 0;
+        //        else
+        //            return 1;
+
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        //}
 
 
     }

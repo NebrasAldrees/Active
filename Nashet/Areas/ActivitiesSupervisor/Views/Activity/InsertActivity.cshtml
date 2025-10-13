@@ -11,20 +11,18 @@
                     <div class="col-md-8">
                         <form asp-action="InsertActivity" method="post">
                             <div class="row">
-                                @* <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="" for="" class="mb-1">الجهة التابعة للنشاط</label>
-                                    <input asp-for="Club.Site.SiteCode" type="text" class="form-control">
-                                </div><!-- END ITEM --> *@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="ClubId" class="mb-1"></label>
+                                    <label asp-for="ClubId" " class="mb-1">  </label>
                                     <select asp-for="ClubId" class="form-control">
-                                        <option value="1" selected>نادي الذكاء الإصطناعي</option>
-                                        <option value="2">نادي الأمن السيبراني</option>
-                                        <option value="3">نادي تعلم الأقران</option>
-                                        <option value="4">نادي ساند تيك</option>
+                                        <option value="">-- اختر النادي --</option>
+                                        @foreach (ClubViewModel club in ViewBag.Club)
+                                        {
+                                            <option value="@club.ClubId">@club.ClubNameAR</option>
+                                        }
                                     </select>
+                                    <span style="color:red" asp-validation-for="ClubId"></span>
+
                                 </div><!-- END ITEM -->
                             </div>
                             <div class="row">

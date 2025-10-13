@@ -15,8 +15,18 @@ namespace Nashet.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ViewNotification()
         {
-            return View(await _SystemNotificationDomain.GetAllNotifications());
+            var notifications = await _SystemNotificationDomain.GetAllNotifications();
+            return View(notifications ?? new List<SystemNotificationViewModel>());
+
         }
+
+        public IActionResult Index()
+        {
+
+            return View();
+        }
+
+
         public async Task<IActionResult> InsertNotification()
         {
             return View();

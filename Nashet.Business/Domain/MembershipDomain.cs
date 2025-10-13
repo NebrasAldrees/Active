@@ -38,21 +38,34 @@ namespace Nashet.Business.Domain
             {
                 tblMembership membership = new tblMembership
                 {
-                    MembershipId = viewModel.MembershipId,
                     StudentId = viewModel.StudentId,
-                    Student = viewModel.Student,
+                    //Student = viewModel.Student,
                     ClubRoleId = viewModel.ClubRoleId,
-                    ClubRole = viewModel.ClubRole,
                     TeamId = viewModel.TeamId,
-                    Team = viewModel.Team,
                     JoinDate = viewModel.JoinDate,
-                    Guid = viewModel.Guid
                 };
                 int check = await _MembershipRepository.InsertMember(membership);
                 if (check == 0)
+                {
                     return 0;
+                }
                 else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblMembership",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
+                }
+               
             }
             catch
             {

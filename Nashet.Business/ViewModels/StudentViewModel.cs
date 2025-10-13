@@ -37,7 +37,7 @@ namespace Nashet.Business.ViewModels
         [DisplayName("رقم الجوال")]
         public string StudentPhone { get; set; }
 
-        [StringLength(50)]
+        //[StringLength(50)]
         [DisplayName(" الجهة")]
         public int SiteId { get; set; }
         public SiteViewModel Site { get; set; }

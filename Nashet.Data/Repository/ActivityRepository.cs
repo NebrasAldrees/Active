@@ -33,8 +33,9 @@ namespace Nashet.Data.Repository
                 await InsertAsync(activity);
                 return 1;
             }
-            catch
+            catch (Exception ex) 
             {
+                Console.WriteLine($"Error inserting system:{ex.Message}");
                 return 0;
             }
         }
@@ -44,6 +45,24 @@ namespace Nashet.Data.Repository
             try
             {
                 await UpdateAsync(activity);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public virtual async Task<int> DeleteActivity(tblActivity activity)
+        {
+            try
+            {
+                if (activity == null || activity.IsDeleted == true)
+                {
+                    return 0;
+                }
+
+                IsDeleted(activity);
                 return 1;
             }
             catch
