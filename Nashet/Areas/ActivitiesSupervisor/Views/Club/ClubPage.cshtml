@@ -1,57 +1,116 @@
 ﻿@model ClubViewModel
+@{
+    ViewData["Title"] = "تفاصيل النادي";
+}
 
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
-            <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">تفاصيل النادي: @Model.ClubNameAR</h5>
+            <!-- Header -->
+            <div class="block-header border-bottom px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">تفاصيل النادي</h5>
+                    <a asp-action="ViewAllClubs" class="btn btn-outline-secondary btn-sm">
+                        ← العودة
+                    </a>
+                </div>
             </div>
-            <div class="block-body py-5">
+
+            <!-- Content -->
+            <div class="block-body p-4">
+                <!-- إذا لم توجد بيانات -->
+                @if (Model == null)
+                {
+                    <div class="alert alert-danger text-center">
+                        ⚠️ لم يتم العثور على النادي
+                    </div>
+                    <div class="text-center">
+                        <a asp-action="ViewAllClubs" class="btn btn-primary">العودة للقائمة</a>
+                    </div>
+                    return;
+                }
+
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Club Icon -->
-                                @if (!string.IsNullOrEmpty(Model.ClubIcon))
-                                {
-                                    <div class="text-center mb-4">
-                                        <img src="@Model.ClubIcon" alt="@Model.ClubNameAR" class="img-fluid" style="max-height: 200px;">
-                                    </div>
-                                }
-
-                                <!-- Club Details -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h6>اسم النادي بالعربية:</h6>
-                                        <p class="text-muted">@Model.ClubNameAR</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h6>اسم النادي بالإنجليزية:</h6>
-                                        <p class="text-muted">@Model.ClubNameEN</p>
-                                    </div>
+                    <div class="col-lg-8">
+                        <!-- الشعار -->
+                        <div class="text-center mb-4">
+                            @if (!string.IsNullOrEmpty(Model.ClubIcon))
+                            {
+                                <img src="@Model.ClubIcon" alt="شعار النادي" class="rounded" style="width: 150px; height: 150px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="bg-light rounded d-inline-flex align-items-center justify-content-center"
+                                     style="width: 150px; height: 150px;">
+                                    📷
                                 </div>
+                            }
+                        </div>
 
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <h6>الرؤية:</h6>
-                                        <p class="text-muted">@Model.ClubVision</p>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <h6>نبذة عن النادي:</h6>
-                                        <p class="text-muted">@Model.ClubOverview</p>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-4">
-                                    <div class="col-12 text-center">
-                                        <a href="@Url.Action("ViewAllClubs")" class="btn btn-secondary">العودة إلى القائمة</a>
-                                        <a href="@Url.Action("EditClub", new { id = Model.ClubId })" class="btn btn-primary">تعديل</a>
-                                    </div>
-                                </div>
+                        <!-- المعلومات الأساسية -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <strong>اسم النادي (عربي):</strong>
+                                <div class="text-muted">@(Model.ClubNameAR ?? "غير محدد")</div>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>اسم النادي (إنجليزي):</strong>
+                                <div class="text-muted">@(Model.ClubNameEN ?? "غير محدد")</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <strong>رقم النادي:</strong>
+                                <div class="text-muted">@Model.ClubId</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>الجهة:</strong>
+                                <div class="text-muted">@(Model.Site?.SiteNameAR ?? "غير محدد")</div>
+                            </div>
+                        </div>
+
+                        <!-- الرؤية -->
+                        <div class="mb-3">
+                            <strong>الرؤية:</strong>
+                            <div class="text-muted p-2 bg-light rounded">
+                                @if (!string.IsNullOrEmpty(Model.ClubVision))
+                                {
+                                    @Model.ClubVision
+                                }
+                                else
+                                {
+                                    <span class="text-muted">لا توجد رؤية</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- النبذة -->
+                        <div class="mb-3">
+                            <strong>نبذة عن النادي:</strong>
+                            <div class="text-muted p-2 bg-light rounded">
+                                @if (!string.IsNullOrEmpty(Model.ClubOverview))
+                                {
+                                    @Model.ClubOverview
+                                }
+                                else
+                                {
+                                    <span class="text-muted">لا توجد نبذة</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- الأزرار -->
+                        <div class="text-center mt-4">
+                            <a asp-action="ViewAllClubs" class="btn btn-secondary">كل الأندية</a>
+                            <a asp-action="InsertClub" class="btn btn-warning">تعديل</a>
+                            <form asp-action="DeleteClub" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@Model.ClubId" />
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('حذف النادي؟')">
+                                    حذف
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -59,3 +118,17 @@
         </div>
     </div>
 </section>
+
+<style>
+    .bg-light {
+        background-color: #f8f9fa;
+    }
+
+    .rounded {
+        border-radius: 10px;
+    }
+
+    .btn {
+        margin: 0 5px;
+    }
+</style>

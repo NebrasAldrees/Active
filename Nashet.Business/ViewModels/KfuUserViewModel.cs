@@ -25,11 +25,11 @@ namespace Nashet.Business.ViewModels
         [DisplayName("نوع المستخدم")]
         public string UserType { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
-        [DisplayName("ةالاسم باللغة العربي")]
+        [DisplayName("الإسم باللغة العربية")]
         public string NameAR { get; set; }
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
-        [DisplayName("الاسم باللغة الإنجليزية")]
+        [DisplayName("الإسم باللغة الإنجليزية")]
         public string NameEN { get; set; }
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]

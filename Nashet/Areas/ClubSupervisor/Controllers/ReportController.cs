@@ -37,7 +37,7 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                     ViewData["Failed"] = "Failed";
                 }
             }
-            return View(viewModel);
+            return RedirectToAction("InsertReport");
         }
     }
 }

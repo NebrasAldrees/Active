@@ -19,7 +19,7 @@ namespace Nashet.Business.Domain
             return _ClubRepository.GetAllClubs().Result.Select(a => new ClubViewModel
             {
                 ClubId = a.ClubId,
-                SiteId = a.siteId,
+                SiteId = (int)a.siteId,
                 ClubNameAR = a.ClubNameAR,
                 ClubNameEN = a.ClubNameEN,
                 ClubVision = a.ClubVision,
@@ -41,7 +41,7 @@ namespace Nashet.Business.Domain
             return new ClubViewModel
             {
                 ClubId = club.ClubId,
-                SiteId = club.siteId,
+                SiteId = (int)club.siteId,
                 ClubNameAR = club.ClubNameAR,
                 ClubNameEN = club.ClubNameEN,
                 ClubVision = club.ClubVision,
@@ -54,6 +54,12 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                bool nameExists = await _ClubRepository.IsClubNameExists(viewModel.ClubNameAR, viewModel.ClubNameEN);
+                if (nameExists)
+                {
+                    return -1;
+                }
+
                 tblClub Club = new tblClub
                 {
                     ClubId = viewModel.ClubId,
@@ -76,17 +82,63 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        //public async Task<int> DeleteClub(int id)
-        //{
-        //    try
-        //    {
-        //        int check = await _ClubRepository.DeleteClub(id);
-        //        return check;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public virtual async Task<int> UpdataClub(int clubid, ClubViewModel viewModel)
+        {
+            try
+            {
+                var club = await _ClubRepository.GetClubById(clubid);
+                if (club == null)
+                {
+                    return 0;
+                }
+
+                bool nameExists = await _ClubRepository.IsClubNameExists(viewModel.ClubNameAR, viewModel.ClubNameEN, clubid);
+                if (nameExists)
+                {
+                    return -1; 
+                }
+
+                club.ClubId = viewModel.ClubId;
+                club.siteId = viewModel.SiteId;
+                club.ClubNameAR = viewModel.ClubNameAR;
+                club.ClubNameEN = viewModel.ClubNameEN;
+                club.ClubVision = viewModel.ClubVision;
+                club.ClubOverview = viewModel.ClubOverview;
+                club.ClubIcon = viewModel.ClubIcon;
+                club.Guid = viewModel.Guid;
+
+                int check = await _ClubRepository.UpdateClub(club);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> DeleteClub(int ClubId)
+        {
+            try
+            {
+                var club = await _ClubRepository.GetClubById(ClubId);
+                if (club == null)
+                {
+                    return 0;
+                }
+
+                int check = await _ClubRepository.DeleteClub(club);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }

@@ -20,7 +20,6 @@
                         @ViewData["Failed"]
                     </div>
                 }
-
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <form asp-action="InsertUser" method="post">
@@ -29,19 +28,19 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="UserNameAR" class="mb-1">اسم المستخدم بالعربية</label>
+                                    <label asp-for="UserNameAR" class="mb-1">الإسم باللغة العربية</label>
                                     <input asp-for="UserNameAR" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="UserNameAR"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1">اسم المستخدم بالأنجليزية</label>
+                                    <label for="" class="mb-1">الإسم باللغة الإنجليزية</label>
                                     <input asp-for="UserNameEN" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="UserNameEN"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"></label>
+                                    <label for="" class="mb-1">اسم المستخدم</label>
                                     <input asp-for="Username" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="Username"></span>
                                 </div><!-- END ITEM -->
@@ -65,8 +64,8 @@
                                 <div class="col-md-6">
                                     <label for="" class="mb-1"> الجهة </label>
                                     <select asp-for="SiteId" class="form-control">
-                                        <option value="">-- اختر الجهة --</option>
-                                        @foreach (SiteViewModel site in Model.Sites)
+                                        <option value=""> اختر الجهة</option>
+                                        @foreach (SiteViewModel site in ViewBag.Site)
                                         {
                                             <option value="@site.SiteId">@site.SiteNameAR</option>
                                         }
@@ -77,8 +76,8 @@
                                 <div class="col-md-6">
                                     <label for="" class="mb-1">نوع المستخدم </label>
                                     <select asp-for="SystemRoleId" class="form-control">
-                                        <option value="">-- اختر نوع المستخدم --</option>
-                                        @foreach (SystemRoleViewModel role in Model.SystemRoles)
+                                        <option value="">اختر نوع المستخدم</option>
+                                        @foreach (SystemRoleViewModel role in ViewBag.SystemRole)
                                         {
                                             <option value="@role.SystemRoleId">@role.RoleType</option>
                                         }
@@ -97,80 +96,3 @@
         </div>
     </div>
 </section>
-@* 
-<section class="page_wrap">
-    <div class="page_content">
-
-        <div class="block mb-4">
-            <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة مستخدم</h5>
-            </div>
-            <div class="block-body py-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <form asp-action="InsertUser" method="post">
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="UserNameAR" class="mb-1">اسم المستخدم بالعربية</label>
-                                    <input asp-for="UserNameAR" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserNameAR"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label for="" class="mb-1">اسم المستخدم بالأنجليزية</label>
-                                    <input asp-for="UserNameEN" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserNameEN"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label for="" class="mb-1">البريد الالكتروني</label>
-                                    <input asp-for="UserEmail" type="email" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserEmail"></span>
-                                </div><!-- END ITEM -->
-                            </div>
-                            <div class="row">
-
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <!-- START ITEM -->
-                                    <label for="" class="mb-1">رقم الجوال </label>
-                                    <input asp-for="UserPhone" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserPhone"></span>
-                                </div><!-- END ITEM -->
-                            </div>
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label for="" class="mb-1"> الجهة </label>
-                                    <select asp-for="Site" class="form-control">
-                                        <option value="1">كلية علوم الحاسب</option>
-                                        <option value="2">عمادة شؤون الطلاب</option>
-                                        <option value="3">كلية إدارة الأعمال</option>
-                                    </select>
-                                    <span style="color:red" asp-validation-for="Site"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label for="" class="mb-1">نوع المستخدم </label>
-                                    <select asp-for="SystemRole" class="form-control">
-                                        <option value="Student">طالب</option>
-                                        <option value="ActivitiesSupervisor">مشرف الأنشطة</option>
-                                        <option value="Clubsupervisor">مشرف النادي</option>
-                                        <option value="CLubLeader">قائد فريق</option>
-                                        <option value="Admin">مدير النظام</option>
-                                    </select>
-                                    <span style="color:red" asp-validation-for="SystemRole"></span>
-                                </div><!-- END ITEM -->
-                            </div>
-
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary" >حفظ</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!-- End Page Wrap --> *@

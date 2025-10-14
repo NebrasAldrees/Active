@@ -85,7 +85,5 @@ namespace Nashet.Areas.Admin.Controllers
 
             return RedirectToAction("ViewSites");
         }
-
-
     }
 }

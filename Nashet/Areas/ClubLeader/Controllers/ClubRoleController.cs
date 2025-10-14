@@ -2,7 +2,7 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
-namespace Nashet.Areas.Admin.Controllers
+namespace Nashet.Areas.ClubLeader.Controllers
 {
     [Area("ClubLeader")]
     public class ClubRoleController : Controller

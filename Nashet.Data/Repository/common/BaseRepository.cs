@@ -120,7 +120,7 @@ namespace Nashet.Data.Repository.Common
             context.SaveChanges();
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public virtual void IsDeleted(TEntity entityToDelete)
         {
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
