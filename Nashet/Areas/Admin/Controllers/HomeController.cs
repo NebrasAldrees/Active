@@ -16,19 +16,13 @@ namespace Nashet.Areas.Admin.Controllers
         {
             _logger = logger;
         }
-       
-        public IActionResult Index()
-        {
-            return View(); // adding update
-        }
-        public IActionResult UpdateUserRole()
-        {
-            return View(); // adding update
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
 
-        
+        public async Task<IActionResult> AdminHome()
+        {
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

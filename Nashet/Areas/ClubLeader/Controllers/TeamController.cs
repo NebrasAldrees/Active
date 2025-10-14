@@ -8,9 +8,11 @@ namespace Nashet.Areas.ClubLeader.Controllers
     public class TeamController : Controller
     {
         private readonly TeamDomain _TeamDomain;
-        public TeamController(TeamDomain teamDomain)
+        private readonly ClubDomain _ClubDomain;
+        public TeamController(TeamDomain teamDomain, ClubDomain clubDomain)
         {
             _TeamDomain = teamDomain;
+            _ClubDomain = clubDomain;
         }
         public IActionResult Index()
         {
@@ -22,12 +24,16 @@ namespace Nashet.Areas.ClubLeader.Controllers
         }
         public async Task<IActionResult> InsertTeam()
         {
+            ViewBag.Club = await _ClubDomain.GetClub();
+
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertTeam(TeamViewModel viewModel)
         {
+            ViewBag.Club = await _ClubDomain.GetClub();
+
             if (ModelState.IsValid)
             {
                 try

@@ -21,7 +21,6 @@ namespace Nashet.Business.Domain
             {
                 tblSystemLogs Log =new tblSystemLogs
                 {
-                    LogsId = viewModel.LogsId,
                     UserId = viewModel.UserId,
                     username = viewModel.username,
                     Table = viewModel.Table,

@@ -44,14 +44,31 @@ namespace Nashet.Business.Domain
                     ActivityEndDate = viewModel.ActivityEndDate,
                     ActivityTime = viewModel.ActivityTime,
                     ActivityLocation = viewModel.ActivityLocation,
-                    ActivityPoster = viewModel.ActivityPoster,
-                    Guid = viewModel.Guid
+                    ActivityPoster = viewModel.ActivityPoster
                 };
                 int check = await _ActivityRepository.InsertActivity(activity);
                 if (check == 0)
+                {
                     return 0;
+                }
                 else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username="najd",
+                        RecordId=17,
+                        Table="tblActivity",
+                        operation_date=DateTime.Now,
+                        operation_type="Insert",
+                        OldValue=null,
+                       // NewValue=
+                    };
+                   //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
+                }
+
+
             }
             catch
             {
@@ -69,12 +86,55 @@ namespace Nashet.Business.Domain
 
             return Activity;
         }
-        public int DeleteActivity(int id)
+
+        public virtual async Task<int> UpdateActivity(int id, ActivityViewModel viewModel)
         {
             try
             {
-                _ActivityRepository.Delete(id);
-                return 1;
+                var activity = await _ActivityRepository.GetActivityById(id);
+                if (activity == null)
+                {
+                    return 0; // Site not found
+                }
+
+                activity.ActivityTopic =viewModel.ActivityTopic;
+                activity.ActivityDescription = viewModel.ActivityDescription;
+                activity.ActivityLocation = viewModel.ActivityLocation; 
+                activity.ActivityPoster = viewModel.ActivityPoster;
+                activity.ActivityStartDate = viewModel.ActivityStartDate;
+                activity.ActivityEndDate = viewModel.ActivityEndDate;
+                activity.ActivityTime = viewModel.ActivityTime;
+
+                int check = await _ActivityRepository.updateActivity(activity);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+
+
+        public virtual async Task<int> DeleteActivity(int Id)
+        {
+            try
+            {
+                var activity = await _ActivityRepository.GetActivityById(Id);
+                if (activity == null)
+                {
+                    return 0; // Site not found
+                }
+
+                int check = await _ActivityRepository.DeleteActivity(activity);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+
             }
             catch
             {

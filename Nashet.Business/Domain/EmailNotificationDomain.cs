@@ -31,17 +31,30 @@ namespace Nashet.Business.Domain
             {
                 tblEmailNotificationLog email = new tblEmailNotificationLog
                 {
-
-                    // EmailNotificationsId = viewModel.EmailNotificationsId,
-                    UserEmail = viewModel.UserEmail,
+                    UserEmail = viewModel.UserEmail
 
                 };
                     int check = await  _EmailNotificationRepository.InsertEmailNotification(email);
                 if (check == 0)
-                 
+                {
                     return 0;
+                }
                 else
-                     return 1;
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblEmailNotificationLog",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
+                    return 1;
+                }
             }
             catch
             {

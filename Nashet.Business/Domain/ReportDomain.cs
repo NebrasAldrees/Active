@@ -47,17 +47,32 @@ namespace Nashet.Business.Domain
             {
                 tblReport Report = new tblReport
                 {
-                    ReportId = viewModel.ReportId,
                     ClubId = viewModel.ClubId,
                     Topic = viewModel.Topic,
-                    Path = viewModel.Path,
-                    Guid = viewModel.Guid
+                    Path = viewModel.Path
                 };
                 int check = await _ReportRepository.InsertReport(Report);
                 if (check == 0)
+                {
                     return 0;
+                }
                 else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblReport",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
+                }
+              
             }
             catch
             {

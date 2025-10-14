@@ -30,9 +30,71 @@
                                     <td>@item.ActivityId</td>
                                     <td>@item.ActivityTopic</td>
                                     <td class="action_td text-end">
-                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
+
+                                        <a asp-action="ViewActivityById" asp-route-id="@item.ActivityId" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                           data-bs-target="#view_section_@item.ActivityId">عرض</a>
+                                        <!-- View Section Modal -->
+                                        <div class="modal fade" id="view_section_@item.ActivityId" tabindex="-1"
+                                             aria-labelledby="view_sectionLabel_@item.ActivityId" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" bg-primary text-white style="background-color: #186F70; color: white;">
+                                                        <h5 class="modal-title" id="view_sectionLabel">عرض تفاصيل الأنشطة</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="modal-body text-center">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <label asp-for="@item.ActivityTopic" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.ActivityTopic</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <label asp-for="@item.ActivityDescription" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.ActivityDescription</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <label asp-for="@item.ActivityLocation" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.ActivityLocation</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6 justify-content-center">
+                                                                <label asp-for="@item.ActivityStartDate" class="card-title text-muted"> </label>
+                                                                <p class="card-text fw-bold"> <i class="bi bi-calendar-event me-2"></i> @item.ActivityStartDate</p>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label asp-for="@item.ActivityTime" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.ActivityTime</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <label asp-for="@item.ActivityEndDate" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.ActivityEndDate</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <button type="button" class="btn btn-secondary" 
+                                                                        data-bs-dismiss="modal">
+                                                                    إلغاء
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="DeleteActivity" asp-route-id="@item.ActivityId" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }

@@ -26,17 +26,19 @@ namespace Nashet.Business.Domain
             }).ToList();
         }
 
-        //public async Task<tblTeam> GetTeamById(int id)
-        //{
-        //    var Team= await _TeamRepository.GetTeamByIdAsync(id);
+        public async Task<tblTeam> GetTeamById(int id)
+        {
+            var Team = await _TeamRepository.GetTeamByIdAsync(id);
 
-        //    if (Team == null)
-        //    {
-        //        throw new KeyNotFoundException($"Team request with ID {id} was not found.");
-        //    }
+            if (Team == null)
+            {
+                throw new KeyNotFoundException($"Team request with ID {id} was not found.");
+            }
 
-        //    return Team;
-        //}
+            return Team;
+        }
+
+
         public async Task<int> InsertTeam(TeamViewModel viewModel)
         {
             try
@@ -45,26 +47,53 @@ namespace Nashet.Business.Domain
                 {
                     ClubId = viewModel.ClubId,
                     TeamNameAR = viewModel.TeamNameAR,
-                    TeamNameEn = viewModel.TeamNameEn,
-                    Guid = viewModel.Guid
+                    TeamNameEn = viewModel.TeamNameEn
                 };
                 int check = await _TeamRepository.InsertTeam(team);
                 if (check == 0)
+                {
                     return 0;
+                }
                 else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblTeam",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
+                }
+               
             }
             catch
             {
                 return 0;
             }
         }
-        public int DeleteTeam(int id)
+        
+        public virtual async Task<int> DeleteTeam(int Id)
         {
             try
             {
-                _TeamRepository.Delete(id);
-                return 1;
+                var team = await _TeamRepository.GetTeamByIdAsync(Id);
+                if (team == null)
+                {
+                    return 0; // Site not found
+                }
+
+                int check = await _TeamRepository.DeleteTeam(team);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+
             }
             catch
             {

@@ -1,0 +1,80 @@
+﻿@model StudentViewModel
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة مستخدم</h5>
+            </div>
+            <div class="block-body py-5">
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="InsertStudent" method="post">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="StudentNameAr" class="mb-1">اسم الطالب بالعربية</label>
+                                    <input asp-for="StudentNameAr" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentNameAr"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="StudentNameEn" class="mb-1">اسم الطالب بالأنجليزية</label>
+                                    <input asp-for="StudentNameEn" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentNameEn"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="AcademicId" class="mb-1">الرقم الأكاديمي  </label>
+                                    <input asp-for="AcademicId" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="AcademicId"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">البريد الالكتروني</label>
+                                    <input asp-for="StudentEmail" type="email" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentEmail"></span>
+                                </div><!-- END ITEM -->
+                            </div>
+                            <div class="row">
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <!-- START ITEM -->
+                                    <label asp-for="StudentPhone" class="mb-1">رقم الجوال </label>
+                                    <input asp-for="StudentPhone" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentPhone"></span>
+                                </div><!-- END ITEM -->
+                            </div>
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1"> الجهة </label>
+                                    <select asp-for="SiteId" class="form-control">
+                                        <option value=""> اختر الجهة</option>
+                                        @foreach (SiteViewModel site in ViewBag.Site)
+                                        {
+                                            <option value="@site.SiteId">@site.SiteNameAR</option>
+                                        }
+                                    </select>
+                                    <span style="color:red" asp-validation-for="SiteId"></span>
+                                </div><!-- END ITEM --> 
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">مهارات الطالب </label>
+                                    <input asp-for="StudentSkills" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentSkills"></span>
+                                </div><!-- END ITEM -->
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">حفظ</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap --> 

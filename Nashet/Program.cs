@@ -43,23 +43,10 @@ builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 builder.Services.AddScoped<MembershipRequestRepository>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 
-.AddCookie(options =>
+//options.LogoutPath = "account/logout";
 
-{
-
-    options.AccessDeniedPath = "/Home/Error";
-
-    options.LoginPath = "/account/login";
-
-    options.ExpireTimeSpan = TimeSpan.FromDays(1);
-
-    //options.LoginPath = "/accounts/ErrorNotLoggedIn";
-
-    //options.LogoutPath = "account/logout";
-
-});
+;
 
 builder.Services.AddControllersWithViews();
 

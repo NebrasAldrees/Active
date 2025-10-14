@@ -14,8 +14,5 @@ namespace Nashet.Data.Models
 
         [StringLength(30)]
         public string UserEmail { get; set; }
-       
-        
-
     }
 }

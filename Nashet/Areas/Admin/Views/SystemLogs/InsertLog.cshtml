@@ -1,0 +1,81 @@
+﻿@model SystemLogsViewModel
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة سجل جديد (System Log)</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <form asp-action="InsertLog" asp-controller="SystemLogs" asp-area="Admin">
+                            <div class="row">
+                                <!-- UserId -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="UserId" class="mb-1"></label>
+                                    <input asp-for="UserId" type="text" class="form-control" />
+                                    <span style="color:red" asp-validation-for="UserId"></span>
+                                </div>
+
+                                <!-- Username -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="username" class="mb-1"></label>
+                                    <input asp-for="username" type="text" class="form-control" />
+                                    <span style="color:red" asp-validation-for="username"></span>
+                                </div>
+
+                                <!-- Table -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Table" class="mb-1"></label>
+                                    <input asp-for="Table" type="text" class="form-control" />
+                                    <span style="color:red" asp-validation-for="Table"></span>
+                                </div>
+
+                                <!-- Operation Type -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="operation_type" class="mb-1"></label>
+                                    <input asp-for="operation_type" type="text" class="form-control" placeholder="Insert / Update / Delete" />
+                                    <span style="color:red" asp-validation-for="operation_type"></span>
+                                </div>
+
+                                <!-- Operation Date -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="operation_date" class="mb-1"></label>
+                                    <input asp-for="operation_date" type="datetime-local" class="form-control" />
+                                    <span style="color:red" asp-validation-for="operation_date"></span>
+                                </div>
+
+                                <!-- Old Value -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="OldValue" class="mb-1"></label>
+                                    <textarea asp-for="OldValue" class="form-control"></textarea>
+                                    <span style="color:red" asp-validation-for="OldValue"></span>
+                                </div>
+
+                                <!-- New Value -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="NewValue" class="mb-1"></label>
+                                    <textarea asp-for="NewValue" class="form-control"></textarea>
+                                    <span style="color:red" asp-validation-for="NewValue"></span>
+                                </div>
+
+                                <!-- Other Details -->
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="other_details" class="mb-1"></label>
+                                    <textarea asp-for="other_details" class="form-control"></textarea>
+                                    <span style="color:red" asp-validation-for="other_details"></span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-primary px-5">حفظ</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

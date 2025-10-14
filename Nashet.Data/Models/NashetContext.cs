@@ -40,5 +40,15 @@ namespace Nashet.Data.Models
            .Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("NashetContext"));
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            NashetSeed.Seed(modelBuilder);
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+        }
     }
 }

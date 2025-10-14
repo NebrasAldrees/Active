@@ -40,9 +40,26 @@ namespace Nashet.Business.Domain
                 };
                 int check = await _SiteRepository.InsertSite(site);
                 if (check == 0)
+                {
                     return 0;
+                }
                 else
+                {
+                    var systemLog = new tblSystemLogs
+                    {
+                        UserId = 23456,
+                        username = "najd",
+                        RecordId = 17,
+                        Table = "tblSite",
+                        operation_date = DateTime.Now,
+                        operation_type = "Insert",
+                        OldValue = null,
+                        // NewValue=
+                    };
+                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
+                }
+              
             }
             catch
             {
@@ -75,12 +92,22 @@ namespace Nashet.Business.Domain
             }
 
         }
-        public int DeleteSite(int id)
+        public virtual async Task<int> DeleteSite(int siteId)
         {
             try
             {
-                _SiteRepository.Delete(id);
-                return 1;
+                var site = await _SiteRepository.GetSiteBySiteId(siteId);
+                if (site == null)
+                {
+                    return 0; // Site not found
+                }
+
+                int check = await _SiteRepository.DeleteSite(site);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+                
             }
             catch
             {
@@ -94,7 +121,7 @@ namespace Nashet.Business.Domain
 
             if (Site == null)
             {
-                throw new KeyNotFoundException($"Site request with site code {siteId} was not found.");
+                throw new KeyNotFoundException($"Site request with site Id {siteId} was not found.");
             }
 
             return Site;

@@ -11,9 +11,9 @@ namespace Nashet.Business.ViewModels
 {
     public class TeamViewModel
     {
-        public int? TeamId { get; set; }
+        public int TeamId { get; set; }
 
-        //[Required(ErrorMessage = "*هذا الحقل مطلوب*")]
+        [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("اسم النادي")]
         public int? ClubId { get; set; }
         public tblClub Club { get; set; }
@@ -25,9 +25,10 @@ namespace Nashet.Business.ViewModels
 
         [StringLength(50)]
         [DisplayName("اسم الفريق باللغة الانجليزية")]
-        public string? TeamNameEn { get; set; }
+        public string TeamNameEn { get; set; }
         public Guid Guid { get; set; }
+        public List<ClubViewModel> clubs { get; set; }
 
-        //public bool IsActive { get; set; } = true;
+
     }
 }

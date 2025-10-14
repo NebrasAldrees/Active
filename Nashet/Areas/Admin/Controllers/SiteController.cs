@@ -38,13 +38,13 @@ namespace Nashet.Areas.Admin.Controllers
                 {
                     int check = await _SiteDomain.InsertSite(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Site inserted successfully.";
+                        ViewData["Successful"] = "تم اضافة الجهة بنجاح";
                     else
-                        ViewData["Failed"] = "Failed to insert site.";
+                        ViewData["Failed"] = "فشل في الإضافة";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "Failed";
+                    ViewData["Failed"] = "فشل في العمليات";
                 }
             }
             return View(viewModel);
@@ -61,29 +61,32 @@ namespace Nashet.Areas.Admin.Controllers
                     if (check == 1)
                         ViewData["Successful"] = "Site Update successfully.";
                     else
-                        ViewData["Failed"] = "Failed to update site.";
+                        ViewData["Failed"] = "تم تعديل بيانات الجهة بنجاح";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "Failed";
+                    ViewData["Failed"] = "فشل التعديل";
                 }
             }
             return RedirectToAction("ViewSites");
         }
-        public ActionResult DeleteSite(int id)
+        public async Task<ActionResult> DeleteSite(int id)
         {
-            int result = _SiteDomain.DeleteSite(id);
+            int result = await _SiteDomain.DeleteSite(id);
 
             if (result == 1)
             {
-                TempData["Success"] = "Site deleted successfully.";
+                TempData["Success"] = "تم حذف الجهة بنجاح";
             }
             else
             {
-                TempData["Error"] = "Failed to delete site.";
+                TempData["Error"] = "خطأ في الحذف";
             }
 
             return RedirectToAction("ViewSites");
         }
+
+
+
     }
 }
