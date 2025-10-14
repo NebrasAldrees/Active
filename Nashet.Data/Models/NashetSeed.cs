@@ -18,15 +18,16 @@ namespace Nashet.Data.Models
         internal static void Seed(ModelBuilder modelBuilder)
         {
             _modelBuilder = modelBuilder;
+            AddStudent();
             AddUser();
-            AddCustomRole();
+            AddSystemRole();
 
         }
 
 
 
 
-        private static void AddtStudent()
+        private static void AddStudent()
         {
             _modelBuilder.Entity<tblStudent>().HasData(
                new tblStudent()
@@ -47,7 +48,7 @@ namespace Nashet.Data.Models
 
                });
         }
-        private static void AddtUser()
+        private static void AddUser()
         {
             _modelBuilder.Entity<tblUser>().HasData(
                 new tblUser()
@@ -90,14 +91,98 @@ namespace Nashet.Data.Models
                 new tblSystemRole()
                 {
                     SystemRoleId = 1,
-                    RoleType = "Admin",
+                    RoleTypeAr = "مدير النظام",
+                    RoleTypeEn = "Admin",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                    CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                 },
                  new tblSystemRole()
                  {
                      SystemRoleId = 2,
-                     RoleType = "Activity Supervisor",
+                     RoleTypeAr = "مشرف النشاط",
+                     RoleTypeEn = "Activity Supervisor",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                 new tblSystemRole()
+                 {
+                     SystemRoleId = 3,
+                     RoleTypeAr = "مشرف النادي",
+                     RoleTypeEn = "Club Supervisor",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                 new tblSystemRole()
+                 {
+                     SystemRoleId = 4,
+                     RoleTypeAr = "قائد النادي",
+                     RoleTypeEn = "Club Leader",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                 new tblSystemRole()
+                 {
+                     SystemRoleId = 5,
+                     RoleTypeAr = "الطالب",
+                     RoleTypeEn = "Student",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                  }
                  );
+        }
+
+            private static void AddClubRole()
+        {
+            _modelBuilder.Entity<tblClubRole>().HasData(
+                new tblClubRole()
+                {
+                    ClubRoleId = 1,
+                    RoleTypeAr = " قائد النادي",
+                    RoleTypeEn = "Club Leader",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    Guid = Guid.Parse("abe79246-baad-4783-b3a3-a56e370464b8"),
+                    CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                },
+                 new tblClubRole()
+                 {
+                     ClubRoleId = 2,
+                     RoleTypeAr = " قائد الفريق",
+                     RoleTypeEn = "Team Leader",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("abe79246-baad-4783-b3a3-a56e370464b8"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                  new tblClubRole()
+                  {
+                      ClubRoleId = 3,
+                      RoleTypeAr = " عضو",
+                      RoleTypeEn = "Member",
+                      IsActive = true,
+                      isSent = true,
+                      IsDeleted = false,
+                      Guid = Guid.Parse("abe79246-baad-4783-b3a3-a56e370464b8"),
+                      CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                  }
+                );
         }
 
     }
