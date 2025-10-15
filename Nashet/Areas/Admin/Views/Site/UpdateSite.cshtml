@@ -1,6 +1,7 @@
 ﻿@model SiteViewModel
 <section class="page_wrap">
     <div class="page_content">
+
         @if (TempData["Message"] != null)
         {
             <div class="alert alert-success">
@@ -13,41 +14,37 @@
                 @TempData["Error"]
             </div>
         }
+
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة جهة</h5>
+                <h5 class="m-0">تحديث بيانات جهة</h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertSite">
+                        <form asp-action="UpdateSite" method="post">
+                            @Html.AntiForgeryToken()
                             <div class="row">
-                                <!-- START ITEM -->
+                                <input type="hidden" asp-for="Guid" />
+                                <input type="hidden" asp-for="SiteId" />
+                                <input type="hidden" asp-for="SiteCode" />
+
                                 <div class="col-md-6">
-                                    <label asp-for="SiteCode" for="" class="mb-1"></label>
-                                    <input asp-for="SiteCode" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="SiteCode"></span>
-                                </div><!-- END ITEM -->
-                            </div>
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <!-- START ITEM -->
                                     <label asp-for="SiteNameAR" class="mb-1"></label>
                                     <input asp-for="SiteNameAR" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="SiteNameAR"></span>
-                                </div><!-- END ITEM -->
-
-                                <!-- START ITEM -->
+                                </div>
                                 <div class="col-md-6">
                                     <label asp-for="SiteNameEn" class="mb-1"></label>
                                     <input asp-for="SiteNameEn" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="SiteNameEn"></span>
-                                </div><!-- END ITEM -->
-                                
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
-                            </div>
+                                </div>
+
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                                    <a asp-action="ViewSites" class="btn btn-secondary">إلغاء</a>
+
+                                </div>
                         </form>
                     </div>
                 </div>

@@ -1,6 +1,18 @@
 ﻿@model IEnumerable<SiteViewModel>
 <section class="page_wrap">
     <div class="page_content">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-3">
                 <h5 class="m-0">جهات الجامعة</h5>
@@ -29,11 +41,11 @@
                                     <td>@item.SiteCode</td>
                                     <td>@item.SiteNameAR</td>
                                     <td class="action_td text-end">
-                                        <a asp-action="ViewSiteById" asp-route-id="@item.SiteId" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                           data-bs-target="#view_section_@item.SiteId">عرض</a>
+                                        <a asp-action="ViewSiteByGUID" asp-route-id="@item.Guid" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                           data-bs-target="#view_section_@item.Guid">عرض</a>
                                         <!-- View Section Modal -->
-                                        <div class="modal fade" id="view_section_@item.SiteId" tabindex="-1"
-                                             aria-labelledby="view_sectionLabel_@item.SiteId" aria-hidden="true">
+                                        <div class="modal fade" id="view_section_@item.Guid" tabindex="-1"
+                                             aria-labelledby="view_sectionLabel_@item.Guid" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                 <div class="modal-content">
                                                     <div class="modal-header" bg-primary text-white style="background-color: #186F70; color: white;">
@@ -72,54 +84,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a asp-action="UpdateSite" asp-route-id="@item.SiteId" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                           data-bs-target="#update_section">تعديل</a>
-                                        <!-- Update Section Modal -->
-                                        <div class="modal fade" id="update_section" tabindex="-1"
-                                             aria-labelledby="update_sectionLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="add_sectionLabel">تعديل بيانات جهة</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form asp-action="UpdateSite">
-                                                            <div class="row">
-                                                                <input type="hidden" name="id" value="@item.SiteId" />
-
-                                                                <!-- START ITEM -->
-                                                                <div class="col-md-6">
-                                                                    <!-- START ITEM -->
-                                                                    <label asp-for="@item.SiteNameAR" class="mb-1"></label>
-                                                                    <input asp-for="@item.SiteNameAR" type="text" class="form-control">
-                                                                    <span style="color:red" asp-validation-for="@item.SiteNameAR"></span>
-                                                                </div><!-- END ITEM -->
-                                                                <!-- START ITEM -->
-                                                                <div class="col-md-6">
-                                                                    <label asp-for="@item.SiteNameEn" class="mb-1"></label>
-                                                                    <input asp-for="@item.SiteNameEn" type="text" class="form-control">
-                                                                    <span style="color:red" asp-validation-for="@item.SiteNameEn"></span>
-                                                                </div><!-- END ITEM -->
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">
-                                                                        إلغاء
-                                                                    </button>
-
-                                                                    <button type="submit" class="btn btn-primary" title="save">حفظ</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a asp-action="DeleteSite" asp-route-id="@item.SiteId" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="UpdateSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-success" >تعديل</a>
+                                        <a asp-action="DeleteSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }
