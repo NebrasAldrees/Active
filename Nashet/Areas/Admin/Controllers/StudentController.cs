@@ -74,21 +74,21 @@ namespace Nashet.Areas.Admin.Controllers
             }
             return RedirectToAction("ViewStudents");
         }
-        //public async Task<ActionResult> DeleteStudent(int id)
-        //{
-        //    int result = await _StudentDomain.DeleteStudent(id);
+        public async Task<ActionResult> DeleteStudent(int id)
+        {
+            int result = await _StudentDomain.DeleteStudent(id);
 
-        //    if (result == 1)
-        //    {
-        //        TempData["Success"] = "تم حذف الجهة بنجاح";
-        //    }
-        //    else
-        //    {
-        //        TempData["Error"] = "خطأ في الحذف";
-        //    }
+            if (result == 1)
+            {
+                TempData["Success"] = "تم حذف الجهة بنجاح";
+            }
+            else
+            {
+                TempData["Error"] = "خطأ في الحذف";
+            }
 
-        //    return RedirectToAction("ViewStudent");
-        //}
+            return RedirectToAction("ViewStudents");
+        }
 
 
 

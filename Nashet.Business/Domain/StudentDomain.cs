@@ -88,7 +88,7 @@ namespace Nashet.Business.Domain
                 var student = await _StudentRepository.GetStudentByIdAsync(id);
                 if (student == null)
                 {
-                    return 0; // Site not found
+                    return 0; 
                 }
 
                 student.StudentId = viewModel.StudentId;
@@ -107,28 +107,28 @@ namespace Nashet.Business.Domain
             }
 
         }
-        //public virtual async Task<int> DeleteStudent(int StudentId)
-        //{
-        //    try
-        //    {
-        //        var site = await _StudentRepository.GetStudentByIdAsync(StudentId);
-        //        if (site == null)
-        //        {
-        //            return 0; // Site not found
-        //        }
+        public virtual async Task<int> DeleteStudent(int id)
+        {
+            try
+            {
+                var student = await _StudentRepository.GetStudentByIdAsync(id);
+                if (student == null)
+                {
+                    return 0; 
+                }
 
-        //        int check = await _StudentRepository.DeleteStudent()
-        //        if (check == null)
-        //            return 0;
-        //        else
-        //            return 1;
+                int check = await _StudentRepository.DeleteStudent(student);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
 
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
+            }
+            catch
+            {
+                return 0;
+            }
+        }
 
 
     }

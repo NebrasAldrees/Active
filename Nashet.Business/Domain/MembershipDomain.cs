@@ -19,11 +19,11 @@ namespace Nashet.Business.Domain
             return _MembershipRepository.GetAllMembers().Result.Select(m => new MembershipViewModel
             {
                 MembershipId = m.MembershipId,
-                StudentId = m.StudentId,
+                StudentId = (int)m.StudentId,
                 Student = m.Student,
-                ClubRoleId = m.ClubRoleId,
+                ClubRoleId = (int)m.ClubRoleId,
                 ClubRole = m.ClubRole,
-                TeamId = m.TeamId,
+                TeamId = (int)m.TeamId,
                 Team = m.Team,
                 JoinDate = m.JoinDate,
                 Guid = m.Guid,

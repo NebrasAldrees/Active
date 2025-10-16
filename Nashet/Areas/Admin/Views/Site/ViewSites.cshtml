@@ -36,47 +36,38 @@
                                              aria-labelledby="view_sectionLabel_@item.SiteId" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
+                                                    <div class="modal-header" bg-primary text-white style="background-color: #186F70; color: white;">
                                                         <h5 class="modal-title" id="view_sectionLabel">عرض بيانات الجهة</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                            <div class="row">
-                                                                <!-- START ITEM -->
+                                                    <div class="modal-body text-center">
+                                                        <div class="row justify-content-center">
                                                                 <div class="col-md-6">
-                                                                    <label asp-for="@item.SiteNameAR" class="mb-1"></label>
-                                                                </div><!-- END ITEM -->
-                                                                <div class ="col-md-6">
-                                                                    <label class="mb-1">@item.SiteNameAR</label>
+                                                                <label asp-for="@item.SiteNameAR" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.SiteNameAR</p>
                                                                 </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <!-- START ITEM -->
+                                                        </div>
+                                                        <div class="row justify-content-center">
                                                                 <div class="col-md-6">
-                                                                    <label asp-for="@item.SiteNameEn" class="mb-1"></label>
+                                                                <label asp-for="@item.SiteNameEn" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold justify-content-center">@item.SiteNameEn</p>
                                                                 </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
                                                                 <div class="col-md-6">
-                                                                    <label class="mb-1">@item.SiteNameEn</label>
-                                                                </div><!-- END ITEM -->
-                                                            </div>
-                                                            <div class="row">
-                                                                <!-- START ITEM -->
-                                                                <div class="col-md-6">
-                                                                    <label asp-for="@item.SiteCode" class="mb-1"></label>
+                                                                <label asp-for="@item.SiteCode" class="card-title text-muted"></label>
+                                                                <p class="card-text fw-bold">@item.SiteCode</p>
                                                                 </div>
+                                                        </div>
+                                                        <div class="row justify-content-center">
                                                                 <div class="col-md-6">
-                                                                    <label>@item.SiteCode</label>
-                                                                </div><!-- END ITEM -->
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <button type="button" class="btn btn-secondary"
+                                                                <button type="button" class="btn btn-secondary " 
                                                                             data-bs-dismiss="modal">
                                                                         إلغاء
                                                                     </button>
                                                                 </div>
-                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

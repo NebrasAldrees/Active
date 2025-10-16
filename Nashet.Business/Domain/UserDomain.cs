@@ -25,7 +25,7 @@ namespace Nashet.Business.Domain
                 UserNameEN = U.UserNameEN,
                 UserEmail = U.UserEmail,
                 UserPhone = U.UserPhone,
-                SystemRoleId = U.SystemRoleId,
+                SystemRoleId = (int)U.SystemRoleId,
                 SiteId = (int)U.SiteId,
             }).ToList();
         }
@@ -80,9 +80,9 @@ namespace Nashet.Business.Domain
                 UserNameEN = user.UserNameEN,
                 UserEmail = user.UserEmail,
                 UserPhone = user.UserPhone,
-                SystemRoleId = user.SystemRoleId,
+                SystemRoleId = (int)user.SystemRoleId,
                 SiteId = (int)user.SiteId,
-                SystemRoleType = user.SystemRole.RoleType,
+                SystemRoleType = user.SystemRole.RoleTypeAr,
             };
             return viewModel;
         }

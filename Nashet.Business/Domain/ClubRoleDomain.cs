@@ -19,7 +19,8 @@ namespace Nashet.Business.Domain
             return _ClubRoleRepository.GetAllClubRole().Result.Select(c => new ClubRoleViewModel
             {
                 ClubRoleId = c.ClubRoleId,
-                RoleType = c.RoleType,
+                RoleTypeAr = c.RoleTypeAr,
+                RoleTypeEn = c.RoleTypeEn,
                 Guid = c.Guid,
 
             }).ToList();
@@ -32,7 +33,8 @@ namespace Nashet.Business.Domain
                 {
 
                     ClubRoleId = viewModel.ClubRoleId,
-                    RoleType = viewModel.RoleType,
+                    RoleTypeAr = viewModel.RoleTypeAr,
+                    RoleTypeEn = viewModel.RoleTypeEn,
                     Guid = viewModel.Guid
                 };
                 int check = await _ClubRoleRepository.InsertClubRole(clubrole);

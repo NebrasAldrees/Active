@@ -19,6 +19,7 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.FirstOrDefaultAsync(student => student.AcademicId == academicId && student.IsDeleted == false);
         }
+        
         public virtual async Task<IList<tblStudent>> GetAllStudents()
         {
             return await dbSet.Where(Student => Student.IsDeleted == false).ToListAsync(); 
@@ -50,24 +51,24 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        //public virtual async Task<int> DeleteStudent(tblStudent student)
-        //{
-        //    try
-        //    {
-        //        if (student == null || student.IsDeleted == true)
-        //        {
-        //            return 0;
-        //        }
+        public virtual async Task<int> DeleteStudent(tblStudent student)
+        {
+            try
+            {
+                if (student == null || student.IsDeleted == true)
+                {
+                    return 0;
+                }
 
-        //        IsDeleted(student);
-        //        return 1;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
-    
+                IsDeleted(student);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
 
         public virtual async Task<tblStudent> GetStudentByIdAsync(int id)
         {

@@ -15,7 +15,8 @@ namespace Nashet.Business.ViewModels
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("نوع المستخدم")]
-        public string RoleType { get; set; }
+        public string RoleTypeAr { get; set; }
+        public string RoleTypeEn { get; set; }
         public Guid guid { get; set; }
 
     }

@@ -11,7 +11,7 @@ namespace Nashet.Data.Models
     {
        [Key]
         public int UserId { get; set; }
-        public int SystemRoleId { get; set; }
+        public int? SystemRoleId { get; set; }
         [StringLength(30)]
         public tblSystemRole SystemRole { get; set; }
         public string UserNameAR { get; set; }

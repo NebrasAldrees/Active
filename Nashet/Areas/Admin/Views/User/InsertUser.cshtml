@@ -79,7 +79,7 @@
                                         <option value="">اختر نوع المستخدم</option>
                                         @foreach (SystemRoleViewModel role in ViewBag.SystemRole)
                                         {
-                                            <option value="@role.SystemRoleId">@role.RoleType</option>
+                                            <option value="@role.SystemRoleId">@role.RoleTypeAr</option>
                                         }
                                     </select>
                                     <span style="color:red" asp-validation-for="SystemRoleId"></span>
