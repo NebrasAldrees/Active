@@ -25,7 +25,6 @@ namespace Nashet.Business.Domain
                 UserNameEN = U.UserNameEN,
                 UserEmail = U.UserEmail,
                 UserPhone = U.UserPhone,
-                //SystemRoles = U.SystemRoles,
                 SystemRoleId = U.SystemRoleId,
                 SiteId = (int)U.SiteId,
             }).ToList();
@@ -37,6 +36,7 @@ namespace Nashet.Business.Domain
             {
                 tblUser User = new tblUser
                 {
+                    UserId = viewModel.UserId,
                     Username = viewModel.Username,
                     UserNameAR = viewModel.UserNameAR,
                     UserNameEN = viewModel.UserNameEN,
@@ -47,26 +47,9 @@ namespace Nashet.Business.Domain
                 };
                 int check = await _UserRepository.InsertUser(User);
                 if (check == 0)
-                {
                     return 0;
-                }
                 else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblUser",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
-                }
-               
             }
             catch
             {
@@ -86,8 +69,7 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-
-        public async Task<UserViewModel> GetUserByUsername(String username)
+        public async Task<UserViewModel> GetUserByUsername(string username)
         {
             var user = await _UserRepository.GetUserByUsername(username);
             UserViewModel viewModel = new UserViewModel
@@ -100,6 +82,7 @@ namespace Nashet.Business.Domain
                 UserPhone = user.UserPhone,
                 SystemRoleId = user.SystemRoleId,
                 SiteId = (int)user.SiteId,
+                SystemRoleType = user.SystemRole.RoleType,
             };
             return viewModel;
         }

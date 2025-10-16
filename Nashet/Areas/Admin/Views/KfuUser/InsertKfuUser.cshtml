@@ -29,7 +29,7 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"> الاسم بالعربي</label>
+                                    <label for="" class="mb-1">الإسم باللغة العربية</label>
                                     <input asp-for="NameAR" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="NameAR"></span>
 
@@ -37,7 +37,7 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <!-- START ITEM -->
-                                    <label for="" class="mb-1">الاسم بالانجليزي</label>
+                                    <label for="" class="mb-1">الإسم باللغة الإنجليزية</label>
                                     <input asp-for="NameEN" type="text" class="form-control">
                                     <span style="color:red" asp-validation-for="NameEN"></span>
 
@@ -63,11 +63,11 @@
                                 <div class="col-md-6">
                                     <label for="" class="mb-1"> نوع المستخدم</label>
                                     <select asp-for="UserType" class="form-control">
-                                        <option value="4">طالب</option>
-                                        <option value="5">مشرف الأنشطة</option>
-                                        <option value="6">مشرف النادي</option>
-                                        <option value="7">مدير النادي</option>
-                                        <option value="8">قائد النادي</option>
+                                        <option value="طالب">طالب</option>
+                                        <option value="مشرف الأنشطة">مشرف الأنشطة</option>
+                                        <option value="مشرف النادي">مشرف النادي</option>
+                                        <option value="مدير النظام">مدير النظام</option>
+                                        <option value="قائد النادي">قائد النادي</option>
                                     </select>
                                     <span style="color:red" asp-validation-for="UserType"></span>
                                 </div><!-- END ITEM -->

@@ -86,7 +86,38 @@ namespace Nashet.Business.Domain
 
             return Activity;
         }
-        
+
+        public virtual async Task<int> UpdateActivity(int id, ActivityViewModel viewModel)
+        {
+            try
+            {
+                var activity = await _ActivityRepository.GetActivityById(id);
+                if (activity == null)
+                {
+                    return 0; // Site not found
+                }
+
+                activity.ActivityTopic =viewModel.ActivityTopic;
+                activity.ActivityDescription = viewModel.ActivityDescription;
+                activity.ActivityLocation = viewModel.ActivityLocation; 
+                activity.ActivityPoster = viewModel.ActivityPoster;
+                activity.ActivityStartDate = viewModel.ActivityStartDate;
+                activity.ActivityEndDate = viewModel.ActivityEndDate;
+                activity.ActivityTime = viewModel.ActivityTime;
+
+                int check = await _ActivityRepository.updateActivity(activity);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+
 
         public virtual async Task<int> DeleteActivity(int Id)
         {

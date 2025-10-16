@@ -24,8 +24,6 @@ namespace Nashet.Business.Domain
 
             }).ToList();
         }
-
-
         public async Task<int> InsertClubRole(ClubRoleViewModel viewModel)
         {
             try

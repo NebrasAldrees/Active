@@ -9,23 +9,24 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.ViewModels
 {
-    public class UserViewModel  
+    public class UserViewModel
     {
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("نوع المستخدم")]
         public int SystemRoleId { get; set; }
-        public tblSystemRole SystemRole { get; set; }
+        public string SystemRoleType { get; set; }
+        public SystemRoleViewModel SystemRole { get; set; }
 
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
-        [DisplayName("اسم المستخدم بالعربي")]
+        [DisplayName("الإسم باللغة العربية")]
         public string UserNameAR { get; set; }
 
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
-        [DisplayName("اسم المستخدم بالانجليزي")]
+        [DisplayName("الإسم باللغة الإنجليزية")]
         public string UserNameEN { get; set; }
 
         [StringLength(50)]
@@ -41,10 +42,8 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("الجهة")]
         public int SiteId { get; set; }
-        public tblSite Site { get; set; }
+        public SiteViewModel Site { get; set; }
         public Guid guid { get; set; }
         public string Username { get; set; }
-        public List<SystemRoleViewModel> SystemRoles { get; set; }
-        public List<SiteViewModel> Sites { get; set; }
     }
 }

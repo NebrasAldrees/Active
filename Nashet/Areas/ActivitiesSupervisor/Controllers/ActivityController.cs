@@ -22,6 +22,11 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _ActivityDomain.GetActivity());
         }
+        [HttpGet]
+        public async Task<IActionResult> ViewActivityById(int id)
+        {
+            return View(await _ActivityDomain.GetActivityById(id));
+        }
 
         [HttpGet]
         public async Task<IActionResult> InsertActivity()
@@ -52,6 +57,21 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             }
             return RedirectToAction("InsertActivity");
 
+        }
+        public async Task<ActionResult> DeleteActivity(int id)
+        {
+            int result = await _ActivityDomain.DeleteActivity(id);
+
+            if (result == 1)
+            {
+                TempData["Success"] = "تم حذف النشاط بنجاح";
+            }
+            else
+            {
+                TempData["Error"] = "خطأ في الحذف";
+            }
+
+            return RedirectToAction("Activities");
         }
 
 
