@@ -25,8 +25,9 @@ namespace Nashet.Business.Domain
                 UserNameEN = U.UserNameEN,
                 UserEmail = U.UserEmail,
                 UserPhone = U.UserPhone,
-                //SystemRoles = U.SystemRoles,
-                SystemRoleId = U.SystemRoleId,
+
+                SystemRoleId = (int)U.SystemRoleId,
+
                 SiteId = (int)U.SiteId,
             }).ToList();
         }
@@ -87,21 +88,24 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public async Task<UserViewModel> GetUserByUsername(String username)
-        {
-            var user = await _UserRepository.GetUserByUsername(username);
-            UserViewModel viewModel = new UserViewModel
-            {
-                UserId = user.UserId,
-                Username = user.Username,
-                UserNameAR = user.UserNameAR,
-                UserNameEN = user.UserNameEN,
-                UserEmail = user.UserEmail,
-                UserPhone = user.UserPhone,
-                SystemRoleId = user.SystemRoleId,
-                SiteId = (int)user.SiteId,
-            };
-            return viewModel;
-        }
+        //public async Task<UserViewModel> GetUserByUsername(String username)
+        //{
+        //    var user = await _UserRepository.GetUserByUsername(username);
+        //    UserViewModel viewModel = new UserViewModel
+        //    {
+        //        UserId = user.UserId,
+        //        Username = user.Username,
+        //        UserNameAR = user.UserNameAR,
+        //        UserNameEN = user.UserNameEN,
+        //        UserEmail = user.UserEmail,
+        //        UserPhone = user.UserPhone,
+        //        SystemRoleId = (int)user.SystemRoleId,
+        //        SiteId = (int)user.SiteId,
+        //        SystemRoleType = user.SystemRole.RoleTypeAr,
+
+
+        //    };
+        //    return viewModel;
+        //}
     }
 }

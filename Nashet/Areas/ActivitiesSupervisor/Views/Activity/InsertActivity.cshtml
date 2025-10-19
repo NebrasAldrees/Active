@@ -1,7 +1,24 @@
 ﻿@model ActivityViewModel
 <section class="page_wrap">
     <div class="page_content">
-
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Success"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
                 <h5 class="m-0">إضافة نشاط</h5>
@@ -45,8 +62,8 @@
                                     <input asp-for="ActivityStartDate" type="time" class="form-control">
                                     <span style="color:red" asp-validation-for="ActivityStartDate"></span>
 
-                                    <input asp-for="ActivityTime" type="time" class="form-control">
-                                    <span style="color:red" asp-validation-for="ActivityTime"></span>
+                                    @* <input asp-for="ActivityTime" type="time" class="form-control">
+                                    <span style="color:red" asp-validation-for="ActivityTime"></span> *@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -64,7 +81,7 @@
                                 <div class="col-md-6">
                                     <label asp-for="ActivityPoster" class="mb-1"></label>
                                     <input asp-for="ActivityPoster" type="file" id="ImageUpload"
-                                           name="ActivityPoster" name="ActivityPoster" accept="image/*" class=" form-control"></input>
+                                           name="ActivityPoster" name="ActivityPoster" accept="image/*" class=" form-control">
                                     <span style="color:red" asp-validation-for="ActivityPoster"></span>
                                 </div><!-- END ITEM -->
 

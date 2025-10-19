@@ -35,7 +35,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 var entity = await _ActivityDomain.GetActivityByGuid(Id);
                 if (entity == null)
                 {
-                    TempData["Error"] = "الجهة غير موجودة";
+                    TempData["Error"] = "النشاط غير موجود";
                     return RedirectToAction(nameof(Activities));
                 }
 

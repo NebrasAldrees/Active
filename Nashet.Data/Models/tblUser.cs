@@ -9,9 +9,12 @@ namespace Nashet.Data.Models
 {
     public class tblUser : Common
     {
-       [Key] public int UserId { get; set; }
-        public int SystemRoleId { get; set; }
-        [StringLength(30)]
+
+       [Key]
+        public int UserId { get; set; }
+        public string SystemRoleType { get; set; }
+
+        public int? SystemRoleId { get; set; }
         public tblSystemRole SystemRole { get; set; }
         public string UserNameAR { get; set; }
         [StringLength(50)]
