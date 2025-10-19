@@ -1,0 +1,79 @@
+﻿@model StudentViewModel
+<section class="page_wrap">
+    <div class="page_content">
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">تحديث بيانات الطالب</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="UpdateStudent" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <input type="hidden" asp-for="Guid" />
+                                <input type="hidden" asp-for="StudentId" />
+                               
+
+                                <div class="col-md-6">
+                                    <label asp-for="StudentNameAr" class="mb-1"></label>
+                                    <input asp-for="StudentNameAr" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentNameAr"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="StudentNameEn" class="mb-1"></label>
+                                    <input asp-for="StudentNameEn" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentNameEn"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="AcademicId" class="mb-1"></label>
+                                    <input asp-for="AcademicId" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="AcademicId"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="StudentEmail" class="mb-1"></label>
+                                    <input asp-for="StudentEmail" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentEmail"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="StudentPhone" class="mb-1"></label>
+                                    <input asp-for="StudentPhone" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentPhone"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="SiteId" class="mb-1"></label>
+                                    <input asp-for="SiteId" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="SiteId"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="StudentSkills" class="mb-1"></label>
+                                    <input asp-for="StudentSkills" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="StudentSkills"></span>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                                    <a asp-action="ViewStudents" class="btn btn-secondary">إلغاء</a>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->

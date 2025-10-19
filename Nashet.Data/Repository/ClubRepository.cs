@@ -20,25 +20,29 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(m => m.IsActive == true).ToListAsync(); // m for club
         }
 
-        public virtual async Task<tblClub> GetClubById(int clubid)
+        public virtual async Task<tblClub> GetClubById(int id)
         {
-            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == clubid)
+            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == id)
             .FirstOrDefaultAsync();
         }
-        public virtual async Task<bool> IsClubNameExists(string clubNameAr, string clubNameEn, int? excludeClubId = null)
-        {
-            var query = dbSet.Where(c => c.IsDeleted == false);
-
-            if (excludeClubId.HasValue)
-            {
-                query = query.Where(c => c.ClubId != excludeClubId.Value);
-            }
-
-            return await query.AnyAsync(c =>
-                c.ClubNameAR == clubNameAr ||
-                c.ClubNameEN == clubNameEn
-            );
-        }
+            //public virtual async Task<int> DeleteClub(int id)
+            //{
+            //    try
+            //    {
+            //        var club = await dbSet.FindAsync(id);
+            //        if (club != null)
+            //        {
+            //            club.IsDeleted = true;
+            //            await NashetContext.SaveChangesAsync();
+            //            return 1;
+            //        }
+            //        return 0; 
+            //    }
+            //    catch
+            //    {
+            //        return 0;
+            //    }
+            //}
         public virtual async Task<int> InsertClub(tblClub Club)
         {
             try
@@ -50,35 +54,6 @@ namespace Nashet.Data.Repository
 
             {
                 Console.WriteLine($"Error inserting system:{ex.Message}");
-                return 0;
-            }
-        }
-        
-        public virtual async Task<int> DeleteClub (tblClub club)
-        {
-            try
-            {
-                if (club == null || club.IsDeleted == true)
-                {
-                    return 0;
-                }
-                IsDeleted(club);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-        public virtual async Task<int> UpdateClub (tblClub club)
-        {
-            try
-            {
-                await UpdateAsync(club);
-                return 1;
-            }
-            catch
-            {
                 return 0;
             }
         }

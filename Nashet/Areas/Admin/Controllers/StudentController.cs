@@ -24,6 +24,12 @@ namespace Nashet.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ViewStudentByGuid(Guid Guid)
+        {
+            return View(await _StudentDomain.GetStudentByGuid(Guid));
+        }
+
+        
         public async Task<IActionResult> InsertStudent()
         {
             ViewBag.Site = await _Siteomain.GetSite();
@@ -53,34 +59,68 @@ namespace Nashet.Areas.Admin.Controllers
             return RedirectToAction("ViewStudents");
 
         }
+
+        public async Task<IActionResult> UpdateStudent(Guid Guid)
+        {
+            try
+            {
+                var student = await _StudentDomain.GetStudentByGuid(Guid);
+                if (student == null)
+                {
+                    TempData["Error"] = "الطالب غير موجود";
+                    return RedirectToAction(nameof(ViewStudents));
+                }
+
+                var viewModel = new StudentViewModel
+                {
+                    Guid = student.Guid,
+                   StudentNameAr = student.StudentNameAr,
+                   StudentNameEn = student.StudentNameEn,
+                    AcademicId = student.AcademicId,
+                    StudentEmail = student.StudentEmail,
+                    StudentPhone = student.StudentPhone,
+                    StudentSkills = student.StudentSkills,
+                    SiteId = student.SiteId,
+                };
+
+                return View(viewModel);
+            }
+            catch
+            {
+                return RedirectToAction(nameof(ViewStudents));
+            }
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateStudent(int id, StudentViewModel viewModel)
+        public async Task<IActionResult> UpdateStudent(StudentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _StudentDomain.UpdateStudent(id, viewModel);
+                    int check = await _StudentDomain.UpdateStudent(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Student Update successfully.";
+                    {
+                        TempData["Message"] = "تم تعديل بيانات الطالب بنجاح";
+                        return RedirectToAction(nameof(ViewStudents));
+                    }
                     else
-                        ViewData["Failed"] = "تم تعديل بيانات الطالب بنجاح";
+                        TempData["Error"] = "فشل التعديل";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "فشل التعديل";
+                    TempData["Error"] = "فشل التعديل";
                 }
             }
-            return RedirectToAction("ViewStudents");
+            return View(viewModel);
         }
-        public async Task<ActionResult> DeleteStudent(int id)
+        public async Task<ActionResult> DeleteStudent(Guid Guid)
         {
-            int result = await _StudentDomain.DeleteStudent(id);
+            int result = await _StudentDomain.DeleteStudent(Guid);
 
             if (result == 1)
             {
-                TempData["Success"] = "تم حذف الجهة بنجاح";
+                TempData["Success"] = "تم حذف الطالب بنجاح";
             }
             else
             {
@@ -90,15 +130,5 @@ namespace Nashet.Areas.Admin.Controllers
             return RedirectToAction("ViewStudents");
         }
 
-
-
-    }
-
-
-    //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    //public IActionResult Error()
-    //{
-    //    return View(new ErrorViewModel { RequestId = Students.Current?.Id ?? HttpContext.TraceIdentifier });
-    //}
+    } 
 }
-

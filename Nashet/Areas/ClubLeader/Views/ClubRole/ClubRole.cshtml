@@ -29,9 +29,9 @@
                                     <td>@item.ClubRoleId</td>
                                     <td>@item.RoleTypeAr</td>
                                     <td class="action_td text-end">
-                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                     @* <a href="" class="btn btn-sm btn-primary">عرض</a>*@
+                                        <a asp-action="UpdateStudent" asp-route-Guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a asp-action="DeleteStudent" asp-route-Guid="@item.Guid" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }

@@ -74,29 +74,21 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-//app.MapControllerRoute(
-//    name: "Admin",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-//app.MapControllerRoute(
-//    name: "ActivitiesSupervisor",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-//app.MapControllerRoute(
-//    name: "ClubSupervisor",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-//app.MapControllerRoute(
-//    name: "ClubLeader",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-//app.MapControllerRoute(
-//    name: "Student",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
-
 app.MapControllerRoute(
-    name: "areas",
+    name: "Admin",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+app.MapControllerRoute(
+    name: "ActivitiesSupervisor",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "ClubSupervisor",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "ClubLeader",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "Student",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

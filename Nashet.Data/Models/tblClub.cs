@@ -16,8 +16,7 @@ namespace Nashet.Data.Models
 
         [StringLength(50)]
         public string ClubNameAR { get; set; }
-        
-        [StringLength(50)]
+       [StringLength(50)]
         public string ClubNameEN { get; set; }
 
         [StringLength(500)]

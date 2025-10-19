@@ -16,16 +16,20 @@ namespace Nashet.Business.Domain
     {
         private readonly StudentRepository _StudentRepository = Repository;
 
-        public async Task<tblStudent> GetByAcademicId(String academicId)
+        public async Task<tblStudent> GetByAcademicId(string academicId)
         {
-            return await _StudentRepository.GetByAcademicIdAsync(academicId); 
+            return await _StudentRepository.GetByAcademicIdAsync(academicId);
+        }
+        public async Task<tblStudent> GetStudentByGuid(Guid Guid)
+        {
+            return await _StudentRepository.GetStudentByGuid(Guid);
         }
 
         public async Task<IList<StudentViewModel>> GetStudent()
         {
             return _StudentRepository.GetAllStudents().Result.Select(S => new StudentViewModel
             {
-                StudentId = S.StudentId,
+                Guid = S.Guid,
                 AcademicId = S.AcademicId,
                 StudentNameAr = S.StudentNameAr,
                 StudentNameEn = S.StudentNameEn,
@@ -81,19 +85,23 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public virtual async Task<int> UpdateStudent(int id, StudentViewModel viewModel)
+        public virtual async Task<int> UpdateStudent(StudentViewModel viewModel)
         {
             try
             {
-                var student = await _StudentRepository.GetStudentByIdAsync(id);
+                var student = await _StudentRepository.GetStudentByGuid (viewModel.Guid);
                 if (student == null)
                 {
                     return 0; 
                 }
 
-                student.StudentId = viewModel.StudentId;
                 student.StudentNameAr = viewModel.StudentNameAr;
                 student.StudentNameEn = viewModel.StudentNameEn;
+                student.AcademicId = viewModel.AcademicId;
+                student.StudentEmail = viewModel.StudentEmail;
+                student.StudentPhone = viewModel.StudentPhone;
+                student.StudentSkills = viewModel.StudentSkills;
+                student.SiteId = viewModel.SiteId;
 
                 int check = await _StudentRepository.updateStudent(student);
                 if (check == 0)
@@ -107,11 +115,11 @@ namespace Nashet.Business.Domain
             }
 
         }
-        public virtual async Task<int> DeleteStudent(int id)
+        public virtual async Task<int> DeleteStudent(Guid Guid)
         {
             try
             {
-                var student = await _StudentRepository.GetStudentByIdAsync(id);
+                var student = await _StudentRepository.GetStudentByGuid(Guid);
                 if (student == null)
                 {
                     return 0; 
@@ -129,10 +137,8 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-
-
     }
-    }
+}
 
 
 

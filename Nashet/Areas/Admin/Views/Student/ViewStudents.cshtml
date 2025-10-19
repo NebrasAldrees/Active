@@ -32,9 +32,9 @@
                                     <td>@item.StudentPhone</td>
                                     <td>@item.StudentSkills</td>
                                     <td class="action_td text-end">
-                                        <a asp-action="" class="btn btn-sm btn-primary">عرض</a>
-                                        <a asp-action="UpdateStudent" class="btn btn-sm btn-success">تعديل</a>
-                                        <a asp-action="DeleteStudent" asp-route-for="@item.StudentId" class="btn btn-sm btn-danger">حذف</a>
+                                        @*<a asp-action="ViewStudentByGuid" asp-route-Guid="@item.Guid"class="btn btn-sm btn-primary">عرض</a>*@
+                                        <a asp-action="UpdateStudent"asp-route-Guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a asp-action="DeleteStudent" asp-route-Guid="@item.Guid" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }

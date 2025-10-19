@@ -23,7 +23,7 @@ namespace Nashet.Data.Repository
             }
             catch (Exception ex) 
             {
-                Console.WriteLine($"Error inserting system:{ex.Message}");
+                Console.WriteLine($"خطأ في الإضافة:{ex.Message}");
                 return 0;
             }
         }
@@ -31,9 +31,9 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(site => site.IsActive == true && site.IsDeleted == false).ToListAsync(); 
         }
-        public virtual async Task<tblSite> GetSiteBySiteId(int siteId)
+        public virtual async Task<tblSite> GetSiteByGUID(Guid guid)
         {
-            return await dbSet.Where(site => site.IsDeleted == false && site.SiteId == siteId)
+            return await dbSet.Where(site => site.IsDeleted == false && site.Guid == guid)
                             .FirstOrDefaultAsync();
         }
         public virtual async Task<int> DeleteSite(tblSite site)
@@ -42,7 +42,7 @@ namespace Nashet.Data.Repository
             {
                 if (site == null || site.IsDeleted == true)
                 {
-                    return 0;
+                    Console.WriteLine($"خطأ في الحذف");
                 }
 
                 IsDeleted(site);

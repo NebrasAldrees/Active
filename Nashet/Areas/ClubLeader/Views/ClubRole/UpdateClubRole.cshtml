@@ -1,0 +1,57 @@
+﻿@model ClubRoleViewModel
+<section class="page_wrap">
+    <div class="page_content">
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">تحديث بيانات نوع المنصب</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="UpdateClubRole" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <input type="hidden" asp-for="Guid" />
+                                <div class="col-md-6">
+                                    <label asp-for="ClubRoleId" class="mb-1"></label>
+                                    <input asp-for="ClubRoleId" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ClubRoleId"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="RoleTypeAr" class="mb-1"></label>
+                                    <input asp-for="RoleTypeAr" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="RoleTypeAr"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="RoleTypeEn" class="mb-1"></label>
+                                    <input asp-for="RoleTypeEn" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="RoleTypeEn"></span>
+                                </div>
+                                
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                                    <a asp-action="ViewClubRole" class="btn btn-secondary">إلغاء</a>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->

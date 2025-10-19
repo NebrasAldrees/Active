@@ -10,6 +10,10 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
+
+        //public int UserId { get; private set; }
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

@@ -17,7 +17,7 @@ namespace Nashet.Business.ViewModels
         [DisplayName("نوع المستخدم")]
         public  string RoleTypeAr { get; set; }
         public  string RoleTypeEn { get; set; }
-        
+
         public Guid Guid { get; set; }
 
 

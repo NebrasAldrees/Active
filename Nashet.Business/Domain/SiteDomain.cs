@@ -18,7 +18,6 @@ namespace Nashet.Business.Domain
         {
             return _SiteRepository.GetAllSites().Result.Select(s => new SiteViewModel
             {
-                SiteId = s.SiteId,
                 SiteCode = s.SiteCode,
                 SiteNameAR = s.SiteNameAR,
                 SiteNameEn = s.SiteNameEn,
@@ -26,14 +25,23 @@ namespace Nashet.Business.Domain
 
             }).ToList();
         }
+        public async Task<tblSite> GetSiteByGUID(Guid guid)
+        {
+            var Site = await _SiteRepository.GetSiteByGUID(guid);
+
+            if (Site == null)
+            {
+                throw new KeyNotFoundException($"Site request with site GUId {guid} was not found.");
+            }
+
+            return Site;
+        }
         public virtual async Task<int> InsertSite(SiteViewModel viewModel)
         {
             try
             {
                 tblSite site = new tblSite
                 {
-                    Guid = viewModel.Guid,
-                    SiteId = viewModel.SiteId,
                     SiteCode = viewModel.SiteCode,
                     SiteNameAR = viewModel.SiteNameAR,
                     SiteNameEn = viewModel.SiteNameEn
@@ -66,17 +74,16 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public virtual async Task<int> UpdateSite(int id,SiteViewModel viewModel)
+        public virtual async Task<int> UpdateSite(SiteViewModel viewModel)
         {
             try
             {
-                var site = await _SiteRepository.GetSiteBySiteId(id);
+                var site = await _SiteRepository.GetSiteByGUID(viewModel.Guid);
                 if (site == null)
                 {
                     return 0; // Site not found
                 }
 
-                site.SiteCode = viewModel.SiteCode;
                 site.SiteNameAR = viewModel.SiteNameAR;
                 site.SiteNameEn = viewModel.SiteNameEn;
 
@@ -92,11 +99,11 @@ namespace Nashet.Business.Domain
             }
 
         }
-        public virtual async Task<int> DeleteSite(int siteId)
+        public virtual async Task<int> DeleteSite(Guid guid)
         {
             try
             {
-                var site = await _SiteRepository.GetSiteBySiteId(siteId);
+                var site = await _SiteRepository.GetSiteByGUID(guid);
                 if (site == null)
                 {
                     return 0; // Site not found
@@ -115,17 +122,7 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public async Task<tblSite> GetSiteBySiteId(int siteId)
-        {
-            var Site = await _SiteRepository.GetSiteBySiteId(siteId);
-
-            if (Site == null)
-            {
-                throw new KeyNotFoundException($"Site request with site Id {siteId} was not found.");
-            }
-
-            return Site;
-        }
+        
 
         
     }

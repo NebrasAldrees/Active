@@ -18,7 +18,7 @@ namespace Nashet.Business.Domain
         {
             return _MembershipRepository.GetAllMembers().Result.Select(m => new MembershipViewModel
             {
-                MembershipId = m.MembershipId,
+                Guid = m.Guid,
                 StudentId = (int)m.StudentId,
                 Student = m.Student,
                 ClubRoleId = (int)m.ClubRoleId,
@@ -26,7 +26,7 @@ namespace Nashet.Business.Domain
                 TeamId = (int)m.TeamId,
                 Team = m.Team,
                 JoinDate = m.JoinDate,
-                Guid = m.Guid,
+                
 
             }).ToList();
         }
@@ -38,7 +38,7 @@ namespace Nashet.Business.Domain
             {
                 tblMembership membership = new tblMembership
                 {
-                    StudentId = viewModel.StudentId,
+                   
                     //Student = viewModel.Student,
                     ClubRoleId = viewModel.ClubRoleId,
                     TeamId = viewModel.TeamId,

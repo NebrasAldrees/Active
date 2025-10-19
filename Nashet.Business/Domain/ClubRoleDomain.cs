@@ -14,17 +14,25 @@ namespace Nashet.Business.Domain
     public class ClubRoleDomain(ClubRoleRepository Repository) : BaseDomain
     {
         private readonly ClubRoleRepository _ClubRoleRepository = Repository;
+
+        public async Task<tblClubRole> GetClubRoleByGuid(Guid Guid)
+        {
+            return await _ClubRoleRepository.GetClubRoleByGuid(Guid);
+        }
         public async Task<IList<ClubRoleViewModel>> GetClubRole()
         {
             return _ClubRoleRepository.GetAllClubRole().Result.Select(c => new ClubRoleViewModel
             {
+                Guid = c.Guid,
                 ClubRoleId = c.ClubRoleId,
                 RoleTypeAr = c.RoleTypeAr,
                 RoleTypeEn = c.RoleTypeEn,
-                Guid = c.Guid,
+               
 
             }).ToList();
         }
+
+
         public async Task<int> InsertClubRole(ClubRoleViewModel viewModel)
         {
             try
@@ -32,10 +40,10 @@ namespace Nashet.Business.Domain
                 tblClubRole clubrole = new tblClubRole
                 {
 
-                    ClubRoleId = viewModel.ClubRoleId,
+                
                     RoleTypeAr = viewModel.RoleTypeAr,
                     RoleTypeEn = viewModel.RoleTypeEn,
-                    Guid = viewModel.Guid
+                    
                 };
                 int check = await _ClubRoleRepository.InsertClubRole(clubrole);
                 if (check == 0)
@@ -63,13 +71,48 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        
-        public int DeleteClubRole(int id)
+
+        public virtual async Task<int> UpdateClubRole(ClubRoleViewModel viewModel)
         {
             try
             {
-                _ClubRoleRepository.Delete(id);
-                return 1;
+                var clubrole = await _ClubRoleRepository.GetClubRoleByGuid(viewModel.Guid);
+                if (clubrole == null)
+                {
+                    return 0;
+                }
+
+                clubrole.RoleTypeAr = viewModel.RoleTypeAr;
+                clubrole.RoleTypeEn = viewModel.RoleTypeEn;
+
+                int check = await _ClubRoleRepository.UpdateClubRole(clubrole);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+        public virtual async Task<int> DeleteClubRole(Guid Guid)
+        {
+            try
+            {
+                var clubrole = await _ClubRoleRepository.GetClubRoleByGuid(Guid);
+                if (clubrole == null)
+                {
+                    return 0;
+                }
+
+                int check = await _ClubRoleRepository.DeleteClubRole(clubrole);
+                if (check == null)
+                    return 0;
+                else
+                    return 1;
+
             }
             catch
             {
