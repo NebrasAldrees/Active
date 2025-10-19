@@ -11,11 +11,11 @@ namespace Nashet.Data.Models
     {
         [Key] public int MRId { get; set; }
         
-        public int StudentID { get; set; }
+        public int? StudentID { get; set; }
         public tblStudent Student { get; set; }
-        public int ClubID { get; set; }
+        public int? ClubID { get; set; }
         public tblClub Club { get; set; }
-        public int TeamID { get; set; }
+        public int? TeamID { get; set; }
         public tblTeam Team { get; set; }
 
         [StringLength(100)]

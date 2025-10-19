@@ -25,7 +25,7 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<tblClub> GetClubById(int clubid)
         {
-            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == clubid)
+            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == id)
             .FirstOrDefaultAsync();
         }
         public virtual async Task<bool> IsClubNameExists(string clubNameAr, string clubNameEn, Guid? excludeClubGuid = null)

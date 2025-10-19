@@ -9,9 +9,15 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
     public class MembershipController : Controller
     {
         private readonly MembershipDomain _MembershipDomain;
-        public MembershipController(MembershipDomain MembershipDomain)
+        private readonly TeamDomain _TeamDomain;
+        private readonly StudentDomain _StudentDomain;
+        private readonly ClubRoleDomain _ClubRoleDomain;
+        public MembershipController(MembershipDomain MembershipDomain, TeamDomain teamDomain, StudentDomain studentDomain, ClubRoleDomain clubRoleDomain)
         {
             _MembershipDomain = MembershipDomain;
+            _TeamDomain = teamDomain;
+            _StudentDomain = studentDomain;
+            _ClubRoleDomain = clubRoleDomain;
         }
         public async Task<IActionResult> ViewMember()
         {
@@ -19,12 +25,35 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         }
         public async Task<IActionResult> InsertMember()
         {
+            ViewBag.Team = await _TeamDomain.GetTeam();
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchStudent(String academicId)
+        {
+            var student = await _StudentDomain.GetByAcademicId(academicId); 
+            if (student == null)
+            {
+                ViewData["Error"] = "لم يتم العثور على الطالب";
+                return View("InsertMember"); 
+            }
+
+            var viewModel = new MembershipViewModel
+            {
+                AcademicId = student.AcademicId,
+                StudentId = student.StudentId,
+                Student = student,
+            };
+
+            ViewBag.Team = await _TeamDomain.GetTeam();
+            return View("InsertMember", viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertMember(MembershipViewModel viewModel)
         {
+            ViewBag.Team = await _TeamDomain.GetTeam();
             if (ModelState.IsValid)
             {
                 try

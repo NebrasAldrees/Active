@@ -19,7 +19,7 @@ namespace Nashet.Business.Domain
             return _ClubRepository.GetAllClubs().Result.Select(a => new ClubViewModel
             {
                 ClubId = a.ClubId,
-                SiteId = (int)a.siteId,
+                SiteId = a.siteId,
                 ClubNameAR = a.ClubNameAR,
                 ClubNameEN = a.ClubNameEN,
                 ClubVision = a.ClubVision,
@@ -61,7 +61,7 @@ namespace Nashet.Business.Domain
             return new ClubViewModel
             {
                 ClubId = club.ClubId,
-                SiteId = (int)club.siteId,
+                SiteId = club.siteId,
                 ClubNameAR = club.ClubNameAR,
                 ClubNameEN = club.ClubNameEN,
                 ClubVision = club.ClubVision,
@@ -74,15 +74,8 @@ namespace Nashet.Business.Domain
         {
             try
             {
-                bool nameExists = await _ClubRepository.IsClubNameExists(viewModel.ClubNameAR, viewModel.ClubNameEN);
-                if (nameExists)
-                {
-                    return -1;
-                }
-
                 tblClub Club = new tblClub
                 {
-                    ClubId = viewModel.ClubId,
                     siteId = viewModel.SiteId,
                     ClubNameAR = viewModel.ClubNameAR,
                     ClubNameEN = viewModel.ClubNameEN,

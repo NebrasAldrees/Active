@@ -19,9 +19,9 @@ namespace Nashet.Areas.Admin.Controllers
             return View(await _SiteDomain.GetSite());
         }
         [HttpGet]
-        public async Task<IActionResult> ViewSiteById(int id)
+        public async Task<IActionResult> ViewSiteByGUID(Guid guid)
         {
-            return View(await _SiteDomain.GetSiteBySiteId(id));
+            return View(await _SiteDomain.GetSiteByGUID(guid));
         }
         
         public async Task<IActionResult> InsertSite()
@@ -38,41 +38,72 @@ namespace Nashet.Areas.Admin.Controllers
                 {
                     int check = await _SiteDomain.InsertSite(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "تم اضافة الجهة بنجاح";
+                        TempData["Message"] = "تم اضافة الجهة بنجاح";
                     else
-                        ViewData["Failed"] = "فشل في الإضافة";
+                        TempData["Error"] = "فشل في الإضافة";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "فشل في العمليات";
+                    TempData["Error"] = "فشل في العمليات";
                 }
             }
-            return View(viewModel);
+            return RedirectToAction("ViewSites");
+        }
+
+        public async Task<IActionResult> UpdateSite(Guid guid)
+        {
+            try
+            {
+                var entity = await _SiteDomain.GetSiteByGUID(guid);
+                if (entity == null)
+                {
+                    TempData["Error"] = "الجهة غير موجودة";
+                    return RedirectToAction(nameof(ViewSites));
+                }
+
+                var viewModel = new SiteViewModel
+                {
+                    Guid = entity.Guid,
+                    SiteId = entity.SiteId,
+                    SiteCode = entity.SiteCode,
+                    SiteNameAR = entity.SiteNameAR,
+                    SiteNameEn = entity.SiteNameEn
+                };
+
+                return View(viewModel); 
+            }
+            catch
+            {
+                return RedirectToAction(nameof(ViewSites));
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateSite(int id, SiteViewModel viewModel)
+        public async Task<IActionResult> UpdateSite(SiteViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int check = await _SiteDomain.UpdateSite(id, viewModel);
+                    int check = await _SiteDomain.UpdateSite( viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Site Update successfully.";
+                    {
+                        TempData["Message"] = "تم تعديل بيانات الجهة بنجاح";
+                        return RedirectToAction(nameof(ViewSites));
+                    }
                     else
-                        ViewData["Failed"] = "تم تعديل بيانات الجهة بنجاح";
+                        TempData["Error"] = "فشل التعديل";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "فشل التعديل";
+                    TempData["Error"] = "فشل التعديل";
                 }
             }
-            return RedirectToAction("ViewSites");
+            return View(viewModel);
         }
-        public async Task<ActionResult> DeleteSite(int id)
+        public async Task<ActionResult> DeleteSite(Guid guid)
         {
-            int result = await _SiteDomain.DeleteSite(id);
+            int result = await _SiteDomain.DeleteSite(guid);
 
             if (result == 1)
             {

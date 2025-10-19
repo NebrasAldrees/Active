@@ -13,6 +13,9 @@ namespace Nashet.Data.Models
         public int ClubRoleId { get; set; }
 
         [StringLength(50)]
-        public string RoleType { get; set; }
+        public string RoleTypeAr { get; set; }
+
+        [StringLength(50)]
+        public string RoleTypeEn { get; set; }
     }
 }

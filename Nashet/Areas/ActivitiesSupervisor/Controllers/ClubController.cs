@@ -19,7 +19,6 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         public async Task<IActionResult> ViewAllClubs()
         {
-            ViewBag.Sites = await _SiteDomain.GetSite();
             return View(await _ClubDomain.GetClub());
         }
         public async Task<IActionResult> ClubPage(Guid guid)
@@ -45,7 +44,6 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         public async Task<IActionResult> InsertClub()
         {
-            ViewBag.Site = await _SiteDomain.GetSite();
             return View();
         }
         [HttpPost]
@@ -97,7 +95,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     TempData["Failed"] = "فشل إضافة النادي: " + ex.Message;
                 }
             }
-            return RedirectToAction("InsertClub");
+            return View(viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -136,7 +134,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 TempData["Error"] = "فشل حذف النادي";
             }
 
-            return RedirectToAction("ViewAllClubs");
-        }
+        //    return RedirectToAction(nameof(ViewAllClubs));
+        //}
     }
 }

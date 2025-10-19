@@ -12,11 +12,11 @@ namespace Nashet.Data.Models
     {
 
         [Key] public int ARId { get; set; }
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
         public tblUser User { get; set; }
-        public int SiteID { get; set; }
+        public int? SiteID { get; set; }
         public tblSite Site { get; set; }
-        public int ClubID { get; set; }
+        public int? ClubID { get; set; }
         public tblClub Club { get; set; } 
 
         [StringLength(100)]
@@ -26,7 +26,7 @@ namespace Nashet.Data.Models
         public TimeOnly ActivityTime { get; set; }
         [StringLength(100)]
         public string ActivityLocation { get; set; }
-        public ImageFileMachine ActivityPoster { get; set; }
+        public string ActivityPoster { get; set; }
         public int ActivityRequestId { get; internal set; }
     }
 }

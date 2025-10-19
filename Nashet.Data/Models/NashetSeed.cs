@@ -18,18 +18,17 @@ namespace Nashet.Data.Models
         internal static void Seed(ModelBuilder modelBuilder)
         {
             _modelBuilder = modelBuilder;
+            AddStudent();
             AddUser();
-            AddtStudent();
             AddKfuUser();
             AddSite();
-
+            AddSystemRole();
+            AddClubRole();
 
         }
 
 
-
-
-        private static void AddtStudent()
+        private static void AddStudent()
         {
             _modelBuilder.Entity<tblStudent>().HasData(
                new tblStudent()
@@ -98,7 +97,7 @@ namespace Nashet.Data.Models
                     Username = "Muntaha_12",
                     Password = "Muntaha",
                     UserEmail = "Muntaha@gmail.com",
-                    UserType ="Admin",
+                    UserType = "Admin",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
@@ -143,6 +142,7 @@ namespace Nashet.Data.Models
         private static void AddSite()
         {
             _modelBuilder.Entity<tblSite>().HasData(
+
                 new tblSite()
                 {
                     SiteId = 10,
@@ -155,22 +155,22 @@ namespace Nashet.Data.Models
                     Guid = Guid.Parse("9b7c9604-e3f3-40a4-9015-9916b7cabcff"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                 },
-                 new tblSite()
-                 {
-                     SiteId = 11,
-                     SiteCode = "",
-                     SiteNameAR = "كلية إدارة الأعمال",
-                     SiteNameEn = "College of Business",
-                     IsActive = true,
-                     isSent = true,
-                     IsDeleted = false,
-                     Guid = Guid.Parse("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
-                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
-                 },
+                new tblSite()
+                {
+                    SiteId = 11,
+                    SiteCode = "0930",
+                    SiteNameAR = "كلية إدارة الأعمال",
+                    SiteNameEn = "College of Business",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    Guid = Guid.Parse("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
+                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                },
                  new tblSite()
                  {
                      SiteId = 12,
-                     SiteCode = "",
+                     SiteCode = "0931",
                      SiteNameAR = "كلية الهندسة",
                      SiteNameEn = "College of Engineering",
                      IsActive = true,
@@ -182,7 +182,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 13,
-                     SiteCode = "",
+                     SiteCode = "0932",
                      SiteNameAR = "كلية الصيدلة الإكلينيكية",
                      SiteNameEn = "College of Clinical Pharmacy",
                      IsActive = true,
@@ -194,7 +194,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 14,
-                     SiteCode = "",
+                     SiteCode = "0933",
                      SiteNameAR = "كلية العلوم الطبية",
                      SiteNameEn = "College of Applied Medical Sciences",
                      IsActive = true,
@@ -206,7 +206,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 15,
-                     SiteCode = "",
+                     SiteCode = "0934",
                      SiteNameAR = "كلية العلوم",
                      SiteNameEn = "College of Science",
                      IsActive = true,
@@ -218,7 +218,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 16,
-                     SiteCode = "",
+                     SiteCode = "0935",
                      SiteNameAR = "كلية الطب",
                      SiteNameEn = "College of Medicine",
                      IsActive = true,
@@ -230,7 +230,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 17,
-                     SiteCode = "",
+                     SiteCode = "0936",
                      SiteNameAR = "كلية الحقوق",
                      SiteNameEn = "College of Law",
                      IsActive = true,
@@ -242,7 +242,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 18,
-                     SiteCode = "",
+                     SiteCode = "0937",
                      SiteNameAR = "كلية العلوم الزراعية والتغذية",
                      SiteNameEn = "College of Agricultural Science and Nutrition",
                      IsActive = true,
@@ -254,7 +254,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 19,
-                     SiteCode = "",
+                     SiteCode = "0938",
                      SiteNameAR = "كلية الاداب",
                      SiteNameEn = "College of Arts",
                      IsActive = true,
@@ -266,7 +266,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 20,
-                     SiteCode = "",
+                     SiteCode = "0939",
                      SiteNameAR = "عمادة شؤون الطلاب",
                      SiteNameEn = "Deanship of Student Affairs",
                      IsActive = true,
@@ -278,7 +278,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 21,
-                     SiteCode = "",
+                     SiteCode = "0940",
                      SiteNameAR = "كلية الدراسات التطبيقية وخدمة المجتمع",
                      SiteNameEn = "College of Applied Studies & Community Services",
                      IsActive = true,
@@ -290,7 +290,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 22,
-                     SiteCode = "",
+                     SiteCode = "0941",
                      SiteNameAR = "كلية التربية",
                      SiteNameEn = "College of Education",
                      IsActive = false,
@@ -302,7 +302,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 23,
-                     SiteCode = "",
+                     SiteCode = "0942",
                      SiteNameAR = "كلية الطب البيطري",
                      SiteNameEn = "College of Veterinary Medicine",
                      IsActive = false,
@@ -314,7 +314,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 24,
-                     SiteCode = "",
+                     SiteCode = "0943",
                      SiteNameAR = "عمادة التعلم الإلكتروني وتقنية المعلومات",
                      SiteNameEn = "Deanship of of E-learning and Information Technology",
                      IsActive = false,
@@ -326,7 +326,7 @@ namespace Nashet.Data.Models
                  new tblSite()
                  {
                      SiteId = 25,
-                     SiteCode = "",
+                     SiteCode = "0944",
                      SiteNameAR = "عمادة التطوير وضمان الجودة",
                      SiteNameEn = "Deanship of of Development and Quality Assurance",
                      IsActive = false,
@@ -336,6 +336,104 @@ namespace Nashet.Data.Models
                      CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                  }
                  );
+        }
+        private static void AddSystemRole()
+        {
+            _modelBuilder.Entity<tblSystemRole>().HasData(
+                new tblSystemRole()
+                {
+                    SystemRoleId = 1,
+                    RoleTypeAr = "مدير النظام",
+                    RoleTypeEn = "Admin",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                    CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                },
+                new tblSystemRole()
+                {
+                    SystemRoleId = 2,
+                    RoleTypeAr = "مشرف النشاط",
+                    RoleTypeEn = "Activity Supervisor",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                    CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                },
+                 new tblSystemRole()
+                 {
+                     SystemRoleId = 3,
+                     RoleTypeAr = "مشرف النادي",
+                     RoleTypeEn = "Club Supervisor",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                 new tblSystemRole()
+                 {
+                     SystemRoleId = 4,
+                     RoleTypeAr = "قائد النادي",
+                     RoleTypeEn = "Club Leader",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                 new tblSystemRole()
+                 {
+                     SystemRoleId = 5,
+                     RoleTypeAr = "الطالب",
+                     RoleTypeEn = "Student",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 });
+        }
+
+        private static void AddClubRole()
+        {
+            _modelBuilder.Entity<tblClubRole>().HasData(
+                new tblClubRole()
+                {
+                    ClubRoleId = 1,
+                    RoleTypeAr = " قائد النادي",
+                    RoleTypeEn = "Club Leader",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    Guid = Guid.Parse("abe79246-baad-4783-b3a3-a56e370464b8"),
+                    CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                },
+                 new tblClubRole()
+                 {
+                     ClubRoleId = 2,
+                     RoleTypeAr = " قائد الفريق",
+                     RoleTypeEn = "Team Leader",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("abe79246-baad-4783-b3a3-a56e370464b8"),
+                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                  new tblClubRole()
+                  {
+                      ClubRoleId = 3,
+                      RoleTypeAr = " عضو",
+                      RoleTypeEn = "Member",
+                      IsActive = true,
+                      isSent = true,
+                      IsDeleted = false,
+                      Guid = Guid.Parse("abe79246-baad-4783-b3a3-a56e370464b8"),
+                      CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
+                  }
+                );
         }
 
     }

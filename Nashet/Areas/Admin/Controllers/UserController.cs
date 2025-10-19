@@ -32,25 +32,53 @@ namespace Nashet.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertUser(UserViewModel viewModel)
         {
-            ViewBag.Site = await _siteDomain.GetSite();
-            ViewBag.SystemRole = await _systemRoleDomain.GetSystemRole();
             if (ModelState.IsValid)
             {
                 try
                 {
                     int check = await _domain.InsertUser(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                    {
+                        TempData["Successful"] = "تم الحفظ بنجاح";
+                        return RedirectToAction(nameof(InsertUser));
+                    }
                     else
-                        ViewData["Failed"] = "Failed";
+                    {
+                        TempData["Failed"] = "فشل في الحفظ";
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    ViewData["Failed"] = "Failed";
+                    TempData["Failed"] = $"حدث خطأ: {ex.Message}";
                 }
             }
-            return RedirectToAction("InsertUser");
+            else
+            {
+                TempData["Failed"] = "البيانات غير صالحة";
+            }
+
+            // Repopulate dropdowns and return with errors
+            var updatedViewModel = await CreateUserViewModelWithDropdowns();
+            updatedViewModel.UserNameAR = viewModel.UserNameAR;
+            updatedViewModel.UserNameEN = viewModel.UserNameEN;
+            updatedViewModel.Username = viewModel.Username;
+            updatedViewModel.UserEmail = viewModel.UserEmail;
+            updatedViewModel.UserPhone = viewModel.UserPhone;
+            updatedViewModel.SiteId = viewModel.SiteId;
+            updatedViewModel.SystemRoleId = viewModel.SystemRoleId;
+
+            return View(updatedViewModel);
         }
+
+        private async Task<UserViewModel> CreateUserViewModelWithDropdowns()
+        {
+            return new UserViewModel
+            {
+                SystemRoles = (await _systemRoleDomain.GetSystemRole())?.ToList() ?? new List<SystemRoleViewModel>(),
+                Sites = (await _siteDomain.GetSite())?.ToList() ?? new List<SiteViewModel>()
+            };
+        }
+
     }
 }
 

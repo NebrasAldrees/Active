@@ -15,8 +15,8 @@ namespace Nashet.Business.ViewModels
 
         //[Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("اسم الجهة")]
-        public int SiteId { get; set; }
-        public SiteViewModel Site { get; set; }
+        public int? SiteId { get; set; }
+        public tblSite Site { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("اسم النادي باللغة العربية")]
