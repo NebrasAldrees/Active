@@ -2,6 +2,24 @@
 @model IEnumerable<ActivityViewModel>
 <section class="page_wrap">
     <div class="page_content">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Success"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-3">
                 <h5 class="m-0">الأنشطة</h5>
@@ -31,11 +49,11 @@
                                     <td>@item.ActivityTopic</td>
                                     <td class="action_td text-end">
 
-                                        <a asp-action="ViewActivityById" asp-route-id="@item.ActivityId" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                           data-bs-target="#view_section_@item.ActivityId">عرض</a>
+                                        <a asp-action="ViewActivityByGuid" asp-route-id="@item.Guid" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                           data-bs-target="#view_section_@item.Guid">عرض</a>
                                         <!-- View Section Modal -->
-                                        <div class="modal fade" id="view_section_@item.ActivityId" tabindex="-1"
-                                             aria-labelledby="view_sectionLabel_@item.ActivityId" aria-hidden="true">
+                                        <div class="modal fade" id="view_section_@item.Guid" tabindex="-1"
+                                             aria-labelledby="view_sectionLabel_@item.Guid" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                 <div class="modal-content">
                                                     <div class="modal-header" bg-primary text-white style="background-color: #186F70; color: white;">
@@ -93,8 +111,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a asp-action="DeleteActivity" asp-route-id="@item.ActivityId" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="UpdateActivity" asp-route-id="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a asp-action="DeleteActivity" asp-route-id="@item.Guid" class="btn btn-sm btn-danger"
+                                           onclick="return confirm('هل أنت متأكد من حذف الجهة؟')">حذف</a>
                                     </td>
                                 </tr>
                             }

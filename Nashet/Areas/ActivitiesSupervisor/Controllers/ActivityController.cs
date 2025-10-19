@@ -23,9 +23,64 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             return View(await _ActivityDomain.GetActivity());
         }
         [HttpGet]
-        public async Task<IActionResult> ViewActivityById(int id)
+        public async Task<IActionResult> ViewActivityById(Guid guid)
         {
-            return View(await _ActivityDomain.GetActivityById(id));
+            return View(await _ActivityDomain.GetActivityByGuid(guid));
+        }
+
+        public async Task<IActionResult> UpdateActivity(Guid Id)
+        {
+            try
+            {
+                var entity = await _ActivityDomain.GetActivityByGuid(Id);
+                if (entity == null)
+                {
+                    TempData["Error"] = "الجهة غير موجودة";
+                    return RedirectToAction(nameof(Activities));
+                }
+
+                var viewModel = new ActivityViewModel
+                {
+                    Guid = entity.Guid,
+                    ActivityTopic = entity.ActivityTopic,
+                    ActivityDescription = entity.ActivityDescription,
+                    ActivityLocation = entity.ActivityLocation,
+                    ActivityPoster = entity.ActivityPoster,
+                    ActivityStartDate = entity.ActivityStartDate,
+                    ActivityEndDate = entity.ActivityEndDate,
+                    ActivityTime = entity.ActivityTime,
+                };
+
+                return View(viewModel);
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Activities));
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateActivity(ActivityViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int check = await _ActivityDomain.UpdateActivity(viewModel);
+                    if (check == 1)
+                    {
+                        TempData["Message"] = "تم تعديل بيانات النشاط بنجاح";
+                        return RedirectToAction(nameof(Activities));
+                    }
+                    else
+                        TempData["Error"] = "فشل التعديل";
+                }
+                catch
+                {
+                    TempData["Error"] = "فشل التعديل";
+                }
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -46,21 +101,21 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 {
                     int check = await _ActivityDomain.InsertActivity(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                        ViewData["Successful"] = "تم إضافة النشاط بنجاح";
                     else
-                        ViewData["Failed"] = "Failed";
+                        ViewData["Failed"] = "خطأ في الإضافة";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "Failed";
+                    ViewData["Failed"] = "خطأ في الإضافة";
                 }
             }
             return RedirectToAction("InsertActivity");
 
         }
-        public async Task<ActionResult> DeleteActivity(int id)
+        public async Task<ActionResult> DeleteActivity(Guid guid)
         {
-            int result = await _ActivityDomain.DeleteActivity(id);
+            int result = await _ActivityDomain.DeleteActivity(guid);
 
             if (result == 1)
             {

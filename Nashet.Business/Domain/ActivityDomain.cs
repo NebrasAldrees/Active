@@ -75,26 +75,26 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public async Task<tblActivity> GetActivityById(int id)
+        public async Task<tblActivity> GetActivityByGuid(Guid guid)
         {
-            var Activity = await _ActivityRepository.GetActivityById(id);
+            var Activity = await _ActivityRepository.GetActivityByGuid(guid);
 
             if (Activity == null)
             {
-                throw new KeyNotFoundException($"Activity requested with ID {id} was not found.");
+                throw new KeyNotFoundException($"Activity requested with GUID {guid} was not found.");
             }
 
             return Activity;
         }
 
-        public virtual async Task<int> UpdateActivity(int id, ActivityViewModel viewModel)
+        public virtual async Task<int> UpdateActivity( ActivityViewModel viewModel)
         {
             try
             {
-                var activity = await _ActivityRepository.GetActivityById(id);
+                var activity = await _ActivityRepository.GetActivityByGuid(viewModel.Guid);
                 if (activity == null)
                 {
-                    return 0; // Site not found
+                    return 0; 
                 }
 
                 activity.ActivityTopic =viewModel.ActivityTopic;
@@ -119,11 +119,11 @@ namespace Nashet.Business.Domain
         }
 
 
-        public virtual async Task<int> DeleteActivity(int Id)
+        public virtual async Task<int> DeleteActivity(Guid guid)
         {
             try
             {
-                var activity = await _ActivityRepository.GetActivityById(Id);
+                var activity = await _ActivityRepository.GetActivityByGuid(guid);
                 if (activity == null)
                 {
                     return 0; // Site not found

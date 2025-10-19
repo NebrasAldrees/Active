@@ -7,6 +7,12 @@
                 @TempData["Message"]
             </div>
         }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Success"]
+            </div>
+        }
         @if (TempData["Error"] != null)
         {
             <div class="alert alert-danger">
@@ -84,8 +90,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a asp-action="UpdateSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-success" >تعديل</a>
-                                        <a asp-action="DeleteSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="UpdateSite" asp-route-id="@item.Guid" class="btn btn-sm btn-success" >تعديل</a>
+                                        <a asp-action="DeleteSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-danger" 
+                                        onclick="return confirm('هل أنت متأكد من حذف الجهة؟')">حذف </a>
                                     </td>
                                 </tr>
                             }

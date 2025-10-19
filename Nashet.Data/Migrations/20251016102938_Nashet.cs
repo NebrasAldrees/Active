@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
@@ -116,7 +118,8 @@ namespace Nashet.Data.Migrations
                 {
                     SystemRoleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    RoleTypeAr = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    RoleTypeEn = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -153,7 +156,8 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblClub_tblSite_siteId",
                         column: x => x.siteId,
                         principalTable: "tblSite",
-                        principalColumn: "SiteId");
+                        principalColumn: "SiteId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,7 +187,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.SiteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +202,7 @@ namespace Nashet.Data.Migrations
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserPhone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    SystemROles = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SiteId = table.Column<int>(type: "int", nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -212,13 +217,14 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblUser_tblSite_SiteId",
                         column: x => x.SiteId,
                         principalTable: "tblSite",
-                        principalColumn: "SiteId");
+                        principalColumn: "SiteId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblUser_tblSystemRole_SystemRoleId",
                         column: x => x.SystemRoleId,
                         principalTable: "tblSystemRole",
                         principalColumn: "SystemRoleId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,7 +254,8 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblActivity_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
-                        principalColumn: "ClubId");
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -277,13 +284,14 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblAnnouncement_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
-                        principalColumn: "ClubId");
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblAnnouncement_tblSite_siteId",
                         column: x => x.siteId,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -309,7 +317,8 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblReport_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
-                        principalColumn: "ClubId");
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -334,7 +343,8 @@ namespace Nashet.Data.Migrations
                         name: "FK_tblTeam_tblClub_ClubId",
                         column: x => x.ClubId,
                         principalTable: "tblClub",
-                        principalColumn: "ClubId");
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -367,19 +377,19 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubID,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblActivityRequest_tblSite_SiteID",
                         column: x => x.SiteID,
                         principalTable: "tblSite",
                         principalColumn: "SiteId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblActivityRequest_tblUser_UserID",
                         column: x => x.UserID,
                         principalTable: "tblUser",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -406,7 +416,7 @@ namespace Nashet.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "tblUser",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,19 +443,19 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubRoleId,
                         principalTable: "tblClubRole",
                         principalColumn: "ClubRoleId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblMembership_tblStudent_StudentId",
                         column: x => x.StudentId,
                         principalTable: "tblStudent",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblMembership_tblTeam_TeamId",
                         column: x => x.TeamId,
                         principalTable: "tblTeam",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -476,19 +486,19 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubID,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TblMembershipRequest_tblStudent_StudentID",
                         column: x => x.StudentID,
                         principalTable: "tblStudent",
                         principalColumn: "StudentId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TblMembershipRequest_tblTeam_TeamID",
                         column: x => x.TeamID,
                         principalTable: "tblTeam",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -516,13 +526,72 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubRoleID,
                         principalTable: "tblClubRole",
                         principalColumn: "ClubRoleId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tblPositionRequest_tblMembership_MembershipID",
                         column: x => x.MembershipID,
                         principalTable: "tblMembership",
                         principalColumn: "MembershipId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblKFUuser",
+                columns: new[] { "KFUUserId", "CreationDate", "Guid", "IsActive", "IsDeleted", "NameAR", "NameEN", "Password", "UserEmail", "UserPhone", "UserType", "Username", "isSent" },
+                values: new object[,]
+                {
+                    { 10, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("7f4a5d58-29db-411b-8e3e-dcf0918e5dc7"), true, false, "منتهى", "Muntaha", "Muntaha", "Muntaha@gmail.com", "0536763284", "Admin", "Muntaha_12", true },
+                    { 11, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("9ba46550-b007-48cf-9f21-bc473d2b4393"), true, false, "هدى", "Huda", "Huda", "Huda@gmail.com", "0533924794", "Activities Supervisor", "Huda1", true },
+                    { 12, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("08d5ea5b-4216-40d6-b166-53c4dfa363e7"), true, false, "نبراس", "Nebras", "Nebras", "Nebras@gmail.com", "0540345575", "Student", "Nebras2", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblSite",
+                columns: new[] { "SiteId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteCode", "SiteNameAR", "SiteNameEn", "isSent" },
+                values: new object[,]
+                {
+                    { 10, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("9b7c9604-e3f3-40a4-9015-9916b7cabcff"), true, false, "0920", "كلية علوم الحاسب وتقنية المعلومات", "College of Computer Science and Information Technology", true },
+                    { 11, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("0f6645f8-ff4e-4d89-8aff-b14443d2688f"), true, false, "0930", "كلية إدارة الأعمال", "College of Business", true },
+                    { 12, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("8f4336da-ea19-4019-8090-5a6cf70dbf49"), true, false, "0940", "كلية الهندسة", "College of Engineering", true },
+                    { 13, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("cc83caab-60ec-4781-a2fc-0cae1217f7fc"), true, false, "0950", "كلية الصيدلة الإكلينيكية", "College of Clinical Pharmacy", true },
+                    { 14, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("332f3a58-9aa3-4898-8f29-ff832149c240"), true, false, "0960", "كلية العلوم الطبية", "College of Applied Medical Sciences", true },
+                    { 15, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("0fe1af63-f72e-402e-b0b1-87013f4c06b9"), true, false, "0300", "كلية العلوم", "College of Science", true },
+                    { 16, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("4516c8da-9634-4cf6-bfe7-eaa2f1dc5c29"), true, false, "0310", "كلية الطب", "College of Medicine", true },
+                    { 17, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("37dba4ea-1caa-4c81-a022-e00e17ec2ebd"), true, false, "0320", "كلية الحقوق", "College of Law", true },
+                    { 18, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("2110b192-c071-484b-9d03-035ec84f2e9d"), true, false, "0340", "كلية العلوم الزراعية والتغذية", "College of Agricultural Science and Nutrition", true },
+                    { 19, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("4646924f-08b9-4e80-9bab-2318eade4917"), true, false, "2200", "كلية الاداب", "College of Arts", true },
+                    { 20, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("fbf9fe3e-45e3-40cf-881c-0d9a2327e236"), true, false, "2230", "عمادة شؤون الطلاب", "Deanship of Student Affairs", true },
+                    { 21, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("2a4cf10c-9bff-45d6-b8c1-a9cc39c76abd"), true, false, "3100", "كلية الدراسات التطبيقية وخدمة المجتمع", "College of Applied Studies & Community Services", true },
+                    { 22, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("7683cbea-2a4d-4b86-8cdb-c1f98bffbbab"), false, false, "3200", "كلية التربية", "College of Education", true },
+                    { 23, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("d58cd45c-e772-4930-ace6-ff8f73562164"), false, false, "3500", "كلية الطب البيطري", "College of Veterinary Medicine", true },
+                    { 24, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("8c2571f1-5acf-412e-bc70-15318a302a0e"), false, false, "4311", "عمادة التعلم الإلكتروني وتقنية المعلومات", "Deanship of of E-learning and Information Technology", true },
+                    { 25, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e29da295-9a8b-4976-be0a-22772690fe01"), false, false, "2100", "عمادة التطوير وضمان الجودة", "Deanship of of Development and Quality Assurance", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblSystemRole",
+                columns: new[] { "SystemRoleId", "CreationDate", "Guid", "IsActive", "IsDeleted", "RoleTypeAr", "RoleTypeEn", "isSent" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3322549c-0575-404b-b77e-289785d03460"), true, false, "مدير النظام", "Admin", true },
+                    { 2, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3322549c-0575-404b-b77e-289785d03460"), true, false, "مشرف النشاط", "Activity Supervisor", true },
+                    { 3, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3322549c-0575-404b-b77e-289785d03460"), true, false, "مشرف النادي", "Club Supervisor", true },
+                    { 4, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3322549c-0575-404b-b77e-289785d03460"), true, false, "قائد النادي", "Club Leader", true },
+                    { 5, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3322549c-0575-404b-b77e-289785d03460"), true, false, "الطالب", "Student", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblStudent",
+                columns: new[] { "StudentId", "AcademicId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteId", "StudentEmail", "StudentNameAr", "StudentNameEn", "StudentPhone", "StudentSkills", "isSent" },
+                values: new object[] { 5, "221422576", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("966bf84b-467d-4385-ae94-867f741e75b9"), true, false, 10, "Nebras@gmail.com", "نبراس", "Nebras", "0540345575", "Fast Learner", true });
+
+            migrationBuilder.InsertData(
+                table: "tblUser",
+                columns: new[] { "UserId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteId", "SystemROles", "SystemRoleId", "UserEmail", "UserNameAR", "UserNameEN", "UserPhone", "Username", "isSent" },
+                values: new object[,]
+                {
+                    { 10, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"), true, false, null, null, 1, "Muntaha@gmail.com", "منتهى", "Muntaha", "0536763284", "Muntaha_12", true },
+                    { 11, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, null, null, 2, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true }
                 });
 
             migrationBuilder.CreateIndex(

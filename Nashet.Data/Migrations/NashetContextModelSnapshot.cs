@@ -374,6 +374,56 @@ namespace Nashet.Data.Migrations
                     b.HasKey("KFUUserId");
 
                     b.ToTable("tblKFUuser");
+
+                    b.HasData(
+                        new
+                        {
+                            KFUUserId = 10,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("7f4a5d58-29db-411b-8e3e-dcf0918e5dc7"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            NameAR = "منتهى",
+                            NameEN = "Muntaha",
+                            Password = "Muntaha",
+                            UserEmail = "Muntaha@gmail.com",
+                            UserPhone = "0536763284",
+                            UserType = "Admin",
+                            Username = "Muntaha_12",
+                            isSent = true
+                        },
+                        new
+                        {
+                            KFUUserId = 11,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("9ba46550-b007-48cf-9f21-bc473d2b4393"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            NameAR = "هدى",
+                            NameEN = "Huda",
+                            Password = "Huda",
+                            UserEmail = "Huda@gmail.com",
+                            UserPhone = "0533924794",
+                            UserType = "Activities Supervisor",
+                            Username = "Huda1",
+                            isSent = true
+                        },
+                        new
+                        {
+                            KFUUserId = 12,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("08d5ea5b-4216-40d6-b166-53c4dfa363e7"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            NameAR = "نبراس",
+                            NameEN = "Nebras",
+                            Password = "Nebras",
+                            UserEmail = "Nebras@gmail.com",
+                            UserPhone = "0540345575",
+                            UserType = "Student",
+                            Username = "Nebras2",
+                            isSent = true
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblMembership", b =>
@@ -613,6 +663,200 @@ namespace Nashet.Data.Migrations
                     b.HasKey("SiteId");
 
                     b.ToTable("tblSite");
+
+                    b.HasData(
+                        new
+                        {
+                            SiteId = 10,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("9b7c9604-e3f3-40a4-9015-9916b7cabcff"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0920",
+                            SiteNameAR = "كلية علوم الحاسب وتقنية المعلومات",
+                            SiteNameEn = "College of Computer Science and Information Technology",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 11,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0930",
+                            SiteNameAR = "كلية إدارة الأعمال",
+                            SiteNameEn = "College of Business",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 12,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("8f4336da-ea19-4019-8090-5a6cf70dbf49"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0940",
+                            SiteNameAR = "كلية الهندسة",
+                            SiteNameEn = "College of Engineering",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 13,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("cc83caab-60ec-4781-a2fc-0cae1217f7fc"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0950",
+                            SiteNameAR = "كلية الصيدلة الإكلينيكية",
+                            SiteNameEn = "College of Clinical Pharmacy",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 14,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("332f3a58-9aa3-4898-8f29-ff832149c240"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0960",
+                            SiteNameAR = "كلية العلوم الطبية",
+                            SiteNameEn = "College of Applied Medical Sciences",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 15,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("0fe1af63-f72e-402e-b0b1-87013f4c06b9"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0300",
+                            SiteNameAR = "كلية العلوم",
+                            SiteNameEn = "College of Science",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 16,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("4516c8da-9634-4cf6-bfe7-eaa2f1dc5c29"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0310",
+                            SiteNameAR = "كلية الطب",
+                            SiteNameEn = "College of Medicine",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 17,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("37dba4ea-1caa-4c81-a022-e00e17ec2ebd"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0320",
+                            SiteNameAR = "كلية الحقوق",
+                            SiteNameEn = "College of Law",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 18,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("2110b192-c071-484b-9d03-035ec84f2e9d"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0340",
+                            SiteNameAR = "كلية العلوم الزراعية والتغذية",
+                            SiteNameEn = "College of Agricultural Science and Nutrition",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 19,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("4646924f-08b9-4e80-9bab-2318eade4917"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "2200",
+                            SiteNameAR = "كلية الاداب",
+                            SiteNameEn = "College of Arts",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 20,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("fbf9fe3e-45e3-40cf-881c-0d9a2327e236"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "2230",
+                            SiteNameAR = "عمادة شؤون الطلاب",
+                            SiteNameEn = "Deanship of Student Affairs",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 21,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("2a4cf10c-9bff-45d6-b8c1-a9cc39c76abd"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "3100",
+                            SiteNameAR = "كلية الدراسات التطبيقية وخدمة المجتمع",
+                            SiteNameEn = "College of Applied Studies & Community Services",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 22,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("7683cbea-2a4d-4b86-8cdb-c1f98bffbbab"),
+                            IsActive = false,
+                            IsDeleted = false,
+                            SiteCode = "3200",
+                            SiteNameAR = "كلية التربية",
+                            SiteNameEn = "College of Education",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 23,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("d58cd45c-e772-4930-ace6-ff8f73562164"),
+                            IsActive = false,
+                            IsDeleted = false,
+                            SiteCode = "3500",
+                            SiteNameAR = "كلية الطب البيطري",
+                            SiteNameEn = "College of Veterinary Medicine",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 24,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("8c2571f1-5acf-412e-bc70-15318a302a0e"),
+                            IsActive = false,
+                            IsDeleted = false,
+                            SiteCode = "4311",
+                            SiteNameAR = "عمادة التعلم الإلكتروني وتقنية المعلومات",
+                            SiteNameEn = "Deanship of of E-learning and Information Technology",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 25,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("e29da295-9a8b-4976-be0a-22772690fe01"),
+                            IsActive = false,
+                            IsDeleted = false,
+                            SiteCode = "2100",
+                            SiteNameAR = "عمادة التطوير وضمان الجودة",
+                            SiteNameEn = "Deanship of of Development and Quality Assurance",
+                            isSent = true
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblStudent", b =>
@@ -670,6 +914,24 @@ namespace Nashet.Data.Migrations
                     b.HasIndex("SiteId");
 
                     b.ToTable("tblStudent");
+
+                    b.HasData(
+                        new
+                        {
+                            StudentId = 5,
+                            AcademicId = "221422576",
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("966bf84b-467d-4385-ae94-867f741e75b9"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteId = 10,
+                            StudentEmail = "Nebras@gmail.com",
+                            StudentNameAr = "نبراس",
+                            StudentNameEn = "Nebras",
+                            StudentPhone = "0540345575",
+                            StudentSkills = "Fast Learner",
+                            isSent = true
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblSystemLogs", b =>
@@ -774,7 +1036,11 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RoleType")
+                    b.Property<string>("RoleTypeAr")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("RoleTypeEn")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -784,6 +1050,63 @@ namespace Nashet.Data.Migrations
                     b.HasKey("SystemRoleId");
 
                     b.ToTable("tblSystemRole");
+
+                    b.HasData(
+                        new
+                        {
+                            SystemRoleId = 1,
+                            CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleTypeAr = "مدير النظام",
+                            RoleTypeEn = "Admin",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SystemRoleId = 2,
+                            CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleTypeAr = "مشرف النشاط",
+                            RoleTypeEn = "Activity Supervisor",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SystemRoleId = 3,
+                            CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleTypeAr = "مشرف النادي",
+                            RoleTypeEn = "Club Supervisor",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SystemRoleId = 4,
+                            CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleTypeAr = "قائد النادي",
+                            RoleTypeEn = "Club Leader",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SystemRoleId = 5,
+                            CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleTypeAr = "الطالب",
+                            RoleTypeEn = "Student",
+                            isSent = true
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblTeam", b =>
@@ -850,6 +1173,9 @@ namespace Nashet.Data.Migrations
                     b.Property<int?>("SiteId")
                         .HasColumnType("int");
 
+                    b.Property<string>("SystemROles")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SystemRoleId")
                         .HasColumnType("int");
 
@@ -882,13 +1208,46 @@ namespace Nashet.Data.Migrations
                     b.HasIndex("SystemRoleId");
 
                     b.ToTable("tblUser");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 10,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SystemRoleId = 1,
+                            UserEmail = "Muntaha@gmail.com",
+                            UserNameAR = "منتهى",
+                            UserNameEN = "Muntaha",
+                            UserPhone = "0536763284",
+                            Username = "Muntaha_12",
+                            isSent = true
+                        },
+                        new
+                        {
+                            UserId = 11,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3072cf40-dc60-41f0-87da-77631050caa3"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SystemRoleId = 2,
+                            UserEmail = "Huda@gmail.com",
+                            UserNameAR = "هدى",
+                            UserNameEN = "Huda",
+                            UserPhone = "0533924794",
+                            Username = "Huda1",
+                            isSent = true
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblActivity", b =>
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
                 });
@@ -898,19 +1257,19 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblUser", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Club");
@@ -924,12 +1283,13 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("siteId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Club");
@@ -941,7 +1301,8 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
-                        .HasForeignKey("siteId");
+                        .HasForeignKey("siteId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Site");
                 });
@@ -951,19 +1312,19 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
                         .WithMany()
                         .HasForeignKey("ClubRoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblTeam", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ClubRole");
@@ -978,19 +1339,19 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblTeam", "Team")
                         .WithMany()
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Club");
@@ -1005,13 +1366,13 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
                         .WithMany()
                         .HasForeignKey("ClubRoleID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblMembership", "Membership")
                         .WithMany()
                         .HasForeignKey("MembershipID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ClubRole");
@@ -1023,7 +1384,8 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
                 });
@@ -1033,7 +1395,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Site");
@@ -1044,7 +1406,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1054,7 +1416,8 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
                 });
@@ -1063,12 +1426,13 @@ namespace Nashet.Data.Migrations
                 {
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
-                        .HasForeignKey("SiteId");
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblSystemRole", "SystemRole")
                         .WithMany()
                         .HasForeignKey("SystemRoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Site");
