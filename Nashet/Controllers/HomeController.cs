@@ -18,7 +18,7 @@ namespace Nashet.Controllers
         private readonly KfuUserDomain _kfuUserDomain;
         private readonly UserDomain _UserDomain;
 
-        public HomeController(ILogger<HomeController> logger,KfuUserDomain kfuUserDomain, UserDomain userDomain)
+        public HomeController(ILogger<HomeController> logger, KfuUserDomain kfuUserDomain, UserDomain userDomain)
         {
             _logger = logger;
             _kfuUserDomain = kfuUserDomain;
@@ -34,7 +34,7 @@ namespace Nashet.Controllers
             return View();
         }
         [HttpPost]
-[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string Username, string Password)
         {
             try

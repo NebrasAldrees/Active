@@ -23,7 +23,7 @@ namespace Nashet.Business.Domain
             return _ReportRepository.GetAllReports().Result.Select(a => new ReportViewModel
             {
                 ReportId = a.ReportId,
-                ClubId = a.ClubId,
+                ClubId = (int)a.ClubId,
                 Topic = a.Topic,
                 Path = a.Path,
                 Guid = a.Guid
@@ -41,6 +41,36 @@ namespace Nashet.Business.Domain
 
             return Report;
         }
+
+        public async Task<ReportViewModel> GetReportByGuid(Guid guid)
+        {
+            var report = await _ReportRepository.GetReportByGuid(guid);
+            if (report == null)
+            {
+                throw new KeyNotFoundException($"Report with GUID {guid} was not found.");
+            }
+
+            return new ReportViewModel
+            {
+                ReportId = report.ReportId,
+                ClubId = (int)report.ClubId,
+                Topic = report.Topic,
+                Path = report.Path,
+                Guid = report.Guid
+            };
+        }
+        public async Task<IList<ReportViewModel>> GetReportsByClubGuid(Guid clubGuid)
+        {
+            var reports = await _ReportRepository.GetReportsByClubGuid(clubGuid);
+            return reports.Select(r => new ReportViewModel
+            {
+                ReportId = r.ReportId,
+                ClubId = (int)r.ClubId,
+                Topic = r.Topic,
+                Path = r.Path,
+                Guid = r.Guid
+            }).ToList();
+        }
         public virtual async Task<int> InsertReport(ReportViewModel viewModel)
         {
             try
@@ -49,33 +79,21 @@ namespace Nashet.Business.Domain
                 {
                     ClubId = viewModel.ClubId,
                     Topic = viewModel.Topic,
-                    Path = viewModel.Path
+                    Path = viewModel.Path, // هنا نخزن مسار الملف
+                    Guid = Guid.NewGuid(),
+                    CreationDate = DateTime.Now,
+                    IsActive = true,
+                    IsDeleted = false,
+                    IsAdded = true, // للإشارة أنه تمت إضافته
+                    isSent = false // لم يتم إرساله بعد
                 };
+
                 int check = await _ReportRepository.InsertReport(Report);
-                if (check == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblReport",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
-                    return 1;
-                }
-              
+                return check == 0 ? 0 : 1;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error inserting report: {ex.Message}");
                 return 0;
             }
         }

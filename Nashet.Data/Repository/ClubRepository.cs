@@ -14,24 +14,27 @@ namespace Nashet.Data.Repository
         public ClubRepository(NashetContext dbContext) : base(dbContext)
         {
         }
-
         public virtual async Task<IList<tblClub>> GetAllClubs()
         {
-            return await dbSet.Where(m => m.IsActive == true).ToListAsync(); // m for club
+            return await dbSet.Where(m => m.IsDeleted == false).ToListAsync();
         }
-
+        public virtual async Task<tblClub> GetClubByGuid(Guid guid)
+        {
+            return await dbSet.Where(Club => Club.IsDeleted == false && Club.Guid == guid)
+                .FirstOrDefaultAsync();
+        }
         public virtual async Task<tblClub> GetClubById(int clubid)
         {
             return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == clubid)
             .FirstOrDefaultAsync();
         }
-        public virtual async Task<bool> IsClubNameExists(string clubNameAr, string clubNameEn, int? excludeClubId = null)
+        public virtual async Task<bool> IsClubNameExists(string clubNameAr, string clubNameEn, Guid? excludeClubGuid = null)
         {
             var query = dbSet.Where(c => c.IsDeleted == false);
 
-            if (excludeClubId.HasValue)
+            if (excludeClubGuid.HasValue)
             {
-                query = query.Where(c => c.ClubId != excludeClubId.Value);
+                query = query.Where(c => c.Guid != excludeClubGuid.Value);
             }
 
             return await query.AnyAsync(c =>
@@ -53,7 +56,48 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        
+        public virtual async Task<int> DeleteClubByGuid(Guid guid)
+        {
+            try
+            {
+                var club = await GetClubByGuid(guid);
+                if (club == null || club.IsDeleted == true)
+                {
+                    return 0;
+                }
+                IsDeleted(club);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> UpdateClubByGuid(Guid guid, tblClub updatedClub)
+        {
+            try
+            {
+                var club = await GetClubByGuid(guid);
+                if (club == null)
+                {
+                    return 0;
+                }
+
+                club.siteId = updatedClub.siteId;
+                club.ClubNameAR = updatedClub.ClubNameAR;
+                club.ClubNameEN = updatedClub.ClubNameEN;
+                club.ClubVision = updatedClub.ClubVision;
+                club.ClubOverview = updatedClub.ClubOverview;
+                club.ClubIcon = updatedClub.ClubIcon;
+
+                await UpdateAsync(club);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         public virtual async Task<int> DeleteClub (tblClub club)
         {
             try

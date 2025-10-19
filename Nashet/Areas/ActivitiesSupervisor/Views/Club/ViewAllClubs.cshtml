@@ -4,7 +4,7 @@
     <div class="page_content">
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-3">
-                <h5 class="m-0">الأندية</h5>
+                <h5 class="m-0">الأندية الطلابية</h5>
                 <div class="d-flex gap-2">
                     <div class="form-group">
                         <input type="text" class="form-control" id="clubSearch"
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="action_td text-center">
-                                        <a href="/ActivitiesSupervisor/Club/ClubPage?id=@item.ClubId"
+                                        <a href="@Url.Action("ClubPage", "Club", new { area = "ActivitiesSupervisor", guid = item.Guid })"
                                            class="btn btn-sm btn-primary">عرض</a>
                                         <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor"
                                            class="btn btn-sm btn-success">تعديل</a>

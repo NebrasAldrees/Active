@@ -9,16 +9,12 @@
             <!-- Header -->
             <div class="block-header border-bottom px-4 py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="m-0">تفاصيل النادي</h5>
-                    <a asp-action="ViewAllClubs" class="btn btn-outline-secondary btn-sm">
-                        ← العودة
-                    </a>
+                    <h5 class="m-0">نادي @Model.ClubNameAR</h5>
                 </div>
             </div>
 
             <!-- Content -->
             <div class="block-body p-4">
-                <!-- إذا لم توجد بيانات -->
                 @if (Model == null)
                 {
                     <div class="alert alert-danger text-center">
@@ -30,105 +26,135 @@
                     return;
                 }
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
+                <div class="row">
+                    <!-- العمود الأيسر - المعلومات الأساسية -->
+                    <div class="col-lg-4 mb-4">
                         <!-- الشعار -->
                         <div class="text-center mb-4">
                             @if (!string.IsNullOrEmpty(Model.ClubIcon))
                             {
-                                <img src="@Model.ClubIcon" alt="شعار النادي" class="rounded" style="width: 150px; height: 150px; object-fit: cover;">
+                                <img src="@Model.ClubIcon" alt="شعار النادي" class="rounded shadow"
+                                     style="width: 200px; height: 200px; object-fit: cover;">
                             }
                             else
                             {
-                                <div class="bg-light rounded d-inline-flex align-items-center justify-content-center"
-                                     style="width: 150px; height: 150px;">
-                                    📷
+                                <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center"
+                                     style="width: 200px; height: 200px;">
+                                    <i class="fas fa-club fa-3x text-muted"></i>
                                 </div>
                             }
                         </div>
 
                         <!-- المعلومات الأساسية -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <strong>اسم النادي (عربي):</strong>
-                                <div class="text-muted">@(Model.ClubNameAR ?? "غير محدد")</div>
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>معلومات النادي</h6>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <strong>اسم النادي (إنجليزي):</strong>
-                                <div class="text-muted">@(Model.ClubNameEN ?? "غير محدد")</div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <strong>اسم النادي (إنجليزي):</strong>
+                                    <div class="text-muted">@(Model.ClubNameEN ?? "غير محدد")</div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>رقم النادي:</strong>
+                                    <div class="text-muted">@Model.ClubId</div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>الجهة:</strong>
+                                    <div class="text-muted">@(ViewBag.CurrentSite?.SiteNameAR ?? "غير محدد")</div>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <strong>رقم النادي:</strong>
-                                <div class="text-muted">@Model.ClubId</div>
+                    <!-- العمود الأيمن - المحتوى التفصيلي -->
+                    <div class="col-lg-8">
+                        <!-- نبذة عن النادي -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>نبذة عن النادي</h6>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <strong>الجهة:</strong>
-                                <div class="text-muted">@(Model.Site?.SiteNameAR ?? "غير محدد")</div>
+                            <div class="card-body">
+                                <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                                    @if (!string.IsNullOrEmpty(Model.ClubOverview))
+                                    {
+                                        @Model.ClubOverview
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">لا توجد نبذة عن النادي</span>
+                                    }
+                                </p>
                             </div>
                         </div>
 
                         <!-- الرؤية -->
-                        <div class="mb-3">
-                            <strong>الرؤية:</strong>
-                            <div class="text-muted p-2 bg-light rounded">
-                                @if (!string.IsNullOrEmpty(Model.ClubVision))
-                                {
-                                    @Model.ClubVision
-                                }
-                                else
-                                {
-                                    <span class="text-muted">لا توجد رؤية</span>
-                                }
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-warning text-dark">
+                                <h6 class="mb-0"><i class="fas fa-eye me-2"></i>رؤية النادي</h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                                    @if (!string.IsNullOrEmpty(Model.ClubVision))
+                                    {
+                                        @Model.ClubVision
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">لا توجد رؤية محددة</span>
+                                    }
+                                </p>
                             </div>
                         </div>
 
-                        <!-- النبذة -->
-                        <div class="mb-3">
-                            <strong>نبذة عن النادي:</strong>
-                            <div class="text-muted p-2 bg-light rounded">
-                                @if (!string.IsNullOrEmpty(Model.ClubOverview))
+                        <!-- زر التقارير -->
+                        <div class="card shadow-sm mt-4">
+                            <div class="card-body text-center">
+                                <!-- تأكد من أن Model.Guid ليس null -->
+                                <a href="@Url.Action("ClubReports", "Report", new { area = "ActivitiesSupervisor", clubGuid = Model.Guid })"
+                                   class="btn btn-success w-100">
+                                    <i class="fas fa-chart-bar me-2"></i>التقارير الخاصة بالنادي
+                                </a>
+                            </div>
+                        </div>
+                        <!-- أفرقة النادي -->
+                        @* <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-users me-2"></i>أفرقة النادي</h6>
+                            </div>
+                            <div class="card-body">
+                                @if (Model.Team != null && Model.ClubTeams.Any())
                                 {
-                                    @Model.ClubOverview
+                                    <div class="row">
+                                        @foreach (var team in Model.ClubTeams)
+                                        {
+                                            <div class="col-md-6 mb-3">
+                                                <div class="team-card border rounded p-3">
+                                                    <h6 class="text-primary mb-2">@team.TeamName</h6>
+                                                    <p class="text-muted small mb-1">
+                                                        <i class="fas fa-tasks me-1"></i>@team.TeamDescription
+                                                    </p>
+                                                    <p class="text-muted small mb-0">
+                                                        <i class="fas fa-user me-1"></i>قائد الفريق: @team.LeaderName
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
                                 }
                                 else
                                 {
-                                    <span class="text-muted">لا توجد نبذة</span>
+                                    <div class="text-center py-4">
+                                        <i class="fas fa-users fa-2x text-muted mb-3"></i>
+                                        <p class="text-muted">لا توجد أفرقة لهذا النادي</p>
+                                    </div>
                                 }
                             </div>
-                        </div>
+                        </div> *@
 
-                        <!-- الأزرار -->
-                        <div class="text-center mt-4">
-                            <a asp-action="ViewAllClubs" class="btn btn-secondary">كل الأندية</a>
-                            <a asp-action="InsertClub" class="btn btn-warning">تعديل</a>
-                            <form asp-action="DeleteClub" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@Model.ClubId" />
-                                <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('حذف النادي؟')">
-                                    حذف
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<style>
-    .bg-light {
-        background-color: #f8f9fa;
-    }
-
-    .rounded {
-        border-radius: 10px;
-    }
-
-    .btn {
-        margin: 0 5px;
-    }
-</style>

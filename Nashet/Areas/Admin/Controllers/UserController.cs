@@ -4,9 +4,7 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Admin.Controllers
 {
-
     [Area("Admin")]
-   
         public class UserController : Controller
         {
             private readonly UserDomain _domain;
@@ -24,7 +22,6 @@ namespace Nashet.Areas.Admin.Controllers
             {
                 return View(await _domain.GetUser());
             }
-        [HttpGet]
         public async Task<IActionResult> InsertUser()
         {
             ViewBag.Site = await _siteDomain.GetSite();
