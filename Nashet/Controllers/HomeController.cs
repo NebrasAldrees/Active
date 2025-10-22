@@ -18,7 +18,7 @@ namespace Nashet.Controllers
         private readonly KfuUserDomain _kfuUserDomain;
         private readonly UserDomain _UserDomain;
 
-        public HomeController(ILogger<HomeController> logger, KfuUserDomain kfuUserDomain, UserDomain userDomain)
+        public HomeController(ILogger<HomeController> logger,KfuUserDomain kfuUserDomain, UserDomain userDomain)
         {
             _logger = logger;
             _kfuUserDomain = kfuUserDomain;
@@ -33,28 +33,28 @@ namespace Nashet.Controllers
         {
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login(string Username, string Password)
-        //{
-        //    try
-        //    {
-        //        var KfuUser = await _kfuUserDomain.CheckUser(Username, Password);
-        //        if (KfuUser != null)
-        //        {
-        //            if (KfuUser.UserType != "9")
-        //            {
-        //                var user = await _UserDomain.GetUserByUsername(Username);
-        //                if (user != null)
-        //                {
-        //                    var identity = new ClaimsIdentity(new[]
-        //                    {
-        //                new Claim(ClaimTypes.Name, user.Username),
-        //                new Claim(ClaimTypes.Role, user.SystemRoleType),
-        //                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-        //                new Claim(ClaimTypes.GivenName, user.UserNameAR)
-        //            }, CookieAuthenticationDefaults.AuthenticationScheme);
-        //                    var principal = new ClaimsPrincipal(identity);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////public async Task<IActionResult> Login(string Username, string Password)
+        ////{
+        ////    try
+        ////    {
+        ////        var KfuUser = await _kfuUserDomain.CheckUser(Username, Password);
+        ////        if (KfuUser != null)
+        ////        {
+        ////            if (KfuUser.UserType != "9")
+        ////            {
+        ////                var user = await _UserDomain.GetUserByUsername(Username);
+        ////                if (user != null)
+        ////                {
+        ////                    var identity = new ClaimsIdentity(new[]
+        ////                    {
+        ////                new Claim(ClaimTypes.Name, user.Username),
+        ////                new Claim(ClaimTypes.Role, user.SystemRoleType),
+        ////                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        ////                new Claim(ClaimTypes.GivenName, user.UserNameAR)
+        ////            }, CookieAuthenticationDefaults.AuthenticationScheme);
+        ////                    var principal = new ClaimsPrincipal(identity);
 
         //                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
         //                        principal);

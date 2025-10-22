@@ -11,7 +11,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         private readonly ClubDomain _ClubDomain;
         private readonly SiteDomain _SiteDomain;
         private readonly IWebHostEnvironment _webHost;
-        public ClubController(ClubDomain clubDomain, SiteDomain siteDomain, IWebHostEnvironment webhost)
+        public ClubController(ClubDomain clubDomain,SiteDomain siteDomain, IWebHostEnvironment webhost)
         {
             _ClubDomain = clubDomain;
             _SiteDomain = siteDomain;

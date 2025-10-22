@@ -61,12 +61,12 @@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"> الجهة </label>
-                                    <select asp-for="SiteId" class="form-control">
-                                        <option value="">اختر الجهة</option>
+                                    <label asp-for="SiteId" class="mb-1">الجهة</label>
+                                    <select asp-for="Site.Guid" class="form-control">
+                                        <option value="">-- اختر الجهة --</option>
                                         @foreach (SiteViewModel site in ViewBag.Site)
                                         {
-                                            <option value="@site.SiteId">@site.SiteNameAR</option>
+                                            <option value="@site.Guid">@site.SiteNameAR</option>
                                         }
                                     </select>
                                     <span style="color:red" asp-validation-for="SiteId"></span>
