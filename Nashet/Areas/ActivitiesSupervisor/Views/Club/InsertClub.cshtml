@@ -61,14 +61,15 @@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="SiteId" class="mb-1">الجهة</label>
+                                    <label for="" class="mb-1"> الجهة </label>
                                     <select asp-for="SiteId" class="form-control">
-                                        <option value="2">عمادة شؤون الطلاب</option>
-                                        <option value="1">كلية علوم الحاسب وتقنية المعلومات</option>
-                                        <option value="3">كلية الطب</option>
-                                        <option value="4">كلية الصيدلة</option>
-                                        <option value="5">كلية العلوم</option>
+                                        <option value="">اختر الجهة</option>
+                                        @foreach (SiteViewModel site in ViewBag.Site)
+                                        {
+                                            <option value="@site.SiteId">@site.SiteNameAR</option>
+                                        }
                                     </select>
+                                    <span style="color:red" asp-validation-for="SiteId"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">

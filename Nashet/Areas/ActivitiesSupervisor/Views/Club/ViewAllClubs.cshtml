@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ClubViewModel>
+﻿@using Nashet.Business.ViewModels
+@model IEnumerable<ClubViewModel>
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
@@ -6,28 +7,38 @@
                 <h5 class="m-0">الأندية الطلابية</h5>
                 <div class="d-flex gap-2">
                     <div class="form-group">
-                        <input type="text" class="form-control table__quick_search"
+                        <input type="text" class="form-control" id="clubSearch"
                                placeholder="البحث السريع ...">
                     </div>
                     <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor" class="btn btn-primary">إضافة نادي</a>
                 </div>
             </div>
             <div class="block-body">
-
-                @if (ViewData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@ViewData["Error"]</div>
-                }
-
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@TempData["Error"]</div>
-                }
-
-                @if (TempData["Message"] != null)
-                {
-                    <div class="alert alert-success">@TempData["Message"]</div>
-                }
+                <!-- بداية البطاقات -->
+                <div class="row" id="clubsContainer">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-lg-4 mb-4 club-card">
+                            <div class="card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">@item.ClubNameAR</h6>
+                                    <span class="badge bg-secondary">#@item.ClubId</span>
+                                </div>
+                                <div class="card-body">
+                                    <!-- صورة الشعار -->
+                                    <div class="text-center mb-3">
+                                        @if (!string.IsNullOrEmpty(item.ClubIcon))
+                                        {
+                                            <img src="@item.ClubIcon" alt="شعار النادي"
+                                                 style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                        }
+                                        else
+                                        {
+                                            <div style="width: 80px; height: 80px; background: #f8f9fa; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </div>
 
                                     <!-- معلومات النادي -->
                                     <div class="mb-2">
@@ -51,54 +62,38 @@
                                         <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor"
                                            class="btn btn-sm btn-success">تعديل</a>
 
-                                            @* زر الحذف مع تأكيد *@
-                                            <form asp-action="DeleteClub" asp-controller="Club"
-                                                  asp-area="ActivitiesSupervisor" method="post"
-                                                  class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف النادي؟');">
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="id" value="@item.ClubId" />
-                                                <button type="submit" class="btn btn-sm btn-danger">حذف</button>
-                                            </form>
-                                        </div>
+                                        <form asp-action="DeleteClub" asp-controller="Club" asp-area="ActivitiesSupervisor" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@item.ClubId" />
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('هل أنت متأكد من حذف النادي؟')">
+                                                حذف
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        }
-                    </div>
-                }
+                        </div>
+                    }
+                </div>
+                <!-- نهاية البطاقات -->
             </div>
         </div>
     </div>
-</section>
+</section><!-- End Page Wrap -->
+@section Scripts {
+    <script>
+        document.getElementById('clubSearch').addEventListener('input', function(e) {
+            const searchText = e.target.value.toLowerCase().trim();
+            const clubCards = document.querySelectorAll('.club-card');
 
-<style>
-    .card {
-        min-height: 200px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .club-overlay {
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: background-color 0.3s ease;
-    }
-
-    .club-name-title {
-        font-weight: bold;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    .club-name-subtitle {
-        font-size: 0.9em;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    .card:hover .club-overlay {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* تحسين شكل الزر في الفورم */
-    .club-actions form {
-        display: inline;
-    }
-</style>
+            clubCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchText) || searchText === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+}
