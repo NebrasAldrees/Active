@@ -12,7 +12,7 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20251016102938_Nashet")]
+    [Migration("20251022074957_Nashet")]
     partial class Nashet
     {
         /// <inheritdoc />
@@ -49,9 +49,6 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("ActivityStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ActivityTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ActivityTopic")
@@ -98,8 +95,8 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ActivityPoster")
-                        .HasColumnType("int");
+                    b.Property<string>("ActivityPoster")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ActivityRequestId")
                         .HasColumnType("int");
@@ -111,7 +108,7 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ClubID")
+                    b.Property<int?>("ClubID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -129,10 +126,10 @@ namespace Nashet.Data.Migrations
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SiteID")
+                    b.Property<int?>("SiteID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
                         .HasColumnType("int");
 
                     b.Property<bool>("isSent")
@@ -191,17 +188,17 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("SiteId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
-
-                    b.Property<int>("siteId")
-                        .HasColumnType("int");
 
                     b.HasKey("AnnouncementId");
 
                     b.HasIndex("ClubId");
 
-                    b.HasIndex("siteId");
+                    b.HasIndex("SiteId");
 
                     b.ToTable("tblAnnouncement");
                 });
@@ -279,7 +276,11 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RoleType")
+                    b.Property<string>("RoleTypeAr")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RoleTypeEn")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -381,7 +382,7 @@ namespace Nashet.Data.Migrations
                     b.HasData(
                         new
                         {
-                            KFUUserId = 10,
+                            KFUUserId = 1,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("7f4a5d58-29db-411b-8e3e-dcf0918e5dc7"),
                             IsActive = true,
@@ -397,7 +398,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            KFUUserId = 11,
+                            KFUUserId = 2,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("9ba46550-b007-48cf-9f21-bc473d2b4393"),
                             IsActive = true,
@@ -413,7 +414,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            KFUUserId = 12,
+                            KFUUserId = 3,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("08d5ea5b-4216-40d6-b166-53c4dfa363e7"),
                             IsActive = true,
@@ -437,7 +438,7 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MembershipId"));
 
-                    b.Property<int>("ClubRoleId")
+                    b.Property<int?>("ClubRoleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -455,10 +456,10 @@ namespace Nashet.Data.Migrations
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isSent")
@@ -483,7 +484,7 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MRId"));
 
-                    b.Property<int>("ClubID")
+                    b.Property<int?>("ClubID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -517,10 +518,10 @@ namespace Nashet.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("StudentID")
+                    b.Property<int?>("StudentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamID")
+                    b.Property<int?>("TeamID")
                         .HasColumnType("int");
 
                     b.Property<bool>("isSent")
@@ -545,7 +546,7 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PRId"));
 
-                    b.Property<int>("ClubRoleID")
+                    b.Property<int?>("ClubRoleID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -560,7 +561,7 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MembershipID")
+                    b.Property<int?>("MembershipID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RequestedDate")
@@ -670,7 +671,7 @@ namespace Nashet.Data.Migrations
                     b.HasData(
                         new
                         {
-                            SiteId = 10,
+                            SiteId = 1,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("9b7c9604-e3f3-40a4-9015-9916b7cabcff"),
                             IsActive = true,
@@ -682,7 +683,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 11,
+                            SiteId = 16,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
                             IsActive = true,
@@ -694,7 +695,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 12,
+                            SiteId = 2,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("8f4336da-ea19-4019-8090-5a6cf70dbf49"),
                             IsActive = true,
@@ -706,7 +707,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 13,
+                            SiteId = 3,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("cc83caab-60ec-4781-a2fc-0cae1217f7fc"),
                             IsActive = true,
@@ -718,7 +719,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 14,
+                            SiteId = 4,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("332f3a58-9aa3-4898-8f29-ff832149c240"),
                             IsActive = true,
@@ -730,7 +731,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 15,
+                            SiteId = 5,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("0fe1af63-f72e-402e-b0b1-87013f4c06b9"),
                             IsActive = true,
@@ -742,7 +743,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 16,
+                            SiteId = 6,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("4516c8da-9634-4cf6-bfe7-eaa2f1dc5c29"),
                             IsActive = true,
@@ -754,7 +755,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 17,
+                            SiteId = 7,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("37dba4ea-1caa-4c81-a022-e00e17ec2ebd"),
                             IsActive = true,
@@ -766,7 +767,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 18,
+                            SiteId = 8,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("2110b192-c071-484b-9d03-035ec84f2e9d"),
                             IsActive = true,
@@ -778,7 +779,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 19,
+                            SiteId = 9,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("4646924f-08b9-4e80-9bab-2318eade4917"),
                             IsActive = true,
@@ -790,7 +791,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 20,
+                            SiteId = 10,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("fbf9fe3e-45e3-40cf-881c-0d9a2327e236"),
                             IsActive = true,
@@ -802,7 +803,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 21,
+                            SiteId = 11,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("2a4cf10c-9bff-45d6-b8c1-a9cc39c76abd"),
                             IsActive = true,
@@ -814,7 +815,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 22,
+                            SiteId = 12,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("7683cbea-2a4d-4b86-8cdb-c1f98bffbbab"),
                             IsActive = false,
@@ -826,7 +827,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 23,
+                            SiteId = 13,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("d58cd45c-e772-4930-ace6-ff8f73562164"),
                             IsActive = false,
@@ -838,7 +839,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 24,
+                            SiteId = 14,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("8c2571f1-5acf-412e-bc70-15318a302a0e"),
                             IsActive = false,
@@ -850,7 +851,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 25,
+                            SiteId = 15,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("e29da295-9a8b-4976-be0a-22772690fe01"),
                             IsActive = false,
@@ -921,7 +922,7 @@ namespace Nashet.Data.Migrations
                     b.HasData(
                         new
                         {
-                            StudentId = 5,
+                            StudentId = 1,
                             AcademicId = "221422576",
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("966bf84b-467d-4385-ae94-867f741e75b9"),
@@ -1044,8 +1045,7 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("RoleTypeEn")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -1059,7 +1059,7 @@ namespace Nashet.Data.Migrations
                         {
                             SystemRoleId = 1,
                             CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            Guid = new Guid("fabba72d-d4b0-4c12-be52-a8b868bc6007"),
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "مدير النظام",
@@ -1070,7 +1070,7 @@ namespace Nashet.Data.Migrations
                         {
                             SystemRoleId = 2,
                             CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            Guid = new Guid("90d065f4-1a15-40b7-8866-0219b1251646"),
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "مشرف النشاط",
@@ -1081,7 +1081,7 @@ namespace Nashet.Data.Migrations
                         {
                             SystemRoleId = 3,
                             CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            Guid = new Guid("ea0e8ba3-8b61-44cb-bb9a-e763f1ac6dac"),
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "مشرف النادي",
@@ -1092,7 +1092,7 @@ namespace Nashet.Data.Migrations
                         {
                             SystemRoleId = 4,
                             CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            Guid = new Guid("4ab11078-e7a8-40a3-8a39-a636735b5834"),
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "قائد النادي",
@@ -1103,7 +1103,7 @@ namespace Nashet.Data.Migrations
                         {
                             SystemRoleId = 5,
                             CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("3322549c-0575-404b-b77e-289785d03460"),
+                            Guid = new Guid("3e9eda03-140d-4b78-8019-3925ae795e47"),
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "الطالب",
@@ -1179,8 +1179,11 @@ namespace Nashet.Data.Migrations
                     b.Property<string>("SystemROles")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SystemRoleId")
+                    b.Property<int?>("SystemRoleId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SystemRoleType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserEmail")
                         .HasMaxLength(50)
@@ -1215,7 +1218,7 @@ namespace Nashet.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = 10,
+                            UserId = 1,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
                             IsActive = true,
@@ -1230,7 +1233,7 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            UserId = 11,
+                            UserId = 2,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("3072cf40-dc60-41f0-87da-77631050caa3"),
                             IsActive = true,
@@ -1260,20 +1263,17 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblUser", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
 
@@ -1291,9 +1291,8 @@ namespace Nashet.Data.Migrations
 
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
-                        .HasForeignKey("siteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
 
@@ -1315,20 +1314,17 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
                         .WithMany()
                         .HasForeignKey("ClubRoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblTeam", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ClubRole");
 
@@ -1342,20 +1338,17 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClub", "Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblTeam", "Team")
                         .WithMany()
                         .HasForeignKey("TeamID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
 
@@ -1369,14 +1362,12 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblClubRole", "ClubRole")
                         .WithMany()
                         .HasForeignKey("ClubRoleID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nashet.Data.Models.tblMembership", "Membership")
                         .WithMany()
                         .HasForeignKey("MembershipID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ClubRole");
 
@@ -1435,8 +1426,7 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblSystemRole", "SystemRole")
                         .WithMany()
                         .HasForeignKey("SystemRoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Site");
 

@@ -35,10 +35,6 @@ namespace Nashet.Business.ViewModels
         [DisplayName("تاريخ انتهاء النشاط")]
         public DateTime ActivityEndDate { get; set; }
 
-        [Required(ErrorMessage = "*حقل مطلوب*")]
-        [DisplayName("وقت بدء النشاط")]
-        public DateTime ActivityTime { get; set; }
-
         [StringLength(300)]
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("موقع النشاط")]

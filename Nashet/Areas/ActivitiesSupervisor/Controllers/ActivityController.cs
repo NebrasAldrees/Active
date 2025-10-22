@@ -48,7 +48,6 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     ActivityPoster = entity.ActivityPoster,
                     ActivityStartDate = entity.ActivityStartDate,
                     ActivityEndDate = entity.ActivityEndDate,
-                    ActivityTime = entity.ActivityTime,
                 };
 
                 return View(viewModel);

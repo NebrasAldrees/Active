@@ -38,7 +38,7 @@ namespace Nashet.Data.Models
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
-                    Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                    Guid = Guid.Parse("fabba72d-d4b0-4c12-be52-a8b868bc6007"),
                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblSystemRole()
@@ -49,7 +49,7 @@ namespace Nashet.Data.Models
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
-                    Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                    Guid = Guid.Parse("90d065f4-1a15-40b7-8866-0219b1251646"),
                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblSystemRole()
@@ -60,7 +60,7 @@ namespace Nashet.Data.Models
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
-                    Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                    Guid = Guid.Parse("ea0e8ba3-8b61-44cb-bb9a-e763f1ac6dac"),
                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                 },
                  new tblSystemRole()
@@ -71,7 +71,7 @@ namespace Nashet.Data.Models
                      IsActive = true,
                      isSent = true,
                      IsDeleted = false,
-                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     Guid = Guid.Parse("4ab11078-e7a8-40a3-8a39-a636735b5834"),
                      CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                  },
                  new tblSystemRole()
@@ -82,7 +82,7 @@ namespace Nashet.Data.Models
                      IsActive = true,
                      isSent = true,
                      IsDeleted = false,
-                     Guid = Guid.Parse("3322549c-0575-404b-b77e-289785d03460"),
+                     Guid = Guid.Parse("3e9eda03-140d-4b78-8019-3925ae795e47"),
                      CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                  });
         }
@@ -94,7 +94,7 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblSite>().HasData(
                 new tblSite()
                 {
-                    SiteId = 10,
+                    SiteId = 1,
                     SiteCode = "0920",
                     SiteNameAR = "كلية علوم الحاسب وتقنية المعلومات",
                     SiteNameEn = "College of Computer Science and Information Technology",
@@ -106,7 +106,7 @@ namespace Nashet.Data.Models
                 },
                  new tblSite()
                  {
-                     SiteId = 11,
+                     SiteId = 16,
                      SiteCode = "0930",
                      SiteNameAR = "كلية إدارة الأعمال",
                      SiteNameEn = "College of Business",
@@ -118,7 +118,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 12,
+                     SiteId = 2,
                      SiteCode = "0940",
                      SiteNameAR = "كلية الهندسة",
                      SiteNameEn = "College of Engineering",
@@ -130,7 +130,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 13,
+                     SiteId = 3,
                      SiteCode = "0950",
                      SiteNameAR = "كلية الصيدلة الإكلينيكية",
                      SiteNameEn = "College of Clinical Pharmacy",
@@ -142,7 +142,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 14,
+                     SiteId = 4,
                      SiteCode = "0960",
                      SiteNameAR = "كلية العلوم الطبية",
                      SiteNameEn = "College of Applied Medical Sciences",
@@ -154,7 +154,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 15,
+                     SiteId = 5,
                      SiteCode = "0300",
                      SiteNameAR = "كلية العلوم",
                      SiteNameEn = "College of Science",
@@ -166,7 +166,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 16,
+                     SiteId = 6,
                      SiteCode = "0310",
                      SiteNameAR = "كلية الطب",
                      SiteNameEn = "College of Medicine",
@@ -178,7 +178,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 17,
+                     SiteId = 7,
                      SiteCode = "0320",
                      SiteNameAR = "كلية الحقوق",
                      SiteNameEn = "College of Law",
@@ -190,7 +190,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 18,
+                     SiteId = 8,
                      SiteCode = "0340",
                      SiteNameAR = "كلية العلوم الزراعية والتغذية",
                      SiteNameEn = "College of Agricultural Science and Nutrition",
@@ -202,7 +202,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 19,
+                     SiteId = 9,
                      SiteCode = "2200",
                      SiteNameAR = "كلية الاداب",
                      SiteNameEn = "College of Arts",
@@ -214,7 +214,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 20,
+                     SiteId = 10,
                      SiteCode = "2230",
                      SiteNameAR = "عمادة شؤون الطلاب",
                      SiteNameEn = "Deanship of Student Affairs",
@@ -226,7 +226,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 21,
+                     SiteId = 11,
                      SiteCode = "3100",
                      SiteNameAR = "كلية الدراسات التطبيقية وخدمة المجتمع",
                      SiteNameEn = "College of Applied Studies & Community Services",
@@ -238,7 +238,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 22,
+                     SiteId = 12,
                      SiteCode = "3200",
                      SiteNameAR = "كلية التربية",
                      SiteNameEn = "College of Education",
@@ -250,7 +250,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 23,
+                     SiteId = 13,
                      SiteCode = "3500",
                      SiteNameAR = "كلية الطب البيطري",
                      SiteNameEn = "College of Veterinary Medicine",
@@ -262,7 +262,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 24,
+                     SiteId = 14,
                      SiteCode = "4311",
                      SiteNameAR = "عمادة التعلم الإلكتروني وتقنية المعلومات",
                      SiteNameEn = "Deanship of of E-learning and Information Technology",
@@ -274,7 +274,7 @@ namespace Nashet.Data.Models
                  },
                  new tblSite()
                  {
-                     SiteId = 25,
+                     SiteId = 15,
                      SiteCode = "2100",
                      SiteNameAR = "عمادة التطوير وضمان الجودة",
                      SiteNameEn = "Deanship of of Development and Quality Assurance",
@@ -291,7 +291,7 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblStudent>().HasData(
                new tblStudent()
                {
-                   StudentId = 5,
+                   StudentId = 1,
                    AcademicId = "221422576",
                    StudentNameAr = "نبراس",
                    StudentNameEn = "Nebras",
@@ -322,7 +322,7 @@ namespace Nashet.Data.Models
                     IsDeleted = false,
                     UserPhone = "0536763284",
                     SiteId = null,
-                    UserId = 10,
+                    UserId = 1,
                     Guid = Guid.Parse("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                 },
@@ -338,7 +338,7 @@ namespace Nashet.Data.Models
                     IsDeleted = false,
                     UserPhone = "0533924794",
                     SiteId = null,
-                    UserId = 11,
+                    UserId = 2,
                     Guid = Guid.Parse("3072cf40-dc60-41f0-87da-77631050caa3"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                 }
@@ -349,7 +349,7 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblKFUuser>().HasData(
                 new tblKFUuser()
                 {
-                    KFUUserId = 10,
+                    KFUUserId = 1,
                     NameEN = "Muntaha",
                     NameAR = "منتهى",
                     Username = "Muntaha_12",
@@ -365,7 +365,7 @@ namespace Nashet.Data.Models
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 11,
+                    KFUUserId = 2,
                     NameEN = "Huda",
                     NameAR = "هدى",
                     Username = "Huda1",
@@ -381,7 +381,7 @@ namespace Nashet.Data.Models
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 12,
+                    KFUUserId = 3,
                     NameEN = "Nebras",
                     NameAR = "نبراس",
                     Username = "Nebras2",

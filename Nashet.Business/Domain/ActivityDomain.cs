@@ -25,7 +25,6 @@ namespace Nashet.Business.Domain
                 ActivityDescription = a.ActivityDescription,
                 ActivityStartDate = a.ActivityStartDate,
                 ActivityEndDate = a.ActivityEndDate,
-                ActivityTime = a.ActivityTime,
                 ActivityLocation = a.ActivityLocation,
                 ActivityPoster = a.ActivityPoster,
                 Guid = a.Guid
@@ -42,7 +41,6 @@ namespace Nashet.Business.Domain
                     ActivityDescription = viewModel.ActivityDescription,
                     ActivityStartDate = viewModel.ActivityStartDate,
                     ActivityEndDate = viewModel.ActivityEndDate,
-                    ActivityTime = viewModel.ActivityTime,
                     ActivityLocation = viewModel.ActivityLocation,
                     ActivityPoster = viewModel.ActivityPoster
                 };
@@ -103,7 +101,6 @@ namespace Nashet.Business.Domain
                 activity.ActivityPoster = viewModel.ActivityPoster;
                 activity.ActivityStartDate = viewModel.ActivityStartDate;
                 activity.ActivityEndDate = viewModel.ActivityEndDate;
-                activity.ActivityTime = viewModel.ActivityTime;
 
                 int check = await _ActivityRepository.updateActivity(activity);
                 if (check == 0)
