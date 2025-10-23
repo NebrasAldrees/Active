@@ -33,68 +33,68 @@ namespace Nashet.Controllers
         {
             return View();
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        ////public async Task<IActionResult> Login(string Username, string Password)
-        ////{
-        ////    try
-        ////    {
-        ////        var KfuUser = await _kfuUserDomain.CheckUser(Username, Password);
-        ////        if (KfuUser != null)
-        ////        {
-        ////            if (KfuUser.UserType != "9")
-        ////            {
-        ////                var user = await _UserDomain.GetUserByUsername(Username);
-        ////                if (user != null)
-        ////                {
-        ////                    var identity = new ClaimsIdentity(new[]
-        ////                    {
-        ////                new Claim(ClaimTypes.Name, user.Username),
-        ////                new Claim(ClaimTypes.Role, user.SystemRoleType),
-        ////                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-        ////                new Claim(ClaimTypes.GivenName, user.UserNameAR)
-        ////            }, CookieAuthenticationDefaults.AuthenticationScheme);
-        ////                    var principal = new ClaimsPrincipal(identity);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string Username, string Password)
+        {
+            try
+            {
+                var KfuUser = await _kfuUserDomain.CheckUser(Username, Password);
+                if (KfuUser != null)
+                {
+                    if (KfuUser.UserType != "9")
+                    {
+                        var user = await _UserDomain.GetUserByUsername(Username);
+                        if (user != null)
+                        {
+                            var identity = new ClaimsIdentity(new[]
+                            {
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role, user.SystemRoleType),
+                        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                        new Claim(ClaimTypes.GivenName, user.UserNameAR)
+                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var principal = new ClaimsPrincipal(identity);
 
-        //                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-        //                        principal);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                principal);
 
-        //                    if (user.SystemRoleType == "„œÌ— «·‰Ÿ«„")
-        //                        return RedirectToAction("Index", "Home", new { area = "Admin" });
-        //                    else if (user.SystemRoleType == "„‘—› «·√‰‘ÿ…")
-        //                        return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
-        //                    else if (user.SystemRoleType == "„‘—› «·‰«œÌ")
-        //                        return RedirectToAction("Index", "Home", new { area = "ClubSupervisor" });
-        //                    else if (user.SystemRoleType == "ÿ«·»")
-        //                        return RedirectToAction("Index", "Home", new { area = "Student" });
-        //                    else if (user.SystemRoleType == "ﬁ«∆œ «·‰«œÌ")
-        //                        return RedirectToAction("Index", "Home", new { area = "ClubLeader" });
-        //                }
-        //                else
-        //                {
-        //                    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-        //                    return View();
-        //                }
-        //            }
-        //            else
-        //            {
-        //                ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-        //                return View();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-        //            return View();
-        //        }
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-        //        return View();
-        //    }
-        //}
+                            if (user.SystemRoleType == "„œÌ— «·‰Ÿ«„")
+                                return RedirectToAction("Index", "Home", new { area = "Admin" });
+                            else if (user.SystemRoleType == "„‘—› «·√‰‘ÿ…")
+                                return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
+                            else if (user.SystemRoleType == "„‘—› «·‰«œÌ")
+    return RedirectToAction("Index", "Home", new { area = "ClubSupervisor" });
+else if (user.SystemRoleType == "ÿ«·»")
+    return RedirectToAction("Index", "Home", new { area = "Student" });
+else if (user.SystemRoleType == "ﬁ«∆œ «·‰«œÌ")
+    return RedirectToAction("Index", "Home", new { area = "ClubLeader" });
+                        }
+                        else
+{
+    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+    return View();
+}
+                    }
+                    else
+{
+    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+    return View();
+}
+                }
+                else
+{
+    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+    return View();
+}
+return View();
+            }
+            catch
+            {
+    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+    return View();
+}
+        }
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
