@@ -25,6 +25,7 @@ namespace Nashet.Business.Domain
                 ActivityDescription = a.ActivityDescription,
                 ActivityStartDate = a.ActivityStartDate,
                 ActivityEndDate = a.ActivityEndDate,
+                ActivityTime = a.ActivityTime,
                 ActivityLocation = a.ActivityLocation,
                 ActivityPoster = a.ActivityPoster,
                 Guid = a.Guid
@@ -41,6 +42,7 @@ namespace Nashet.Business.Domain
                     ActivityDescription = viewModel.ActivityDescription,
                     ActivityStartDate = viewModel.ActivityStartDate,
                     ActivityEndDate = viewModel.ActivityEndDate,
+                    ActivityTime = viewModel.ActivityTime,
                     ActivityLocation = viewModel.ActivityLocation,
                     ActivityPoster = viewModel.ActivityPoster
                 };
@@ -73,26 +75,26 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public async Task<tblActivity> GetActivityByGuid(Guid guid)
+        public async Task<tblActivity> GetActivityById(int id)
         {
-            var Activity = await _ActivityRepository.GetActivityByGuid(guid);
+            var Activity = await _ActivityRepository.GetActivityById(id);
 
             if (Activity == null)
             {
-                throw new KeyNotFoundException($"Activity requested with GUID {guid} was not found.");
+                throw new KeyNotFoundException($"Activity requested with ID {id} was not found.");
             }
 
             return Activity;
         }
 
-        public virtual async Task<int> UpdateActivity( ActivityViewModel viewModel)
+        public virtual async Task<int> UpdateActivity(int id, ActivityViewModel viewModel)
         {
             try
             {
-                var activity = await _ActivityRepository.GetActivityByGuid(viewModel.Guid);
+                var activity = await _ActivityRepository.GetActivityById(id);
                 if (activity == null)
                 {
-                    return 0; 
+                    return 0; // Site not found
                 }
 
                 activity.ActivityTopic =viewModel.ActivityTopic;
@@ -101,6 +103,7 @@ namespace Nashet.Business.Domain
                 activity.ActivityPoster = viewModel.ActivityPoster;
                 activity.ActivityStartDate = viewModel.ActivityStartDate;
                 activity.ActivityEndDate = viewModel.ActivityEndDate;
+                activity.ActivityTime = viewModel.ActivityTime;
 
                 int check = await _ActivityRepository.updateActivity(activity);
                 if (check == 0)
@@ -116,11 +119,11 @@ namespace Nashet.Business.Domain
         }
 
 
-        public virtual async Task<int> DeleteActivity(Guid guid)
+        public virtual async Task<int> DeleteActivity(int Id)
         {
             try
             {
-                var activity = await _ActivityRepository.GetActivityByGuid(guid);
+                var activity = await _ActivityRepository.GetActivityById(Id);
                 if (activity == null)
                 {
                     return 0; // Site not found

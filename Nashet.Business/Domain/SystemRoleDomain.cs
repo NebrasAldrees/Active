@@ -23,6 +23,7 @@ namespace Nashet.Business.Domain
                 guid = sr.Guid,
                 SystemRoleId = sr.SystemRoleId,
                 RoleTypeAr = sr.RoleTypeAr,
+                RoleTypeEn = sr.RoleTypeEn,
 
             }).ToList() ?? new List<SystemRoleViewModel>();
         }
@@ -33,6 +34,7 @@ namespace Nashet.Business.Domain
                 tblSystemRole SystemRole = new tblSystemRole
                 {
                     RoleTypeAr = viewModel.RoleTypeAr,
+                    RoleTypeEn = viewModel.RoleTypeEn,
 
                 };
                 int check = await _SystemRoleRepository.InsertSystemRole(SystemRole);

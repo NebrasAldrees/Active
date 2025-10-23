@@ -50,11 +50,11 @@ namespace Nashet.Areas.Admin.Controllers
             return RedirectToAction("ViewSites");
         }
 
-        public async Task<IActionResult> UpdateSite(Guid Id)
+        public async Task<IActionResult> UpdateSite(Guid guid)
         {
             try
             {
-                var entity = await _SiteDomain.GetSiteByGUID(Id);
+                var entity = await _SiteDomain.GetSiteByGUID(guid);
                 if (entity == null)
                 {
                     TempData["Error"] = "الجهة غير موجودة";
@@ -107,7 +107,7 @@ namespace Nashet.Areas.Admin.Controllers
 
             if (result == 1)
             {
-                TempData["Message"] = "تم حذف الجهة بنجاح";
+                TempData["Success"] = "تم حذف الجهة بنجاح";
             }
             else
             {

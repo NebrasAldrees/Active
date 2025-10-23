@@ -58,40 +58,39 @@ namespace Nashet.Controllers
 
         //                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
         //                        principal);
-
-        //                    if (user.SystemRoleType == "„œÌ— «·‰Ÿ«„")
+        //                    if (user.SystemRoles == "Admin")
         //                        return RedirectToAction("Index", "Home", new { area = "Admin" });
-        //                    else if (user.SystemRoleType == "„‘—› «·√‰‘ÿ…")
-        //                        return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
-        //                    else if (user.SystemRoleType == "„‘—› «·‰«œÌ")
+        //                    else if (user.SystemRoles == "ActivitiesSupervisor")
+        //                        return RedirectToAction("Index", "Home", new { area = "ActivitiesSupervisor" });
+        //                    else if (user.SystemRoles == "ClubSupervisor")
         //                        return RedirectToAction("Index", "Home", new { area = "ClubSupervisor" });
-        //                    else if (user.SystemRoleType == "ÿ«·»")
+        //                    else if (user.SystemRoles == "Student")
         //                        return RedirectToAction("Index", "Home", new { area = "Student" });
-        //                    else if (user.SystemRoleType == "ﬁ«∆œ «·‰«œÌ")
+        //                    else if (user.SystemRoles == "ClubLeader")
         //                        return RedirectToAction("Index", "Home", new { area = "ClubLeader" });
         //                }
         //                else
         //                {
-        //                    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+        //                    ViewData["Login_Error"] = "Õÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
         //                    return View();
         //                }
         //            }
         //            else
         //            {
-        //                ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+        //                ViewData["Login_Error"] = "Õÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
         //                return View();
         //            }
         //        }
         //        else
         //        {
-        //            ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+        //            ViewData["Login_Error"] = "Õÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
         //            return View();
         //        }
         //        return View();
         //    }
         //    catch
         //    {
-        //        ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+        //        ViewData["Login_Error"] = "Õÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
         //        return View();
         //    }
         //}

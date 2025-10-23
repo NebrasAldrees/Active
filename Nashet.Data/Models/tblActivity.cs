@@ -21,6 +21,7 @@ namespace Nashet.Data.Models
         public string ActivityDescription { get; set; }
         public DateTime ActivityStartDate { get; set; }
         public DateTime ActivityEndDate { get; set; }
+        public DateTime ActivityTime { get; set; }
 
         [StringLength(300)]
         public string ActivityLocation { get; set; }
