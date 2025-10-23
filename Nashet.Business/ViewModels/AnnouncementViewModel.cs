@@ -28,7 +28,7 @@ namespace Nashet.Business.ViewModels
         [StringLength(50)]
         public string AnnouncementTopic { get; set; }
         [Required(ErrorMessage = "*حقل مطلوب*")]
-        [DisplayName("تفاصيل الإ‘علان")]
+        [DisplayName("تفاصيل الإعلان")]
         [StringLength(500)]
         public string AnnouncementDetails { get; set; }
         

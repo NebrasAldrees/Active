@@ -19,6 +19,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         public async Task<IActionResult> ViewAllClubs()
         {
+            ViewBag.Sites = await _SiteDomain.GetSite();
             return View(await _ClubDomain.GetClub());
         }
         public async Task<IActionResult> ClubPage(Guid guid)

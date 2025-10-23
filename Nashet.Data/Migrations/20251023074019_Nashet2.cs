@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Nashet : Migration
+    public partial class Nashet2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -584,7 +584,11 @@ namespace Nashet.Data.Migrations
             migrationBuilder.InsertData(
                 table: "tblStudent",
                 columns: new[] { "StudentId", "AcademicId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteId", "StudentEmail", "StudentNameAr", "StudentNameEn", "StudentPhone", "StudentSkills", "isSent" },
-                values: new object[] { 1, "221422576", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("966bf84b-467d-4385-ae94-867f741e75b9"), true, false, 10, "Nebras@gmail.com", "نبراس", "Nebras", "0540345575", "Fast Learner", true });
+                values: new object[,]
+                {
+                    { 1, "221422576", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("966bf84b-467d-4385-ae94-867f741e75b9"), true, false, 10, "Nebras@gmail.com", "نبراس", "Nebras", "0540345575", "Fast Learner", true },
+                    { 2, "220430000", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("0ad3db67-b821-4503-b0b0-c3c6cf160d36"), true, false, 10, "Safa@gmail.com", "صفا", "Safa", "0509410406", "التعاون", true }
+                });
 
             migrationBuilder.InsertData(
                 table: "tblUser",

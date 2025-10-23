@@ -932,6 +932,22 @@ namespace Nashet.Data.Migrations
                             StudentPhone = "0540345575",
                             StudentSkills = "Fast Learner",
                             isSent = true
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            AcademicId = "220430000",
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("0ad3db67-b821-4503-b0b0-c3c6cf160d36"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteId = 10,
+                            StudentEmail = "Safa@gmail.com",
+                            StudentNameAr = "صفا",
+                            StudentNameEn = "Safa",
+                            StudentPhone = "0509410406",
+                            StudentSkills = "التعاون",
+                            isSent = true
                         });
                 });
 

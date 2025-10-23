@@ -305,6 +305,22 @@ namespace Nashet.Data.Models
                    Guid = Guid.Parse("966bf84b-467d-4385-ae94-867f741e75b9"),
                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
 
+               },new tblStudent()
+               {
+                   StudentId = 2,
+                   AcademicId = "220430000",
+                   StudentNameAr = "صفا",
+                   StudentNameEn = "Safa",
+                   StudentEmail = "Safa@gmail.com",
+                   IsActive = true,
+                   IsDeleted = false,
+                   isSent = true,
+                   StudentPhone = "0509410406",
+                   SiteId = 10,
+                   StudentSkills = "التعاون",
+                   Guid = Guid.Parse("0ad3db67-b821-4503-b0b0-c3c6cf160d36"),
+                   CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+
                });
         }
         private static void AddUser()
