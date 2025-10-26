@@ -17,13 +17,13 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblActivity>> GetAllActivities()
         {
-            return await dbSet.Where(Activity => Activity.IsDeleted == false).ToListAsync(); //a for activity
+            return await dbSet.Where(Activity => Activity.IsActive == true && Activity.IsDeleted == false).ToListAsync();
         }
 
-        public virtual async Task<tblActivity> GetActivityById(int id)
+        public virtual async Task<tblActivity> GetActivityByGUID(Guid? guid)
         {
-            return await dbSet.Where(Activity => Activity.IsDeleted == false && Activity.ActivityId == id)
-            .FirstOrDefaultAsync();
+            return await dbSet.Where(Activity => Activity.IsDeleted == false && Activity.Guid == guid)
+                            .FirstOrDefaultAsync();
         }
 
         public virtual async Task<int> InsertActivity(tblActivity activity)
@@ -35,11 +35,23 @@ namespace Nashet.Data.Repository
             }
             catch (Exception ex) 
             {
-                Console.WriteLine($"Error inserting system:{ex.Message}");
+                Console.WriteLine($"خطأ في الإضافة:{ex.Message}");
                 return 0;
             }
         }
 
+        public virtual async Task<bool> IsActivityTopicExists(string ActivityTopic, Guid? excludeActivityGuid = null)
+        {
+            var query = dbSet.Where(activity => activity.IsDeleted == false);
+
+            if (excludeActivityGuid.HasValue)
+            {
+                query = query.Where(activity => activity.Guid != excludeActivityGuid.Value);
+            }
+
+            return await query.AnyAsync(activity => activity.ActivityTopic == ActivityTopic);
+        }
+        
         public virtual async Task<int> updateActivity(tblActivity activity)
         {
             try
@@ -59,7 +71,7 @@ namespace Nashet.Data.Repository
             {
                 if (activity == null || activity.IsDeleted == true)
                 {
-                    return 0;
+                    Console.WriteLine($"خطأ في الحذف");
                 }
 
                 IsDeleted(activity);
@@ -70,6 +82,7 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+
 
 
     }

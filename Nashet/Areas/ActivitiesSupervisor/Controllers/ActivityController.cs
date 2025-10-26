@@ -12,23 +12,44 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
     {
         private readonly ActivityDomain _ActivityDomain;
         private readonly ClubDomain _ClubDomain;
-        public ActivityController(ActivityDomain activityDomain,ClubDomain clubDomain)
+        private readonly IWebHostEnvironment _webHost;
+        public ActivityController(ActivityDomain activityDomain,ClubDomain clubDomain, IWebHostEnvironment webHost)
         {
             _ActivityDomain = activityDomain;
             _ClubDomain = clubDomain;
+            _webHost = webHost;
         }
 
         public async Task<IActionResult> Activities()
         {
+            ViewBag.Clubs = await _ClubDomain.GetClub();
             return View(await _ActivityDomain.GetActivity());
         }
-        [HttpGet]
-        public async Task<IActionResult> ViewActivityById(int id)
+        public async Task<IActionResult> ViewActivityByGuid(Guid guid)
         {
-            return View(await _ActivityDomain.GetActivityById(id));
+            return View(await _ActivityDomain.GetActivityByGuid(guid));
         }
+        public async Task<IActionResult> ActivityPage(Guid guid)
+        {
+            try
+            {
+                var activity = await _ActivityDomain.GetActivityByGuid(guid);
+                if (activity == null)
+                {
+                    return NotFound();
+                }
 
-        [HttpGet]
+                var club = await _ClubDomain.GetClub();
+                var currentClub = club.FirstOrDefault(c => c.ClubId == activity.ClubId);
+                ViewBag.CurrentSite = currentClub;
+
+                return View("ActivityPage", activity);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
         public async Task<IActionResult> InsertActivity()
         {
             ViewBag.Club = await _ClubDomain.GetClub();
@@ -36,7 +57,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertActivity(ActivityViewModel viewModel)
+        public async Task<IActionResult> InsertActivity(ActivityViewModel viewModel, IFormFile ActivityPoster)
         {
             ViewBag.Club = await _ClubDomain.GetClub();
 
@@ -44,23 +65,110 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             {
                 try
                 {
+
+                    // معالجة رفع الصورة إذا تم رفع ملف
+                    if (ActivityPoster != null && ActivityPoster.Length > 0)
+                    {
+                        string uploadFolder = Path.Combine(_webHost.WebRootPath, "uploads");
+
+                        // إنشاء المجلد إذا لم يكن موجوداً
+                        if (!Directory.Exists(uploadFolder))
+                        {
+                            Directory.CreateDirectory(uploadFolder);
+                        }
+
+                        // إنشاء اسم فريد للملف
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ActivityPoster.FileName);
+                        string fileSavePath = Path.Combine(uploadFolder, fileName);
+
+                        // حفظ الملف
+                        using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
+                        {
+                            await ActivityPoster.CopyToAsync(stream);
+                        }
+
+                        // حفظ مسار الصورة في الـ ViewModel
+                        viewModel.ActivityPoster = "/uploads/" + fileName;
+                        ViewBag.Message = fileName + " تم الرفع بنجاح";
+                    }
+
                     int check = await _ActivityDomain.InsertActivity(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                        ViewData["Successful"] = "تم إضافة النشاط بنجاح";
+                    else if (check == -1)
+                        TempData["Duplicate"] = "اسم النشاط موجود مسبقاً";
                     else
-                        ViewData["Failed"] = "Failed";
+                        ViewData["Failed"] = "فشل في الإضافة";
+                }
+                catch (Exception ex)
+                {
+                    ViewData["Failed"] = "فشل في الإضافة";
+                }
+            }
+            return RedirectToAction("Activities");
+
+        }
+
+        public async Task<IActionResult> UpdateActivity(Guid guid)
+        {
+            try
+            {
+                var entity = await _ActivityDomain.GetActivityByGuid(guid);
+                if (entity == null)
+                {
+                    TempData["Error"] = "النشاط غير موجود";
+                    return RedirectToAction(nameof(Activities));
+                }
+
+                var viewModel = new ActivityViewModel
+                {
+                    Guid = entity.Guid,
+                    ActivityId = entity.ActivityId,
+                    ActivityTopic = entity.ActivityTopic,
+                    ActivityDescription = entity.ActivityDescription,
+                    ActivityStartDate = entity.ActivityStartDate,
+                    ActivityEndDate = entity.ActivityEndDate,
+                    ActivityLocation = entity.ActivityLocation,
+                    ActivityPoster = entity.ActivityPoster
+                };
+                ViewData["Successful"] = "تم تحديث البيانات بنجاح";
+                return View(viewModel);
+            }
+            catch
+            {
+                TempData["Error"] = "فشل في التحديث";
+                return RedirectToAction(nameof(Activities));
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateActivity(ActivityViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    int check = await _ActivityDomain.UpdateActivity(viewModel);
+                    if (check == 1)
+                    {
+                        TempData["Successful"] = "تم تحديث البيانات بنجاح";
+                        return RedirectToAction(nameof(Activities));
+                    }
+                    else if (check == -1)
+                        TempData["Duplicate"] = "اسم النشاط موجود مسبقاً";
+                    else
+                        TempData["Error"] = "فشل التحديث";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "Failed";
+                    TempData["Error"] = "فشل التحديث";
                 }
             }
-            return RedirectToAction("InsertActivity");
-
+            return View(viewModel);
         }
-        public async Task<ActionResult> DeleteActivity(int id)
+        public async Task<ActionResult> DeleteActivity(Guid guid)
         {
-            int result = await _ActivityDomain.DeleteActivity(id);
+            int result = await _ActivityDomain.DeleteActivity(guid);
 
             if (result == 1)
             {
@@ -68,7 +176,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             }
             else
             {
-                TempData["Error"] = "خطأ في الحذف";
+                TempData["Error"] = "فشل في الحذف";
             }
 
             return RedirectToAction("Activities");

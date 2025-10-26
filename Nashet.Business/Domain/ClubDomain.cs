@@ -10,16 +10,22 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class ClubDomain(ClubRepository Repository) : BaseDomain
+    public class ClubDomain: BaseDomain
     {
-        private readonly ClubRepository _ClubRepository = Repository;
+        private readonly ClubRepository _ClubRepository;
+        private readonly SiteRepository _SiteRepository;
+        public ClubDomain(SiteRepository siteRepository, ClubRepository Repository)
+        {
+            _SiteRepository = siteRepository;
+            _ClubRepository = Repository;
+        }
 
         public async Task<IList<ClubViewModel>> GetClub()
         {
             return _ClubRepository.GetAllClubs().Result.Select(a => new ClubViewModel
             {
                 ClubId = a.ClubId,
-                SiteId = (int)a.siteId,
+                SiteId = a.siteId,
                 ClubNameAR = a.ClubNameAR,
                 ClubNameEN = a.ClubNameEN,
                 ClubVision = a.ClubVision,
@@ -61,7 +67,7 @@ namespace Nashet.Business.Domain
             return new ClubViewModel
             {
                 ClubId = club.ClubId,
-                SiteId = (int)club.siteId,
+                SiteId = club.siteId,
                 ClubNameAR = club.ClubNameAR,
                 ClubNameEN = club.ClubNameEN,
                 ClubVision = club.ClubVision,
@@ -74,16 +80,10 @@ namespace Nashet.Business.Domain
         {
             try
             {
-                bool nameExists = await _ClubRepository.IsClubNameExists(viewModel.ClubNameAR, viewModel.ClubNameEN);
-                if (nameExists)
-                {
-                    return -1;
-                }
-
+                var site = await _SiteRepository.GetSiteByGUID(viewModel.SiteGuid);
                 tblClub Club = new tblClub
                 {
-                    ClubId = viewModel.ClubId,
-                    siteId = viewModel.SiteId,
+                    siteId = site.SiteId,
                     ClubNameAR = viewModel.ClubNameAR,
                     ClubNameEN = viewModel.ClubNameEN,
                     ClubVision = viewModel.ClubVision,
@@ -142,6 +142,7 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        
         
     }
 }

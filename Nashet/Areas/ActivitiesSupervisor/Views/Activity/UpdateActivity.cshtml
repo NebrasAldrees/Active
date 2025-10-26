@@ -37,12 +37,17 @@
 
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة نشاط</h5>
+                <h5 class="m-0">تحديث بيانات نشاط</h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertActivity" method="post" enctype="multipart/form-data">
+                        <form asp-action="UpdateActivity" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <input type="hidden" asp-for="Guid" />
+                                <input type="hidden" asp-for="ActivityId" />
+                            </div>
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -54,7 +59,7 @@
                                             <option value="@club.Guid">@club.ClubNameAR</option>
                                         }
                                     </select>
-                                    <span style="color:red" asp-validation-for="ClubId"></span>
+                                    <span style="color:red" asp-validation-for="ClubGuid"></span>
 
                                 </div><!-- END ITEM -->
                             </div>
@@ -100,11 +105,11 @@
                                     <span style="color:red" asp-validation-for="ActivityPoster"></span>
                                 </div><!-- END ITEM -->
 
+                                <div class="form-group mt-4">
+                                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                                    <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
 
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5" title="save">إضافة</button>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -127,7 +132,7 @@
 
                 const allowedTypes = ['image/jpeg', 'image/png'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG)');
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG )');
                     e.target.value = '';
                     return;
                 }

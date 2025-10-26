@@ -14,122 +14,75 @@
                 </div>
             </div>
             <div class="block-body">
-                <table class="table table-hover js-dataTable">
-                    <thead>
-                        <tr>
-                            <th>الرقم المرجعي للنشاط</th>
-                            <th>عنوان النشاط</th>
-                            <th class=""></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            foreach (var item in Model)
-                            {
-                                <tr class="cursor-pointer" goto="order_details.html">
-                                    <td>@item.ActivityId</td>
-                                    <td>@item.ActivityTopic</td>
-                                    <td class="action_td text-end">
-
-                                        <a asp-action="ViewActivityById" asp-route-id="@item.ActivityId" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                           data-bs-target="#view_section_@item.ActivityId">عرض</a>
-                                        <!-- View Section Modal -->
-                                        <div class="modal fade" id="view_section_@item.ActivityId" tabindex="-1"
-                                             aria-labelledby="view_sectionLabel_@item.ActivityId" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" bg-primary text-white style="background-color: #186F70; color: white;">
-                                                        <h5 class="modal-title" id="view_sectionLabel">عرض تفاصيل الأنشطة</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </div>
-
-                                                    <div class="modal-body text-center">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-6">
-                                                                <label asp-for="@item.ActivityTopic" class="card-title text-muted"></label>
-                                                                <p class="card-text fw-bold">@item.ActivityTopic</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-6">
-                                                                <label asp-for="@item.ActivityDescription" class="card-title text-muted"></label>
-                                                                <p class="card-text fw-bold">@item.ActivityDescription</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-6">
-                                                                <label asp-for="@item.ActivityLocation" class="card-title text-muted"></label>
-                                                                <p class="card-text fw-bold">@item.ActivityLocation</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-6 justify-content-center">
-                                                                <label asp-for="@item.ActivityStartDate" class="card-title text-muted"> </label>
-                                                                <p class="card-text fw-bold"> <i class="bi bi-calendar-event me-2"></i> @item.ActivityStartDate</p>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-6">
-                                                                <label asp-for="@item.ActivityEndDate" class="card-title text-muted"></label>
-                                                                <p class="card-text fw-bold">@item.ActivityEndDate</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-6">
-                                                                <button type="button" class="btn btn-secondary" 
-                                                                        data-bs-dismiss="modal">
-                                                                    إلغاء
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                <!-- Start Card -->
+                <div class="row" id="activitesContainer">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-lg-4 mb-4 club-card">
+                            <div class="card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0" style="ustify-content: center;">@item.ActivityTopic</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Activity poster-->
+                                    <div class="text-center mb-3">
+                                        @if (!string.IsNullOrEmpty(item.ActivityPoster))
+                                        {
+                                            <img src="@item.ActivityPoster" alt="إعلان النشاط"
+                                                 style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                        }
+                                        else
+                                        {
+                                            <div style="width: 80px; height: 80px; background: #f8f9fa; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-image text-muted"></i>
                                             </div>
-                                        </div>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a asp-action="DeleteActivity" asp-route-id="@item.ActivityId" class="btn btn-sm btn-danger">حذف</a>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
+                                        }
+                                    </div>
+
+                                    <!-- Activity Info-->
+
+                                    <div class="mb-2">
+                                        <strong>النادي:</strong>
+                                        @{
+                                            var Clubs = ViewBag.Clubs as List<ClubViewModel>;
+                                            var club = Clubs?.FirstOrDefault(c => c.Guid == item.ClubGuid);
+                                        }
+                                        <p class="mb-1 text-muted">@(club?.ClubNameAR ?? "غير محدد")</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="action_td text-center">
+                                        <a href="@Url.Action("ActivityPage", "Activity", new { area = "ActivitiesSupervisor", guid = item.Guid })"
+                                           class="btn btn-sm btn-primary">عرض</a>
+                                        <a asp-action="UpdateActivity" asp-controller="Activity" asp-route-id="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a asp-action="DeleteActivity" asp-controller="Activity" asp-route-guid="@item.Guid" class="btn btn-sm btn-danger"
+                                           onclick="return confirm('هل أنت متأكد من أنك تريد حذف هذا النشاط؟')">حذف </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- End card-->
             </div>
         </div>
 
     </div>
 </section><!-- End Page Wrap -->
-<style>
-    .card {
-        min-height: 200px;
-        position: relative;
-        overflow: hidden;
-    }
+@section Scripts {
+    <script>
+        document.getElementById('ActivitySearch').addEventListener('input', function(e) {
+            const searchText = e.target.value.toLowerCase().trim();
+            const activityCards = document.querySelectorAll('.activity-card');
 
-    .club-overlay {
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: background-color 0.3s ease;
-    }
-
-    .club-name-title {
-        font-weight: bold;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    .club-name-subtitle {
-        font-size: 0.9em;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    .card:hover .club-overlay {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* تحسين شكل الزر في الفورم */
-    .club-actions form {
-        display: inline;
-    }
-</style>
+            activityCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchText) || searchText === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+}
