@@ -46,7 +46,6 @@ builder.Services.AddScoped<MembershipRequestRepository>();
 
 //options.LogoutPath = "account/logout";
 
-;
 
 builder.Services.AddControllersWithViews();
 
