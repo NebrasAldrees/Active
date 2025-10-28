@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
+using Nashet.Models;
+using System.Diagnostics;
 
-namespace Nashet.Areas.ClubLeader.Controllers
+namespace Nashet.Areas.ClubSupervisor.Controllers
 {
-    [Area("ClubLeader")]
+    [Area("ClubSupervisor")]
     public class TeamController : Controller
     {
         private readonly TeamDomain _TeamDomain;
@@ -51,5 +53,18 @@ namespace Nashet.Areas.ClubLeader.Controllers
             }
             return View(viewModel);
         }
+        public async Task<ActionResult> DeleteTeam(Guid Guid)
+        {
+            int result = await _TeamDomain.DeleteTeam(Guid);
+
+            if (result == 1)
+                TempData["Success"] = "تم حذف النادي بنجاح";
+            else
+                TempData["Error"] = "فشل في الحذف";
+
+
+            return RedirectToAction("Teams");
+        }
     }
+
 }

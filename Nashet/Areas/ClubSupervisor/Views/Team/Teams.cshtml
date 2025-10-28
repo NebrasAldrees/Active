@@ -9,7 +9,7 @@
                         <input type="text" class="form-control table__quick_search"
                                placeholder="البحث السريع ...">
                     </div>
-                    <a asp-action="InsertTeam" asp-controller="Team" asp-area="ClubLeader" class="btn btn-primary">إضافة فريق</a>
+                    <a asp-action="InsertTeam" asp-controller="Team" asp-area="ClubSupervisor" class="btn btn-primary">إضافة فريق</a>
                 </div>
             </div>
             <div class="block-body">
@@ -30,7 +30,6 @@
                                     <td>@item.TeamNameAR</td>
                                     <td class="action_td text-end">
                                         <a href="" class="btn btn-sm btn-primary">عرض</a>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
                                         <a href="" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
