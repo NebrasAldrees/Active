@@ -67,7 +67,6 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         public async Task<IActionResult> InsertActivity(ActivityViewModel viewModel, IFormFile ActivityPoster)
         {
             ViewBag.Club = await _ClubDomain.GetClub();
-
             if (ModelState.IsValid)
             {
                 try
@@ -195,8 +194,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteActivity(Guid guid)
         {
-            var result = _ActivityDomain.DeleteActivity(guid);
-
+            var result = await _ActivityDomain.DeleteActivity(guid);
             return Json(new { success = true });
 
         }
