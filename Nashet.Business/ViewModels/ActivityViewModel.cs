@@ -19,6 +19,7 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("النادي التابع للنشاط")]
         public Guid ClubGuid { get; set; }
+        [Required(ErrorMessage = "*حقل مطلوب*")]
         public tblClub Club { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
@@ -34,10 +35,15 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("تاريخ بدء النشاط")]
         public DateTime ActivityStartDate { get; set; }
+        [Required(ErrorMessage = "وقت البداية مطلوب")]
+        public string ActivityStartTime { get; set; }
+
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("تاريخ انتهاء النشاط")]
         public DateTime ActivityEndDate { get; set; }
+        [Required(ErrorMessage = "وقت النهاية مطلوب")]
+        public string ActivityEndTime { get; set; }
 
 
         [StringLength(300)]

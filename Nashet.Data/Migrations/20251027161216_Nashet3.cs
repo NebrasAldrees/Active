@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Nashet2 : Migration
+    public partial class Nashet3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -138,7 +138,7 @@ namespace Nashet.Data.Migrations
                 {
                     ClubId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    siteId = table.Column<int>(type: "int", nullable: true),
+                    siteId = table.Column<int>(type: "int", nullable: false),
                     ClubNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ClubNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ClubVision = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
@@ -235,7 +235,7 @@ namespace Nashet.Data.Migrations
                 {
                     ActivityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClubId = table.Column<int>(type: "int", nullable: true),
+                    ClubId = table.Column<int>(type: "int", nullable: false),
                     ActivityTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ActivityDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     ActivityStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -265,13 +265,11 @@ namespace Nashet.Data.Migrations
                 {
                     AnnouncementId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClubId = table.Column<int>(type: "int", nullable: true),
-                    SiteId = table.Column<int>(type: "int", nullable: true),
-                    ClubNameAR = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AnnouncementType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AnnouncementTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ClubId = table.Column<int>(type: "int", nullable: false),
+                    AnnouncementType = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    AnnouncementTopic = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     AnnouncementDetails = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    AnnouncementImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnnouncementImage = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -286,12 +284,6 @@ namespace Nashet.Data.Migrations
                         column: x => x.ClubId,
                         principalTable: "tblClub",
                         principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_tblAnnouncement_tblSite_SiteId",
-                        column: x => x.SiteId,
-                        principalTable: "tblSite",
-                        principalColumn: "SiteId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -623,11 +615,6 @@ namespace Nashet.Data.Migrations
                 name: "IX_tblAnnouncement_ClubId",
                 table: "tblAnnouncement",
                 column: "ClubId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tblAnnouncement_SiteId",
-                table: "tblAnnouncement",
-                column: "SiteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblClub_siteId",

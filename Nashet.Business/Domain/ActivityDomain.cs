@@ -37,6 +37,22 @@ namespace Nashet.Business.Domain
                 Guid = a.Guid
             }).ToList();
         }
+        public async Task<IList<ActivityViewModel>> GetActivitiesByClubGuid(Guid? clubGuid)
+        {
+            var activities = await GetActivity();
+
+            if (clubGuid.HasValue)
+            {
+                var club = await _ClubRepository.GetClubByGuid(clubGuid.Value);
+                var clubId = club.ClubId;
+
+                return activities.Where(a => a.ClubId == clubId).ToList();
+            }
+
+            return activities;
+        }
+
+
         public async Task<tblActivity> GetActivityByGuid(Guid guid)
         {
             var Activity = await _ActivityRepository.GetActivityByGUID(guid);
@@ -48,19 +64,29 @@ namespace Nashet.Business.Domain
 
             return Activity;
         }
+
         
         public virtual async Task<int> InsertActivity(ActivityViewModel viewModel)
         {
             try
             {
+                bool topicExists = await _ActivityRepository.IsActivityTopicExists(viewModel.ActivityTopic);
+
+                if (topicExists)
+                {
+                    return -1; 
+                }
+
+                DateTime.TryParse($"{viewModel.ActivityStartDate:yyyy-MM-dd} {viewModel.ActivityStartTime}", out var startDateTime);
+                DateTime.TryParse($"{viewModel.ActivityEndDate:yyyy-MM-dd} {viewModel.ActivityEndTime}", out var endDateTime);
                 var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
                 tblActivity activity = new tblActivity
                 {
                     ClubId = club.ClubId,
                     ActivityTopic = viewModel.ActivityTopic,
                     ActivityDescription = viewModel.ActivityDescription,
-                    ActivityStartDate = viewModel.ActivityStartDate,
-                    ActivityEndDate = viewModel.ActivityEndDate,
+                    ActivityStartDate = startDateTime,
+                    ActivityEndDate = endDateTime,
                     ActivityLocation = viewModel.ActivityLocation,
                     ActivityPoster = viewModel.ActivityPoster
                 };
@@ -86,6 +112,7 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                
                 var activity = await _ActivityRepository.GetActivityByGUID(viewModel.Guid);
                 if (activity == null)
                 {
@@ -122,7 +149,7 @@ namespace Nashet.Business.Domain
                 {
                     return 0; // Site not found
                 }
-
+                activity.IsDeleted = true;
                 int check = await _ActivityRepository.DeleteActivity(activity);
                 if (check == null)
                     return 0;

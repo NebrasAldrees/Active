@@ -22,8 +22,7 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<tblActivity> GetActivityByGUID(Guid? guid)
         {
-            return await dbSet.Where(Activity => Activity.IsDeleted == false && Activity.Guid == guid)
-                            .FirstOrDefaultAsync();
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Activity => Activity.IsDeleted == false && Activity.Guid == guid);
         }
 
         public virtual async Task<int> InsertActivity(tblActivity activity)
@@ -69,12 +68,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                if (activity == null || activity.IsDeleted == true)
-                {
-                    Console.WriteLine($"خطأ في الحذف");
-                }
-
-                IsDeleted(activity);
+                await UpdateAsync(activity);
                 return 1;
             }
             catch
