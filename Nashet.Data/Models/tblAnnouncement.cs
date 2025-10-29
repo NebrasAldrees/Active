@@ -12,21 +12,18 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int AnnouncementId { get; set; }
-        public int? ClubId { get; set; }
+        public int ClubId { get; set; }
         public tblClub Club { get; set; }
-        public int? SiteId { get; set; }
-        public tblSite Site { get; set; }
-        [StringLength(50)]
-        public string ClubNameAR { get; set; }
-
-        [StringLength(50)]
+                
+        [StringLength(150)]
         public string AnnouncementType { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string AnnouncementTopic { get; set; }
 
         [StringLength(500)]
         public string AnnouncementDetails { get; set; }
+        [StringLength(1500)]
         public string AnnouncementImage { get; set; }
 
     }

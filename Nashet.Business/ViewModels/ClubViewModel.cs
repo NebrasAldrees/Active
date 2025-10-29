@@ -13,9 +13,11 @@ namespace Nashet.Business.ViewModels
     {
         public int ClubId { get; set; }
 
-        //[Required(ErrorMessage = "*حقل مطلوب*")]
+        [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("اسم الجهة")]
-        public int? SiteId { get; set; }
+        public int SiteId { get; set; }
+        [DisplayName("اسم الجهة")]
+        public Guid SiteGuid { get; set; }
         public tblSite Site { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]

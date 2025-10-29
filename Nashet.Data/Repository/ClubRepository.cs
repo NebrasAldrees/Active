@@ -16,7 +16,7 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<IList<tblClub>> GetAllClubs()
         {
-            return await dbSet.Where(m => m.IsDeleted == false).ToListAsync();
+            return await dbSet.Where(m => m.IsActive == true && m.IsDeleted == false).ToListAsync();
         }
         public virtual async Task<tblClub> GetClubByGuid(Guid guid)
         {
@@ -98,33 +98,6 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        public virtual async Task<int> DeleteClub(tblClub club)
-        {
-            try
-            {
-                if (club == null || club.IsDeleted == true)
-                {
-                    return 0;
-                }
-                IsDeleted(club);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-        public virtual async Task<int> UpdateClub(tblClub club)
-        {
-            try
-            {
-                await UpdateAsync(club);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
+        
     }
 }

@@ -11,9 +11,16 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class ActivityDomain(ActivityRepository Repository) : BaseDomain
+    public class ActivityDomain: BaseDomain
     {
-        private readonly ActivityRepository _ActivityRepository = Repository;
+        private readonly ActivityRepository _ActivityRepository;
+        private readonly ClubRepository _ClubRepository;
+
+        public ActivityDomain(ActivityRepository activityRepository, ClubRepository ClubRepository)
+        {
+            _ActivityRepository = activityRepository;
+            _ClubRepository = ClubRepository;
+        }
 
         public async Task<IList<ActivityViewModel>> GetActivity()
         {
@@ -25,24 +32,61 @@ namespace Nashet.Business.Domain
                 ActivityDescription = a.ActivityDescription,
                 ActivityStartDate = a.ActivityStartDate,
                 ActivityEndDate = a.ActivityEndDate,
-                ActivityTime = a.ActivityTime,
                 ActivityLocation = a.ActivityLocation,
                 ActivityPoster = a.ActivityPoster,
                 Guid = a.Guid
             }).ToList();
         }
+        public async Task<IList<ActivityViewModel>> GetActivitiesByClubGuid(Guid? clubGuid)
+        {
+            var activities = await GetActivity();
+
+            if (clubGuid.HasValue)
+            {
+                var club = await _ClubRepository.GetClubByGuid(clubGuid.Value);
+                var clubId = club.ClubId;
+
+                return activities.Where(a => a.ClubId == clubId).ToList();
+            }
+
+            return activities;
+        }
+
+
+        public async Task<tblActivity> GetActivityByGuid(Guid guid)
+        {
+            var Activity = await _ActivityRepository.GetActivityByGUID(guid);
+
+            if (Activity == null)
+            {
+                throw new KeyNotFoundException($"النشاط المطلوب غير متوفر");
+            }
+
+            return Activity;
+        }
+
+        
         public virtual async Task<int> InsertActivity(ActivityViewModel viewModel)
         {
             try
             {
+                bool topicExists = await _ActivityRepository.IsActivityTopicExists(viewModel.ActivityTopic);
+
+                if (topicExists)
+                {
+                    return -1; 
+                }
+
+                DateTime.TryParse($"{viewModel.ActivityStartDate:yyyy-MM-dd} {viewModel.ActivityStartTime}", out var startDateTime);
+                DateTime.TryParse($"{viewModel.ActivityEndDate:yyyy-MM-dd} {viewModel.ActivityEndTime}", out var endDateTime);
+                var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
                 tblActivity activity = new tblActivity
                 {
-                    ClubId = viewModel.ClubId,
+                    ClubId = club.ClubId,
                     ActivityTopic = viewModel.ActivityTopic,
                     ActivityDescription = viewModel.ActivityDescription,
-                    ActivityStartDate = viewModel.ActivityStartDate,
-                    ActivityEndDate = viewModel.ActivityEndDate,
-                    ActivityTime = viewModel.ActivityTime,
+                    ActivityStartDate = startDateTime,
+                    ActivityEndDate = endDateTime,
                     ActivityLocation = viewModel.ActivityLocation,
                     ActivityPoster = viewModel.ActivityPoster
                 };
@@ -53,18 +97,6 @@ namespace Nashet.Business.Domain
                 }
                 else
                 {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username="najd",
-                        RecordId=17,
-                        Table="tblActivity",
-                        operation_date=DateTime.Now,
-                        operation_type="Insert",
-                        OldValue=null,
-                       // NewValue=
-                    };
-                   //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
                 }
 
@@ -75,35 +107,24 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public async Task<tblActivity> GetActivityById(int id)
-        {
-            var Activity = await _ActivityRepository.GetActivityById(id);
 
-            if (Activity == null)
-            {
-                throw new KeyNotFoundException($"Activity requested with ID {id} was not found.");
-            }
-
-            return Activity;
-        }
-
-        public virtual async Task<int> UpdateActivity(int id, ActivityViewModel viewModel)
+        public virtual async Task<int> UpdateActivity(ActivityViewModel viewModel)
         {
             try
             {
-                var activity = await _ActivityRepository.GetActivityById(id);
+                
+                var activity = await _ActivityRepository.GetActivityByGUID(viewModel.Guid);
                 if (activity == null)
                 {
                     return 0; // Site not found
                 }
-
+                var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
                 activity.ActivityTopic =viewModel.ActivityTopic;
                 activity.ActivityDescription = viewModel.ActivityDescription;
                 activity.ActivityLocation = viewModel.ActivityLocation; 
                 activity.ActivityPoster = viewModel.ActivityPoster;
                 activity.ActivityStartDate = viewModel.ActivityStartDate;
                 activity.ActivityEndDate = viewModel.ActivityEndDate;
-                activity.ActivityTime = viewModel.ActivityTime;
 
                 int check = await _ActivityRepository.updateActivity(activity);
                 if (check == 0)
@@ -119,16 +140,16 @@ namespace Nashet.Business.Domain
         }
 
 
-        public virtual async Task<int> DeleteActivity(int Id)
+        public virtual async Task<int> DeleteActivity(Guid guid)
         {
             try
             {
-                var activity = await _ActivityRepository.GetActivityById(Id);
+                var activity = await _ActivityRepository.GetActivityByGUID(guid);
                 if (activity == null)
                 {
                     return 0; // Site not found
                 }
-
+                activity.IsDeleted = true;
                 int check = await _ActivityRepository.DeleteActivity(activity);
                 if (check == null)
                     return 0;

@@ -1,6 +1,39 @@
 ﻿@model AnnouncementViewModel
 <section class="page_wrap">
     <div class="page_content">
+        <!-- START ALERT MESSAGES -->
+        @if (TempData["Successful"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i> @TempData["Successful"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData["Duplicate"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i> @TempData["Duplicate"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData["Failed"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-times-circle me-2"></i> @TempData["Failed"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-info-circle me-2"></i> @ViewBag.Message
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <!-- END ALERT MESSAGES -->
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
                 <h5 class="m-0">إنشاء إعلان جديد</h5>
@@ -8,57 +41,58 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertAnnouncement" method="post">
+                        <form asp-action="InsertAnnouncement" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="siteId" class="mb-1">الجهة</label>
-                                    <select asp-for="siteId" class="form-control">
-                                        <option value="2">عمادة شؤون الطلاب</option>
-                                        <option value="1">كلية علوم الحاسب وتقنية المعلومات</option>
-                                        <option value="3">كلية الطب</option>
-                                        <option value="4">كلية الصيدلة</option>
-                                        <option value="5">كلية العلوم</option>
+                                    <label asp-for="ClubGuid" class="mb-1"></label>
+                                    <select asp-for="ClubGuid" class="form-control">
+                                        <option value="">-- اختر النادي --</option>
+                                        @foreach (ClubViewModel club in ViewBag.Club)
+                                        {
+                                            <option value="@club.Guid">@club.ClubNameAR</option>
+                                        }
                                     </select>
+                                    <span style="color:red" asp-validation-for="ClubGuid"></span>
+
                                 </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="ClubNameAR" class="mb-1">النادي</label>
-                                    <select asp-for="ClubNameAR" class="form-control">
-                                        <option value="1">نادي الذكاء الإصطناعي</option>
-                                        <option value="2">نادي هواوي</option>
-                                        <option value="3">نادي قوقل</option>
-                                        <option value="4">نادي التعلم بالأقران</option>
-                                    </select>
-                                </div><!-- END ITEM -->
+
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="AnnouncementType" class="mb-1">نوع الإعلان</label>
                                     <select asp-for="AnnouncementType" class="form-control">
-                                        <option value="x">إعلان  نشاط</option>
-                                        <option value="y">إنشاء نادي جديد</option>
+                                        <option value="إعلان  نشاط">إعلان  نشاط</option>
+                                        <option value="إنشاء نادي جديد">إنشاء نادي جديد</option>
                                     </select>
-                                </div>
+                                    <span style="color:red" asp-validation-for="AnnouncementType"></span>
+
+                                </div><!-- END ITEM -->
+
                                 <!-- START ITEM -->
                                     <div class="col-md-6">
                                         <label for="" class="mb-1">موضوع الإعلان </label>
                                         <input asp-for="AnnouncementTopic" type="text" class="form-control">
                                         <span style="color:red" asp-validation-for="AnnouncementTopic"></span>
                                     </div><!-- END ITEM -->
+
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label for="" class="mb-1">تفاصيل الإعلان</label>
                                         <textarea asp-for="AnnouncementDetails" class="form-control"></textarea>
                                         <span style="color:red" asp-validation-for="AnnouncementDetails"></span>
                                 </div><!-- END ITEM -->
-                                    <!-- START ITEM -->
-                                    <div class="col-md-6">
-                                    <label for="" class="mb-1">إرفاق صورة للإعلان</label>
-                                    <input asp-for="AnnouncementImage" type="file" id="ImageUpload" name="ClubIcon" accept="image/*" class="form-control">
-                                    </div><!-- END ITEM -->
+                                    
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="AnnouncementImage" class="mb-1"></label>
+                                    <input asp-for="AnnouncementImage" type="file" id="ImageUpload"
+                                           name="ActivityPoster" name="ActivityPoster" accept="image/*" class=" form-control">
+                                    <small class="text-muted">الأنواع المسموحة: JPG, PNG, PDF - الحجم الأقصى: 50MB</small>
+                                    <span style="color:red" asp-validation-for="AnnouncementImage"></span>
+                                </div><!-- END ITEM -->
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                <button type="submit" class="btn btn-primary px-5" title="save">إضافة</button>
                             </div>
                         </form>
                     </div>
@@ -67,3 +101,46 @@
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script>
+
+        document.getElementById('ImageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 50MB');
+                    e.target.value = '';
+                    return;
+                }
+
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/pdf'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG, PDF)');
+                    e.target.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+
+                    const oldPreview = document.getElementById('imagePreview');
+                    if (oldPreview) {
+                        oldPreview.remove();
+                    }
+
+                    const preview = document.createElement('div');
+                    preview.id = 'imagePreview';
+                    preview.innerHTML = `
+                        <div class="mt-3 p-3 border">
+                            <h6>معاينة صورة الإعلان:</h6>
+                            <img src="${e.target.result}" class="img-fluid " style="max-height: 200px;">
+                        </div>
+                    `;
+                    document.querySelector('.mb-4').after(preview);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}
