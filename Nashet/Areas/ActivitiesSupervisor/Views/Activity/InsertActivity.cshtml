@@ -121,29 +121,28 @@
             }
         });
     </script>
-    <script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                        if (@ViewBag.Successful != null)
-        {
-            <Text>
-                                        var result = '@Html.Raw(ViewBag.Successful)';
-                Swal.fire(result, '', 'success')
-                .then(
-                function () {
-                window.location.href = '@Url.Action("Activities", "Activity")';
-                }
-                );
-            </Text>
-        }
-                else if (@ViewBag.Error != null)
-        {
-            <Text>
-                            var result = '@Html.Raw(ViewBag.Error)';
-                Swal.fire(result, '', 'error');
-            </Text>
-        }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
+    @if (ViewBag.Successful != null)
+    {
+        <script>
+            Swal.fire('@ViewBag.Successful', '', 'success').then(() => {
+                window.location.href = '@Url.Action("Activities", "Activity")';
+            });
+        </script>
     }
-    </script>
+    else if (ViewBag.Duplicate != null)
+    {
+        <script>
+            Swal.fire('@ViewBag.Duplicate', '', 'warning');
+            });
+        </script>
+    }
+    else if (ViewBag.Error != null)
+    {
+        <script>
+            Swal.fire('@ViewBag.Error', '', 'error');
+        </script>
+    }
+
 }

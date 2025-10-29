@@ -128,4 +128,29 @@
             }
         });
     </script>
+    <script>
+        @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                if (@ViewBag.Successful != null)
+                {
+                        <Text>
+                            var result = @Html.Raw(ViewBag.Successful);
+                            Swal.fire(result, '', 'success')
+                            .then(
+                            function(){
+                            window.location.href = @Url.Action("Activities", "Activity");
+                            }
+                            );
+                        </Text>
+                }
+                else if (@ViewBag.Error != null)
+                {
+                        <Text>
+                            var result = @Html.Raw(ViewBag.Error);
+                            Swal.fire(result, '', 'error');
+                        </Text>
+                }
+
+        }
+    </script>
 }
