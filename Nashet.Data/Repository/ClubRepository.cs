@@ -49,7 +49,7 @@ namespace Nashet.Data.Repository
                 await InsertAsync(Club);
                 return 1;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
 
             {
                 Console.WriteLine($"Error inserting system:{ex.Message}");

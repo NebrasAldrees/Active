@@ -40,27 +40,23 @@
                                         }
                                     </div>
 
-                                    <!-- معلومات النادي -->
-                                    <div class="mb-2">
-                                        <strong>الاسم الإنجليزي:</strong>
-                                        <p class="mb-1 text-muted">@item.ClubNameEN</p>
-                                    </div>
-
-                                    <div class="mb-2">
-                                        <strong>الجهة:</strong>
-                                        @{
-                                            var sites = ViewBag.Sites as List<SiteViewModel>;
-                                            var site = sites?.FirstOrDefault(s => s.SiteId == item.SiteId);
-                                        }
-                                        <p class="mb-1 text-muted">@(site?.SiteNameAR ?? "غير محدد")</p> <!-- ✅ التعديل هنا -->
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="action_td text-center">
-                                        <a href="@Url.Action("ClubPage", "Club", new { area = "ActivitiesSupervisor", guid = item.Guid })"
-                                           class="btn btn-sm btn-primary">عرض</a>
-                                        <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor"
-                                           class="btn btn-sm btn-success">تعديل</a>
+                @if (Model == null || !Model.Any())
+                {
+                                        <div class="alert alert-warning">لا توجد أندية مسجلة حالياً</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                                            @foreach (var item in Model)
+                                            {
+                                                <div class="col">
+                                                    <div class="card h-100 text-white shadow" style="background-image: url('@item.ClubIcon'); background-size: cover; background-position: center;">
+                                    <div class="card-img-overlay d-flex flex-column justify-content-end club-overlay">
+                                        <h5 class="card-title text-center mb-1 club-name-title">@item.ClubNameAR</h5>
+                                        <p class="card-text text-center mb-2 club-name-subtitle">@item.ClubNameEN</p>
+                                        <div class="d-flex justify-content-center gap-1 club-actions">
+                                            <a href="#" class="btn btn-sm btn-light">عرض</a>
+                                            <a href="#" class="btn btn-sm btn-success">تعديل</a>
 
                                         <form asp-action="DeleteClub" asp-controller="Club" asp-area="ActivitiesSupervisor" method="post" class="d-inline">
                                             <input type="hidden" name="id" value="@item.ClubId" />
@@ -75,10 +71,12 @@
                         </div>
                     }
                 </div>
+                }
                 <!-- نهاية البطاقات -->
             </div>
         </div>
     </div>
+    }
 </section><!-- End Page Wrap -->
 @section Scripts {
     <script>
@@ -96,4 +94,4 @@
             });
         });
     </script>
-}
+} *@

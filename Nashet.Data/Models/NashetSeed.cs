@@ -305,22 +305,6 @@ namespace Nashet.Data.Models
                    Guid = Guid.Parse("966bf84b-467d-4385-ae94-867f741e75b9"),
                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
 
-               },new tblStudent()
-               {
-                   StudentId = 2,
-                   AcademicId = "220430000",
-                   StudentNameAr = "صفا",
-                   StudentNameEn = "Safa",
-                   StudentEmail = "Safa@gmail.com",
-                   IsActive = true,
-                   IsDeleted = false,
-                   isSent = true,
-                   StudentPhone = "0509410406",
-                   SiteId = 10,
-                   StudentSkills = "التعاون",
-                   Guid = Guid.Parse("0ad3db67-b821-4503-b0b0-c3c6cf160d36"),
-                   CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
-
                });
         }
         private static void AddUser()
@@ -337,7 +321,7 @@ namespace Nashet.Data.Models
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0536763284",
-                    SiteId = null,
+                    SiteId = 1,
                     UserId = 1,
                     Guid = Guid.Parse("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
@@ -353,7 +337,7 @@ namespace Nashet.Data.Models
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0533924794",
-                    SiteId = null,
+                    SiteId = 1,
                     UserId = 2,
                     Guid = Guid.Parse("3072cf40-dc60-41f0-87da-77631050caa3"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)

@@ -32,7 +32,7 @@ namespace Nashet.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertUser(UserViewModel viewModel)
-        {
+        { 
             ViewBag.Site = await _siteDomain.GetSite();
             ViewBag.SystemRole = await _systemRoleDomain.GetSystemRole();
             if (ModelState.IsValid)
@@ -41,16 +41,24 @@ namespace Nashet.Areas.Admin.Controllers
                 {
                     int check = await _domain.InsertUser(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                        TempData["Successful"] = "تمت الإضافة بنجاح";  // غير إلى TempData
                     else
-                        ViewData["Failed"] = "Failed";
+                        TempData["Failed"] = "فشلت العملية";  // غير إلى TempData
+
+                    return RedirectToAction("InsertUser");
                 }
-                catch
+                catch (Exception ex)
                 {
-                    ViewData["Failed"] = "Failed";
+                    TempData["Failed"] = "حدث خطأ: " + ex.Message;  // غير إلى TempData
                 }
             }
-            return RedirectToAction("InsertUser");
+            else
+            {
+                TempData["Failed"] = "البيانات غير صالحة";  // غير إلى TempData
+            }
+
+           
+            return View(viewModel);
         }
     }
 }

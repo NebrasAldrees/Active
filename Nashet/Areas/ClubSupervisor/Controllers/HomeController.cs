@@ -9,5 +9,9 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         {
             return View();
         }
+        public IActionResult ClubsupervisorHome ()
+        {
+            return View();
+        }
     }
 }

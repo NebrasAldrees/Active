@@ -48,6 +48,9 @@ namespace Nashet.Data.Migrations
                     b.Property<DateTime>("ActivityStartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ActivityTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ActivityTopic")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -1046,8 +1049,7 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RoleTypeAr")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleTypeEn")
                         .HasColumnType("nvarchar(max)");
@@ -1180,9 +1182,6 @@ namespace Nashet.Data.Migrations
 
                     b.Property<int?>("SiteId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SystemROles")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SystemRoleId")
                         .HasColumnType("int");
