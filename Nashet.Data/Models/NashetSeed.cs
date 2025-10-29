@@ -321,7 +321,7 @@ namespace Nashet.Data.Models
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0536763284",
-                    SiteId = null,
+                    SiteId = 1,
                     UserId = 1,
                     Guid = Guid.Parse("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
@@ -337,7 +337,7 @@ namespace Nashet.Data.Models
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0533924794",
-                    SiteId = null,
+                    SiteId = 1,
                     UserId = 2,
                     Guid = Guid.Parse("3072cf40-dc60-41f0-87da-77631050caa3"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)

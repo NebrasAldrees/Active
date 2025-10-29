@@ -48,14 +48,11 @@
                             <span>الرئيسية</span>
                         </a>
                         <ul>
-                            <li><a asp-area="ClubSupervisor" asp-controller="Report" asp-action="InsertReport"><span>رفع التقارير</span></a></li>
-                            <li><a asp-area="ClubSupervisor" asp-controller="ActivityRequest" asp-action="InsertActivityRequest"><span>تقديم طلب إنشاء نشاط</span></a></li>
-                            <li><a asp-area="ClubSupervisor" asp-controller="Membership" asp-action="ViewMembership"><span>عرض معلومات الأعضاء</span></a></li>
-                            <li><a asp-area="ClubSupervisor" asp-controller="MembershipRequests" asp-action="ViewMembershipRequests"><span>مراجعة طلبات العضوية</span></a></li>
+                            <li><a asp-area="Student" asp-controller="MembershipRequest" asp-action="InsertMembershipRequest"><span>تقديم طلب العضوية</span></a></li>
                         </ul>
                     </li>
                     <li>
-                        <a asp-area="ClubSupervisor" asp-controller="Club" asp-action="ViewAllClubs">
+                        <a asp-area="Student" asp-controller="Club" asp-action="ViewAllClubs">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
                                 <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
@@ -68,7 +65,7 @@
                     </li>
 
                     <li>
-                        <a asp-area="ClubSupervisor" asp-controller="Activity" asp-action="Activities">
+                        <a asp-area="Student" asp-controller="Activity" asp-action="Activities">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
                                 <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />

@@ -12,9 +12,7 @@ namespace Nashet.Data.Models
 
        [Key]
         public int UserId { get; set; }
-        public string SystemRoleType { get; set; }
-
-        public int? SystemRoleId { get; set; }
+        public int SystemRoleId { get; set; }
         public tblSystemRole SystemRole { get; set; }
         public string UserNameAR { get; set; }
         [StringLength(50)]
@@ -25,9 +23,7 @@ namespace Nashet.Data.Models
         public string UserEmail { get; set; }
         [StringLength(30)]
         public string UserPhone { get; set; }
-        public string SystemROles { get; set; }
-        //public List<Nashet.Business.ViewModels.SystemRoleViewModel> SystemRoles { get; set; }
-        public int? SiteId { get; set; } 
+        public int SiteId { get; set; } 
         public tblSite Site { get; set; }
     }
 }

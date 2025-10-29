@@ -24,7 +24,7 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(user => user.IsDeleted == false && user.Username == Username)
                 .SingleOrDefaultAsync();
         }
-        public virtual async Task<tblKFUuser> CheckUser(String username, String password)
+        public virtual async Task<tblKFUuser> CheckUser(string username, string password)
         {
             return await dbSet.SingleOrDefaultAsync(user => user.Username == username && user.Password == password);
         }

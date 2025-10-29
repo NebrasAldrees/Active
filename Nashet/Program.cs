@@ -56,6 +56,23 @@ builder.Services.AddAuthorization(Option=>
     Option.AddPolicy("MustBeAdmin", P => P.RequireAuthenticatedUser().RequireRole("Admin"));
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+
+.AddCookie(options =>
+
+{
+
+    options.AccessDeniedPath = "/Home/Error";
+
+    options.LoginPath = "/Home/login";
+
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+    //options.LoginPath = "/accounts/ErrorNotLoggedIn";
+
+    //options.LogoutPath = "account/logout";
+
+});
 
 var app = builder.Build();
 
@@ -66,7 +83,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

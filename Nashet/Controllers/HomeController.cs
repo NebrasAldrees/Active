@@ -18,7 +18,7 @@ namespace Nashet.Controllers
         private readonly KfuUserDomain _kfuUserDomain;
         private readonly UserDomain _UserDomain;
 
-        public HomeController(ILogger<HomeController> logger,KfuUserDomain kfuUserDomain, UserDomain userDomain)
+        public HomeController(ILogger<HomeController> logger, KfuUserDomain kfuUserDomain, UserDomain userDomain)
         {
             _logger = logger;
             _kfuUserDomain = kfuUserDomain;
@@ -42,7 +42,7 @@ namespace Nashet.Controllers
                 var KfuUser = await _kfuUserDomain.CheckUser(Username, Password);
                 if (KfuUser != null)
                 {
-                    if (KfuUser.UserType != "9")
+                    if (KfuUser.UserType != "person")
                     {
                         var user = await _UserDomain.GetUserByUsername(Username);
                         if (user != null)
@@ -50,56 +50,59 @@ namespace Nashet.Controllers
                             var identity = new ClaimsIdentity(new[]
                             {
                         new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.Role, user.SystemRoleType),
+                        new Claim(ClaimTypes.Role, user.RoleTypeEn),
                         new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                         new Claim(ClaimTypes.GivenName, user.UserNameAR)
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+                    },
+                    CookieAuthenticationDefaults.AuthenticationScheme);
                             var principal = new ClaimsPrincipal(identity);
 
                             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                 principal);
 
-                            if (user.SystemRoleType == "„œÌ— «·‰Ÿ«„")
-                                return RedirectToAction("Index", "Home", new { area = "Admin" });
-                            else if (user.SystemRoleType == "„‘—› «·√‰‘ÿ…")
+                            if (user.RoleTypeEn == "Admin")
+                                return RedirectToAction("AdminHome", "Home", new { area = "Admin" });
+                            else if (user.RoleTypeEn == "Activities Supervisor")
                                 return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
-                            else if (user.SystemRoleType == "„‘—› «·‰«œÌ")
-    return RedirectToAction("Index", "Home", new { area = "ClubSupervisor" });
-else if (user.SystemRoleType == "ÿ«·»")
-    return RedirectToAction("Index", "Home", new { area = "Student" });
-else if (user.SystemRoleType == "ﬁ«∆œ «·‰«œÌ")
-    return RedirectToAction("Index", "Home", new { area = "ClubLeader" });
+                            else if (user.RoleTypeEn == "Club Supervisor")
+                                return RedirectToAction("ClubSupervisorHome", "Home", new { area = "ClubSupervisor" });
+                            else if (user.RoleTypeEn == "Student")
+                                return RedirectToAction("StudentHome", "Home", new { area = "Student" });
                         }
                         else
-{
-    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-    return View();
-}
+                        {
+                            ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+                            return View();
+                        }
                     }
                     else
-{
-    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-    return View();
-}
+                    {
+                        ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+                        return View();
+                    }
                 }
                 else
-{
-    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-    return View();
-}
-return View();
+                {
+                    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+                    return View();
+                }
+                return View();
             }
             catch
             {
-    ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
-    return View();
-}
+                ViewData["Login_Error"] = "Œÿ√ «”„ «·„” Œœ„ «Ê ﬂ·„… «·„—Ê— €Ì— ’ÕÌÕ…";
+                return View();
+            }
         }
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction("Login");
+        }
+        public IActionResult ProfilePage()
+        {
+            return View();
         }
         public IActionResult users()
         {

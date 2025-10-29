@@ -25,9 +25,7 @@ namespace Nashet.Business.Domain
                 UserNameEN = U.UserNameEN,
                 UserEmail = U.UserEmail,
                 UserPhone = U.UserPhone,
-
                 SystemRoleId = (int)U.SystemRoleId,
-
                 SiteId = (int)U.SiteId,
             }).ToList();
         }
@@ -44,7 +42,7 @@ namespace Nashet.Business.Domain
                     UserEmail = viewModel.UserEmail,
                     UserPhone = viewModel.UserPhone,
                     SystemRoleId = viewModel.SystemRoleId,
-                    SiteId = viewModel.SiteId,
+                    SiteId = viewModel.SiteId
                 };
                 int check = await _UserRepository.InsertUser(User);
                 if (check == 0)
@@ -88,7 +86,7 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public async Task<UserViewModel> GetUserByUsername(String username)
+        public async Task<UserViewModel> GetUserByUsername(string username)
         {
             var user = await _UserRepository.GetUserByUsername(username);
             UserViewModel viewModel = new UserViewModel
@@ -99,11 +97,9 @@ namespace Nashet.Business.Domain
                 UserNameEN = user.UserNameEN,
                 UserEmail = user.UserEmail,
                 UserPhone = user.UserPhone,
-                SystemRoleId = (int)user.SystemRoleId,
-                SiteId = (int)user.SiteId,
-                SystemRoleType = user.SystemRole.RoleTypeAr,
-
-
+                SystemRoleId = user.SystemRoleId,
+                SiteId = user.SiteId,
+                RoleTypeEn = user.SystemRole.RoleTypeEn
             };
             return viewModel;
         }
