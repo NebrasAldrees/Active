@@ -42,7 +42,7 @@ namespace Nashet.Controllers
                 var KfuUser = await _kfuUserDomain.CheckUser(Username, Password);
                 if (KfuUser != null)
                 {
-                    if (KfuUser.UserType != "person")
+                    if (KfuUser.UserType != "Staff")
                     {
                         var user = await _UserDomain.GetUserByUsername(Username);
                         if (user != null)
