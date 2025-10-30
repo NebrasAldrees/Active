@@ -50,7 +50,7 @@
                                     <label asp-for="ActivityEndDate"></label>
                                     <input asp-for="ActivityEndDate" type="date" class="form-control" />
                                     <input asp-for="ActivityEndTime" type="time" class="form-control" />
-                                    <span style="color:red" asp-validation-for="ActivityEndDate"></span>
+                                    <span style="color:red" asp-validation-for="ActivityEndDate" ></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -126,22 +126,33 @@
     @if (ViewBag.Successful != null)
     {
         <script>
-            Swal.fire('@ViewBag.Successful', '', 'success').then(() => {
-                window.location.href = '@Url.Action("Activities", "Activity")';
-            });
+            Swal.fire({
+            title: "@ViewBag.Successful",
+            icon: "success",
+            draggable: true
+            }).then(() => {
+            window.location.href = '@Url.Action("Activities", "Activity")';
         </script>
     }
     else if (ViewBag.Duplicate != null)
     {
         <script>
-            Swal.fire('@ViewBag.Duplicate', '', 'warning');
+            Swal.fire({
+            icon: "warning",
+            title: "@ViewBag.Duplicate",
+            text: "خطأ في الإضافة",
             });
         </script>
     }
     else if (ViewBag.Error != null)
     {
         <script>
-            Swal.fire('@ViewBag.Error', '', 'error');
+
+            Swal.fire({
+            icon: "error",
+            title: "خطأ",
+            text: "خطأ في الإضافة",
+            });
         </script>
     }
 

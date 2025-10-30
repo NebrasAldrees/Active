@@ -68,13 +68,13 @@
                                 <div class="col-md-6">
                                     <label asp-for="ActivityPoster" class="mb-1"></label>
                                     <input asp-for="ActivityPoster" type="file" id="ImageUpload"
-                                           name="ActivityPoster" name="ActivityPoster" accept="image/*" class=" form-control">
+                                           name="ActivityPoster" accept="image/*" class=" form-control">
                                     <small class="text-muted">الأنواع المسموحة: JPG, PNG - الحجم الأقصى: 50MB</small>
                                     <span style="color:red" asp-validation-for="ActivityPoster"></span>
                                 </div><!-- END ITEM -->
 
                                 <div class="form-group mt-4">
-                                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                                    <button type="submit" id="showAlertBtn" class="btn btn-success">حفظ التعديلات</button>
                                     <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
 
                                 </div>
@@ -87,11 +87,10 @@
 </section><!-- End Page Wrap -->
 @section Scripts {
     <script>
-
-        document.getElementById('ImageUpload').addEventListener('change', function(e) {
+        // Image validation and preview
+        document.getElementById('ImageUpload').addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (file) {
-
                 if (file.size > 50 * 1024 * 1024) {
                     alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 50MB');
                     e.target.value = '';
@@ -106,20 +105,18 @@
                 }
 
                 const reader = new FileReader();
-                reader.onload = function(e) {
-
+                reader.onload = function (e) {
                     const oldPreview = document.getElementById('imagePreview');
                     if (oldPreview) {
                         oldPreview.remove();
                     }
-
 
                     const preview = document.createElement('div');
                     preview.id = 'imagePreview';
                     preview.innerHTML = `
                         <div class="mt-3 p-3 border">
                             <h6>معاينة الصورة:</h6>
-                            <img src="${e.target.result}" class="img-fluid " style="max-height: 200px;">
+                            <img src="${e.target.result}" class="img-fluid" style="max-height: 200px;">
                         </div>
                     `;
                     document.querySelector('.mb-4').after(preview);
@@ -127,30 +124,51 @@
                 reader.readAsDataURL(file);
             }
         });
-    </script>
-    <script>
-        @{
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                if (@ViewBag.Successful != null)
-                {
-                        <Text>
-                            var result = @Html.Raw(ViewBag.Successful);
-                            Swal.fire(result, '', 'success')
-                            .then(
-                            function(){
-                            window.location.href = @Url.Action("Activities", "Activity");
-                            }
-                            );
-                        </Text>
-                }
-                else if (@ViewBag.Error != null)
-                {
-                        <Text>
-                            var result = @Html.Raw(ViewBag.Error);
-                            Swal.fire(result, '', 'error');
-                        </Text>
-                }
 
-        }
+        // Submit confirmation alert
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default submission
+
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: 'سيتم حفظ التعديلات',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'نعم، احفظ',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    e.target.submit();
+                }
+            });
+        });
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+
+    @if (TempData["Successful"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'تم التحديث بنجاح',
+                icon: 'success',
+                confirmButtonText: 'موافق'
+            }).then(() => {
+                window.location.href = '@Url.Action("ActivityPage", "Activity")';
+            });
+        </script>
+    }
+    else if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'حدث خطأ',
+                text: '@TempData["Error"]',
+                icon: 'error',
+                confirmButtonText: 'موافق'
+            });
+        </script>
+    }
     </script>
+
 }

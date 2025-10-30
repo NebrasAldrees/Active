@@ -19,7 +19,6 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("النادي التابع للنشاط")]
         public Guid ClubGuid { get; set; }
-        //[Required(ErrorMessage = "*حقل مطلوب*")]
         public tblClub Club { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]

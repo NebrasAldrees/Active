@@ -139,12 +139,12 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     ActivityLocation = entity.ActivityLocation,
                     ActivityPoster = entity.ActivityPoster
                 };
-                ViewBag.Successful = "تم تحديث البيانات بنجاح";
+                TempData["Successful"] = "تم التحديث بنجاح";
                 return View(viewModel);
             }
             catch
             {
-                ViewBag.Error = "فشل في التحديث";
+                TempData["Error"] = "حدث خطأ أثناء التحديث";
                 return RedirectToAction(nameof(Activities));
             }
         }
