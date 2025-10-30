@@ -94,12 +94,15 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 
                     int check = await _ActivityDomain.InsertActivity(viewModel);
                     if (check == 1)
+                    {
                         ViewBag.Successful = "تم إضافة النشاط بنجاح";
+                        return View(viewModel);
+                    }
+
                     else if (check == -1)
                         ViewBag.Duplicate = "اسم النشاط موجود مسبقاً";
                     else
                         ViewBag.Error = "فشل في الإضافة";
-                    return View(viewModel);
 
                 }
                 catch (Exception ex)
@@ -110,9 +113,8 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 
 
             return View(viewModel);
-
         }
-        
+
         public async Task<IActionResult> UpdateActivity(Guid guid)
         {
             try
@@ -137,12 +139,12 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     ActivityLocation = entity.ActivityLocation,
                     ActivityPoster = entity.ActivityPoster
                 };
-                ViewBag.Successful = "تم تحديث البيانات بنجاح";
+                TempData["Successful"] = "تم التحديث بنجاح";
                 return View(viewModel);
             }
             catch
             {
-                ViewBag.Error = "فشل في التحديث";
+                TempData["Error"] = "حدث خطأ أثناء التحديث";
                 return RedirectToAction(nameof(Activities));
             }
         }

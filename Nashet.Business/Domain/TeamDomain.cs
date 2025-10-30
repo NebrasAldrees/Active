@@ -11,28 +11,34 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class TeamDomain(TeamRepository Repository) : BaseDomain
+    public class TeamDomain : BaseDomain
     {
-        private readonly TeamRepository _TeamRepository = Repository;
+        private readonly TeamRepository _TeamRepository;
+        private readonly ClubRepository _ClubRepository;
+        public TeamDomain(TeamRepository TeamRepository, ClubRepository ClubRepository)
+        {
+            _TeamRepository = TeamRepository;
+            _ClubRepository = ClubRepository;
+        }
         public async Task<IList<TeamViewModel>> GetTeam()
         {
             return _TeamRepository.GetAllTeams().Result.Select(t => new TeamViewModel
             {
                 TeamId = t.TeamId,
-                ClubId = t.ClubId,
+                ClubId = (int)t.ClubId,
                 TeamNameAR = t.TeamNameAR,
                 TeamNameEn = t.TeamNameEn,
                 Guid = t.Guid
             }).ToList();
         }
 
-        public async Task<tblTeam> GetTeamById(int id)
+        public async Task<tblTeam> GetTeamById(Guid Guid)
         {
-            var Team = await _TeamRepository.GetTeamByIdAsync(id);
+            var Team = await _TeamRepository.GetTeamByGuid(Guid);
 
             if (Team == null)
             {
-                throw new KeyNotFoundException($"Team request with ID {id} was not found.");
+                throw new KeyNotFoundException($"Team request with Guid {Guid} was not found.");
             }
 
             return Team;
@@ -43,9 +49,10 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
                 tblTeam team = new tblTeam
                 {
-                    ClubId = viewModel.ClubId,
+                    ClubId = club.ClubId,
                     TeamNameAR = viewModel.TeamNameAR,
                     TeamNameEn = viewModel.TeamNameEn
                 };
@@ -78,14 +85,14 @@ namespace Nashet.Business.Domain
             }
         }
         
-        public virtual async Task<int> DeleteTeam(int Id)
+        public virtual async Task<int> DeleteTeam(Guid Guid)
         {
             try
             {
-                var team = await _TeamRepository.GetTeamByIdAsync(Id);
+                var team = await _TeamRepository.GetTeamByGuid(Guid);
                 if (team == null)
                 {
-                    return 0; // Site not found
+                    return 0; 
                 }
 
                 int check = await _TeamRepository.DeleteTeam(team);

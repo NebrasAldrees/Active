@@ -23,6 +23,11 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(team => team.IsDeleted == false && team.TeamId == id)
                             .FirstOrDefaultAsync();
         }
+        public virtual async Task<tblTeam> GetTeamByGuid(Guid Guid)
+        {
+            return await dbSet.Where(team => team.IsDeleted == false && team.Guid == Guid)
+                            .FirstOrDefaultAsync();
+        }
         public virtual async Task<int> InsertTeam(tblTeam Team)
         {
             try
@@ -33,19 +38,6 @@ namespace Nashet.Data.Repository
             catch (Exception ex) 
             {
                 Console.WriteLine($"Error inserting system:{ex.Message}");
-                return 0;
-            }
-        }
-
-        public virtual async Task<int> updateTeam(tblTeam Team)
-        {
-            try
-            {
-                await UpdateAsync(Team);
-                return 1;
-            }
-            catch
-            {
                 return 0;
             }
         }
