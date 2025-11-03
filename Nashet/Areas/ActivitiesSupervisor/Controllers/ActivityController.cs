@@ -181,7 +181,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     if (check == 1)
                     {
                         ViewBag.Successful = "تم تحديث البيانات بنجاح";
-                        return View(viewModel);
+                        return Json(new { success = true });
                     }
                     else
                         ViewBag.Error = "فشل التحديث";

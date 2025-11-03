@@ -84,7 +84,29 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        
+
+        //public virtual async Task<int> DeleteTeam(Guid guid)
+        //{
+        //    try
+        //    {
+        //        var team = await _TeamRepository.GetTeamByGuid(guid);
+        //        if (team == null)
+        //        {
+        //            return 0; 
+        //        }
+        //        team.IsDeleted = true;
+        //        int check = await _TeamRepository.DeleteTeam(team);
+        //        if (check == null)
+        //            return 0;
+        //        else
+        //            return 1;
+
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        //}
         public virtual async Task<int> DeleteTeam(Guid Guid)
         {
             try
@@ -92,9 +114,9 @@ namespace Nashet.Business.Domain
                 var team = await _TeamRepository.GetTeamByGuid(Guid);
                 if (team == null)
                 {
-                    return 0; 
+                    return 0;
                 }
-
+                team.IsDeleted = true;
                 int check = await _TeamRepository.DeleteTeam(team);
                 if (check == null)
                     return 0;

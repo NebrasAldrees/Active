@@ -53,17 +53,19 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             }
             return View(viewModel);
         }
-        public async Task<ActionResult> DeleteTeam(Guid Guid)
+        [HttpPost]
+        public async Task<IActionResult> DeleteTeam(Guid guid)
         {
-            int result = await _TeamDomain.DeleteTeam(Guid);
+            var result = await _TeamDomain.DeleteTeam(guid);
+            return Json(new { success = true });
 
-            if (result == 1)
-                TempData["Success"] = "تم حذف النادي بنجاح";
-            else
-                TempData["Error"] = "فشل في الحذف";
+        }
 
 
-            return RedirectToAction("Teams");
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 
