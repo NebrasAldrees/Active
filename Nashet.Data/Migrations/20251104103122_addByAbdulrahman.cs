@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Nashet3 : Migration
+    public partial class addByAbdulrahman : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -197,15 +197,13 @@ namespace Nashet.Data.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SystemRoleType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SystemRoleId = table.Column<int>(type: "int", nullable: true),
+                    SystemRoleId = table.Column<int>(type: "int", nullable: false),
                     UserNameAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserNameEN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserPhone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    SystemROles = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SiteId = table.Column<int>(type: "int", nullable: true),
+                    SiteId = table.Column<int>(type: "int", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -576,19 +574,15 @@ namespace Nashet.Data.Migrations
             migrationBuilder.InsertData(
                 table: "tblStudent",
                 columns: new[] { "StudentId", "AcademicId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteId", "StudentEmail", "StudentNameAr", "StudentNameEn", "StudentPhone", "StudentSkills", "isSent" },
-                values: new object[,]
-                {
-                    { 1, "221422576", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("966bf84b-467d-4385-ae94-867f741e75b9"), true, false, 10, "Nebras@gmail.com", "نبراس", "Nebras", "0540345575", "Fast Learner", true },
-                    { 2, "220430000", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("0ad3db67-b821-4503-b0b0-c3c6cf160d36"), true, false, 10, "Safa@gmail.com", "صفا", "Safa", "0509410406", "التعاون", true }
-                });
+                values: new object[] { 1, "221422576", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("966bf84b-467d-4385-ae94-867f741e75b9"), true, false, 10, "Nebras@gmail.com", "نبراس", "Nebras", "0540345575", "Fast Learner", true });
 
             migrationBuilder.InsertData(
                 table: "tblUser",
-                columns: new[] { "UserId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteId", "SystemROles", "SystemRoleId", "SystemRoleType", "UserEmail", "UserNameAR", "UserNameEN", "UserPhone", "Username", "isSent" },
+                columns: new[] { "UserId", "CreationDate", "Guid", "IsActive", "IsDeleted", "SiteId", "SystemRoleId", "UserEmail", "UserNameAR", "UserNameEN", "UserPhone", "Username", "isSent" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"), true, false, null, null, 1, null, "Muntaha@gmail.com", "منتهى", "Muntaha", "0536763284", "Muntaha_12", true },
-                    { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, null, null, 2, null, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true }
+                    { 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"), true, false, 1, 1, "Muntaha@gmail.com", "منتهى", "Muntaha", "0536763284", "Muntaha_12", true },
+                    { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, 1, 2, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true }
                 });
 
             migrationBuilder.CreateIndex(
