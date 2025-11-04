@@ -1,17 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nashet.Business.Domain;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
     [Area("ClubSupervisor")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly AnnouncementDomain _announcementDomain;
+
+        public HomeController(AnnouncementDomain announcementDomain)
         {
-            return View();
+            _announcementDomain = announcementDomain;
         }
-        public IActionResult ClubsupervisorHome ()
+
+        public async Task<IActionResult> ClubsupervisorHome()
         {
-            return View();
+            var latestAnnouncements = await _announcementDomain.GetLatestAnnouncements(3);
+            return View(latestAnnouncements);
+        }
+
+        public async Task<IActionResult> AnnouncementPage(Guid id)
+        {
+            try
+            {
+                var announcement = await _announcementDomain.GetAnnouncementByGuid(id);
+                return View(announcement);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

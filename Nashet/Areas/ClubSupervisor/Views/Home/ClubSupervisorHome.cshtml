@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IList<AnnouncementViewModel>
+@{
     Layout = "~/Areas/ClubSupervisor/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "الرئيسية";
 }
@@ -6,25 +7,95 @@
 <!-- Start Page Wrap -->
 <section class="page_wrap">
     <div class="page_content">
-
         <div class="row justify-content-md-center mb-3">
             <div class="col">
-                <!-- بانر الإعلانات -->
+                <!-- Announcement Banner -->
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="block mb-4">
                             <div class="block-header border-bottom mb-3 p-3">
-                                <h6 class="m-0">الإعلانات</h6>
+                                <h6 class="m-0">آخر الإعلانات</h6>
                             </div>
-                            <div class="p-4 text-center">
-                                <i class="fas fa-bullhorn fa-3x mb-3 text-muted"></i>
-                                <h5 class="text-muted">لا يوجد إعلان حالياً</h5>
-                                <p class="text-muted mb-0">سيتم عرض الإعلانات هنا عند توفرها</p>
-                            </div>
+
+                            @if (Model == null || !Model.Any())
+                            {
+                                <div class="p-4 text-center">
+                                    <i class="fas fa-bullhorn fa-3x mb-3 text-muted"></i>
+                                    <h5 class="text-muted">لا يوجد إعلانات حالياً</h5>
+                                    <p class="text-muted mb-0">سيتم عرض الإعلانات هنا عند توفرها</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="announcementsCarousel" class="carousel slide" data-bs-ride="carousel" style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                    <!-- المؤشرات -->
+                                    <div class="carousel-indicators">
+                                        @for (int i = 0; i < Model.Count; i++)
+                                        {
+                                            <button type="button"
+                                                    data-bs-target="#announcementsCarousel"
+                                                    data-bs-slide-to="@i"
+                                                    class="@(i == 0 ? "active" : "")"
+                                                    aria-current="@(i == 0 ? "true" : "false")"
+                                                    aria-label="Slide @(i + 1)"></button>
+                                        }
+                                    </div>
+
+                                    <!-- slides -->
+                                    <div class="carousel-inner">
+                                        @foreach (var (announcement, index) in Model.Select((a, i) => (a, i)))
+                                        {
+                                            <div class="carousel-item @(index == 0 ? "active" : "")">
+                                                <a href="@Url.Action("AnnouncementPage", "Home", new { area = "ClubSupervisor", id = announcement.Guid })"
+                                                   class="text-decoration-none">
+                                                    <div class="announcement-slide" style="position: relative; height: 400px; overflow: hidden; cursor: pointer;">
+                                                        <!-- background -->
+                                                        @if (!string.IsNullOrEmpty(announcement.AnnouncementImage))
+                                                        {
+                                                            <div class="announcement-background"
+                                                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('@announcement.AnnouncementImage'); background-size: cover; background-position: center; background-repeat: no-repeat; transition: transform 0.5s ease;">
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="announcement-background"
+                                                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); transition: transform 0.5s ease;">
+                                                            </div>
+                                                        }
+
+                                                        <!-- طبقة تدرج -->
+                                                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);"></div>
+
+                                                        <!-- content -->
+                                                        <div class="announcement-content" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; color: white; z-index: 2;">
+                                                            <div class="announcement-badge" style="margin-bottom: 1rem;">
+                                                                <span class="badge" style="background-color: #0f7179; font-size: 0.8em; padding: 0.5em 1em;">@announcement.AnnouncementType</span>
+                                                            </div>
+                                                            <h3 class="announcement-title" style="font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">@announcement.AnnouncementTopic</h3>
+                                                            <p class="announcement-details" style="font-size: 1.1rem; margin-bottom: 1rem; line-height: 1.6; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); max-height: 4.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">@announcement.AnnouncementDetails</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <!-- أزرار التحكم -->
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#announcementsCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">السابق</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#announcementsCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">التالي</span>
+                                    </button>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
-                <!-- أزرارا الإجراءات -->
+
+                <!-- أزرار الإجراءات -->
                 <div class="row">
                     <div class="col-md-4">
                         <a asp-area="ClubSupervisor" asp-controller="Report" asp-action="InsertReport" class="block layout_icons d-block mb-4">
@@ -51,11 +122,11 @@
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
                                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                             </svg>
-                            <h5 class="text-dark">مراجعة طلبات العصوية</h5>
+                            <h5 class="text-dark">مراجعة طلبات العضوية</h5>
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a asp-area ="ClubSupervisor" asp-controller="Membership" asp-action="ViewMembership" class="block layout_icons d-block mb-4">
+                        <a asp-area="ClubSupervisor" asp-controller="Membership" asp-action="ViewMembership" class="block layout_icons d-block mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0f7179" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                                 <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
                             </svg>
@@ -63,9 +134,105 @@
                         </a>
                     </div>
                 </div>
-                    
-                </div>
             </div>
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script>
+        // تشغيل السلایدر تلقائياً
+        document.addEventListener('DOMContentLoaded', function() {
+            var myCarousel = document.getElementById('announcementsCarousel');
+            if (myCarousel) {
+                var carousel = new bootstrap.Carousel(myCarousel, {
+                    interval: 5000, // تغيير كل 5 ثواني
+                    wrap: true,
+                    pause: 'hover'
+                });
+
+                // إضافة تأثير hover على الصور
+                var announcementSlides = document.querySelectorAll('.announcement-slide');
+                announcementSlides.forEach(function(slide) {
+                    slide.addEventListener('mouseenter', function() {
+                        var background = this.querySelector('.announcement-background');
+                        if (background) {
+                            background.style.transform = 'scale(1.05)';
+                        }
+                    });
+
+                    slide.addEventListener('mouseleave', function() {
+                        var background = this.querySelector('.announcement-background');
+                        if (background) {
+                            background.style.transform = 'scale(1)';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <style>
+        /* الأنماط الأساسية فقط */
+        .carousel-indicators button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: rgba(255,255,255,0.5);
+            border: 2px solid transparent;
+        }
+
+            .carousel-indicators button.active {
+                background-color: white;
+                border-color: #0f7179;
+            }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+            .carousel-control-prev:hover,
+            .carousel-control-next:hover {
+                opacity: 1;
+            }
+
+        /* التأكد من أن السلایدر متجاوب */
+        @@media (max-width: 768px) {
+            .announcement-slide {
+                height: 300px !important;
+            }
+
+            .announcement-title {
+                font-size: 1.4rem !important;
+            }
+
+            .announcement-details {
+                font-size: 1rem !important;
+                -webkit-line-clamp: 2 !important;
+                max-height: 3.2em !important;
+            }
+
+            .announcement-content {
+                padding: 1.5rem !important;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .announcement-slide {
+                height: 250px !important;
+            }
+
+            .announcement-title {
+                font-size: 1.2rem !important;
+            }
+
+            .announcement-details {
+                font-size: 0.9rem !important;
+                -webkit-line-clamp: 2 !important;
+            }
+        }
+    </style>
+}

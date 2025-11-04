@@ -4,6 +4,7 @@ using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,13 +38,12 @@ namespace Nashet.Business.Domain
         {
             var announcement = await _AnnouncementRepository.GetAnnouncementByGuid(guid);
             if (announcement == null)
-            {
                 throw new KeyNotFoundException($"Announcement with GUID {guid} was not found.");
-            }
 
             return new AnnouncementViewModel
             {
-                ClubId = (int)announcement.ClubId,
+                AnnouncementId = announcement.AnnouncementId,
+                ClubId = announcement.ClubId,
                 AnnouncementType = announcement.AnnouncementType,
                 AnnouncementTopic = announcement.AnnouncementTopic,
                 AnnouncementDetails = announcement.AnnouncementDetails,
@@ -51,7 +51,23 @@ namespace Nashet.Business.Domain
                 Guid = announcement.Guid
             };
         }
-        
+
+        public async Task<IList<AnnouncementViewModel>> GetLatestAnnouncements(int count = 3)
+        {
+            var announcements = await _AnnouncementRepository.GetLatestAnnouncements(count);
+
+            return announcements.Select(a => new AnnouncementViewModel
+            {
+                AnnouncementId = a.AnnouncementId,
+                ClubId = a.ClubId,
+                AnnouncementType = a.AnnouncementType,
+                AnnouncementTopic = a.AnnouncementTopic,
+                AnnouncementDetails = a.AnnouncementDetails,
+                AnnouncementImage = a.AnnouncementImage,
+                Guid = a.Guid
+            }).ToList();
+        }
+
         public virtual async Task<int> InsertAnnouncement(AnnouncementViewModel viewModel)
         {
             try
@@ -109,26 +125,24 @@ namespace Nashet.Business.Domain
             }
 
         }
-        
-        public virtual async Task<int> DeleteAnnouncement(Guid guid)
+
+        public async Task<bool> DeleteAnnouncement(Guid guid)
         {
             try
             {
                 var announcement = await _AnnouncementRepository.GetAnnouncementByGuid(guid);
                 if (announcement == null)
-                {
-                    return 0; // Site not found
-                }
+                    return false;
 
-                int check = await _AnnouncementRepository.DeleteAnnouncement(announcement);
-                if (check == null)
-                    return 0;
-                else
-                    return 1;
+                // Soft Delete (تغيير حالة IsDeleted)
+                announcement.IsDeleted = true;
+                await _AnnouncementRepository.UpdateAsync(announcement);
+
+                return true;
             }
-            catch
+            catch (Exception)
             {
-                return 0;
+                return false;
             }
         }
     }

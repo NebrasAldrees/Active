@@ -26,8 +26,15 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<tblAnnouncement> GetAnnouncementByGuid(Guid guid)
         {
-            return await dbSet.Where(A => A.IsDeleted == false && A.Guid == guid)
-                .FirstOrDefaultAsync();
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(A => A.IsDeleted == false && A.Guid == guid);
+        }
+        public virtual async Task<IList<tblAnnouncement>> GetLatestAnnouncements(int count = 3)
+        {
+            return await dbSet
+                .Where(a => a.IsDeleted == false)
+                .OrderByDescending(a => a.Guid)
+                .Take(count)
+                .ToListAsync();
         }
         public virtual async Task<int> InsertAnnouncement(tblAnnouncement Announcement)
         {
@@ -63,7 +70,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                IsDeleted(Announcement);
+                await UpdateAsync(Announcement);
                 return 1;
             }
             catch

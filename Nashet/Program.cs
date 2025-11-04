@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Nashet.Business.Domain;
 using Nashet.Data.Repository;
@@ -45,7 +47,6 @@ builder.Services.AddScoped<MembershipRequestRepository>();
 
 
 //options.LogoutPath = "account/logout";
-
 
 builder.Services.AddControllersWithViews();
 
