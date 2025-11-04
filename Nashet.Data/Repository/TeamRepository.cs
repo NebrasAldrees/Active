@@ -46,12 +46,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                if (team == null || team.IsDeleted == true)
-                {
-                    return 0;
-                }
-
-                IsDeleted(team);
+                await UpdateAsync(team);
                 return 1;
             }
             catch
@@ -59,6 +54,7 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+
 
     }
 }

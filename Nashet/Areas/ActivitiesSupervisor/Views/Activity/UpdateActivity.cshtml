@@ -74,7 +74,7 @@
                                 </div><!-- END ITEM -->
 
                                 <div class="form-group mt-4">
-                                    <button type="submit" id="showAlertBtn" class="btn btn-success">حفظ التعديلات</button>
+                                    <button type="submit" id="showAlertBtn" class="btn btn-success update-btn">حفظ التعديلات</button>
                                     <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
 
                                 </div>
@@ -126,8 +126,8 @@
         });
 
         // Submit confirmation alert
-        document.querySelector('form').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent default submission
+         $('.update-btn').on('click', function (e) {
+            e.preventDefault();
 
             Swal.fire({
                 title: 'هل أنت متأكد؟',
@@ -138,37 +138,38 @@
                 cancelButtonText: 'إلغاء'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    e.target.submit();
+                    $.ajax({
+                        url: '/Activity/UpdateActivity', // Replace with your actual endpoint
+                        type: 'POST',
+                        data: $('#yourFormId').serialize(), // Replace with your form ID
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: 'نجحت العملية!',
+                                    text: 'تم تحديث البيانات',
+                                    icon: 'success'
+                                }).then(() => {
+                                    window.location.href = '/Activity/Activities'; // Replace with actual URL
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'فشلت العملية!',
+                                    text: 'لم يتم التحديث',
+                                    icon: 'error'
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'خطأ!',
+                                text: 'حدث خطأ غير متوقع.',
+                                icon: 'error'
+                            });
+                        }
+                    });
                 }
             });
         });
-
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-
-
-    @if (TempData["Successful"] != null)
-    {
-        <script>
-            Swal.fire({
-                title: 'تم التحديث بنجاح',
-                icon: 'success',
-                confirmButtonText: 'موافق'
-            }).then(() => {
-                window.location.href = '@Url.Action("ActivityPage", "Activity")';
-            });
-        </script>
-    }
-    else if (TempData["Error"] != null)
-    {
-        <script>
-            Swal.fire({
-                title: 'حدث خطأ',
-                text: '@TempData["Error"]',
-                icon: 'error',
-                confirmButtonText: 'موافق'
-            });
-        </script>
-    }
     </script>
 
 }

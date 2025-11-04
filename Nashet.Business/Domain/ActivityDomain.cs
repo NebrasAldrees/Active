@@ -116,7 +116,7 @@ namespace Nashet.Business.Domain
                 var activity = await _ActivityRepository.GetActivityByGUID(viewModel.Guid);
                 if (activity == null)
                 {
-                    return 0; // Site not found
+                    return 0; 
                 }
                 var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
                 activity.ActivityTopic =viewModel.ActivityTopic;

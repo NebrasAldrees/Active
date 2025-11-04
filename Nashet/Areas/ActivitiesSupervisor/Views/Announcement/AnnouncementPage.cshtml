@@ -29,12 +29,12 @@
                             @if (!string.IsNullOrEmpty(Model.AnnouncementImage))
                             {
                                 <img src="@Model.AnnouncementImage" alt="صورة الاعلان" class="rounded shadow"
-                                     style="width: 250px; height: 400px; object-fit: cover;">
+                                     style="width: 400px; height: 400px; object-fit: cover;">
                             }
                             else
                             {
                                 <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center"
-                                     style="width: 250px; height: 400px;">
+                                     style="width: 400px; height: 400px;">
                                     <i class="fas fa-club fa-3x text-muted" onerror="this.onerror=null;this.src='https://placehold.co/80x80/f3f4f6/000000?text=POSTER';"></i>
                                 </div>
                             }
@@ -67,7 +67,7 @@
                         <!-- تفاصيل الإعلان-->
                         <div class="card shadow-sm mb-4">
                             <div class="card-header">
-                                <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>تفاصيل النشاط</h6>
+                                <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>تفاصيل الإعلان</h6>
                             </div>
                             <div class="card-body">
                                 <p class="text-muted" style="line-height: 1.8; text-align: justify;">
