@@ -112,59 +112,67 @@
     </div>
 </section>
 @section Scripts {
-<script>
-    $(document).ready(function () {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Attach event listener for delete buttons
+            $('.delete-btn').on('click', function (event) {
+                event.preventDefault();
 
-        // Attach event listener for delete buttons
-        $('.delete-btn').on('click', function (event) {
-            event.preventDefault();
-            // Get the GUID from the clicked delete button
-            var id = $(this).data('id');
-            // Trigger SweetAlert2 for confirmation
-            Swal.fire({
-                title: "هل أنت متأكد؟",
-                text: "",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "نعم، احذف!",
-                cancelButtonText: "إلغاء"
-            }).then((result) => {
-                if (result.value) {
-                    // Proceed with the AJAX request to delete the permission
-                    $.ajax({
-                        url: '@Url.Action("DeleteActivity")',
-                        type: 'POST',
-                        data: { guid: id },
-                        success: function (response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    title: 'نجحت العملية!',
-                                    text: 'تم الحذف',
-                                    icon: 'success'
-                                }).then(() => {
-                                    window.location.href = @Url.Action("Activities", "Activity");
+                // Get the GUID from the clicked delete button
+                var id = $(this).data('id');
+
+                // Trigger SweetAlert2 for confirmation
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "سيتم حذف النشاط ولا يمكن التراجع عن هذا الإجراء!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "نعم، احذف النشاط",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Proceed with the AJAX request to delete the activity
+                        $.ajax({
+                            url: '@Url.Action("DeleteActivity", "Activity")',
+                            type: 'POST',
+                            data: { guid: id },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'تم الحذف!',
+                                        text: response.message || 'تم حذف النشاط بنجاح',
+                                        icon: 'success',
+                                        confirmButtonText: 'موافق',
+                                        timer: 2000
+                                    }).then(() => {
+                                        // التوجيه إلى صفحة الأنشطة بعد الحذف
+                                        window.location.href = '@Url.Action("Activities", "Activity", new { area = "ActivitiesSupervisor" })';
                                     });
-                            } else {
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل الحذف!',
+                                        text: response.message || 'لم يتم حذف النشاط',
+                                        icon: 'error',
+                                        confirmButtonText: 'موافق'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error:', error);
                                 Swal.fire({
-                                    title: 'فشلت العملية!',
-                                    text: 'لم يتم الحذف',
-                                    icon: 'error'
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
+                                    icon: 'error',
+                                    confirmButtonText: 'موافق'
                                 });
                             }
-                        },
-                        error: function () {
-                            Swal.fire({
-                                title: 'خطأ!',
-                                text: 'حدث خطأ غير متوقع.',
-                                icon: 'error'
-                            });
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 }

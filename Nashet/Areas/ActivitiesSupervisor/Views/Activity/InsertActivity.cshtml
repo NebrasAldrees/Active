@@ -80,6 +80,7 @@
     </div>
 </section><!-- End Page Wrap -->
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById('ImageUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -120,40 +121,42 @@
                 reader.readAsDataURL(file);
             }
         });
+        @if (ViewBag.Successful != null)
+        {
+            <text>
+            Swal.fire({
+                title: "تمت الإضافة",
+                // text: "@ViewBag.Successful",
+                icon: "success",
+                confirmButtonText: "موافق",
+                draggable: true
+            }).then(() => {
+                window.location.href = '@Url.Action("Activities", "Activity")';
+            });
+            </text>
+        }
+        else if (ViewBag.Duplicate != null)
+        {
+            <text>
+            Swal.fire({
+                title: "تنبيه",
+                // text: "@ViewBag.Duplicate",
+                icon: "warning",
+                confirmButtonText: "موافق"
+            });
+            </text>
+        }
+        else if (ViewBag.Error != null)
+        {
+            <text>
+            Swal.fire({
+                title: "خطأ",
+                // text: "@ViewBag.Error",
+                icon: "error",
+                confirmButtonText: "موافق"
+            });
+            </text>
+        }
     </script>
     @await Html.PartialAsync("_ValidationScriptsPartial")
-
-    @if (ViewBag.Successful != null)
-    {
-        <script>
-            Swal.fire({
-            title: "@ViewBag.Successful",
-            icon: "success",
-            draggable: true
-            }).then(() => {
-            window.location.href = '@Url.Action("Activities", "Activity")';
-        </script>
-    }
-    else if (ViewBag.Duplicate != null)
-    {
-        <script>
-            Swal.fire({
-            icon: "warning",
-            title: "@ViewBag.Duplicate",
-            text: "خطأ في الإضافة",
-            });
-        </script>
-    }
-    else if (ViewBag.Error != null)
-    {
-        <script>
-
-            Swal.fire({
-            icon: "error",
-            title: "خطأ",
-            text: "خطأ في الإضافة",
-            });
-        </script>
-    }
-
 }

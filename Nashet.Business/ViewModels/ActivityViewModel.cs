@@ -44,7 +44,6 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "وقت النهاية مطلوب")]
         public string ActivityEndTime { get; set; }
 
-
         [StringLength(300)]
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("موقع النشاط")]

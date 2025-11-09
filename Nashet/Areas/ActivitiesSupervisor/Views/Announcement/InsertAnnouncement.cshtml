@@ -65,49 +65,90 @@
     </div>
 </section><!-- End Page Wrap -->
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // عرض معاينة الصورة قبل الرفع
         document.getElementById('ImageUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
-                // التحقق من حجم الملف (5MB كحد أقصى)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 5MB');
+                // التحقق من حجم الملف (50MB كحد أقصى)
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 50MB');
                     e.target.value = '';
                     return;
                 }
 
                 // التحقق من نوع الملف
-                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG, GIF)');
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG, GIF) أو ملف PDF');
                     e.target.value = '';
                     return;
                 }
 
-                // عرض معاينة الصورة
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // إزالة المعاينة القديمة إذا كانت موجودة
-                    const oldPreview = document.getElementById('imagePreview');
-                    if (oldPreview) {
-                        oldPreview.remove();
-                    }
+                // عرض معاينة الصورة (للملفات المصورة فقط)
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // إزالة المعاينة القديمة إذا كانت موجودة
+                        const oldPreview = document.getElementById('imagePreview');
+                        if (oldPreview) {
+                            oldPreview.remove();
+                        }
 
-                    // إنشاء معاينة جديدة
-                    const preview = document.createElement('div');
-                    preview.id = 'imagePreview';
-                    preview.innerHTML = `
-                        <div class="mt-3 p-3 border rounded">
-                            <h6>معاينة الصورة:</h6>
-                            <img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">
-                        </div>
-                    `;
-                    document.querySelector('.mb-4').after(preview);
+                        // إنشاء معاينة جديدة
+                        const preview = document.createElement('div');
+                        preview.id = 'imagePreview';
+                        preview.innerHTML = `
+                            <div class="mt-3 p-3 border rounded">
+                                <h6>معاينة الصورة:</h6>
+                                <img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">
+                            </div>
+                        `;
+                        document.querySelector('.mb-4').after(preview);
+                    }
+                    reader.readAsDataURL(file);
                 }
-                reader.readAsDataURL(file);
             }
         });
     </script>
 
+    @if (ViewBag.Successful != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'تمت الإضافة بنجاح!',
+                text: 'تم إنشاء الإعلان بنجاح',
+                icon: 'success',
+                confirmButtonText: 'موافق',
+                confirmButtonColor: '#0f7179'
+            }).then(() => {
+                window.location.href = '@Url.Action("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" })';
+            });
+        </script>
+    }
+    else if (ViewBag.Error != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'خطأ!',
+                text: '@ViewBag.Error',
+                icon: 'error',
+                confirmButtonText: 'موافق'
+            });
+        </script>
+    }
+    else if (ViewBag.Duplicate != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'تنبيه',
+                text: '@ViewBag.Duplicate',
+                icon: 'warning',
+                confirmButtonText: 'موافق'
+            });
+        </script>
+    }
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

@@ -48,9 +48,6 @@ namespace Nashet.Data.Migrations
                     b.Property<DateTime>("ActivityStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ActivityTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("ActivityTopic")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -927,22 +924,6 @@ namespace Nashet.Data.Migrations
                             StudentPhone = "0540345575",
                             StudentSkills = "Fast Learner",
                             isSent = true
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            AcademicId = "220430000",
-                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("0ad3db67-b821-4503-b0b0-c3c6cf160d36"),
-                            IsActive = true,
-                            IsDeleted = false,
-                            SiteId = 10,
-                            StudentEmail = "Safa@gmail.com",
-                            StudentNameAr = "صفا",
-                            StudentNameEn = "Safa",
-                            StudentPhone = "0509410406",
-                            StudentSkills = "التعاون",
-                            isSent = true
                         });
                 });
 
@@ -1049,7 +1030,8 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RoleTypeAr")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("RoleTypeEn")
                         .HasColumnType("nvarchar(max)");
@@ -1180,14 +1162,11 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("SiteId")
+                    b.Property<int>("SiteId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SystemRoleId")
+                    b.Property<int>("SystemRoleId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SystemRoleType")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserEmail")
                         .HasMaxLength(50)
@@ -1227,6 +1206,7 @@ namespace Nashet.Data.Migrations
                             Guid = new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
                             IsActive = true,
                             IsDeleted = false,
+                            SiteId = 1,
                             SystemRoleId = 1,
                             UserEmail = "Muntaha@gmail.com",
                             UserNameAR = "منتهى",
@@ -1242,6 +1222,7 @@ namespace Nashet.Data.Migrations
                             Guid = new Guid("3072cf40-dc60-41f0-87da-77631050caa3"),
                             IsActive = true,
                             IsDeleted = false,
+                            SiteId = 1,
                             SystemRoleId = 2,
                             UserEmail = "Huda@gmail.com",
                             UserNameAR = "هدى",
@@ -1421,12 +1402,14 @@ namespace Nashet.Data.Migrations
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Nashet.Data.Models.tblSystemRole", "SystemRole")
                         .WithMany()
                         .HasForeignKey("SystemRoleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Site");
 

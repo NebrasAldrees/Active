@@ -17,10 +17,12 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             _SiteDomain = siteDomain;
             _webHost = webhost;
         }
-        public async Task<IActionResult> ViewAllClubs()
+        public async Task<IActionResult> ViewAllClubs(Guid? SiteGuid)
         {
-            ViewBag.Sites = await _SiteDomain.GetSite();
-            return View(await _ClubDomain.GetClub());
+            var clubs = await _ClubDomain.GetClubBySiteGuid(SiteGuid);
+            ViewBag.Site = await _SiteDomain.GetSite();
+
+            return View(clubs);
         }
         public async Task<IActionResult> ClubPage(Guid guid)
         {
@@ -79,50 +81,60 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                             await ClubIcon.CopyToAsync(stream);
                         }
 
-                        // حفظ مسار الصورة في الـ ViewModel
+                       
                         viewModel.ClubIcon = "/uploads/" + fileName;
                         ViewBag.Message = fileName + " تم الرفع بنجاح";
                     }
 
                     int check = await _ClubDomain.InsertClub(viewModel);
                     if (check == 1)
+                    {
                         TempData["Successful"] = "تم إضافة النادي بنجاح";
+                        ViewBag.Successful = "تم إنشاء النادي بنجاح";
+                    }
                     else if (check == -1)
+                    {
                         TempData["Duplicate"] = "اسم النادي موجود مسبقاً";
+                        ViewBag.Duplicate = "اسم النادي موجود مسبقاً";
+                    }
                     else
+                    {
                         TempData["Failed"] = "فشل إضافة النادي";
+                        ViewBag.Error = "فشل إضافة النادي";
+                    }
                 }
                 catch (Exception ex)
                 {
                     TempData["Failed"] = "فشل إضافة النادي: " + ex.Message;
+                    ViewBag.Error = "فشل إضافة النادي: " + ex.Message;
                 }
             }
             return View(viewModel);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateClub(Guid guid, ClubViewModel viewModel)
-        {
-            ViewBag.Site = await _SiteDomain.GetSite();
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    int check = await _ClubDomain.UpdateClubByGuid(guid, viewModel);
-                    if (check == 1)
-                        TempData["Successful"] = "تم تعديل البيانات بنجاح";
-                    else if (check == -1)
-                        TempData["Duplicate"] = "اسم النادي موجود مسبقاً";
-                    else
-                        TempData["Failed"] = "فشل تعديل البيانات";
-                }
-                catch
-                {
-                    TempData["Failed"] = "فشل تعديل البيانات";
-                }
-            }
-            return RedirectToAction("InsertClub");
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> UpdateClub(Guid guid, ClubViewModel viewModel)
+        //{
+        //    ViewBag.Site = await _SiteDomain.GetSite();
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            int check = await _ClubDomain.UpdateClubByGuid(guid, viewModel);
+        //            if (check == 1)
+        //                TempData["Successful"] = "تم تعديل البيانات بنجاح";
+        //            else if (check == -1)
+        //                TempData["Duplicate"] = "اسم النادي موجود مسبقاً";
+        //            else
+        //                TempData["Failed"] = "فشل تعديل البيانات";
+        //        }
+        //        catch
+        //        {
+        //            TempData["Failed"] = "فشل تعديل البيانات";
+        //        }
+        //    }
+        //    return RedirectToAction("InsertClub");
+        //}
         public async Task<ActionResult> DeleteClub(Guid guid)
         {
             int result = await _ClubDomain.DeleteClubByGuid(guid);

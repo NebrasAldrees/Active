@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <strong>النادي التابع للإعلان</strong>
-                                    <div class="text-muted">@(ViewBag.currentClub?.ClubNameAR ?? "غير محدد")</div>
+                                    <div class="text-muted">@(ViewBag.CurrentClub?.ClubNameAR ?? "غير محدد")</div>
                                 </div>
                             </div>
                         </div>
@@ -96,52 +96,59 @@
     </div>
 </section>
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
-
             // Attach event listener for delete buttons
             $('.delete-btn').on('click', function (event) {
                 event.preventDefault();
+
                 // Get the GUID from the clicked delete button
                 var id = $(this).data('id');
+                console.log('Deleting announcement with GUID:', id); // للتصحيح
+
                 // Trigger SweetAlert2 for confirmation
                 Swal.fire({
                     title: "هل أنت متأكد؟",
-                    text: "",
+                    text: "سيتم حذف هذا الإعلان ولا يمكن التراجع عن هذا الإجراء!",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
                     confirmButtonText: "نعم، احذف!",
                     cancelButtonText: "إلغاء"
                 }).then((result) => {
-                    if (result.value) {
-                        // Proceed with the AJAX request to delete the permission
+                    if (result.isConfirmed) {
+                        // Proceed with the AJAX request to delete the announcement
                         $.ajax({
-                            url: '@Url.Action("DeleteAnnouncement")',
+                            url: '@Url.Action("DeleteAnnouncement", "Announcement")',
                             type: 'POST',
                             data: { guid: id },
                             success: function (response) {
+                                console.log('Response:', response); // للتصحيح
                                 if (response.success) {
                                     Swal.fire({
-                                        title: 'نجحت العملية!',
-                                        text: 'تم الحذف',
-                                        icon: 'success'
+                                        title: 'تم الحذف!',
+                                        text: response.message || 'تم حذف الإعلان بنجاح',
+                                        icon: 'success',
+                                        timer: 2000
                                     }).then(() => {
-                                        window.location.href = @Url.Action("ActivitiesSupervisorHome", "Home");
-                                        });
+                                        // التوجيه إلى الصفحة الرئيسية
+                                        window.location.href = '@Url.Action("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" })';
+                                    });
                                 } else {
                                     Swal.fire({
-                                        title: 'فشلت العملية!',
-                                        text: 'لم يتم الحذف',
+                                        title: 'فشل الحذف!',
+                                        text: response.message || 'لم يتم الحذف',
                                         icon: 'error'
                                     });
                                 }
                             },
-                            error: function () {
+                            error: function (xhr, status, error) {
+                                console.error('Error:', error); // للتصحيح
                                 Swal.fire({
                                     title: 'خطأ!',
-                                    text: 'حدث خطأ غير متوقع.',
+                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
                                     icon: 'error'
                                 });
                             }

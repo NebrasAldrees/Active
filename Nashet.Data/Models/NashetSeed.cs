@@ -20,9 +20,12 @@ namespace Nashet.Data.Models
             _modelBuilder = modelBuilder;
             AddSystemRole();
             AddSite();
+            AddClub();
+            AddTeam();
             AddUser();
             AddtStudent();
             AddKfuUser();
+
 
 
         }
@@ -104,18 +107,7 @@ namespace Nashet.Data.Models
                     Guid = Guid.Parse("9b7c9604-e3f3-40a4-9015-9916b7cabcff"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                 },
-                 new tblSite()
-                 {
-                     SiteId = 16,
-                     SiteCode = "0930",
-                     SiteNameAR = "كلية إدارة الأعمال",
-                     SiteNameEn = "College of Business",
-                     IsActive = true,
-                     isSent = true,
-                     IsDeleted = false,
-                     Guid = Guid.Parse("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
-                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
-                 },
+
                  new tblSite()
                  {
                      SiteId = 2,
@@ -283,8 +275,149 @@ namespace Nashet.Data.Models
                      IsDeleted = false,
                      Guid = Guid.Parse("e29da295-9a8b-4976-be0a-22772690fe01"),
                      CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                 },
+                 new tblSite()
+                 {
+                     SiteId = 16,
+                     SiteCode = "0930",
+                     SiteNameAR = "كلية إدارة الأعمال",
+                     SiteNameEn = "College of Business",
+                     IsActive = true,
+                     isSent = true,
+                     IsDeleted = false,
+                     Guid = Guid.Parse("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
+                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                  }
                  );
+        }
+
+        private static void AddClub()
+        {
+            _modelBuilder.Entity<tblClub>().HasData(
+                new tblClub()
+                {
+                    Guid = Guid.Parse("22370d9b-c4fe-4464-bf11-011db9fb7889"),
+                    ClubId = 1,
+                    siteId = 1,
+                    ClubNameAR = "نادي الذكاء الاصطناعي",
+                    ClubNameEN = "Artificial Intelligence (AI)",
+                    ClubVision = "يهدف النادي إلى تطوير البيئات التثنية باستخدام الذكاء الاصطناعي",
+                    ClubOverview = "نادي تعليمي وهادف",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                },
+
+            new tblClub()
+            {
+                Guid = Guid.Parse("a28dd9d4-0916-46b2-8fae-aae015bbb78c"),
+                ClubId = 2,
+                siteId = 1,
+                ClubNameAR = "نادي التعلم بالأقران",
+                ClubNameEN = "PTI",
+                ClubVision = "يهدف النادي إلى تطوير التعلم الجماعي ومساعدة الأفراد",
+                ClubOverview = "نادي تعليمي وهادف",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            },
+
+            new tblClub()
+            {
+                Guid = Guid.Parse("5ea71484-15dc-4dc8-a175-dcb93a487a57"),
+                ClubId = 3,
+                siteId = 1,
+                ClubNameAR = "نادي تطوير الويب",
+                ClubNameEN = "Web Application",
+                ClubVision = "يهدف النادي إلى تطوير مواقع الويب",
+                ClubOverview = "نادي تعليمي وهادف",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            });
+        }
+        private static void AddTeam()
+        {
+            _modelBuilder.Entity<tblTeam>().HasData(
+                new tblTeam()
+                {
+                    Guid = Guid.Parse("ec23cc85-fd2f-439f-a71d-a1d8e20f8f34"),
+                    ClubId = 1,
+                    TeamId = 1,
+                    TeamNameAR = "فريق البرمجة",
+                    TeamNameEn = "Programming Team",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                },
+
+
+            new tblTeam()
+            {
+                Guid = Guid.Parse("e7f0778c-f4f4-4aa7-b7c0-d4e4ccbeb4c6"),
+                ClubId = 1,
+                TeamId = 2,
+                TeamNameAR = "فريق الإعلام",
+                TeamNameEn = "Media Team",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            },
+            new tblTeam()
+            {
+                Guid = Guid.Parse("732181fb-62be-448b-8be4-651bfa2634d1"),
+                ClubId = 2,
+                TeamId = 3,
+                TeamNameAR = "فريق تطوير الويب ",
+                TeamNameEn = "Web development Team",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            },
+            new tblTeam()
+            {
+                Guid = Guid.Parse("fee080a7-95d8-47bf-9c8e-477066d9f983"),
+                ClubId = 2,
+                TeamId = 4,
+                TeamNameAR = "الفريق الإعلامي لتطوير الويب ",
+                TeamNameEn = "Media Web developement Team",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            },
+            new tblTeam()
+            {
+                Guid = Guid.Parse("e69833df-ccb1-4e07-89fe-d6267994e186"),
+                ClubId = 2,
+                TeamId = 5,
+                TeamNameAR = "فريق الابتكار",
+                TeamNameEn = "Innovation Team",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            },
+            new tblTeam()
+            {
+                Guid = Guid.Parse("e69833df-ccb1-4e07-89fe-d6267994e186"),
+                ClubId = 1,
+                TeamId = 6,
+                TeamNameAR = "فريق التطوير للذكاء",
+                TeamNameEn = "Developement Team",
+                IsActive = true,
+                isSent = true,
+                IsDeleted = false,
+                CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+            });
+
+
         }
         private static void AddtStudent()
         {
@@ -307,6 +440,7 @@ namespace Nashet.Data.Models
 
                });
         }
+
         private static void AddUser()
         {
             _modelBuilder.Entity<tblUser>().HasData(
@@ -355,7 +489,7 @@ namespace Nashet.Data.Models
                     Username = "Muntaha_12",
                     Password = "Muntaha",
                     UserEmail = "Muntaha@gmail.com",
-                    UserType ="Admin",
+                    UserType = "Admin",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
@@ -397,7 +531,7 @@ namespace Nashet.Data.Models
                 }
             );
         }
-        
+
 
     }
 }

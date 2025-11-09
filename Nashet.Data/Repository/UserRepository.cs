@@ -28,9 +28,17 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<tblUser> GetUserByUsername(string username)
         {
-            return await dbSet
-                .Include(user => user.SystemRole)
-                .SingleOrDefaultAsync(user => user.Username == username && !user.IsDeleted);
+            try
+            {
+                var test = dbSet;
+                return await dbSet
+                .Include(R => R.SystemRole)
+                .SingleOrDefaultAsync(R => R.Username == username && !R.IsDeleted);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
         public virtual async Task<int> InsertUser(tblUser user)
         {

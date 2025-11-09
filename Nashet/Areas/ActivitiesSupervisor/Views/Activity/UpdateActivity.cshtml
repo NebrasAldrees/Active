@@ -1,8 +1,6 @@
 ﻿@model ActivityViewModel
 <section class="page_wrap">
     <div class="page_content">
-        
-
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
                 <h5 class="m-0">تحديث بيانات نشاط</h5>
@@ -10,7 +8,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="UpdateActivity" method="post" enctype="multipart/form-data">
+                        <form id="updateActivityForm" asp-action="UpdateActivity" method="post" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             <div class="row">
                                 <input type="hidden" asp-for="Guid" />
@@ -19,7 +17,7 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="ClubGuid"  class="mb-1">  </label>
+                                    <label asp-for="ClubGuid" class="mb-1"></label>
                                     <select asp-for="ClubGuid" class="form-control">
                                         <option value="">-- اختر النادي --</option>
                                         @foreach (ClubViewModel club in ViewBag.Club)
@@ -28,7 +26,6 @@
                                         }
                                     </select>
                                     <span style="color:red" asp-validation-for="ClubGuid"></span>
-
                                 </div><!-- END ITEM -->
                             </div>
                             <div class="row">
@@ -67,25 +64,25 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ActivityPoster" class="mb-1"></label>
-                                    <input asp-for="ActivityPoster" type="file" id="ImageUpload"
-                                           name="ActivityPoster" accept="image/*" class=" form-control">
+                                    <input type="file" id="ImageUpload" name="ActivityPoster" accept="image/*" class="form-control">
                                     <small class="text-muted">الأنواع المسموحة: JPG, PNG - الحجم الأقصى: 50MB</small>
                                     <span style="color:red" asp-validation-for="ActivityPoster"></span>
                                 </div><!-- END ITEM -->
 
                                 <div class="form-group mt-4">
-                                    <button type="submit" id="showAlertBtn" class="btn btn-success update-btn">حفظ التعديلات</button>
+                                    <button type="submit" class="btn btn-success update-btn">حفظ التعديلات</button>
                                     <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
-
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section><!-- End Page Wrap -->
+</section>
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Image validation and preview
         document.getElementById('ImageUpload').addEventListener('change', function (e) {
@@ -99,7 +96,7 @@
 
                 const allowedTypes = ['image/jpeg', 'image/png'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG )');
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG)');
                     e.target.value = '';
                     return;
                 }
@@ -125,51 +122,53 @@
             }
         });
 
-        // Submit confirmation alert
-         $('.update-btn').on('click', function (e) {
+        // Form submission with confirmation
+        document.getElementById('updateActivityForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
             Swal.fire({
                 title: 'هل أنت متأكد؟',
-                text: 'سيتم حفظ التعديلات',
+                text: 'سيتم حفظ التعديلات وسيتم نقلك إلى صفحة الأنشطة',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'نعم، احفظ',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم، احفظ وأنتقل',
                 cancelButtonText: 'إلغاء'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/Activity/UpdateActivity', // Replace with your actual endpoint
-                        type: 'POST',
-                        data: $('#yourFormId').serialize(), // Replace with your form ID
-                        success: function (response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    title: 'نجحت العملية!',
-                                    text: 'تم تحديث البيانات',
-                                    icon: 'success'
-                                }).then(() => {
-                                    window.location.href = '/Activity/Activities'; // Replace with actual URL
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'فشلت العملية!',
-                                    text: 'لم يتم التحديث',
-                                    icon: 'error'
-                                });
-                            }
-                        },
-                        error: function () {
+                    // أرسل الفورم أولاً
+                    const formData = new FormData(this);
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // بعد الإرسال الناجح، انتقل إلى صفحة الأنشطة
+                            window.location.href = '@Url.Action("Activities", "Activity", new { area = "ActivitiesSupervisor" })';
+                        } else {
                             Swal.fire({
                                 title: 'خطأ!',
-                                text: 'حدث خطأ غير متوقع.',
-                                icon: 'error'
+                                text: 'فشل في حفظ التعديلات',
+                                icon: 'error',
+                                confirmButtonText: 'موافق'
                             });
                         }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'خطأ!',
+                            text: 'حدث خطأ أثناء الحفظ: ' + error,
+                            icon: 'error',
+                            confirmButtonText: 'موافق'
+                        });
                     });
                 }
             });
         });
     </script>
 
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

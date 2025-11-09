@@ -2,6 +2,7 @@
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 using Nashet.Models;
+using System;
 using System.Diagnostics;
 
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
@@ -24,34 +25,29 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _AnnouncementDomain.GetAnnouncement());
         }
-
         [HttpGet]
-        public async Task<IActionResult> AnnouncementPage(Guid guid)
+        public async Task<IActionResult> AnnouncementPage(Guid id)
         {
-            var Announcement = await _AnnouncementDomain.GetAnnouncementByGuid(guid);
-            if (Announcement == null)
+            try
+            {
+                var announcement = await _AnnouncementDomain.GetAnnouncementByGuid(id);
+                if (announcement == null)
+                {
+                    return NotFound();
+                }
+
+                var clubList = await _ClubDomain.GetClub();
+                var currentClub = clubList.FirstOrDefault(c => c.ClubId == announcement.ClubId);
+                ViewBag.currentClub = currentClub;
+
+                return View(announcement);
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-
-            var clubList = await _ClubDomain.GetClub();
-            var currentClub = clubList.FirstOrDefault(c => c.ClubId == Announcement.ClubId);
-            ViewBag.currentClub = currentClub;
-
-            var viewModel = new AnnouncementViewModel
-            {
-                Guid = Announcement.Guid,
-                AnnouncementTopic = Announcement.AnnouncementTopic,
-                AnnouncementDetails = Announcement.AnnouncementDetails,
-                AnnouncementImage = Announcement.AnnouncementImage,
-                AnnouncementType = Announcement.AnnouncementType,
-                ClubId = Announcement.ClubId
-            };
-
-
-            return View(viewModel);
         }
-
+        
         public async Task<IActionResult> InsertAnnouncement()
         {
             ViewBag.Club = await _ClubDomain.GetClub();
@@ -193,16 +189,23 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteAnnouncement(Guid guid)
         {
-            var result = await _AnnouncementDomain.DeleteAnnouncement(guid);
-            return Json(new { success = true });
+            try
+            {
+                var result = await _AnnouncementDomain.DeleteAnnouncement(guid);
 
-        }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                if (result)
+                {
+                    return Json(new { success = true, message = "تم الحذف بنجاح" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "فشل في الحذف" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "حدث خطأ: " + ex.Message });
+            }
         }
     }
 }
