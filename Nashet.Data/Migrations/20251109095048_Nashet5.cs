@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class addByAbdulrahman : Migration
+    public partial class Nashet5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -565,10 +565,19 @@ namespace Nashet.Data.Migrations
                 values: new object[,]
                 {
                     { 1, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("fabba72d-d4b0-4c12-be52-a8b868bc6007"), true, false, "مدير النظام", "Admin", true },
-                    { 2, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("90d065f4-1a15-40b7-8866-0219b1251646"), true, false, "مشرف النشاط", "Activity Supervisor", true },
-                    { 3, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ea0e8ba3-8b61-44cb-bb9a-e763f1ac6dac"), true, false, "مشرف النادي", "Club Supervisor", true },
-                    { 4, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("4ab11078-e7a8-40a3-8a39-a636735b5834"), true, false, "قائد النادي", "Club Leader", true },
-                    { 5, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3e9eda03-140d-4b78-8019-3925ae795e47"), true, false, "الطالب", "Student", true }
+                    { 2, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("90d065f4-1a15-40b7-8866-0219b1251646"), true, false, "مشرف النشاط", "ActivitySupervisor", true },
+                    { 3, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ea0e8ba3-8b61-44cb-bb9a-e763f1ac6dac"), true, false, "مشرف النادي", "ClubSupervisor", true },
+                    { 5, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3e9eda03-140d-4b78-8019-3925ae795e47"), true, false, "طالب", "Student", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblClub",
+                columns: new[] { "ClubId", "ClubIcon", "ClubNameAR", "ClubNameEN", "ClubOverview", "ClubVision", "CreationDate", "Guid", "IsActive", "IsDeleted", "isSent", "siteId" },
+                values: new object[,]
+                {
+                    { 1, null, "نادي الذكاء الاصطناعي", "Artificial Intelligence (AI)", "نادي تعليمي وهادف", "يهدف النادي إلى تطوير البيئات التثنية باستخدام الذكاء الاصطناعي", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("22370d9b-c4fe-4464-bf11-011db9fb7889"), true, false, true, 1 },
+                    { 2, null, "نادي التعلم بالأقران", "PTI", "نادي تعليمي وهادف", "يهدف النادي إلى تطوير التعلم الجماعي ومساعدة الأفراد", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("a28dd9d4-0916-46b2-8fae-aae015bbb78c"), true, false, true, 1 },
+                    { 3, null, "نادي تطوير الويب", "Web Application", "نادي تعليمي وهادف", "يهدف النادي إلى تطوير مواقع الويب", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("5ea71484-15dc-4dc8-a175-dcb93a487a57"), true, false, true, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -583,6 +592,19 @@ namespace Nashet.Data.Migrations
                 {
                     { 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"), true, false, 1, 1, "Muntaha@gmail.com", "منتهى", "Muntaha", "0536763284", "Muntaha_12", true },
                     { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, 1, 2, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblTeam",
+                columns: new[] { "TeamId", "ClubId", "CreationDate", "Guid", "IsActive", "IsDeleted", "TeamNameAR", "TeamNameEn", "isSent" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ec23cc85-fd2f-439f-a71d-a1d8e20f8f34"), true, false, "فريق البرمجة", "Programming Team", true },
+                    { 2, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e7f0778c-f4f4-4aa7-b7c0-d4e4ccbeb4c6"), true, false, "فريق الإعلام", "Media Team", true },
+                    { 3, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("732181fb-62be-448b-8be4-651bfa2634d1"), true, false, "فريق تطوير الويب ", "Web development Team", true },
+                    { 4, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("fee080a7-95d8-47bf-9c8e-477066d9f983"), true, false, "الفريق الإعلامي لتطوير الويب ", "Media Web developement Team", true },
+                    { 5, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"), true, false, "فريق الابتكار", "Innovation Team", true },
+                    { 6, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"), true, false, "فريق التطوير للذكاء", "Developement Team", true }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,8 +12,8 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20251104103122_addByAbdulrahman")]
-    partial class addByAbdulrahman
+    [Migration("20251109095048_Nashet5")]
+    partial class Nashet5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -246,6 +246,50 @@ namespace Nashet.Data.Migrations
                     b.HasIndex("siteId");
 
                     b.ToTable("tblClub");
+
+                    b.HasData(
+                        new
+                        {
+                            ClubId = 1,
+                            ClubNameAR = "نادي الذكاء الاصطناعي",
+                            ClubNameEN = "Artificial Intelligence (AI)",
+                            ClubOverview = "نادي تعليمي وهادف",
+                            ClubVision = "يهدف النادي إلى تطوير البيئات التثنية باستخدام الذكاء الاصطناعي",
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("22370d9b-c4fe-4464-bf11-011db9fb7889"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            isSent = true,
+                            siteId = 1
+                        },
+                        new
+                        {
+                            ClubId = 2,
+                            ClubNameAR = "نادي التعلم بالأقران",
+                            ClubNameEN = "PTI",
+                            ClubOverview = "نادي تعليمي وهادف",
+                            ClubVision = "يهدف النادي إلى تطوير التعلم الجماعي ومساعدة الأفراد",
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("a28dd9d4-0916-46b2-8fae-aae015bbb78c"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            isSent = true,
+                            siteId = 1
+                        },
+                        new
+                        {
+                            ClubId = 3,
+                            ClubNameAR = "نادي تطوير الويب",
+                            ClubNameEN = "Web Application",
+                            ClubOverview = "نادي تعليمي وهادف",
+                            ClubVision = "يهدف النادي إلى تطوير مواقع الويب",
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("5ea71484-15dc-4dc8-a175-dcb93a487a57"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            isSent = true,
+                            siteId = 1
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblClubRole", b =>
@@ -675,18 +719,6 @@ namespace Nashet.Data.Migrations
                         },
                         new
                         {
-                            SiteId = 16,
-                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
-                            IsActive = true,
-                            IsDeleted = false,
-                            SiteCode = "0930",
-                            SiteNameAR = "كلية إدارة الأعمال",
-                            SiteNameEn = "College of Business",
-                            isSent = true
-                        },
-                        new
-                        {
                             SiteId = 2,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("8f4336da-ea19-4019-8090-5a6cf70dbf49"),
@@ -851,6 +883,18 @@ namespace Nashet.Data.Migrations
                             SiteCode = "2100",
                             SiteNameAR = "عمادة التطوير وضمان الجودة",
                             SiteNameEn = "Deanship of of Development and Quality Assurance",
+                            isSent = true
+                        },
+                        new
+                        {
+                            SiteId = 16,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("0f6645f8-ff4e-4d89-8aff-b14443d2688f"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteCode = "0930",
+                            SiteNameAR = "كلية إدارة الأعمال",
+                            SiteNameEn = "College of Business",
                             isSent = true
                         });
                 });
@@ -1066,7 +1110,7 @@ namespace Nashet.Data.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "مشرف النشاط",
-                            RoleTypeEn = "Activity Supervisor",
+                            RoleTypeEn = "ActivitySupervisor",
                             isSent = true
                         },
                         new
@@ -1077,18 +1121,7 @@ namespace Nashet.Data.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             RoleTypeAr = "مشرف النادي",
-                            RoleTypeEn = "Club Supervisor",
-                            isSent = true
-                        },
-                        new
-                        {
-                            SystemRoleId = 4,
-                            CreationDate = new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("4ab11078-e7a8-40a3-8a39-a636735b5834"),
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleTypeAr = "قائد النادي",
-                            RoleTypeEn = "Club Leader",
+                            RoleTypeEn = "ClubSupervisor",
                             isSent = true
                         },
                         new
@@ -1098,7 +1131,7 @@ namespace Nashet.Data.Migrations
                             Guid = new Guid("3e9eda03-140d-4b78-8019-3925ae795e47"),
                             IsActive = true,
                             IsDeleted = false,
-                            RoleTypeAr = "الطالب",
+                            RoleTypeAr = "طالب",
                             RoleTypeEn = "Student",
                             isSent = true
                         });
@@ -1143,6 +1176,80 @@ namespace Nashet.Data.Migrations
                     b.HasIndex("ClubId");
 
                     b.ToTable("tblTeam");
+
+                    b.HasData(
+                        new
+                        {
+                            TeamId = 1,
+                            ClubId = 1,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("ec23cc85-fd2f-439f-a71d-a1d8e20f8f34"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            TeamNameAR = "فريق البرمجة",
+                            TeamNameEn = "Programming Team",
+                            isSent = true
+                        },
+                        new
+                        {
+                            TeamId = 2,
+                            ClubId = 1,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("e7f0778c-f4f4-4aa7-b7c0-d4e4ccbeb4c6"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            TeamNameAR = "فريق الإعلام",
+                            TeamNameEn = "Media Team",
+                            isSent = true
+                        },
+                        new
+                        {
+                            TeamId = 3,
+                            ClubId = 2,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("732181fb-62be-448b-8be4-651bfa2634d1"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            TeamNameAR = "فريق تطوير الويب ",
+                            TeamNameEn = "Web development Team",
+                            isSent = true
+                        },
+                        new
+                        {
+                            TeamId = 4,
+                            ClubId = 2,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("fee080a7-95d8-47bf-9c8e-477066d9f983"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            TeamNameAR = "الفريق الإعلامي لتطوير الويب ",
+                            TeamNameEn = "Media Web developement Team",
+                            isSent = true
+                        },
+                        new
+                        {
+                            TeamId = 5,
+                            ClubId = 2,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            TeamNameAR = "فريق الابتكار",
+                            TeamNameEn = "Innovation Team",
+                            isSent = true
+                        },
+                        new
+                        {
+                            TeamId = 6,
+                            ClubId = 1,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            TeamNameAR = "فريق التطوير للذكاء",
+                            TeamNameEn = "Developement Team",
+                            isSent = true
+                        });
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblUser", b =>

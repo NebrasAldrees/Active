@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Data.Models;
 using Nashet.Models;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
