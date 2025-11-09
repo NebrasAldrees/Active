@@ -10,7 +10,6 @@
                         <input type="text" id="searchInput" class="form-control table__quick_search"
                                placeholder="البحث عن نشاط ...">
                     </div>
-                    <a asp-action="InsertActivity" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-primary">إضافة نشاط</a>
                 </div>
             </div>
             <div class="block-body mx-auto px-4 py-8">
@@ -18,7 +17,7 @@
 
                     <div class="row" id="ActivitiesContainer">
                         <!-- Filter by club -->
-                        <form method="get" asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="mb-10 w-full">
+                        <form method="get" asp-action="Activities" asp-controller="Activity" asp-area="Student" class="mb-10 w-full">
                             <div class="flex items-stretch md:items-center bg-white rounded shadow-sm p-3 input-shadow border border-gray-200">
                                 <div class="flex items-center space-x-2 space-x-reverse mb-3 md:mb-0 md:ml-4 flex-shrink-0">
                                     <label for="selectedClub" class="text-lg font-semibold text-gray-700 whitespace-nowrap">النادي</label>
@@ -41,7 +40,7 @@
                         {
                             <div class="border-hover-gray-300 col-12 col-sm-6 col-md-4 col-lg-3 mb-4 activity-item"
                                  data-search="@item.ActivityTopic.ToLower() @item.ActivityDescription?.ToLower()">
-                                <a asp-action="ActivityPage" asp-route-guid="@item.Guid" asp-controller="Activity" asp-area="ActivitiesSupervisor"
+                                <a asp-action="ActivityPage" asp-route-guid="@item.Guid" asp-controller="Activity" asp-area="ClubSupervisor"
                                    class="d-block bg-white rounded shadow-sm text-center p-3 h-100">
                                     <img src="@item.ActivityPoster"
                                          alt="@item.ActivityTopic Poster"
@@ -80,7 +79,6 @@
                     const activityTopic = item.querySelector('h6').textContent.toLowerCase();
                     const activityDescription = item.querySelector('.activity-description')?.textContent.toLowerCase() || '';
 
-                    // البحث في العنوان والوصف
                     const matches = activityTopic.includes(searchTerm) ||
                                    activityDescription.includes(searchTerm) ||
                                    searchData.includes(searchTerm);

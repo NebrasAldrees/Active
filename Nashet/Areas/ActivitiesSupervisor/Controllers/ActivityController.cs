@@ -196,9 +196,35 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteActivity(Guid guid)
         {
-            var result = await _ActivityDomain.DeleteActivity(guid);
-            return Json(new { success = true });
+            try
+            {
+                var result = await _ActivityDomain.DeleteActivity(guid);
 
+                if (result)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "تم حذف النشاط بنجاح"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "فشل في حذف النشاط"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "حدث خطأ: " + ex.Message
+                });
+            }
         }
 
 

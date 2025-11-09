@@ -28,19 +28,29 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == clubid)
             .FirstOrDefaultAsync();
         }
-        public virtual async Task<bool> IsClubNameExists(string clubNameAr, string clubNameEn, Guid? excludeClubGuid = null)
+        public virtual async Task<bool> IsClubNameExistsInSameSite(string clubNameAr, string clubNameEn, int siteId)
         {
-            var query = dbSet.Where(c => c.IsDeleted == false);
-
-            if (excludeClubGuid.HasValue)
-            {
-                query = query.Where(c => c.Guid != excludeClubGuid.Value);
-            }
-
-            return await query.AnyAsync(c =>
-                c.ClubNameAR == clubNameAr ||
-                c.ClubNameEN == clubNameEn
+            return await dbSet.AnyAsync(c =>
+                c.IsDeleted == false &&
+                c.siteId == siteId &&
+                (c.ClubNameAR.ToLower() == clubNameAr.ToLower() ||
+                 c.ClubNameEN.ToLower() == clubNameEn.ToLower())
             );
+        }
+        public virtual async Task<IList<tblClub>> GetClubsBySiteId(int siteId)
+        {
+            try
+            {
+                return await dbSet
+                    .Include(c => c.Site) // تضمين بيانات الجهة
+                    .Where(c => c.siteId == siteId && c.IsDeleted == false && c.IsActive == true)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetClubsBySiteId: {ex.Message}");
+                return new List<tblClub>();
+            }
         }
         public virtual async Task<int> InsertClub(tblClub Club)
         {

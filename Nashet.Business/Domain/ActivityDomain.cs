@@ -140,26 +140,23 @@ namespace Nashet.Business.Domain
         }
 
 
-        public virtual async Task<int> DeleteActivity(Guid guid)
+        public async Task<bool> DeleteActivity(Guid guid)
         {
             try
             {
                 var activity = await _ActivityRepository.GetActivityByGUID(guid);
                 if (activity == null)
-                {
-                    return 0; // Site not found
-                }
-                activity.IsDeleted = true;
-                int check = await _ActivityRepository.DeleteActivity(activity);
-                if (check == null)
-                    return 0;
-                else
-                    return 1;
+                    return false;
 
+                // Soft Delete (تغيير حالة IsDeleted)
+                activity.IsDeleted = true;
+                await _ActivityRepository.UpdateAsync(activity);
+
+                return true;
             }
-            catch
+            catch (Exception)
             {
-                return 0;
+                return false;
             }
         }
 

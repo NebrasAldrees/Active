@@ -98,81 +98,9 @@
                                 </div> 
                             </div>
                         </div>
-
-                        <div class="card shadow-sm mt-4">
-                            <div class="card-body text-center">
-                                <a asp-action="UpdateActivity" asp-route-guid="@Model.Guid" class="btn btn-sm btn-success">تعديل</a>
-                                <a data-id="@Model.Guid" class="btn btn-sm btn-danger delete-btn">حذف</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function () {
-            // Attach event listener for delete buttons
-            $('.delete-btn').on('click', function (event) {
-                event.preventDefault();
-
-                // Get the GUID from the clicked delete button
-                var id = $(this).data('id');
-
-                // Trigger SweetAlert2 for confirmation
-                Swal.fire({
-                    title: "هل أنت متأكد؟",
-                    text: "سيتم حذف النشاط ولا يمكن التراجع عن هذا الإجراء!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "نعم، احذف النشاط",
-                    cancelButtonText: "إلغاء"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Proceed with the AJAX request to delete the activity
-                        $.ajax({
-                            url: '@Url.Action("DeleteActivity", "Activity")',
-                            type: 'POST',
-                            data: { guid: id },
-                            success: function (response) {
-                                if (response.success) {
-                                    Swal.fire({
-                                        title: 'تم الحذف!',
-                                        text: response.message || 'تم حذف النشاط بنجاح',
-                                        icon: 'success',
-                                        confirmButtonText: 'موافق',
-                                        timer: 2000
-                                    }).then(() => {
-                                        // التوجيه إلى صفحة الأنشطة بعد الحذف
-                                        window.location.href = '@Url.Action("Activities", "Activity", new { area = "ActivitiesSupervisor" })';
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        title: 'فشل الحذف!',
-                                        text: response.message || 'لم يتم حذف النشاط',
-                                        icon: 'error',
-                                        confirmButtonText: 'موافق'
-                                    });
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                console.error('Error:', error);
-                                Swal.fire({
-                                    title: 'خطأ!',
-                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
-                                    icon: 'error',
-                                    confirmButtonText: 'موافق'
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-}
