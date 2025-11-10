@@ -28,18 +28,17 @@ public class MembershipRequestController : Controller
         return View();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetTeamByClubGuid(Guid id)
+    {
+        var teams = await _TeamDomain.GetTeamsByClubGuid(id);
+        return Json(teams);
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-
     public async Task<IActionResult> InsertMembershipRequest(MembershipRequestViewModel viewModel)
     {
-        //if (!ModelState.IsValid)
-        //{
-        //    ViewBag.Club = await _ClubDomain.GetClub();
-        //    ViewBag.Team = await _TeamDomain.GetTeam();
-        //    ViewBag.Student = await _StudentDomain.GetStudent();
-        //    return View(viewModel);
-        //}
         ViewBag.Club = await _ClubDomain.GetClub();
         ViewBag.Team = await _TeamDomain.GetTeam();
         ViewBag.Student = await _StudentDomain.GetStudent();
@@ -47,12 +46,9 @@ public class MembershipRequestController : Controller
         int check = await _domain.InsertMembershipRequest(viewModel);
         if (check == 1)
         {
-            ViewBag.Successful = "تم إضافة النشاط بنجاح";
+            ViewBag.Successful = "تم رفع الطلب بنجاح";
             return View(viewModel);
         }
-
-        else if (check == -1)
-            ViewBag.Duplicate = "اسم النشاط موجود مسبقاً";
         else
             ViewBag.Error = "فشل في الإضافة";
 

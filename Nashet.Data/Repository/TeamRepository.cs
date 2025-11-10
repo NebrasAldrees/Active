@@ -28,6 +28,11 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(team => team.IsDeleted == false && team.Guid == Guid)
                             .FirstOrDefaultAsync();
         }
+        public virtual async Task<IList<tblTeam>> GetTeamByClubGuid(Guid Guid)
+        {
+            return await dbSet.Where(team => team.IsDeleted == false && team.Club.Guid == Guid)
+                            .ToListAsync();
+        }
         public virtual async Task<int> InsertTeam(tblTeam Team)
         {
             try

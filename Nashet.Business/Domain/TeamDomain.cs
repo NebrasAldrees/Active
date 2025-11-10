@@ -32,16 +32,14 @@ namespace Nashet.Business.Domain
             }).ToList();
         }
 
-        public async Task<tblTeam> GetTeamById(Guid Guid)
+        public async Task<List<TeamViewModel>> GetTeamsByClubGuid(Guid clubGuid)
         {
-            var Team = await _TeamRepository.GetTeamByGuid(Guid);
-
-            if (Team == null)
+            var teams = await _TeamRepository.GetTeamByClubGuid(clubGuid);
+            return teams.Select(t => new TeamViewModel
             {
-                throw new KeyNotFoundException($"Team request with Guid {Guid} was not found.");
-            }
-
-            return Team;
+                Guid = t.Guid,
+                TeamNameAR = t.TeamNameAR
+            }).ToList();
         }
 
 
@@ -50,6 +48,7 @@ namespace Nashet.Business.Domain
             try
             {
                 var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
+                if (club == null) throw new Exception("النادي غير موجود");
                 tblTeam team = new tblTeam
                 {
                     ClubId = club.ClubId,
@@ -58,25 +57,9 @@ namespace Nashet.Business.Domain
                 };
                 int check = await _TeamRepository.InsertTeam(team);
                 if (check == 0)
-                {
                     return 0;
-                }
                 else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblTeam",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
-                }
                
             }
             catch
@@ -96,8 +79,9 @@ namespace Nashet.Business.Domain
                 }
                 team.IsDeleted = true;
                 int check = await _TeamRepository.DeleteTeam(team);
-                if (check == null)
+                if (check <= 0)
                     return 0;
+
                 else
                     return 1;
 
