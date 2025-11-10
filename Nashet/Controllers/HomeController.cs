@@ -64,7 +64,7 @@ namespace Nashet.Controllers
                                 return RedirectToAction("AdminHome", "Home", new { area = "Admin" });
                             else if (user.RoleTypeEn == "Activities Supervisor")
                                 return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
-                            else if (user.RoleTypeEn == "Club Supervisor")
+                            else if (user.RoleTypeEn == "ClubSupervisor")
                                 return RedirectToAction("ClubSupervisorHome", "Home", new { area = "ClubSupervisor" });
                             else if (user.RoleTypeEn == "Student")
                                 return RedirectToAction("StudentHome", "Home", new { area = "Student" });

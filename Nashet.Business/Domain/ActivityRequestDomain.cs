@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
@@ -10,31 +11,87 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class ActivityRequestDomain(ActivityRequestRepository Repository) : BaseDomain
+    public class ActivityRequestDomain: BaseDomain
     {
-        private readonly ActivityRequestRepository _ActivityRequestRepository = Repository;
+        private readonly ActivityRequestRepository _ActivityRequestRepository;
+        private readonly ClubRepository _ClubRepository;
 
-        public async Task<IList<tblActivityRequest>> GetActivityRequest()
+        public ActivityRequestDomain(ActivityRequestRepository activityRequestRepository, ClubRepository ClubRepository)
         {
-            return await _ActivityRequestRepository.GetAllRequests();
+            _ActivityRequestRepository = activityRequestRepository;
+            _ClubRepository = ClubRepository;
         }
-        public async Task<tblActivityRequest> GetActivityRequestById(int id)
+        
+        public async Task<IList<ActivityRequestViewModel>> GetActivityRequests()
         {
-            var ActivityRequest = await _ActivityRequestRepository.GetActivityRequestById(id);
-
-            if (ActivityRequest == null)
+            return _ActivityRequestRepository.GetAllRequests().Result.Select(a => new ActivityRequestViewModel
             {
-                throw new KeyNotFoundException($"Activity Request requested with ID {id} was not found.");
+                ActivityRequestId = a.ActivityRequestId,
+                ClubId = a.ClubId,
+                ActivityTopic = a.ActivityTopic,
+                ActivityDescription = a.ActivityDescription,
+                ActivityStartDate = a.ActivityStartDate,
+                ActivityEndDate = a.ActivityEndDate,
+                ActivityLocation = a.ActivityLocation,
+                ActivityPoster = a.ActivityPoster,
+                Guid = a.Guid
+            }).ToList();
+        }
+        public async Task<IList<ActivityRequestViewModel>> GetRequestsByClubGuid(Guid? clubGuid)
+        {
+            var requests = await GetActivityRequests();
+
+            if (clubGuid.HasValue)
+            {
+                var club = await _ClubRepository.GetClubByGuid(clubGuid.Value);
+                var clubId = club.ClubId;
+
+                return requests.Where(a => a.ClubId == clubId).ToList();
             }
 
-            return ActivityRequest;
+            return requests;
         }
-        public int DeleteActivityRequest(int id)
+
+        public async Task<tblActivityRequest> GetRequestByGuid(Guid guid)
+        {
+            var Request = await _ActivityRequestRepository.GetRequestByGUID(guid);
+
+            if (Request == null)
+            {
+                throw new KeyNotFoundException($"بيانات الطلب المطلوب غير متوفرة");
+            }
+
+            return Request;
+        }
+
+        public virtual async Task<int> InsertActivityRequest(ActivityRequestViewModel viewModel)
         {
             try
             {
-                _ActivityRequestRepository.Delete(id);
-                return 1;
+                DateTime.TryParse($"{viewModel.ActivityStartDate:yyyy-MM-dd} {viewModel.ActivityStartTime}", out var startDateTime);
+                DateTime.TryParse($"{viewModel.ActivityEndDate:yyyy-MM-dd} {viewModel.ActivityEndTime}", out var endDateTime);
+                var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
+                tblActivityRequest activity = new tblActivityRequest
+                {
+                    ClubId = club.ClubId,
+                    ActivityTopic = viewModel.ActivityTopic,
+                    ActivityDescription = viewModel.ActivityDescription,
+                    ActivityStartDate = startDateTime,
+                    ActivityEndDate = endDateTime,
+                    ActivityLocation = viewModel.ActivityLocation,
+                    ActivityPoster = viewModel.ActivityPoster
+                };
+                int check = await _ActivityRequestRepository.InsertActivityRequest(activity);
+                if (check == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+
+
             }
             catch
             {
@@ -42,5 +99,44 @@ namespace Nashet.Business.Domain
             }
         }
 
+        public virtual async Task<bool> UpdateActivityRequest(Guid guid)
+        {
+            try
+            {
+                var request = await _ActivityRequestRepository.GetRequestByGUID(guid);
+                if (request == null)
+                    return false;
+
+                request.IsActive = false;
+                await _ActivityRequestRepository.UpdateAsync(request);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+
+        public async Task<bool> DeleteActivityRequest(Guid guid)
+        {
+            try
+            {
+                var request = await _ActivityRequestRepository.GetRequestByGUID(guid);
+                if (request == null)
+                    return false;
+
+                request.IsDeleted = true;
+                await _ActivityRequestRepository.UpdateAsync(request);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

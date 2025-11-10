@@ -48,7 +48,7 @@ namespace Nashet.Data.Models
                 {
                     SystemRoleId = 2,
                     RoleTypeAr = "مشرف النشاط",
-                    RoleTypeEn = "Activity Supervisor",
+                    RoleTypeEn = "ActivitySupervisor",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
@@ -59,7 +59,7 @@ namespace Nashet.Data.Models
                 {
                     SystemRoleId = 3,
                     RoleTypeAr = "مشرف النادي",
-                    RoleTypeEn = "Club Supervisor",
+                    RoleTypeEn = "ClubSupervisor",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
@@ -68,19 +68,8 @@ namespace Nashet.Data.Models
                 },
                  new tblSystemRole()
                  {
-                     SystemRoleId = 4,
-                     RoleTypeAr = "قائد النادي",
-                     RoleTypeEn = "Club Leader",
-                     IsActive = true,
-                     isSent = true,
-                     IsDeleted = false,
-                     Guid = Guid.Parse("4ab11078-e7a8-40a3-8a39-a636735b5834"),
-                     CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
-                 },
-                 new tblSystemRole()
-                 {
                      SystemRoleId = 5,
-                     RoleTypeAr = "الطالب",
+                     RoleTypeAr = "طالب",
                      RoleTypeEn = "Student",
                      IsActive = true,
                      isSent = true,

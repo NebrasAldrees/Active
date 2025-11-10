@@ -9,7 +9,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertActivity" asp-controller="Activity" method="post" enctype="multipart/form-data">
+                        <form asp-action="InsertRequest" asp-controller="ActivityRequest" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -126,12 +126,11 @@
                 <text>
                 Swal.fire({
                     title: "تمت الإضافة",
-                    // text: "@ViewBag.Successful",
                     icon: "success",
                     confirmButtonText: "موافق",
                     draggable: true
                 }).then(() => {
-                    window.location.href = '@Url.Action("Activities", "Activity")';
+                    window.location.href = '@Url.Action("Home", "ClubSupervisorHome")';
                 });
                 </text>
         }
@@ -140,7 +139,6 @@
                 <text>
                 Swal.fire({
                     title: "تنبيه",
-                    // text: "@ViewBag.Duplicate",
                     icon: "warning",
                     confirmButtonText: "موافق"
                 });
@@ -151,7 +149,6 @@
                 <text>
                 Swal.fire({
                     title: "خطأ",
-                    // text: "@ViewBag.Error",
                     icon: "error",
                     confirmButtonText: "موافق"
                 });

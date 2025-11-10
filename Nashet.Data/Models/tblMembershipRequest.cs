@@ -18,12 +18,9 @@ namespace Nashet.Data.Models
         public int? TeamID { get; set; }
         public tblTeam Team { get; set; }
 
-        [StringLength(100)]
-        public string RequestTeam1 { get; set; }
-        [StringLength(100)]
-        public string RequestTeam2 { get; set; }
-        [StringLength(100)]
-        public string RequestTeam3 { get; set; }
+        public int? RequestTeam1 { get; set; }
+        public int? RequestTeam2 { get; set; }
+        public int? RequestTeam3 { get; set; }
         [StringLength(1000)]
         public string RequestReason { get; set; }
         public DateTime RequestDate { get; set; }

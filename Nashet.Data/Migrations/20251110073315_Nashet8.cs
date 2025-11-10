@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class addByAbdulrahman : Migration
+    public partial class Nashet8 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -258,6 +258,36 @@ namespace Nashet.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tblActivityRequest",
+                columns: table => new
+                {
+                    ActivityRequestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClubId = table.Column<int>(type: "int", nullable: false),
+                    ActivityTopic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ActivityDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    ActivityStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActivityEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActivityLocation = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    ActivityPoster = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    isSent = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblActivityRequest", x => x.ActivityRequestId);
+                    table.ForeignKey(
+                        name: "FK_tblActivityRequest_tblClub_ClubId",
+                        column: x => x.ClubId,
+                        principalTable: "tblClub",
+                        principalColumn: "ClubId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tblAnnouncement",
                 columns: table => new
                 {
@@ -339,51 +369,6 @@ namespace Nashet.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblActivityRequest",
-                columns: table => new
-                {
-                    ARId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: true),
-                    SiteID = table.Column<int>(type: "int", nullable: true),
-                    ClubID = table.Column<int>(type: "int", nullable: true),
-                    ActivityTopic = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ActivityDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ActivityTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    ActivityLocation = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ActivityPoster = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ActivityRequestId = table.Column<int>(type: "int", nullable: false),
-                    Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    isSent = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tblActivityRequest", x => x.ARId);
-                    table.ForeignKey(
-                        name: "FK_tblActivityRequest_tblClub_ClubID",
-                        column: x => x.ClubID,
-                        principalTable: "tblClub",
-                        principalColumn: "ClubId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_tblActivityRequest_tblSite_SiteID",
-                        column: x => x.SiteID,
-                        principalTable: "tblSite",
-                        principalColumn: "SiteId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_tblActivityRequest_tblUser_UserID",
-                        column: x => x.UserID,
-                        principalTable: "tblUser",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tblSystemLogs",
                 columns: table => new
                 {
@@ -458,9 +443,9 @@ namespace Nashet.Data.Migrations
                     StudentID = table.Column<int>(type: "int", nullable: true),
                     ClubID = table.Column<int>(type: "int", nullable: true),
                     TeamID = table.Column<int>(type: "int", nullable: true),
-                    RequestTeam1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RequestTeam2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RequestTeam3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RequestTeam1 = table.Column<int>(type: "int", nullable: true),
+                    RequestTeam2 = table.Column<int>(type: "int", nullable: true),
+                    RequestTeam3 = table.Column<int>(type: "int", nullable: true),
                     RequestReason = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -565,10 +550,19 @@ namespace Nashet.Data.Migrations
                 values: new object[,]
                 {
                     { 1, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("fabba72d-d4b0-4c12-be52-a8b868bc6007"), true, false, "مدير النظام", "Admin", true },
-                    { 2, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("90d065f4-1a15-40b7-8866-0219b1251646"), true, false, "مشرف النشاط", "Activity Supervisor", true },
-                    { 3, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ea0e8ba3-8b61-44cb-bb9a-e763f1ac6dac"), true, false, "مشرف النادي", "Club Supervisor", true },
-                    { 4, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("4ab11078-e7a8-40a3-8a39-a636735b5834"), true, false, "قائد النادي", "Club Leader", true },
-                    { 5, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3e9eda03-140d-4b78-8019-3925ae795e47"), true, false, "الطالب", "Student", true }
+                    { 2, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("90d065f4-1a15-40b7-8866-0219b1251646"), true, false, "مشرف النشاط", "ActivitySupervisor", true },
+                    { 3, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ea0e8ba3-8b61-44cb-bb9a-e763f1ac6dac"), true, false, "مشرف النادي", "ClubSupervisor", true },
+                    { 5, new DateTime(2025, 10, 5, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3e9eda03-140d-4b78-8019-3925ae795e47"), true, false, "طالب", "Student", true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tblClub",
+                columns: new[] { "ClubId", "ClubIcon", "ClubNameAR", "ClubNameEN", "ClubOverview", "ClubVision", "CreationDate", "Guid", "IsActive", "IsDeleted", "isSent", "siteId" },
+                values: new object[,]
+                {
+                    { 1, null, "نادي الذكاء الاصطناعي", "Artificial Intelligence (AI)", "نادي تعليمي وهادف", "يهدف النادي إلى تطوير البيئات التثنية باستخدام الذكاء الاصطناعي", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("22370d9b-c4fe-4464-bf11-011db9fb7889"), true, false, true, 1 },
+                    { 2, null, "نادي التعلم بالأقران", "PTI", "نادي تعليمي وهادف", "يهدف النادي إلى تطوير التعلم الجماعي ومساعدة الأفراد", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("a28dd9d4-0916-46b2-8fae-aae015bbb78c"), true, false, true, 1 },
+                    { 3, null, "نادي تطوير الويب", "Web Application", "نادي تعليمي وهادف", "يهدف النادي إلى تطوير مواقع الويب", new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("5ea71484-15dc-4dc8-a175-dcb93a487a57"), true, false, true, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -585,25 +579,28 @@ namespace Nashet.Data.Migrations
                     { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, 1, 2, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true }
                 });
 
+            migrationBuilder.InsertData(
+                table: "tblTeam",
+                columns: new[] { "TeamId", "ClubId", "CreationDate", "Guid", "IsActive", "IsDeleted", "TeamNameAR", "TeamNameEn", "isSent" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ec23cc85-fd2f-439f-a71d-a1d8e20f8f34"), true, false, "فريق البرمجة", "Programming Team", true },
+                    { 2, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e7f0778c-f4f4-4aa7-b7c0-d4e4ccbeb4c6"), true, false, "فريق الإعلام", "Media Team", true },
+                    { 3, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("732181fb-62be-448b-8be4-651bfa2634d1"), true, false, "فريق تطوير الويب ", "Web development Team", true },
+                    { 4, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("fee080a7-95d8-47bf-9c8e-477066d9f983"), true, false, "الفريق الإعلامي لتطوير الويب ", "Media Web developement Team", true },
+                    { 5, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"), true, false, "فريق الابتكار", "Innovation Team", true },
+                    { 6, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"), true, false, "فريق التطوير للذكاء", "Developement Team", true }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_tblActivity_ClubId",
                 table: "tblActivity",
                 column: "ClubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblActivityRequest_ClubID",
+                name: "IX_tblActivityRequest_ClubId",
                 table: "tblActivityRequest",
-                column: "ClubID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tblActivityRequest_SiteID",
-                table: "tblActivityRequest",
-                column: "SiteID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tblActivityRequest_UserID",
-                table: "tblActivityRequest",
-                column: "UserID");
+                column: "ClubId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblAnnouncement_ClubId",

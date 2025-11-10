@@ -3,6 +3,7 @@ using Nashet.Data.Models;
 using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,34 +15,64 @@ namespace Nashet.Data.Repository
         public MembershipRequestRepository(NashetContext dbContext) : base(dbContext)
         {
         }
-        public virtual async Task<IList<tblMembershipRequest>> GetAllMembershipRequest(int id)
+        public virtual async Task<IList<tblMembershipRequest>> GetAllRequests()
         {
-            return await dbSet.Where(MembershipRequest => MembershipRequest.IsDeleted == false && MembershipRequest.ClubID == id).ToListAsync();
+            return await dbSet.Where(Request => Request.IsActive == true && Request.IsDeleted == false).ToListAsync();
         }
-
-        public virtual async Task<IList<tblMembershipRequest>> GetAllMembershipRequest()
+        public virtual async Task<tblMembershipRequest> GetRequestByGUID(Guid? guid)
         {
-            throw new NotImplementedException();
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.IsDeleted == false && Request.Guid == guid);
         }
-
-        public virtual async Task<tblMembershipRequest> GetMembershipRequestById(int id)
-        {
-            return await dbSet.Where(MembershipRequest => MembershipRequest.IsDeleted == false && MembershipRequest.MRId == id)
-                .FirstOrDefaultAsync();
-        }
-        public virtual async Task<int> InsertMembershipRequest(tblMembershipRequest MembershipRequest)
+        public async Task<int> InsertMembershipRequest(tblMembershipRequest request)
         {
             try
             {
-                await InsertAsync(MembershipRequest);
+                await InsertAsync(request);
                 return 1;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Console.WriteLine($"Error inserting system:{ex.Message}");
+                Console.WriteLine($"خطأ في الإضافة:{ex.Message}");
                 return 0;
             }
         }
+
+        public virtual async Task<bool> IsRequestExists(int ClubID, Guid? excludeRequestGuid = null)
+        {
+            var query = dbSet.Where(request => request.IsDeleted == false);
+
+            if (excludeRequestGuid.HasValue)
+            {
+                query = query.Where(request => request.Guid != excludeRequestGuid.Value);
+            }
+
+            return await query.AnyAsync(request => request.ClubID == ClubID);
+        }
+
+        public virtual async Task<int> updateRequest(tblMembershipRequest request)
+        {
+            try
+            {
+                await UpdateAsync(request);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> DeleteRequest(tblMembershipRequest request)
+        {
+            try
+            {
+                await UpdateAsync(request);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }
-//nn
