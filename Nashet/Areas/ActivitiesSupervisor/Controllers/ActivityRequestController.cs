@@ -16,9 +16,9 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             _ActivityRequestDomain = activityRequestDomain;
         }
         [HttpGet]
-        public async Task<IActionResult> ActivitiyRequests(Guid? clubGuid)
+        public async Task<IActionResult> ViewRequests()
         {
-            var Requests = await _ActivityRequestDomain.GetRequestsByClubGuid(clubGuid);
+            var Requests = await _ActivityRequestDomain.GetActivityRequests();
             ViewBag.Club = await _ClubDomain.GetClub();
             return View(Requests);
         }
