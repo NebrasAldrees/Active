@@ -84,7 +84,23 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+        public async Task<StudentViewModel> GetStudentByEmail(string email)
+        {
+            var student = await _StudentRepository.GetStudentByEmail(email);
+            if (student == null) return null;
 
+            return new StudentViewModel
+            {
+                StudentId = student.StudentId,
+                AcademicId = student.AcademicId,
+                StudentNameAr = student.StudentNameAr,
+                StudentNameEn = student.StudentNameEn,
+                StudentEmail = student.StudentEmail,
+                StudentPhone = student.StudentPhone,
+                SiteId = student.SiteId,
+                StudentSkills = student.StudentSkills
+            };
+        }
         public virtual async Task<int> UpdateStudent(StudentViewModel viewModel)
         {
             try
