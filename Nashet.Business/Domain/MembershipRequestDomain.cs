@@ -34,6 +34,7 @@ public class MembershipRequestDomain : BaseDomain
         }
         return Request;
     }
+
     public async Task<int> InsertMembershipRequest(MembershipRequestViewModel viewModel)
     {
         bool topicExists = await _repo.IsRequestExists(viewModel.ClubID);
