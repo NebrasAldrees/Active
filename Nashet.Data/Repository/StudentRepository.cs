@@ -29,7 +29,19 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.Where(Student => Student.IsDeleted == false).ToListAsync(); 
         }
-
+        public virtual async Task<tblStudent> GetStudentByEmail(string email)
+        {
+            try
+            {
+                return await dbSet
+                    .Include(s => s.Site)
+                    .SingleOrDefaultAsync(s => s.StudentEmail == email && !s.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public virtual async Task<int> InsertStudent(tblStudent student)
         {
             try
@@ -43,7 +55,6 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-
         public virtual async Task<int> DeleteStudent(tblStudent student)
         {
             try

@@ -25,9 +25,6 @@ namespace Nashet.Data.Models
             AddUser();
             AddtStudent();
             AddKfuUser();
-
-
-
         }
 
         private static void AddSystemRole()
@@ -395,7 +392,7 @@ namespace Nashet.Data.Models
             },
             new tblTeam()
             {
-                Guid = Guid.Parse("e69833df-ccb1-4e07-89fe-d6267994e186"),
+                Guid = Guid.Parse("1a3b1005-1258-4c9a-b375-e716f6583f5c"),
                 ClubId = 1,
                 TeamId = 6,
                 TeamNameAR = "فريق التطوير للذكاء",
@@ -464,6 +461,22 @@ namespace Nashet.Data.Models
                     UserId = 2,
                     Guid = Guid.Parse("3072cf40-dc60-41f0-87da-77631050caa3"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                },
+                new tblUser()
+                {
+                    SystemRoleId = 3,
+                    UserNameEN = "Safaa",
+                    UserNameAR = "صفا",
+                    Username = "Safaa2",
+                    UserEmail = "Safaa@gmail.com",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    UserPhone = "0509410406",
+                    SiteId = 1,
+                    UserId = 3,
+                    Guid = Guid.Parse("3e4b0298-c385-40eb-96a9-5d69d8cbae79"),
+                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                 }
             );
         }
@@ -493,7 +506,7 @@ namespace Nashet.Data.Models
                     NameAR = "هدى",
                     Username = "Huda1",
                     Password = "Huda",
-                    UserType = "Activities Supervisor",
+                    UserType = "ActivitySupervisor",
                     UserEmail = "Huda@gmail.com",
                     IsActive = true,
                     isSent = true,
@@ -516,6 +529,22 @@ namespace Nashet.Data.Models
                     IsDeleted = false,
                     UserPhone = "0540345575",
                     Guid = Guid.Parse("08d5ea5b-4216-40d6-b166-53c4dfa363e7"),
+                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                },
+                new tblKFUuser()
+                {
+                    KFUUserId = 4,
+                    NameEN = "Safaa",
+                    NameAR = "صفا",
+                    Username = "Safaa2",
+                    Password = "Safaa",
+                    UserType = "ClubSupervisor",
+                    UserEmail = "Safaa@gmail.com",
+                    IsActive = true,
+                    isSent = true,
+                    IsDeleted = false,
+                    UserPhone = "0509410406",
+                    Guid = Guid.Parse("f68717eb-5be7-4a81-bcae-49428ccc52ad"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
                 }
             );

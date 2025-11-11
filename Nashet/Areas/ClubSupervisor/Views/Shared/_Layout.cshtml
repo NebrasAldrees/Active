@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
 
 <head>
@@ -116,33 +117,63 @@
                 </ul>
                 <ul class="nav d-flex">
                     <li class="nav-item dropdown ms-2">
-                        <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
-                                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                                <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
-                            </svg>
-                        </a>
-                        <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
-                            <li>
-                                <div class="d-flex flex-column">
-                                    <h6 class="mb-0">عبد الرحمن ال عبد اللطيف</h6>
-                                    <small class="text-muted m-0">aaaalatif@kfu.edu.sa</small>
-                                </div>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider w-100">
-                            </li>
-                            <li><a class="dropdown-item" asp-controller="Home" asp-action="ProfilePage">الملف الشخصي</a></li>
-                            <li>
-                                <hr class="dropdown-divider w-100">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#" onclick="confirmLogout()">تسجيل الخروج</a>
+                        <ul class="nav d-flex">
+                            <li class="nav-item dropdown ms-2">
+                                <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                        <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                                    </svg>
+                                </a>
+                                <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
+                                    <li>
+                                        <div class="d-flex flex-column">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <h6 class="mb-0">@User.FindFirst(ClaimTypes.GivenName)?.Value</h6>
+                                                @* <small class="text-muted m-0">@User.Identity.Name</small> *@
+                                                <small class="text-muted m-0">@User.FindFirst(ClaimTypes.Role)?.Value</small>
+                                            }
+                                            else
+                                            {
+                                                <h6 class="mb-0">زائر</h6>
+                                                <small class="text-muted m-0">غير مسجل</small>
+                                            }
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <!-- زر الملف الشخصي -->
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item" a asp-action="ProfilePage" asp-controller="Home" asp-area="Clubsupervisor">
+                                                <i class="fas fa-user me-2"></i>الملف الشخصي
+                                            </a>
+                                        }
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item text-danger" href="#" onclick="confirmLogout()">
+                                                <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Account/Login">تسجيل الدخول</a>
+                                        }
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -190,8 +221,12 @@
                 cancelButtonText: "إلغاء"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // الانتقال إلى صفحة تسجيل الخروج
-                    window.location.href =  '/Home/Login';
+                    // تنظيف التخزين المحلي أولاً (اختياري)
+                    localStorage.clear();
+                    sessionStorage.clear();
+
+                    // التوجيه المباشر إلى صفحة Login
+                    window.location.href = '/Home/Login';
                 }
             });
         }

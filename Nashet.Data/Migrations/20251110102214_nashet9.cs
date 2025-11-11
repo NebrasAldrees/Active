@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Nashet8 : Migration
+    public partial class nashet9 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -517,8 +517,9 @@ namespace Nashet.Data.Migrations
                 values: new object[,]
                 {
                     { 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("7f4a5d58-29db-411b-8e3e-dcf0918e5dc7"), true, false, "منتهى", "Muntaha", "Muntaha", "Muntaha@gmail.com", "0536763284", "Admin", "Muntaha_12", true },
-                    { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("9ba46550-b007-48cf-9f21-bc473d2b4393"), true, false, "هدى", "Huda", "Huda", "Huda@gmail.com", "0533924794", "Activities Supervisor", "Huda1", true },
-                    { 3, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("08d5ea5b-4216-40d6-b166-53c4dfa363e7"), true, false, "نبراس", "Nebras", "Nebras", "Nebras@gmail.com", "0540345575", "Student", "Nebras2", true }
+                    { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("9ba46550-b007-48cf-9f21-bc473d2b4393"), true, false, "هدى", "Huda", "Huda", "Huda@gmail.com", "0533924794", "ActivitySupervisor", "Huda1", true },
+                    { 3, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("08d5ea5b-4216-40d6-b166-53c4dfa363e7"), true, false, "نبراس", "Nebras", "Nebras", "Nebras@gmail.com", "0540345575", "Student", "Nebras2", true },
+                    { 4, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("f68717eb-5be7-4a81-bcae-49428ccc52ad"), true, false, "صفا", "Safaa", "Safaa", "Safaa@gmail.com", "0509410406", "ClubSupervisor", "Safaa2", true }
                 });
 
             migrationBuilder.InsertData(
@@ -576,7 +577,8 @@ namespace Nashet.Data.Migrations
                 values: new object[,]
                 {
                     { 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"), true, false, 1, 1, "Muntaha@gmail.com", "منتهى", "Muntaha", "0536763284", "Muntaha_12", true },
-                    { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, 1, 2, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true }
+                    { 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3072cf40-dc60-41f0-87da-77631050caa3"), true, false, 1, 2, "Huda@gmail.com", "هدى", "Huda", "0533924794", "Huda1", true },
+                    { 3, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("3e4b0298-c385-40eb-96a9-5d69d8cbae79"), true, false, 1, 3, "Safaa@gmail.com", "صفا", "Safaa", "0509410406", "Safaa2", true }
                 });
 
             migrationBuilder.InsertData(
@@ -589,7 +591,7 @@ namespace Nashet.Data.Migrations
                     { 3, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("732181fb-62be-448b-8be4-651bfa2634d1"), true, false, "فريق تطوير الويب ", "Web development Team", true },
                     { 4, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("fee080a7-95d8-47bf-9c8e-477066d9f983"), true, false, "الفريق الإعلامي لتطوير الويب ", "Media Web developement Team", true },
                     { 5, 2, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"), true, false, "فريق الابتكار", "Innovation Team", true },
-                    { 6, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"), true, false, "فريق التطوير للذكاء", "Developement Team", true }
+                    { 6, 1, new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc), new Guid("1a3b1005-1258-4c9a-b375-e716f6583f5c"), true, false, "فريق التطوير للذكاء", "Developement Team", true }
                 });
 
             migrationBuilder.CreateIndex(

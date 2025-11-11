@@ -12,8 +12,8 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20251110073315_Nashet8")]
-    partial class Nashet8
+    [Migration("20251110102214_nashet9")]
+    partial class nashet9
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -433,7 +433,7 @@ namespace Nashet.Data.Migrations
                             Password = "Huda",
                             UserEmail = "Huda@gmail.com",
                             UserPhone = "0533924794",
-                            UserType = "Activities Supervisor",
+                            UserType = "ActivitySupervisor",
                             Username = "Huda1",
                             isSent = true
                         },
@@ -451,6 +451,22 @@ namespace Nashet.Data.Migrations
                             UserPhone = "0540345575",
                             UserType = "Student",
                             Username = "Nebras2",
+                            isSent = true
+                        },
+                        new
+                        {
+                            KFUUserId = 4,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("f68717eb-5be7-4a81-bcae-49428ccc52ad"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            NameAR = "صفا",
+                            NameEN = "Safaa",
+                            Password = "Safaa",
+                            UserEmail = "Safaa@gmail.com",
+                            UserPhone = "0509410406",
+                            UserType = "ClubSupervisor",
+                            Username = "Safaa2",
                             isSent = true
                         });
                 });
@@ -1229,7 +1245,7 @@ namespace Nashet.Data.Migrations
                             TeamId = 6,
                             ClubId = 1,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
-                            Guid = new Guid("e69833df-ccb1-4e07-89fe-d6267994e186"),
+                            Guid = new Guid("1a3b1005-1258-4c9a-b375-e716f6583f5c"),
                             IsActive = true,
                             IsDeleted = false,
                             TeamNameAR = "فريق التطوير للذكاء",
@@ -1325,6 +1341,22 @@ namespace Nashet.Data.Migrations
                             UserNameEN = "Huda",
                             UserPhone = "0533924794",
                             Username = "Huda1",
+                            isSent = true
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3e4b0298-c385-40eb-96a9-5d69d8cbae79"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteId = 1,
+                            SystemRoleId = 3,
+                            UserEmail = "Safaa@gmail.com",
+                            UserNameAR = "صفا",
+                            UserNameEN = "Safaa",
+                            UserPhone = "0509410406",
+                            Username = "Safaa2",
                             isSent = true
                         });
                 });
