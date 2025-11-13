@@ -9,30 +9,31 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertClub" method="post">
+                        <form asp-action="InsertClub" method="post" enctype="multipart/form-data" id="clubForm">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label for="" class="mb-1"> اسم النادي باللغة العربية</label>
-                                    <input asp-for="ClubNameAR" type="text" class="form-control">
+                                    <input asp-for="ClubNameAR" type="text" class="form-control" id="arabicName" pattern="[\u0600-\u06FF\s]+" title="يرجى إدخال نص عربي فقط">
                                     <span style="color:red" asp-validation-for="ClubNameAR"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label for="" class="mb-1">اسم النادي باللغة الإنجليزية </label>
-                                    <input asp-for="ClubNameEN" type="text" class="form-control">
+                                    <input asp-for="ClubNameEN" type="text" class="form-control" id="englishName" pattern="[A-Za-z\s]+" title="يرجى إدخال نص إنجليزي فقط">
                                     <span style="color:red" asp-validation-for="ClubNameEN"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="SiteId" class="mb-1">الجهة</label>
-                                    <select asp-for="SiteId" class="form-control">
-                                        <option value="2">عمادة شؤون الطلاب</option>
-                                        <option value="1">كلية علوم الحاسب وتقنية المعلومات</option>
-                                        <option value="3">كلية الطب</option>
-                                        <option value="4">كلية الصيدلة</option>
-                                        <option value="5">كلية العلوم</option>
+                                    <label asp-for="SiteGuid" class="mb-1">الجهة</label>
+                                    <select asp-for="SiteGuid" class="form-control">
+                                        <option value="">-- اختر الجهة --</option>
+                                        @foreach (SiteViewModel site in ViewBag.Site)
+                                        {
+                                            <option value="@site.Guid">@site.SiteNameAR</option>
+                                        }
                                     </select>
+                                    <span style="color:red" asp-validation-for="SiteId"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -50,7 +51,8 @@
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="" class="mb-1">إرفاق صورة لشعار النادي</label>
-                                        <input asp-for="ClubIcon" type="file" id="ImageUpload" name="ClubIcon" accept="image/*" class="form-control">
+                                        <input type="file" id="ImageUpload" name="ClubIcon" accept="image/*" class="form-control">
+                                        <small class="text-muted">الأنواع المسموحة: JPG, PNG, GIF - الحجم الأقصى: 5MB</small>
                                     </div>
                                 </div><!-- END ITEM -->
                             </div>
@@ -64,3 +66,100 @@
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // قيود على اسم النادي بالعربية فقط
+        document.getElementById('arabicName').addEventListener('input', function(e) {
+            // السماح فقط بالأحرف العربية والمسافات
+            this.value = this.value.replace(/[^\u0600-\u06FF\s]/g, '');
+        });
+
+        // قيود على اسم النادي بالإنجليزية فقط
+        document.getElementById('englishName').addEventListener('input', function(e) {
+            // السماح فقط بالأحرف الإنجليزية والمسافات
+            this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+        });
+
+        // عرض معاينة الصورة قبل الرفع
+        document.getElementById('ImageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // التحقق من حجم الملف (5MB كحد أقصى)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 5MB');
+                    e.target.value = '';
+                    return;
+                }
+
+                // التحقق من نوع الملف
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG, GIF)');
+                    e.target.value = '';
+                    return;
+                }
+
+                // عرض معاينة الصورة
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const oldPreview = document.getElementById('imagePreview');
+                    if (oldPreview) {
+                        oldPreview.remove();
+                    }
+
+                    const preview = document.createElement('div');
+                    preview.id = 'imagePreview';
+                    preview.innerHTML = `
+                        <div class="mt-3 p-3 border rounded">
+                            <h6>معاينة الصورة:</h6>
+                            <img src="${e.target.result}" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                    `;
+                    document.querySelector('.mb-4').after(preview);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // SweetAlert للإضافة الناجحة فقط
+        @if (ViewBag.Successful != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تم إنشاء النادي بنجاح!",
+                    icon: "success",
+                    draggable: true
+                }).then(() => {
+                    window.location.href = '@Url.Action("ViewAllClubs", "Club", new { area = "ActivitiesSupervisor" })';
+                });
+                </text>
+        }
+        @if (ViewBag.Duplicate != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "اسم النادي موجود مسبقاً!",
+                    text: "لا يمكن إضافة نادي بنفس الاسم",
+                    icon: "warning",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                });
+                </text>
+        }
+        @if (ViewBag.Failed != null)
+        {
+                <text>
+                Swal.fire({
+                        title: "فشل إضافة النادي",
+                        text: "فشل إضافة النادي",
+                    icon: "warning",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                });
+                </text>
+        }
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

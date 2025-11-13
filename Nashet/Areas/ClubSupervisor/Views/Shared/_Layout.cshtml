@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم  بالنظام</title>
+    <title>نشِط</title>
 
     <!-- Favico -->
     <link rel="apple-touch-icon" sizes="180x180" href="~/assets/imgs/favicon/apple-touch-icon.png">
@@ -24,8 +25,6 @@
     <!-- Data Table -->
     <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/select.dataTables.min.css" /> -->
     <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/datatables_customization.css" /> -->
-
-
     <!-- customization -->
     <link rel="stylesheet" href="~/assets/css/app_rtl.css">
 
@@ -40,59 +39,59 @@
             <div class="menu_links">
                 <ul>
                     <li>
-                        <a href="ActivitiesSupervisorHome" class="active">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
-                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
-                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor">
-                                </rect>
-                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                        <a asp-area="ClubSupervisor" asp-controller="Home" asp-action="ClubSupervisorHome">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
                             </svg>
                             <span>الرئيسية</span>
                         </a>
+                    </li>
+                    <li class="sub_menu">
+                        <a href="JavaScript:void(0)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                            </svg>
+                            <span>القائمة الرئيسية</span>
+                        </a>
                         <ul>
-
-                            <li><a asp-action ="InsertMember" asp-controller="Membership" asp-area="ClubSupervisor"><span> مراجعة الطلبات العضوية</span></a></li>
-                            <li><a href="Requests"><span>رفع التقارير</span></a></li>
-                            <li><a href="Requests"><span>تقديم طلب إنشاء نشاط</span></a></li>
-                            <li><a asp-action="ViewMember" asp-controller="Membership" asp-area="ClubSupervisor"><span>عرض معلومات الأعضاء</span></a></li>
+                            <li><a asp-area="ClubSupervisor" asp-controller="Report" asp-action="InsertReport"><span>رفع التقارير</span></a></li>
+                            <li><a asp-area="ClubSupervisor" asp-controller="ActivityRequest" asp-action="InsertActivityRequest"><span>تقديم طلب إنشاء نشاط</span></a></li>
+                            <li><a asp-area="ClubSupervisor" asp-controller="Membership" asp-action="ViewMembership"><span>عرض معلومات الأعضاء</span></a></li>
+                            <li><a asp-area="ClubSupervisor" asp-controller="MembershipRequests" asp-action="ViewMembershipRequests"><span>مراجعة طلبات العضوية</span></a></li>
                         </ul>
                     </li>
                     <li>
-
-                        <a href="Clubs">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
-                                      fill="currentColor"></path>
-                                <path opacity="0.3"
-                                      d="M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z"
-                                      fill="currentColor"></path>
-                                <path opacity="0.3"
-                                      d="M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z"
-                                      fill="currentColor"></path>
+                        <a asp-area="ClubSupervisor" asp-controller="Club" asp-action="ViewAllClubs">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
                             </svg>
                             <span>الأندية الطلابية</span>
                         </a>
                     </li>
+
                     <li>
-                        <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="active">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
-                                      fill="currentColor"></path>
-                                <path opacity="0.3"
-                                      d="M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z"
-                                      fill="currentColor"></path>
-                                <path opacity="0.3"
-                                      d="M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z"
-                                      fill="currentColor"></path>
+                        <a asp-area="ClubSupervisor" asp-controller="Activity" asp-action="Activities">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
                             </svg>
                             <span>الأنشطة</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
             <div class="btm_link">
@@ -114,73 +113,78 @@
             <!-- Start Header Navbar -->
             <header>
                 <ul class="nav me-auto">
-                    <li class="nav-item me-2">
-                        <a class="nav-link btn btn-dark-rgb text-gray-800 br-10" id="menu_state_btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 26 26"
-                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <path d="M6 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                                <path d="M16 4v16" />
-                                <path d="M10 10l2 2l-2 2" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="input-group overflow-hiddin bg-dark-rgb border-0 br-10">
-                            <span class="input-group-text" id="basic-addon1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 11v-2a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v5a2 2 0 0 0 2 2h5" />
-                                    <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                    <path d="M20.2 20.2l1.8 1.8" />
-                                </svg>
-                            </span>
-                            <input type="text" class="form-control header__search_input ps-0" placeholder="البحث ...">
-                        </div>
-                    </li>
+                    
                 </ul>
                 <ul class="nav d-flex">
                     <li class="nav-item dropdown ms-2">
-                        <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
-                                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                                <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
-                            </svg>
-                        </a>
-                        <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
-                            <li>
-                                <div class="d-flex flex-column">
-                                    <h6 class="mb-0">عبد الرحمن ال عبد اللطيف</h6>
-                                    <small class="text-muted m-0">aaaalatif@kfu.edu.sa</small>
-                                </div>
+                        <ul class="nav d-flex">
+                            <li class="nav-item dropdown ms-2">
+                                <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                        <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                                    </svg>
+                                </a>
+                                <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
+                                    <li>
+                                        <div class="d-flex flex-column">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <h6 class="mb-0">@User.FindFirst(ClaimTypes.GivenName)?.Value</h6>
+                                                @* <small class="text-muted m-0">@User.Identity.Name</small> *@
+                                                <small class="text-muted m-0">@User.FindFirst(ClaimTypes.Role)?.Value</small>
+                                            }
+                                            else
+                                            {
+                                                <h6 class="mb-0">زائر</h6>
+                                                <small class="text-muted m-0">غير مسجل</small>
+                                            }
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <!-- زر الملف الشخصي -->
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item" a asp-action="ProfilePage" asp-controller="Home" asp-area="Clubsupervisor">
+                                                <i class="fas fa-user me-2"></i>الملف الشخصي
+                                            </a>
+                                        }
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item text-danger" href="#" onclick="confirmLogout()">
+                                                <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Account/Login">تسجيل الدخول</a>
+                                        }
+                                    </li>
+                                </ul>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider w-100">
-                            </li>
-                            <li><a class="dropdown-item" href="#">الملف الشخصي</a></li>
-                            <li><a class="dropdown-item" href="#">English Language</a></li>
-                            <li>
-                                <hr class="dropdown-divider w-100">
-                            </li>
-                            <li><a class="dropdown-item" href="#">تسجيل الخروج</a></li>
                         </ul>
                     </li>
                 </ul>
             </header><!-- End Header Navbar -->
             <!-- Start Page Wrap -->
-            
             <!-- Start Footer -->
             @RenderBody()
         </main><!-- End Content wrapper -->
     </main>
-    
+
 
     @* <div class="container">
         <main role="main" class="pb-3">
@@ -201,9 +205,32 @@
 
     <!--------- JS Liberaries ---------->
     <script src="~/assets/lib/DataTable/js/dataTables.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- customization -->
     <script src="~/assets/js/app.js"></script>
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "سيتم تسجيل خروجك من النظام",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0f7179",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "نعم، سجل الخروج",
+                cancelButtonText: "إلغاء"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // تنظيف التخزين المحلي أولاً (اختياري)
+                    localStorage.clear();
+                    sessionStorage.clear();
+
+                    // التوجيه المباشر إلى صفحة Login
+                    window.location.href = '/Home/Login';
+                }
+            });
+        }
+    </script>
     <script>
         $("#addSectionBtn").on('click', function () {
             let sections_item_length = $('.sub_sections_wrap').find('.sub_sections_item').length

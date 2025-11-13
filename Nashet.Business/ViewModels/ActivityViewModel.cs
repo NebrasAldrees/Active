@@ -12,10 +12,14 @@ namespace Nashet.Business.ViewModels
     public class ActivityViewModel
     {
         public int ActivityId { get; set; }
+
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("النادي التابع للنشاط")]
-        public int? ClubId { get; set; }
-        public ClubViewModel Club { get; set; }
+        public int ClubId { get; set; }
+        [Required(ErrorMessage = "*حقل مطلوب*")]
+        [DisplayName("النادي التابع للنشاط")]
+        public Guid ClubGuid { get; set; }
+        public tblClub Club { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("عنوان النشاط")]
@@ -30,21 +34,22 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("تاريخ بدء النشاط")]
         public DateTime ActivityStartDate { get; set; }
+        [Required(ErrorMessage = "وقت البداية مطلوب")]
+        public string ActivityStartTime { get; set; }
+
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("تاريخ انتهاء النشاط")]
         public DateTime ActivityEndDate { get; set; }
-
-        [Required(ErrorMessage = "*حقل مطلوب*")]
-        [DisplayName("وقت بدء النشاط")]
-        public DateTime ActivityTime { get; set; }
+        [Required(ErrorMessage = "وقت النهاية مطلوب")]
+        public string ActivityEndTime { get; set; }
 
         [StringLength(300)]
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("موقع النشاط")]
         public string ActivityLocation { get; set; }
 
-        [StringLength(200)]
+        [StringLength(1500)]
         [DisplayName("إرفاق صورة")]
         public string ActivityPoster { get; set; }
         public Guid Guid { get; set; }

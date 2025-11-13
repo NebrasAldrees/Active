@@ -42,6 +42,8 @@ namespace Nashet.Business.Domain
             {
                 tblSite site = new tblSite
                 {
+                    Guid = Guid.NewGuid(),
+                    SiteId = viewModel.SiteId,
                     SiteCode = viewModel.SiteCode,
                     SiteNameAR = viewModel.SiteNameAR,
                     SiteNameEn = viewModel.SiteNameEn

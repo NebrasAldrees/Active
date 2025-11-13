@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using Nashet.Data.Models;
 using Nashet.Data.Repository.Common;
 using System;
@@ -19,25 +20,50 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblActivityRequest>> GetAllRequests()
         {
-            return await dbSet.Where(AReq => AReq.IsDeleted == false).ToListAsync();
+            return await dbSet.Where(Request => Request.IsActive == true && Request.IsDeleted == false).ToListAsync();
         }
 
-        public virtual async Task<tblActivityRequest> GetActivityRequestById(int id)
+        public virtual async Task<tblActivityRequest> GetRequestByGUID(Guid? guid)
         {
-            return await dbSet.Where(ActivityRequest => ActivityRequest.IsDeleted == false && ActivityRequest.ActivityRequestId == id)
-            .FirstOrDefaultAsync();
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.IsDeleted == false && Request.Guid == guid);
         }
 
-        public virtual async Task<int> InsertActivityRequest(tblActivityRequest activityRequest)
+        public virtual async Task<int> InsertActivityRequest(tblActivityRequest request)
         {
             try
             {
-                await InsertAsync(activityRequest);
+                await InsertAsync(request);
                 return 1;
             }
-            catch //(Exception ex) 
+            catch (Exception ex)
             {
-               // Console.WriteLine($"Error inserting system:{ex.Message}");
+                Console.WriteLine($"خطأ في الإضافة:{ex.Message}");
+                return 0;
+            }
+        }
+
+        public virtual async Task<int> updateActivityRequest(tblActivityRequest Request)
+        {
+            try
+            {
+                await UpdateAsync(Request);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public virtual async Task<int> DeleteActivityRequest(tblActivityRequest Request)
+        {
+            try
+            {
+                await UpdateAsync(Request);
+                return 1;
+            }
+            catch
+            {
                 return 0;
             }
         }

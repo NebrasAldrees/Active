@@ -15,15 +15,33 @@ namespace Nashet.Data.Repository
         {
         }
 
-        public async Task<tblStudent> GetByAcademicIdAsync(String academicId)
+        public async Task<tblStudent> GetByAcademicIdAsync(string academicId)
         {
             return await dbSet.FirstOrDefaultAsync(student => student.AcademicId == academicId && student.IsDeleted == false);
         }
+
+        public async Task<tblStudent> GetStudentByGuid(Guid Guid)
+        {
+            return await dbSet.FirstOrDefaultAsync(student => student.Guid == Guid && student.IsDeleted == false);
+        }
+
         public virtual async Task<IList<tblStudent>> GetAllStudents()
         {
             return await dbSet.Where(Student => Student.IsDeleted == false).ToListAsync(); 
         }
-
+        public virtual async Task<tblStudent> GetStudentByEmail(string email)
+        {
+            try
+            {
+                return await dbSet
+                    .Include(s => s.Site)
+                    .SingleOrDefaultAsync(s => s.StudentEmail == email && !s.IsDeleted);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public virtual async Task<int> InsertStudent(tblStudent student)
         {
             try
@@ -37,7 +55,23 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+        public virtual async Task<int> DeleteStudent(tblStudent student)
+        {
+            try
+            {
+                if (student == null || student.IsDeleted == true)
+                {
+                    Console.WriteLine($"Error deleting system:");
+                }
 
+                IsDeleted(student);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         public virtual async Task<int> updateStudent(tblStudent student)
         {
             try
@@ -50,34 +84,5 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        //public virtual async Task<int> DeleteStudent(tblStudent student)
-        //{
-        //    try
-        //    {
-        //        if (student == null || student.IsDeleted == true)
-        //        {
-        //            return 0;
-        //        }
-
-        //        IsDeleted(student);
-        //        return 1;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
-    
-
-        public virtual async Task<tblStudent> GetStudentByIdAsync(int id)
-        {
-            return await dbSet.Where(Student => Student.IsDeleted == false && Student.StudentId == id)
-                            .FirstOrDefaultAsync();
-        }
-
-        //public async Task<int> UpdateStudent(tblStudent student)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

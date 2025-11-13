@@ -36,6 +36,10 @@ namespace Nashet.Business.Domain
         {
             return await _KFUuserRepository.CheckUser(username,password);
         }
+        public virtual async Task<tblKFUuser> CheckUserByEmail(string email, string password)
+        {
+            return await _KFUuserRepository.CheckUserByEmail(email, password);
+        }
         public async Task<int> InsertKfuUser(KfuUserViewModel viewModel)
         {
             try

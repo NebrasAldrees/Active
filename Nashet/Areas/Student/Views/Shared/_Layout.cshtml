@@ -1,0 +1,264 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en" dir="rtl" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نشِط</title>
+
+    <!-- Favico -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/imgs/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/imgs/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/imgs/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/assets/imgs/favicon/site.webmanifest">
+    <link rel="mask-icon" href="~/assets/imgs/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/assets/css/root.css">
+
+    <!--------- CSS Liberaries ---------->
+    <!-- Data Table -->
+    <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/select.dataTables.min.css" /> -->
+    <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/datatables_customization.css" /> -->
+    <!-- customization -->
+    <link rel="stylesheet" href="~/assets/css/app_rtl.css">
+
+</head>
+<body>
+    <main class="app_wrap">
+        <!-- Start Side Menu -->
+        <nav class="side_menu">
+            <div class="logo_wrap">
+                <img src="~/assets/imgs/KFU_Logo_Dark.png" alt="Logo">
+            </div>
+            <div class="menu_links">
+                <ul>
+                    <li>
+                        <a asp-area="ٍStudent" asp-controller="Home" asp-action="StudentHome">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
+                            </svg>
+                            <span>الرئيسية</span>
+                        </a>
+                    </li>
+                    <li class="sub_menu">
+                        <a href="JavaScript:void(0)">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                            </svg>
+                            <span>القائمة الرئيسية</span>
+                        </a>
+                        <ul>
+                            <li><a asp-area="Student" asp-controller="MembershipRequest" asp-action="InsertMembershipRequest"><span>تقديم طلب العضوية</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a asp-area="Student" asp-controller="Club" asp-action="ViewAllClubs">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
+                            </svg>
+                            <span>الأندية الطلابية</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-area="Student" asp-controller="Activity" asp-action="Activities">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
+                            </svg>
+                            <span>الأنشطة</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btm_link">
+                <button class="btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)"
+                              fill="currentColor"></rect>
+                        <path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z"
+                              fill="currentColor"></path>
+                        <path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z"
+                              fill="currentColor"></path>
+                    </svg>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </nav><!-- End Side Menu -->
+        <!-- Start Content wrapper -->
+        <main class="side_content">
+            <!-- Start Header Navbar -->
+            <header>
+                <ul class="nav me-auto">
+                    
+                </ul>
+                <ul class="nav d-flex">
+                    <li class="nav-item dropdown ms-2">
+                        <ul class="nav d-flex">
+                            <li class="nav-item dropdown ms-2">
+                                <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                        <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                                    </svg>
+                                </a>
+                                <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
+                                    <li>
+                                        <div class="d-flex flex-column">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <h6 class="mb-0">@User.FindFirst(ClaimTypes.GivenName)?.Value</h6>
+                                                @* <small class="text-muted m-0">@User.Identity.Name</small> *@
+                                                <small class="text-muted m-0">@User.FindFirst(ClaimTypes.Role)?.Value</small>
+                                            }
+                                            else
+                                            {
+                                                <h6 class="mb-0">زائر</h6>
+                                                <small class="text-muted m-0">غير مسجل</small>
+                                            }
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <!-- زر الملف الشخصي -->
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item" a asp-action="ProfilePage" asp-controller="Home" asp-area="Student">
+                                                <i class="fas fa-user me-2"></i>الملف الشخصي
+                                            </a>
+                                        }
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item text-danger" href="#" onclick="confirmLogout()">
+                                                <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Account/Login">تسجيل الدخول</a>
+                                        }
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </header><!-- End Header Navbar -->
+            <!-- Start Page Wrap -->
+            <!-- Start Footer -->
+            @RenderBody()
+        </main><!-- End Content wrapper -->
+    </main>
+
+
+    @* <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div> *@
+
+    <footer class="d-flex justify-content-center align-items-center">
+        <p class="m-0 d-flex justify-content-center">
+            جميع الحقوق محفوظة لجامعة الملك فيصل 2025 © | تصميم وتطوير
+            عمادة التعلم الإلكتروني وتقنية المعلومات
+        </p>
+    </footer><!-- End Footer -->
+    <!-- main JS Scripts -->
+    <script src="~/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!--------- JS Liberaries ---------->
+    <script src="~/assets/lib/DataTable/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- customization -->
+    <script src="~/assets/js/app.js"></script>
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "سيتم تسجيل خروجك من النظام",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0f7179",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "نعم، سجل الخروج",
+                cancelButtonText: "إلغاء"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    window.location.href = '/Home/Login';
+                }
+            });
+        }
+    </script>
+    <script>
+        $("#addSectionBtn").on('click', function () {
+            let sections_item_length = $('.sub_sections_wrap').find('.sub_sections_item').length
+            $('.sub_sections_wrap').append(`
+                <div class="sub_sections_item">
+                    <i class="bi bi-trash3 delete_sub_sec"></i>
+                    <div class="form-group">
+                        <label for="ss_name_${sections_item_length}">اسم الحقل</label>
+                        <input type="text" name="ss_name_${sections_item_length}" id="ss_name_${sections_item_length}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="ss_type_${sections_item_length}">نوع الحقل</label>
+                        <select name="ss_type_${sections_item_length}" id="ss_type_${sections_item_length}" class="form-select">
+                            <option value="checkbox">checkbox</option>
+                            <option value="radiobox">radioBox</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="ss_req_${sections_item_length}">
+                            <label class="form-check-label" for="ss_req_${sections_item_length}">
+                                مطلوب اجباري
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `)
+        })
+
+
+        $(".sub_sections_wrap").on('click', '.delete_sub_sec', function (e) {
+            $(this).parent('.sub_sections_item').remove()
+        })
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

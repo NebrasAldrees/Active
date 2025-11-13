@@ -1,0 +1,55 @@
+﻿@model ClubViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">تفاصيل النادي: @Model.ClubNameAR</h5>
+                </div>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <!-- Club Icon -->
+                                @if (!string.IsNullOrEmpty(Model.ClubIcon))
+                                {
+                                    <div class="text-center mb-4">
+                                        <img src="@Model.ClubIcon" alt="@Model.ClubNameAR" class="img-fluid rounded" style="max-height: 200px;">
+                                    </div>
+                                }
+
+                                <!-- Club Details -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="text-primary">اسم النادي بالعربية:</h6>
+                                        <p class="text-muted fs-6">@Model.ClubNameAR</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="text-primary">اسم النادي بالإنجليزية:</h6>
+                                        <p class="text-muted fs-6">@Model.ClubNameEN</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12 mb-3">
+                                        <h6 class="text-primary">الرؤية:</h6>
+                                        <p class="text-muted fs-6">@(string.IsNullOrEmpty(Model.ClubVision) ? "لا توجد رؤية محددة" : Model.ClubVision)</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6 class="text-primary">نبذة عن النادي:</h6>
+                                        <p class="text-muted fs-6">@(string.IsNullOrEmpty(Model.ClubOverview) ? "لا توجد نبذة عن النادي" : Model.ClubOverview)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

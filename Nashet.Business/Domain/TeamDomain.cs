@@ -11,31 +11,35 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class TeamDomain(TeamRepository Repository) : BaseDomain
+    public class TeamDomain : BaseDomain
     {
-        private readonly TeamRepository _TeamRepository = Repository;
+        private readonly TeamRepository _TeamRepository;
+        private readonly ClubRepository _ClubRepository;
+        public TeamDomain(TeamRepository TeamRepository, ClubRepository ClubRepository)
+        {
+            _TeamRepository = TeamRepository;
+            _ClubRepository = ClubRepository;
+        }
         public async Task<IList<TeamViewModel>> GetTeam()
         {
             return _TeamRepository.GetAllTeams().Result.Select(t => new TeamViewModel
             {
                 TeamId = t.TeamId,
-                ClubId = t.ClubId,
+                ClubId = (int)t.ClubId,
                 TeamNameAR = t.TeamNameAR,
                 TeamNameEn = t.TeamNameEn,
                 Guid = t.Guid
             }).ToList();
         }
 
-        public async Task<tblTeam> GetTeamById(int id)
+        public async Task<List<TeamViewModel>> GetTeamsByClubGuid(Guid clubGuid)
         {
-            var Team = await _TeamRepository.GetTeamByIdAsync(id);
-
-            if (Team == null)
+            var teams = await _TeamRepository.GetTeamByClubGuid(clubGuid);
+            return teams.Select(t => new TeamViewModel
             {
-                throw new KeyNotFoundException($"Team request with ID {id} was not found.");
-            }
-
-            return Team;
+                Guid = t.Guid,
+                TeamNameAR = t.TeamNameAR
+            }).ToList();
         }
 
 
@@ -43,33 +47,19 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
+                if (club == null) throw new Exception("النادي غير موجود");
                 tblTeam team = new tblTeam
                 {
-                    ClubId = viewModel.ClubId,
+                    ClubId = club.ClubId,
                     TeamNameAR = viewModel.TeamNameAR,
                     TeamNameEn = viewModel.TeamNameEn
                 };
                 int check = await _TeamRepository.InsertTeam(team);
                 if (check == 0)
-                {
                     return 0;
-                }
                 else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblTeam",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
-                }
                
             }
             catch
@@ -77,20 +67,21 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        
-        public virtual async Task<int> DeleteTeam(int Id)
+
+        public virtual async Task<int> DeleteTeam(Guid Guid)
         {
             try
             {
-                var team = await _TeamRepository.GetTeamByIdAsync(Id);
+                var team = await _TeamRepository.GetTeamByGuid(Guid);
                 if (team == null)
                 {
-                    return 0; // Site not found
-                }
-
-                int check = await _TeamRepository.DeleteTeam(team);
-                if (check == null)
                     return 0;
+                }
+                team.IsDeleted = true;
+                int check = await _TeamRepository.DeleteTeam(team);
+                if (check <= 0)
+                    return 0;
+
                 else
                     return 1;
 

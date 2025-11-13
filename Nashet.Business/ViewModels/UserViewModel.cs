@@ -12,12 +12,12 @@ namespace Nashet.Business.ViewModels
     public class UserViewModel  
     {
         public int UserId { get; set; }
+        public string RoleTypeEn { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("نوع المستخدم")]
         public int SystemRoleId { get; set; }
-        public tblSystemRole SystemRole { get; set; }
-
+        public SystemRoleViewModel SystemRole { get; set; }
         [StringLength(50)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("اسم المستخدم بالعربي")]
@@ -32,7 +32,7 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName(" البريد الإلكتروني")]
         public string UserEmail { get; set; }
-
+        public string Username { get; set; }
         [StringLength(10)]
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("رقم الهاتف")]
@@ -41,10 +41,8 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("الجهة")]
         public int SiteId { get; set; }
-        public tblSite Site { get; set; }
+        public SiteViewModel Site { get; set; }
         public Guid guid { get; set; }
-        public string Username { get; set; }
-        public List<SystemRoleViewModel> SystemRoles { get; set; }
-        public List<SiteViewModel> Sites { get; set; }
+        
     }
 }

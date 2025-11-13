@@ -1,59 +1,90 @@
 ﻿using Nashet.Business.Domain.Common;
+using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
+using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nashet.Business.Domain
+public class MembershipRequestDomain : BaseDomain
 {
-    public class MembershipRequestDomain : BaseDomain
+    private readonly MembershipRequestRepository _repo;
+    private readonly ClubRepository _ClubRepository;
+    private readonly TeamRepository _TeamRepository;
+    private readonly StudentRepository _StudentRepository;
+
+
+    public MembershipRequestDomain(MembershipRequestRepository repo, ClubRepository clubRepository, TeamRepository teamRepository, StudentRepository studentRepository)
     {
-        private readonly MembershipRequestRepository _MembershipRequestRepository;
-        public MembershipRequestDomain(MembershipRequestRepository Repository)
-        {
-            _MembershipRequestRepository = Repository;
-        }
-        public async Task<IList<tblMembershipRequest>> GetMembershipRequest(int id)
-        {
-            return await _MembershipRequestRepository.GetAllMembershipRequest();
-        }
-        public async Task<tblMembershipRequest> GetMembershipRequestById(int id)
-        {
-            var membershipRequest = await _MembershipRequestRepository.GetMembershipRequestById(id);
+        _repo = repo;
+        _ClubRepository = clubRepository;
+        _TeamRepository = teamRepository;
+        _StudentRepository = studentRepository;
+    }
+    public async Task<tblMembershipRequest> GetRequestByGuid(Guid guid)
+    {
+        var Request = await _repo.GetRequestByGUID(guid);
 
-            if (membershipRequest == null)
-            {
-                throw new KeyNotFoundException($"Membership request with ID {id} was not found.");
-            }
+        if (Request == null)
+        {
+            throw new KeyNotFoundException($"طلب العضوية المطلوب غير متوفر");
+        }
+        return Request;
+    }
 
-            return membershipRequest;
-        }
-        public virtual async Task<int> InsertMembershipRequest(tblMembershipRequest MembershipRequest)
+    public async Task<int> InsertMembershipRequest(MembershipRequestViewModel viewModel)
+    {
+        bool topicExists = await _repo.IsRequestExists(viewModel.ClubID);
+        if (topicExists)
         {
-            try
-            {
-                await _MembershipRequestRepository.InsertMembershipRequest(MembershipRequest);
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
+            return -1;
         }
-        public int DeleteUser(int id)
+        var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
+        var team1 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam1);
+        var team2 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam2);
+        var team3 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam3);
+        var student = await _StudentRepository.GetByAcademicIdAsync(viewModel.AcademicId);
+
+
+        var entity = new tblMembershipRequest
         {
-            try
+
+            ClubID = club.ClubId,
+            RequestTeam1 = team1.TeamId,
+            RequestTeam2 = team2.TeamId,
+            RequestTeam3 = team3.TeamId,
+            RequestReason = viewModel.RequestReason,
+            RequestDate = viewModel.RequestDate,
+            StudentID = student.StudentId
+        };
+
+        return await _repo.InsertMembershipRequest(entity);
+    }
+
+
+    public virtual async Task<int> DeleteRequest(Guid guid)
+    {
+        try
+        {
+            var Request = await _repo.GetRequestByGUID(guid);
+            if (Request == null)
             {
-                _MembershipRequestRepository.Delete(id);
-                return 1;
+                return 0; // Site not found
             }
-            catch
-            {
+            Request.IsDeleted = true;
+            int check = await _repo.DeleteRequest(Request);
+            if (check == null)
                 return 0;
-            }
+            else
+                return 1;
+
+        }
+        catch
+        {
+            return 0;
         }
     }
 }

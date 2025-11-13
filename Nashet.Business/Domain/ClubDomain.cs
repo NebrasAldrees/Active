@@ -10,9 +10,15 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class ClubDomain(ClubRepository Repository) : BaseDomain
+    public class ClubDomain: BaseDomain
     {
-        private readonly ClubRepository _ClubRepository = Repository;
+        private readonly ClubRepository _ClubRepository;
+        private readonly SiteRepository _SiteRepository;
+        public ClubDomain(SiteRepository siteRepository, ClubRepository Repository)
+        {
+            _SiteRepository = siteRepository;
+            _ClubRepository = Repository;
+        }
 
         public async Task<IList<ClubViewModel>> GetClub()
         {
@@ -28,6 +34,76 @@ namespace Nashet.Business.Domain
                 Guid = a.Guid
 
             }).ToList();
+        }
+        public async Task<ClubViewModel> GetClubByGuid(Guid guid)
+        {
+            var club = await _ClubRepository.GetClubByGuid(guid);
+            if (club == null)
+            {
+                throw new KeyNotFoundException($"Club with GUID {guid} was not found.");
+            }
+
+            return new ClubViewModel
+            {
+                ClubId = club.ClubId,
+                SiteId = (int)club.siteId,
+                ClubNameAR = club.ClubNameAR,
+                ClubNameEN = club.ClubNameEN,
+                ClubVision = club.ClubVision,
+                ClubOverview = club.ClubOverview,
+                ClubIcon = club.ClubIcon,
+                Guid = club.Guid
+            };
+        }
+        public async Task<IList<ClubViewModel>> GetClubBySiteGuid(Guid? SiteGuid)
+        {
+            try
+            {
+                Console.WriteLine($"GetClubBySiteGuid called with SiteGuid: {SiteGuid}");
+
+                if (SiteGuid.HasValue)
+                {
+                    // 1. الحصول على الـ SiteId من الـ SiteGuid
+                    var site = await _SiteRepository.GetSiteByGUID(SiteGuid.Value);
+                    if (site == null)
+                    {
+                        Console.WriteLine("Site not found for the provided GUID");
+                        return new List<ClubViewModel>();
+                    }
+
+                    Console.WriteLine($"Found site: {site.SiteNameAR} with ID: {site.SiteId}");
+
+                    // 2. الحصول على الأندية الخاصة بهذا الـ SiteId مباشرة من الـ Repository
+                    var clubs = await _ClubRepository.GetClubsBySiteId(site.SiteId);
+
+                    Console.WriteLine($"Found {clubs?.Count ?? 0} clubs for site ID: {site.SiteId}");
+
+                    // 3. تحويل إلى ViewModel
+                    var result = clubs?.Select(a => new ClubViewModel
+                    {
+                        ClubId = a.ClubId,
+                        SiteId = a.siteId,
+                        ClubNameAR = a.ClubNameAR,
+                        ClubNameEN = a.ClubNameEN,
+                        ClubVision = a.ClubVision,
+                        ClubOverview = a.ClubOverview,
+                        ClubIcon = a.ClubIcon,
+                        Guid = a.Guid
+                    }).ToList() ?? new List<ClubViewModel>();
+
+                    return result;
+                }
+                else
+                {
+                    // إذا لم يتم تحديد جهة، أرجع جميع الأندية
+                    return await GetClub();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetClubBySiteGuid: {ex.Message}");
+                return new List<ClubViewModel>();
+            }
         }
         public async Task<ClubViewModel> GetClubById(int id)
         {
@@ -54,53 +130,77 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                var site = await _SiteRepository.GetSiteByGUID(viewModel.SiteGuid);
+
+                // التحقق من التكرار في نفس الجهة فقط - باستخدام الـ Repository
+                bool nameExists = await _ClubRepository.IsClubNameExistsInSameSite(viewModel.ClubNameAR, viewModel.ClubNameEN, site.SiteId);
+                if (nameExists)
+                {
+                    return -1; // إرجاع -1 في حالة التكرار في نفس الجهة
+                }
+
                 tblClub Club = new tblClub
                 {
-                    siteId = viewModel.SiteId,
+                    siteId = site.SiteId,
                     ClubNameAR = viewModel.ClubNameAR,
                     ClubNameEN = viewModel.ClubNameEN,
                     ClubVision = viewModel.ClubVision,
                     ClubOverview = viewModel.ClubOverview,
-                    ClubIcon = viewModel.ClubIcon                
+                    ClubIcon = viewModel.ClubIcon,
+                    Guid = Guid.NewGuid()
                 };
                 int check = await _ClubRepository.InsertClub(Club);
                 if (check == 0)
-                {
                     return 0;
-                }
                 else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblClub",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
                     return 1;
-                }
             }
             catch
             {
                 return 0;
             }
         }
-        public async Task<int> DeleteClub(int id)
+        //public virtual async Task<int> UpdateClubByGuid(Guid guid, ClubViewModel viewModel)
+        //{
+        //    try
+        //    {
+        //        bool nameExists = await _ClubRepository.IsClubNameExistsInSameSite(viewModel.ClubNameAR, viewModel.ClubNameEN, guid);
+        //        if (nameExists)
+        //        {
+        //            return -1;
+        //        }
+
+        //        var updatedClub = new tblClub
+        //        {
+        //            siteId = viewModel.SiteId,
+        //            ClubNameAR = viewModel.ClubNameAR,
+        //            ClubNameEN = viewModel.ClubNameEN,
+        //            ClubVision = viewModel.ClubVision,
+        //            ClubOverview = viewModel.ClubOverview,
+        //            ClubIcon = viewModel.ClubIcon
+        //        };
+
+        //        int check = await _ClubRepository.UpdateClubByGuid(guid, updatedClub);
+        //        return check == 0 ? 0 : 1;
+        //    }
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        //}
+        public virtual async Task<int> DeleteClubByGuid(Guid guid)
         {
             try
             {
-                _ClubRepository.Delete(id);
-                return 1;
+                int check = await _ClubRepository.DeleteClubByGuid(guid);
+                return check == 0 ? 0 : 1;
             }
             catch
             {
                 return 0;
             }
         }
+        
+        
     }
 }

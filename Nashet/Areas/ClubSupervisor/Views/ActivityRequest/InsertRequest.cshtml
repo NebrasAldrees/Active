@@ -1,0 +1,159 @@
+﻿@model ActivityRequestViewModel
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">إضافة طلب نشاط</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="InsertRequest" asp-controller="ActivityRequest" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ClubGuid" class="mb-1">  </label>
+                                    <select asp-for="ClubGuid" class="form-control">
+                                        <option value="">-- اختر النادي --</option>
+                                        @foreach (ClubViewModel club in ViewBag.Club)
+                                        {
+                                            <option value="@club.Guid">@club.ClubNameAR</option>
+                                        }
+                                    </select>
+                                    <span style="color:red" asp-validation-for="ClubGuid"></span>
+
+                                </div><!-- END ITEM -->
+                            </div>
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityTopic" class="mb-1"></label>
+                                    <input asp-for="ActivityTopic" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ActivityTopic"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityDescription" class="mb-1"></label>
+                                    <input asp-for="ActivityDescription" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ActivityDescription"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityStartDate"></label>
+                                    <input asp-for="ActivityStartDate" type="date" class="form-control" />
+                                    <input asp-for="ActivityStartTime" type="time" class="form-control" />
+                                    <span style="color:red" asp-validation-for="ActivityStartDate"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityEndDate"></label>
+                                    <input asp-for="ActivityEndDate" type="date" class="form-control" />
+                                    <input asp-for="ActivityEndTime" type="time" class="form-control" />
+                                    <span style="color:red" asp-validation-for="ActivityEndDate"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityLocation" class="mb-1"></label>
+                                    <input asp-for="ActivityLocation" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="ActivityLocation"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ActivityPoster" class="mb-1"></label>
+                                    <input type="file" name="ActivityPoster" id="ImageUpload" accept="image/*" class="form-control" />
+                                    <small class="text-muted">الأنواع المسموحة: JPG, PNG - الحجم الأقصى: 50MB</small>
+                                    <span style="color:red" asp-validation-for="ActivityPoster"></span>
+                                </div><!-- END ITEM -->
+
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-5 insert-btn" title="save">إضافة</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('ImageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 50MB');
+                    e.target.value = '';
+                    return;
+                }
+
+                const allowedTypes = ['image/jpeg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG)');
+                    e.target.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+
+                    const oldPreview = document.getElementById('imagePreview');
+                    if (oldPreview) {
+                        oldPreview.remove();
+                    }
+
+
+                    const preview = document.createElement('div');
+                    preview.id = 'imagePreview';
+                    preview.innerHTML = `
+                        <div class="mt-3 p-3 border">
+                            <h6>معاينة الصورة:</h6>
+                            <img src="${e.target.result}" class="img-fluid " style="max-height: 200px;">
+                        </div>
+                    `;
+                    document.querySelector('.mb-4').after(preview);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        @if (ViewBag.Successful != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تمت الإضافة",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                }).then(() => {
+                    window.location.href = '@Url.Action("Home", "ClubSupervisorHome")';
+                });
+                </text>
+        }
+        else if (ViewBag.Duplicate != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تنبيه",
+                    icon: "warning",
+                    confirmButtonText: "موافق"
+                });
+                </text>
+        }
+        else if (ViewBag.Error != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "خطأ",
+                    icon: "error",
+                    confirmButtonText: "موافق"
+                });
+                </text>
+        }
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

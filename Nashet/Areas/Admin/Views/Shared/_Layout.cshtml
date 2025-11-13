@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en" dir="rtl" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم  بالنظام</title>
+    <title>نشِط</title>
 
     <!-- Favico -->
     <link rel="apple-touch-icon" sizes="180x180" href="~/assets/imgs/favicon/apple-touch-icon.png">
@@ -19,15 +20,13 @@
     <link rel="stylesheet" href="~/assets/css/bootstrap.rtl.min.css">
     <link rel="stylesheet" href="~/assets/css/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/assets/css/root.css">
-    <link href="~/assets/css/app_rtl.css" rel="stylesheet" />
 
     <!--------- CSS Liberaries ---------->
     <!-- Data Table -->
-     <link rel="stylesheet" href="~/assets/lib/DataTable/css/select.dataTables.min.css" /> 
-     <link rel="stylesheet" href="~/assets/lib/DataTable/css/datatables_customization.css" />
-
-
+    <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/select.dataTables.min.css" /> -->
+    <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/datatables_customization.css" /> -->
     <!-- customization -->
+    <link rel="stylesheet" href="~/assets/css/app_rtl.css">
 
 </head>
 <body>
@@ -40,52 +39,32 @@
             <div class="menu_links">
                 <ul>
                     <li>
-                        <a asp-action="AdminHome" asp-controller="Home" asp-area="Admin">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
-                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
-                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor">
-                                </rect>
-                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                        <a asp-area="Admin" asp-controller="Home" asp-action="AdminHome">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z" fill="currentColor" />
+                                <path d="M21 9V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V9C3 10.1 3.9 11 5 11H19C20.1 11 21 10.1 21 9Z" fill="currentColor" />
+                                <path d="M19 13H5C3.9 13 3 13.9 3 15V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V15C21 13.9 20.1 13 19 13Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 8H9V10H15V8Z" fill="currentColor" />
+                                <path opacity="0.3" d="M15 14H9V16H15V14Z" fill="currentColor" />
                             </svg>
                             <span>الرئيسية</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-action="Index" asp-controller="KfuUser" asp-area="Admin" class="active">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
-                            </svg>
-                            <span>مستخدمين الجامعة</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-action="ViewSites" asp-controller="Site" asp-area="Admin" class="active">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-buildings" viewBox="0 0 16 16">
-                                <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z" />
-                                <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z" />
-                            </svg>
-                            <span>جهات الجامعة</span>
-                        </a>
-                    </li>
                     <li class="sub_menu">
                         <a href="JavaScript:void(0)">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                <path opacity="0.2" fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M11 3C10.4477 3 10 3.44772 10 4V4.56876C10 4.99658 9.71288 5.36825 9.31776 5.53229C8.9225 5.6964 8.46228 5.63386 8.15966 5.33123L7.75734 4.92891C7.36681 4.53839 6.73365 4.53839 6.34312 4.92891L4.92891 6.34313C4.53838 6.73365 4.53838 7.36681 4.92891 7.75734L5.33123 8.15966C5.63386 8.46229 5.6964 8.9225 5.53229 9.31776C5.36825 9.71288 4.99658 10 4.56877 10L4 10C3.44772 10 3 10.4477 3 11V13C3 13.5523 3.44772 14 4 14H4.56879C4.99659 14 5.36825 14.2871 5.53228 14.6822C5.69638 15.0775 5.63384 15.5377 5.33123 15.8403L4.92889 16.2426C4.53837 16.6331 4.53837 17.2663 4.92889 17.6568L6.34311 19.071C6.73363 19.4616 7.36679 19.4616 7.75732 19.071L8.1596 18.6688C8.46223 18.3661 8.92247 18.3036 9.31774 18.4677C9.71287 18.6317 10 19.0034 10 19.4313V20C10 20.5523 10.4477 21 11 21H13C13.5523 21 14 20.5523 14 20V19.4312C14 19.0034 14.2871 18.6318 14.6822 18.4677C15.0775 18.3036 15.5377 18.3661 15.8403 18.6688L16.2426 19.071C16.6331 19.4616 17.2663 19.4616 17.6568 19.071L19.071 17.6568C19.4616 17.2663 19.4616 16.6331 19.071 16.2426L18.6688 15.8403C18.3661 15.5377 18.3036 15.0775 18.4677 14.6822C18.6318 14.2871 19.0034 14 19.4312 14H20C20.5523 14 21 13.5523 21 13V11C21 10.4477 20.5523 10 20 10L19.4313 10C19.0034 10 18.6317 9.71287 18.4677 9.31774C18.3036 8.92247 18.3661 8.46223 18.6688 8.1596L19.071 7.75734C19.4615 7.36681 19.4616 6.73365 19.071 6.34312L17.6568 4.92891C17.2663 4.53838 16.6331 4.53838 16.2426 4.92891L15.8403 5.33123C15.5377 5.63384 15.0775 5.69638 14.6822 5.53228C14.2871 5.36825 14 4.99659 14 4.56879V4C14 3.44772 13.5523 3 13 3H11ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
-                                      fill="currentColor"></path>
-                                <path d="M10 4C10 3.44772 10.4477 3 11 3H13C13.5523 3 14 3.44772 14 4V4.56879C14 4.99659 14.2871 5.36825 14.6822 5.53228C15.0775 5.69638 15.5377 5.63384 15.8403 5.33123L16.2426 4.92891C16.6331 4.53838 17.2663 4.53838 17.6568 4.92891L19.071 6.34312C19.4616 6.73365 19.4616 7.36681 19.071 7.75734L18.6688 8.1596C18.3661 8.46223 18.3036 8.92247 18.4677 9.31774C18.6317 9.71287 19.0034 10 19.4313 10L20 10C20.5523 10 21 10.4477 21 11V13C21 13.5523 20.5523 14 20 14H19.4312C19.0034 14 18.6318 14.2871 18.4677 14.6822C18.3036 15.0775 18.3661 15.5377 18.6688 15.8403L19.071 16.2426C19.4616 16.6331 19.4616 17.2663 19.071 17.6568L17.6568 19.071C17.2663 19.4616 16.6331 19.4616 16.2426 19.071L15.8403 18.6688C15.5377 18.3661 15.0775 18.3036 14.6822 18.4677C14.2871 18.6317 14 19.0034 14 19.4312V20C14 20.5523 13.5523 21 13 21H11C10.4477 21 10 20.5523 10 20V19.4313C10 19.0034 9.71287 18.6317 9.31774 18.4677C8.92247 18.3036 8.46223 18.3661 8.1596 18.6688L7.75732 19.071C7.36679 19.4616 6.73363 19.4616 6.34311 19.071L4.92889 17.6568C4.53837 17.2663 4.53837 16.6331 4.92889 16.2426L5.33123 15.8403C5.63384 15.5377 5.69638 15.0775 5.53228 14.6822C5.36825 14.2871 4.99659 14 4.56879 14H4C3.44772 14 3 13.5523 3 13V11C3 10.4477 3.44772 10 4 10L4.56877 10C4.99658 10 5.36825 9.71288 5.53229 9.31776C5.6964 8.9225 5.63386 8.46229 5.33123 8.15966L4.92891 7.75734C4.53838 7.36681 4.53838 6.73365 4.92891 6.34313L6.34312 4.92891C6.73365 4.53839 7.36681 4.53839 7.75734 4.92891L8.15966 5.33123C8.46228 5.63386 8.9225 5.6964 9.31776 5.53229C9.71288 5.36825 10 4.99658 10 4.56876V4Z"
-                                      stroke="currentColor" stroke-width="1.5"></path>
-                                <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
-                                      stroke="currentColor" stroke-width="1.5"></path>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
+                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
                             </svg>
-                            <span>إدارة</span>
+                            <span>القائمة الرئيسية</span>
                         </a>
                         <ul>
-                            <li><a asp-action="Index" asp-controller="KfuUser" asp-area="Admin"><span>المستخدمين</span></a></li>
-                            <li><a asp-action="Insert" asp-controller="SystemRole" asp-area="Admin"><span>الأدوار</span></a></li>
-                            
+                            <li><a asp-action="Index" asp-controller="KfuUser" asp-area="Admin"><span> مستخدمين الجامعة</span></a></li>
+                            <li><a asp-action="InsertUser" asp-controller="User" asp-area="Admin"><span>إدارة المستخدمين</span></a></li>
+                            <li><a asp-action="ViewSites" asp-controller="Site" asp-area="Admin"><span>جهات الجامعة</span></a></li>
+                            <li><a asp-action="Insert" asp-controller="SystemRole" asp-area="Admin"><span>إضافة أدوار للنظام</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -109,79 +88,77 @@
             <!-- Start Header Navbar -->
             <header>
                 <ul class="nav me-auto">
-                    <li class="nav-item me-2">
-                        <a class="nav-link btn btn-dark-rgb text-gray-800 br-10" id="menu_state_btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 26 26"
-                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <path d="M6 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                                <path d="M16 4v16" />
-                                <path d="M10 10l2 2l-2 2" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="input-group overflow-hiddin bg-dark-rgb border-0 br-10">
-                            <span class="input-group-text" id="basic-addon1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 11v-2a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v5a2 2 0 0 0 2 2h5" />
-                                    <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                    <path d="M20.2 20.2l1.8 1.8" />
-                                </svg>
-                            </span>
-                            <input type="text" class="form-control header__search_input ps-0" placeholder="البحث ...">
-                        </div>
-                    </li>
+                    
                 </ul>
                 <ul class="nav d-flex">
                     <li class="nav-item dropdown ms-2">
-                        <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
-                                 stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
-                                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                                <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
-                            </svg>
-                        </a>
-                        <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
-                            <li>
-                                <div class="d-flex flex-column">
-                                    <h6 class="mb-0">عبد الرحمن ال عبد اللطيف</h6>
-                                    <small class="text-muted m-0">aaaalatif@kfu.edu.sa</small>
-                                </div>
+                        <ul class="nav d-flex">
+                            <li class="nav-item dropdown ms-2">
+                                <a class="nav-link dropdown-toggle btn btn-dark-rgb text-gray-800 br-10" id="account"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                        <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                                    </svg>
+                                </a>
+                                <ul class="dropdown-menu account_dd br-stand border-1 border-gray-300 p-4 shadow" aria-labelledby="account">
+                                    <li>
+                                        <div class="d-flex flex-column">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <h6 class="mb-0">@User.FindFirst(ClaimTypes.GivenName)?.Value</h6>
+                                                @* <small class="text-muted m-0">@User.Identity.Name</small> *@
+                                                <small class="text-muted m-0">@User.FindFirst(ClaimTypes.Role)?.Value</small>
+                                            }
+                                            else
+                                            {
+                                                <h6 class="mb-0">زائر</h6>
+                                                <small class="text-muted m-0">غير مسجل</small>
+                                            }
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <!-- زر الملف الشخصي -->
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item" a asp-action="ProfilePage" asp-controller="Home" asp-area="Admin">
+                                                <i class="fas fa-user me-2"></i>الملف الشخصي
+                                            </a>
+                                        }
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider w-100">
+                                    </li>
+                                    <li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="dropdown-item text-danger" href="#" onclick="confirmLogout()">
+                                                <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item" href="/Account/Login">تسجيل الدخول</a>
+                                        }
+                                    </li>
+                                </ul>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider w-100">
-                            </li>
-                            <li><a class="dropdown-item" href="#">الملف الشخصي</a></li>
-                            <li><a class="dropdown-item" href="#">English Language</a></li>
-                            <li>
-                                <hr class="dropdown-divider w-100">
-                            </li>
-                            <li><a class="dropdown-item" href="#">تسجيل الخروج</a></li>
                         </ul>
                     </li>
                 </ul>
             </header><!-- End Header Navbar -->
             <!-- Start Page Wrap -->
-            
             <!-- Start Footer -->
             @RenderBody()
         </main><!-- End Content wrapper -->
     </main>
-    
-
-    @* <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div> *@
 
     <footer class="d-flex justify-content-center align-items-center">
         <p class="m-0 d-flex justify-content-center">
@@ -193,12 +170,35 @@
     <script src="~/assets/js/jquery-3.4.1.min.js"></script>
     <script src="~/assets/js/popper.min.js"></script>
     <script src="~/assets/js/bootstrap.min.js"></script>
-    <script src="~/assets/js/app.js"></script>
+
     <!--------- JS Liberaries ---------->
     <script src="~/assets/lib/DataTable/js/dataTables.min.js"></script>
-    <script src="~/assets/lib/datatable/js/datatables.select.min.js"></script>
-    <script src="~/assets/lib/quicksearch/jquery.quicksearch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- customization -->
+    <script src="~/assets/js/app.js"></script>
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: "هل أنت متأكد؟",
+                text: "سيتم تسجيل خروجك من النظام",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0f7179",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "نعم، سجل الخروج",
+                cancelButtonText: "إلغاء"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // تنظيف التخزين المحلي أولاً (اختياري)
+                    localStorage.clear();
+                    sessionStorage.clear();
+
+                    // التوجيه المباشر إلى صفحة Login
+                    window.location.href = '/Home/Login';
+                }
+            });
+        }
+    </script>
     <script>
         $("#addSectionBtn").on('click', function () {
             let sections_item_length = $('.sub_sections_wrap').find('.sub_sections_item').length

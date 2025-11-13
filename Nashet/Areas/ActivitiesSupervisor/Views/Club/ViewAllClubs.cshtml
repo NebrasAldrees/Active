@@ -1,4 +1,18 @@
-﻿@model IEnumerable<ClubViewModel>
+﻿@using Nashet.Business.ViewModels
+@model IEnumerable<ClubViewModel>
+@{
+    var queryGuid = ViewContext.HttpContext.Request.Query["SiteGuid"];
+    Guid selectedSiteGuid = Guid.Empty;
+
+    if (!string.IsNullOrEmpty(queryGuid) && Guid.TryParse(queryGuid, out Guid parsedGuid))
+    {
+        selectedSiteGuid = parsedGuid;
+    }
+
+    var siteList = (IEnumerable<SiteViewModel>)ViewBag.Sites;
+    var selectedSite = siteList?.FirstOrDefault(s => s.Guid == selectedSiteGuid);
+}
+
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
@@ -6,95 +20,111 @@
                 <h5 class="m-0">الأندية الطلابية</h5>
                 <div class="d-flex gap-2">
                     <div class="form-group">
-                        <input type="text" class="form-control table__quick_search"
+                        <input type="text" class="form-control" id="clubSearch"
                                placeholder="البحث السريع ...">
                     </div>
                     <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor" class="btn btn-primary">إضافة نادي</a>
                 </div>
             </div>
-            <div class="block-body">
 
-                @if (ViewData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@ViewData["Error"]</div>
-                }
+            <!-- فلترة الجهة -->
+            <div class="block-body mx-auto px-4 py-8">
+                    <div class="col-md-6">
+                        <form method="get" asp-action="ViewAllClubs" asp-controller="Club" asp-area="ActivitiesSupervisor">
+                        <div class="flex items-stretch md:items-center bg-white rounded shadow-sm p-3 input-shadow border border-gray-200">
+                            <div class="flex items-center space-x-2 space-x-reverse mb-3 md:mb-0 md:ml-4 flex-shrink-0">
+                                <label for="selectedSite" class="text-lg font-semibold text-gray-700 whitespace-nowrap">فلترة حسب الجهة:</label>
+                                @{
+                                    var siteList = (IEnumerable<SiteViewModel>)ViewBag.Site;
+                                    var queryGuid = ViewContext.HttpContext.Request.Query["siteGuid"];
+                                    Guid SiteGuid = Guid.TryParse(queryGuid, out var parsedGuid) ? parsedGuid : Guid.Empty;
+                                }
+                                @Html.DropDownList("siteGuid",
+                                new SelectList(siteList, "Guid", "SiteNameAR", SiteGuid),
+                                                                "-- اختر الجهة --",
+                                                                new { @class = "form-control", onchange = "this.form.submit()" })
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+            </div>
 
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@TempData["Error"]</div>
-                }
-
-                @if (TempData["Message"] != null)
-                {
-                    <div class="alert alert-success">@TempData["Message"]</div>
-                }
-
-                @if (Model == null || !Model.Any())
-                {
-                    <div class="alert alert-warning">لا توجد أندية مسجلة حالياً</div>
-                }
-                else
-                {
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-                        @foreach (var item in Model)
+                <!-- بداية البطاقات -->
+                <div class="row" id="clubsContainer">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
                         {
-                            <div class="col">
-                                <div class="card h-100 text-white shadow" style="background-image: url('@item.ClubIcon'); background-size: cover; background-position: center;">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-end club-overlay">
-                                        <h5 class="card-title text-center mb-1 club-name-title">@item.ClubNameAR</h5>
-                                        <p class="card-text text-center mb-2 club-name-subtitle">@item.ClubNameEN</p>
-                                        <div class="d-flex justify-content-center gap-1 club-actions">
-                                            <a href="#" class="btn btn-sm btn-light">عرض</a>
-                                            <a href="#" class="btn btn-sm btn-success">تعديل</a>
-
-                                            @* زر الحذف مع تأكيد *@
-                                            <form asp-action="DeleteClub" asp-controller="Club"
-                                                  asp-area="ActivitiesSupervisor" method="post"
-                                                  class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف النادي؟');">
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="id" value="@item.ClubId" />
-                                                <button type="submit" class="btn btn-sm btn-danger">حذف</button>
-                                            </form>
+                            <div class="col-md-6 col-lg-4 mb-4 club-card">
+                                <div class="card h-100 shadow-sm">
+                                    <a asp-action="ClubPage" asp-controller="Club" asp-area="ActivitiesSupervisor" asp-route-guid="@item.Guid"
+                                       class="text-decoration-none text-dark">
+                                        <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                                            <h6 class="mb-0 text-primary">@item.ClubNameAR</h6>
+                                            <span class="badge bg-secondary">#@item.ClubId</span>
                                         </div>
-                                    </div>
+                                        <div class="card-body">
+                                            <!-- صورة الشعار -->
+                                            <div class="text-center mb-3">
+                                                @if (!string.IsNullOrEmpty(item.ClubIcon))
+                                                {
+                                                    <img src="@item.ClubIcon" alt="شعار النادي"
+                                                         style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                                }
+                                                else
+                                                {
+                                                    <div style="width: 80px; height: 80px; background: #f8f9fa; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;">
+                                                        <i class="fas fa-image text-muted"></i>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <!-- معلومات النادي -->
+                                            <div class="mb-2">
+                                                <strong>الاسم الإنجليزي:</strong>
+                                                <p class="mb-1 text-muted">@item.ClubNameEN</p>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <strong>الجهة:</strong>
+                                                @{
+                                                    var siteName = "غير محدد";
+                                                    if (siteList != null && item.SiteId > 0)
+                                                    {
+                                                        var site = siteList.FirstOrDefault(s => s.SiteId == item.SiteId);
+                                                        siteName = site?.SiteNameAR ?? "غير محدد";
+                                                    }
+                                                }
+                                                <p class="mb-1 text-muted">@siteName</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         }
-                    </div>
-                }
+                    }
+                </div>
+                <!-- نهاية البطاقات -->
             </div>
         </div>
     </div>
 </section>
 
-<style>
-    .card {
-        min-height: 200px;
-        position: relative;
-        overflow: hidden;
-    }
+@section Scripts {
+    <script>
+        // البحث السريع
+        document.getElementById('clubSearch').addEventListener('input', function(e) {
+            const searchText = e.target.value.toLowerCase().trim();
+            const clubCards = document.querySelectorAll('.club-card');
 
-    .club-overlay {
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: background-color 0.3s ease;
-    }
-
-    .club-name-title {
-        font-weight: bold;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    .club-name-subtitle {
-        font-size: 0.9em;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    }
-
-    .card:hover .club-overlay {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    /* تحسين شكل الزر في الفورم */
-    .club-actions form {
-        display: inline;
-    }
-</style>
+            clubCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchText) || searchText === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+}

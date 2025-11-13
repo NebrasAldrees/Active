@@ -9,19 +9,19 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertActivity" method="post">
+                        <form asp-action="InsertActivity" asp-controller="Activity" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="ClubId" " class="mb-1">  </label>
-                                    <select asp-for="ClubId" class="form-control">
+                                    <label asp-for="ClubGuid" class="mb-1">  </label>
+                                    <select asp-for="ClubGuid" class="form-control">
                                         <option value="">-- اختر النادي --</option>
                                         @foreach (ClubViewModel club in ViewBag.Club)
                                         {
-                                            <option value="@club.ClubId">@club.ClubNameAR</option>
+                                            <option value="@club.Guid">@club.ClubNameAR</option>
                                         }
                                     </select>
-                                    <span style="color:red" asp-validation-for="ClubId"></span>
+                                    <span style="color:red" asp-validation-for="ClubGuid"></span>
 
                                 </div><!-- END ITEM -->
                             </div>
@@ -41,17 +41,16 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ActivityStartDate"></label>
-                                    <input asp-for="ActivityStartDate" type="date" class="form-control">
+                                    <input asp-for="ActivityStartDate" type="date" class="form-control" />
+                                    <input asp-for="ActivityStartTime" type="time" class="form-control" />
                                     <span style="color:red" asp-validation-for="ActivityStartDate"></span>
-
-                                    <input asp-for="ActivityTime" type="time" class="form-control">
-                                    <span style="color:red" asp-validation-for="ActivityTime"></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ActivityEndDate"></label>
-                                    <input asp-for="ActivityEndDate" type="date" class="form-control">
-                                    <span style="color:red" asp-validation-for="ActivityEndDate"></span>
+                                    <input asp-for="ActivityEndDate" type="date" class="form-control" />
+                                    <input asp-for="ActivityEndTime" type="time" class="form-control" />
+                                    <span style="color:red" asp-validation-for="ActivityEndDate" ></span>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -62,20 +61,102 @@
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
                                     <label asp-for="ActivityPoster" class="mb-1"></label>
-                                    <input asp-for="ActivityPoster" type="file" id="ImageUpload"
-                                           name="ActivityPoster" name="ActivityPoster" accept="image/*" class=" form-control"></input>
+                                    <input type="file" name="ActivityPoster" id="ImageUpload" accept="image/*" class="form-control" />
+                                    <small class="text-muted">الأنواع المسموحة: JPG, PNG - الحجم الأقصى: 50MB</small>
                                     <span style="color:red" asp-validation-for="ActivityPoster"></span>
                                 </div><!-- END ITEM -->
 
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                    <button type="submit" class="btn btn-primary px-5 insert-btn" title="save">إضافة</button>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('ImageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 50MB');
+                    e.target.value = '';
+                    return;
+                }
+
+                const allowedTypes = ['image/jpeg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG)');
+                    e.target.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+
+                    const oldPreview = document.getElementById('imagePreview');
+                    if (oldPreview) {
+                        oldPreview.remove();
+                    }
+
+
+                    const preview = document.createElement('div');
+                    preview.id = 'imagePreview';
+                    preview.innerHTML = `
+                        <div class="mt-3 p-3 border">
+                            <h6>معاينة الصورة:</h6>
+                            <img src="${e.target.result}" class="img-fluid " style="max-height: 200px;">
+                        </div>
+                    `;
+                    document.querySelector('.mb-4').after(preview);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        @if (ViewBag.Successful != null)
+        {
+            <text>
+            Swal.fire({
+                title: "تمت الإضافة",
+                // text: "@ViewBag.Successful",
+                icon: "success",
+                confirmButtonText: "موافق",
+                draggable: true
+            }).then(() => {
+                window.location.href = '@Url.Action("Activities", "Activity")';
+            });
+            </text>
+        }
+        else if (ViewBag.Duplicate != null)
+        {
+            <text>
+            Swal.fire({
+                title: "تنبيه",
+                // text: "@ViewBag.Duplicate",
+                icon: "warning",
+                confirmButtonText: "موافق"
+            });
+            </text>
+        }
+        else if (ViewBag.Error != null)
+        {
+            <text>
+            Swal.fire({
+                title: "خطأ",
+                // text: "@ViewBag.Error",
+                icon: "error",
+                confirmButtonText: "موافق"
+            });
+            </text>
+        }
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

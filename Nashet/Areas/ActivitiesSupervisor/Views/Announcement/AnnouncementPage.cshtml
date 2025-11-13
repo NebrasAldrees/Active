@@ -1,0 +1,161 @@
+﻿@model AnnouncementViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <!-- Header -->
+            <div class="block-header border-bottom px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">نشاط: @Model.AnnouncementTopic</h5>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="block-body p-4">
+                @if (Model == null)
+                {
+                    <div class="alert alert-danger text-center">
+                        ⚠️ لم يتم العثور على الإعلان
+                    </div>
+                    <div class="text-center">
+                        <a asp-action="AvtivitiesSupervisorHome" class="btn btn-primary">العودة للصفحة الرئيسية</a>
+                    </div>
+                    return;
+                }
+
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <!-- poster -->
+                        <div class="text-center mb-4">
+                            @if (!string.IsNullOrEmpty(Model.AnnouncementImage))
+                            {
+                                <img src="@Model.AnnouncementImage" alt="صورة الاعلان" class="rounded shadow"
+                                     style="width: 400px; height: 400px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center"
+                                     style="width: 400px; height: 400px;">
+                                    <i class="fas fa-club fa-3x text-muted" onerror="this.onerror=null;this.src='https://placehold.co/80x80/f3f4f6/000000?text=POSTER';"></i>
+                                </div>
+                            }
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-8">
+                        <!-- المعلومات الأساسية -->
+                        <div class="card shadow-sm">
+                            <div class="card-header ">
+                                <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>معلومات الإعلان</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <strong>موضوع الإعلان</strong>
+                                    <div class="text-muted">@(Model.AnnouncementTopic ?? "غير محدد")</div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>نوع الإعلان</strong>
+                                    <div class="text-muted">@Model.AnnouncementType</div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>النادي التابع للإعلان</strong>
+                                    <div class="text-muted">@(ViewBag.CurrentClub?.ClubNameAR ?? "غير محدد")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- تفاصيل الإعلان-->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>تفاصيل الإعلان</h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                                    @if (!string.IsNullOrEmpty(Model.AnnouncementDetails))
+                                    {
+                                        @Model.AnnouncementDetails
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">تفاصيل الإعلان غير متاحة</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm mt-4">
+                            <div class="card-body text-center">
+                                <a asp-action="UpdateAnnouncement" asp-route-guid="@Model.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                <a data-id="@Model.Guid" class="btn btn-sm btn-danger delete-btn">حذف</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Attach event listener for delete buttons
+            $('.delete-btn').on('click', function (event) {
+                event.preventDefault();
+
+                // Get the GUID from the clicked delete button
+                var id = $(this).data('id');
+                console.log('Deleting announcement with GUID:', id); // للتصحيح
+
+                // Trigger SweetAlert2 for confirmation
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "سيتم حذف هذا الإعلان ولا يمكن التراجع عن هذا الإجراء!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "نعم، احذف!",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Proceed with the AJAX request to delete the announcement
+                        $.ajax({
+                            url: '@Url.Action("DeleteAnnouncement", "Announcement")',
+                            type: 'POST',
+                            data: { guid: id },
+                            success: function (response) {
+                                console.log('Response:', response); // للتصحيح
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'تم الحذف!',
+                                        text: response.message || 'تم حذف الإعلان بنجاح',
+                                        icon: 'success',
+                                        timer: 2000
+                                    }).then(() => {
+                                        // التوجيه إلى الصفحة الرئيسية
+                                        window.location.href = '@Url.Action("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" })';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل الحذف!',
+                                        text: response.message || 'لم يتم الحذف',
+                                        icon: 'error'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error:', error); // للتصحيح
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

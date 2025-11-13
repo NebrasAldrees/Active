@@ -10,23 +10,23 @@ namespace Nashet.Data.Models
 {
     public class tblActivityRequest:Common 
     {
+        [Key]
+        public int ActivityRequestId { get; set; }
+        public int ClubId { get; set; }
+        public tblClub Club { get; set; }
 
-        [Key] public int ARId { get; set; }
-        public int UserID { get; set; }
-        public tblUser User { get; set; }
-        public int SiteID { get; set; }
-        public tblSite Site { get; set; }
-        public int ClubID { get; set; }
-        public tblClub Club { get; set; } 
-
-        [StringLength(100)]
+        [StringLength(50)]
         public string ActivityTopic { get; set; }
-        public DateTime ActivityDate { get; set; }
-        public DateTime RequestDate { get; set; }
-        public TimeOnly ActivityTime { get; set; }
-        [StringLength(100)]
+
+        [StringLength(500)]
+        public string ActivityDescription { get; set; }
+        public DateTime ActivityStartDate { get; set; }
+        public DateTime ActivityEndDate { get; set; }
+
+        [StringLength(300)]
         public string ActivityLocation { get; set; }
-        public ImageFileMachine ActivityPoster { get; set; }
-        public int ActivityRequestId { get; internal set; }
+
+        [StringLength(200)]
+        public string ActivityPoster { get; set; }
     }
 }

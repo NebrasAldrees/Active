@@ -1,0 +1,162 @@
+﻿@model AnnouncementViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0">تحديث بيانات نشاط</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form asp-action="UpdateAnnouncement" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <input type="hidden" asp-for="Guid" />
+                                <input type="hidden" asp-for="AnnouncementId" />
+                            </div>
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="ClubGuid" class="mb-1">  </label>
+                                    <select asp-for="ClubGuid" class="form-control">
+                                        <option value="">-- اختر النادي --</option>
+                                        @foreach (ClubViewModel club in ViewBag.Club)
+                                        {
+                                            <option value="@club.Guid">@club.ClubNameAR</option>
+                                        }
+                                    </select>
+                                    <span style="color:red" asp-validation-for="ClubGuid"></span>
+                                </div><!-- END ITEM -->
+                            </div>
+                            <div class="row">
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="AnnouncementType" class="mb-1">نوع الإعلان</label>
+                                    <select asp-for="AnnouncementType" class="form-control">
+                                        <option value="إعلان  نشاط">إعلان  نشاط</option>
+                                        <option value="إنشاء نادي جديد">إنشاء نادي جديد</option>
+                                    </select>
+                                    <span style="color:red" asp-validation-for="AnnouncementType"></span>
+                                </div><!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">موضوع الإعلان </label>
+                                    <input asp-for="AnnouncementTopic" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="AnnouncementTopic"></span>
+                                </div><!-- END ITEM -->
+
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label for="" class="mb-1">تفاصيل الإعلان</label>
+                                    <textarea asp-for="AnnouncementDetails" class="form-control"></textarea>
+                                    <span style="color:red" asp-validation-for="AnnouncementDetails"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label asp-for="AnnouncementImage" class="mb-1"></label>
+                                    <input asp-for="AnnouncementImage" type="file" id="ImageUpload"
+                                           name="AnnouncementImage" accept="image/*" class=" form-control">
+                                    <small class="text-muted">الأنواع المسموحة: JPG,JPEG, PNG, PDF - الحجم الأقصى: 50MB</small>
+                                    <span style="color:red" asp-validation-for="AnnouncementImage"></span>
+                                </div><!-- END ITEM -->
+
+                                <div class="form-group mt-4">
+                                    <button type="submit" id="showAlertBtn" class="btn btn-success update-btn">حفظ التعديلات</button>
+                                    <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->
+@section Scripts {
+    <script>
+        // Image validation and preview
+        document.getElementById('ImageUpload').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('حجم الملف كبير جداً. الحد الأقصى المسموح به هو 50MB');
+                    e.target.value = '';
+                    return;
+                }
+
+                const allowedTypes = ['image/jpeg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('نوع الملف غير مسموح. الرجاء اختيار صورة (JPG, PNG )');
+                    e.target.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const oldPreview = document.getElementById('imagePreview');
+                    if (oldPreview) {
+                        oldPreview.remove();
+                    }
+
+                    const preview = document.createElement('div');
+                    preview.id = 'imagePreview';
+                    preview.innerHTML = `
+                        <div class="mt-3 p-3 border">
+                            <h6>معاينة الصورة:</h6>
+                            <img src="${e.target.result}" class="img-fluid" style="max-height: 200px;">
+                        </div>
+                    `;
+                    document.querySelector('.mb-4').after(preview);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Submit confirmation alert
+         $('.update-btn').on('click', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: 'سيتم حفظ التعديلات',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'نعم، احفظ',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: @Url.Action("ActivitiesSupervisorHome", "Home"),
+                        type: 'POST',
+                        data: $('#yourFormId').serialize(),
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: 'نجحت العملية!',
+                                    text: 'تم تحديث البيانات',
+                                    icon: 'success'
+                                }).then(() => {
+                                    window.location.href = @Url.Action("ActivitiesSupervisorHome", "Home"); 
+                            } else {
+                                Swal.fire({
+                                    title: 'فشلت العملية!',
+                                    text: 'لم يتم التحديث',
+                                    icon: 'error'
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'خطأ!',
+                                text: 'حدث خطأ غير متوقع.',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+}

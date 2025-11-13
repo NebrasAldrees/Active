@@ -1,0 +1,52 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "الملف الشخصي";
+    Layout = "~/Areas/ClubSupervisor/Views/Shared/_Layout.cshtml";
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-4">
+                <h5 class="m-0"><i class="fas fa-user me-2"></i>الملف الشخصي</h5>
+            </div>
+            <div class="block-body py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!-- START ITEM -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">اسم المستخدم:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.Identity.Name</p>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">الاسم الكامل:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.GivenName)?.Value</p>
+                                    </div>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">الدور:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                    </div>
+                                </div><!-- END ITEM -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

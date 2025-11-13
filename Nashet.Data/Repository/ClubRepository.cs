@@ -14,35 +14,44 @@ namespace Nashet.Data.Repository
         public ClubRepository(NashetContext dbContext) : base(dbContext)
         {
         }
-
         public virtual async Task<IList<tblClub>> GetAllClubs()
         {
-            return await dbSet.Where(m => m.IsActive == true).ToListAsync(); // m for club
+            return await dbSet.Where(m => m.IsActive == true && m.IsDeleted == false).ToListAsync();
         }
-
-        public virtual async Task<tblClub> GetClubById(int id)
+        public virtual async Task<tblClub> GetClubByGuid(Guid guid)
         {
-            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == id)
+            return await dbSet.Where(Club => Club.IsDeleted == false && Club.Guid == guid)
+                .FirstOrDefaultAsync();
+        }
+        public virtual async Task<tblClub> GetClubById(int clubid)
+        {
+            return await dbSet.Where(Club => Club.IsDeleted == false && Club.ClubId == clubid)
             .FirstOrDefaultAsync();
         }
-            //public virtual async Task<int> DeleteClub(int id)
-            //{
-            //    try
-            //    {
-            //        var club = await dbSet.FindAsync(id);
-            //        if (club != null)
-            //        {
-            //            club.IsDeleted = true;
-            //            await NashetContext.SaveChangesAsync();
-            //            return 1;
-            //        }
-            //        return 0; 
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-            //}
+        public virtual async Task<bool> IsClubNameExistsInSameSite(string clubNameAr, string clubNameEn, int siteId)
+        {
+            return await dbSet.AnyAsync(c =>
+                c.IsDeleted == false &&
+                c.siteId == siteId &&
+                (c.ClubNameAR.ToLower() == clubNameAr.ToLower() ||
+                 c.ClubNameEN.ToLower() == clubNameEn.ToLower())
+            );
+        }
+        public virtual async Task<IList<tblClub>> GetClubsBySiteId(int siteId)
+        {
+            try
+            {
+                return await dbSet
+                    .Include(c => c.Site) // تضمين بيانات الجهة
+                    .Where(c => c.siteId == siteId && c.IsDeleted == false && c.IsActive == true)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetClubsBySiteId: {ex.Message}");
+                return new List<tblClub>();
+            }
+        }
         public virtual async Task<int> InsertClub(tblClub Club)
         {
             try
@@ -50,12 +59,55 @@ namespace Nashet.Data.Repository
                 await InsertAsync(Club);
                 return 1;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
 
             {
                 Console.WriteLine($"Error inserting system:{ex.Message}");
                 return 0;
             }
         }
+        public virtual async Task<int> DeleteClubByGuid(Guid guid)
+        {
+            try
+            {
+                var club = await GetClubByGuid(guid);
+                if (club == null || club.IsDeleted == true)
+                {
+                    return 0;
+                }
+                IsDeleted(club);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> UpdateClubByGuid(Guid guid, tblClub updatedClub)
+        {
+            try
+            {
+                var club = await GetClubByGuid(guid);
+                if (club == null)
+                {
+                    return 0;
+                }
+
+                club.siteId = updatedClub.siteId;
+                club.ClubNameAR = updatedClub.ClubNameAR;
+                club.ClubNameEN = updatedClub.ClubNameEN;
+                club.ClubVision = updatedClub.ClubVision;
+                club.ClubOverview = updatedClub.ClubOverview;
+                club.ClubIcon = updatedClub.ClubIcon;
+
+                await UpdateAsync(club);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Nashet.Business.Domain;
 using Nashet.Data.Repository;
@@ -9,6 +11,32 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Nashet.Data.Models.NashetContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NashetContext")));
+
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddAuthorization(Option =>
+{
+    Option.AddPolicy("MustBeAdmin", P => P.RequireAuthenticatedUser().RequireRole("Admin"));
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+
+.AddCookie(options =>
+
+{
+
+    options.AccessDeniedPath = "/Home/Error";
+
+    options.LoginPath = "/Home/login";
+
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+    options.LoginPath = "/accounts/ErrorNotLoggedIn";
+
+    options.LogoutPath = "/account/logout";
+
+});
 
 builder.Services.AddScoped<MembershipRepository>();
 builder.Services.AddScoped<MembershipDomain>();
@@ -40,30 +68,16 @@ builder.Services.AddScoped<ActivityRepository>();
 builder.Services.AddScoped<ActivityDomain>();
 builder.Services.AddScoped<PositionRequestRepository>();
 builder.Services.AddScoped<PositionRequestDomain>();
+builder.Services.AddScoped<MembershipRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
-builder.Services.AddScoped<MembershipRequestRepository>();
-
-
-//options.LogoutPath = "account/logout";
-
-;
-
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddAuthorization(Option=>
-{
-    Option.AddPolicy("MustBeAdmin", P => P.RequireAuthenticatedUser().RequireRole("Admin"));
-});
-
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    //The default HSTS value is 30 days.You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.;
     app.UseHsts();
 }
 
@@ -71,8 +85,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "Admin",

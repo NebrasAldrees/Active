@@ -1,55 +1,58 @@
 ﻿@model ClubViewModel
-
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">تفاصيل النادي: @Model.ClubNameAR</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">تفاصيل النادي: @Model.ClubNameAR</h5>
+                </div>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card">
+                    <div class="col-md-10">
+                        <div class="card shadow-sm">
                             <div class="card-body">
                                 <!-- Club Icon -->
                                 @if (!string.IsNullOrEmpty(Model.ClubIcon))
                                 {
                                     <div class="text-center mb-4">
-                                        <img src="@Model.ClubIcon" alt="@Model.ClubNameAR" class="img-fluid" style="max-height: 200px;">
+                                        <img src="@Model.ClubIcon" alt="@Model.ClubNameAR" class="img-fluid rounded" style="max-height: 200px;">
                                     </div>
                                 }
 
                                 <!-- Club Details -->
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <h6>اسم النادي بالعربية:</h6>
-                                        <p class="text-muted">@Model.ClubNameAR</p>
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="text-primary">اسم النادي بالعربية:</h6>
+                                        <p class="text-muted fs-6">@Model.ClubNameAR</p>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h6>اسم النادي بالإنجليزية:</h6>
-                                        <p class="text-muted">@Model.ClubNameEN</p>
+                                    <div class="col-md-6 mb-3">
+                                        <h6 class="text-primary">اسم النادي بالإنجليزية:</h6>
+                                        <p class="text-muted fs-6">@Model.ClubNameEN</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12 mb-3">
+                                        <h6 class="text-primary">الرؤية:</h6>
+                                        <p class="text-muted fs-6">@(string.IsNullOrEmpty(Model.ClubVision) ? "لا توجد رؤية محددة" : Model.ClubVision)</p>
                                     </div>
                                 </div>
 
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <h6>الرؤية:</h6>
-                                        <p class="text-muted">@Model.ClubVision</p>
+                                        <h6 class="text-primary">نبذة عن النادي:</h6>
+                                        <p class="text-muted fs-6">@(string.IsNullOrEmpty(Model.ClubOverview) ? "لا توجد نبذة عن النادي" : Model.ClubOverview)</p>
                                     </div>
                                 </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <h6>نبذة عن النادي:</h6>
-                                        <p class="text-muted">@Model.ClubOverview</p>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-4">
-                                    <div class="col-12 text-center">
-                                        <a href="@Url.Action("ViewAllClubs")" class="btn btn-secondary">العودة إلى القائمة</a>
-                                        <a href="@Url.Action("EditClub", new { id = Model.ClubId })" class="btn btn-primary">تعديل</a>
-                                    </div>
+                                <div class="d-flex gap-2">
+                                    <a asp-action="UpdateClub" asp-controller="Club" asp-area="ActivitiesSupervisor" asp-route-guid="@Model.Guid"
+                                       class="btn btn-success btn-sm">
+                                        <i class="fas fa-edit"></i> تعديل النادي
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" id="deleteClubBtn">
+                                        <i class="fas fa-trash"></i> حذف النادي
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -59,3 +62,61 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // حذف النادي من صفحة التفاصيل
+        document.getElementById('deleteClubBtn').addEventListener('click', function() {
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: `سيتم حذف النادي "@Model.ClubNameAR" ولا يمكن التراجع عن هذا الإجراء!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'نعم، احذف النادي',
+                cancelButtonText: 'إلغاء',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // إرسال طلب الحذف
+                    fetch('@Url.Action("DeleteClub", "Club", new { area = "ActivitiesSupervisor" })?guid=@Model.Guid', {
+                        method: 'POST',
+                        headers: {
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'تم الحذف!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'موافق'
+                            }).then(() => {
+                                window.location.href = '@Url.Action("ViewAllClubs", "Club", new { area = "ActivitiesSupervisor" })';
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'خطأ!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'موافق'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'خطأ!',
+                            text: 'حدث خطأ أثناء الحذف',
+                            icon: 'error',
+                            confirmButtonText: 'موافق'
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+}

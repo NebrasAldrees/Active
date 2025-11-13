@@ -24,10 +24,17 @@ namespace Nashet.Data.Repository
 
 
         }
-        public virtual async Task<tblAnnouncement> GetAnnouncementByIdAsync(int id)
+        public virtual async Task<tblAnnouncement> GetAnnouncementByGuid(Guid guid)
         {
-            return await dbSet.Where(Announcement => Announcement.IsDeleted == false && Announcement.AnnouncementId== id)
-                            .FirstOrDefaultAsync();
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(A => A.IsDeleted == false && A.Guid == guid);
+        }
+        public virtual async Task<IList<tblAnnouncement>> GetLatestAnnouncements(int count = 3)
+        {
+            return await dbSet
+                .Where(a => a.IsDeleted == false)
+                .OrderByDescending(a => a.Guid)
+                .Take(count)
+                .ToListAsync();
         }
         public virtual async Task<int> InsertAnnouncement(tblAnnouncement Announcement)
         {
@@ -38,7 +45,48 @@ namespace Nashet.Data.Repository
             }
             catch (Exception ex) 
             {
-                Console.WriteLine($"Error inserting system:{ex.Message}");
+                Console.WriteLine($"خطأ في الإضافة:{ex.Message}");
+                return 0;
+            }
+        }
+
+        public virtual async Task<bool> IsAnnouncementNameExists(string AnnouncementTopic, string AnnouncementType,
+            Guid? excludeAnnouncementGuid = null)
+        {
+            var query = dbSet.Where(A => A.IsDeleted == false);
+
+            if (excludeAnnouncementGuid.HasValue)
+            {
+                query = query.Where(A => A.Guid != excludeAnnouncementGuid.Value);
+            }
+
+            return await query.AnyAsync(a =>
+                a.AnnouncementTopic == AnnouncementTopic ||
+                a.AnnouncementType == AnnouncementType
+            );
+        }
+        
+        public virtual async Task<int> DeleteAnnouncement(tblAnnouncement Announcement)
+        {
+            try
+            {
+                await UpdateAsync(Announcement);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> UpdateAnnouncement(tblAnnouncement Announcement)
+        {
+            try
+            {
+                await UpdateAsync(Announcement);
+                return 1;
+            }
+            catch
+            {
                 return 0;
             }
         }
