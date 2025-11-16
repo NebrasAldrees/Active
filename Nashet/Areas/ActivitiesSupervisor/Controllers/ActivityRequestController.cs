@@ -11,15 +11,14 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         private readonly ClubDomain _ClubDomain;
         public ActivityRequestController(ActivityRequestDomain activityRequestDomain,ActivityDomain activityDomain, ClubDomain clubDomain)
         {
+            _ActivityRequestDomain = activityRequestDomain;
             _ActivityDomain = activityDomain;
             _ClubDomain = clubDomain;
-            _ActivityRequestDomain = activityRequestDomain;
         }
-        [HttpGet]
         public async Task<IActionResult> ViewRequests()
         {
             var Requests = await _ActivityRequestDomain.GetActivityRequests();
-            ViewBag.Club = await _ClubDomain.GetClub();
+            //ViewBag.Club = await _ClubDomain.GetClub();
             return View(Requests);
         }
     }

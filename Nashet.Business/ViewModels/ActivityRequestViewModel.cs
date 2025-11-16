@@ -51,6 +51,8 @@ namespace Nashet.Business.ViewModels
         [DisplayName("إرفاق صورة")]
         public string ActivityPoster { get; set; }
         public Guid Guid { get; set; }
+        public string ActivityStatus { get; set; }
+
 
     }
 }

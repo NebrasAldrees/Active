@@ -12,8 +12,8 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    [Migration("20251110102214_nashet9")]
-    partial class nashet9
+    [Migration("20251111092405_Nashet")]
+    partial class Nashet
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,9 @@ namespace Nashet.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("RequestStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
@@ -546,6 +549,9 @@ namespace Nashet.Data.Migrations
                     b.Property<string>("RequestReason")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("RequestStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RequestTeam1")
                         .HasColumnType("int");

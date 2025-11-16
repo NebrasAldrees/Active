@@ -24,9 +24,7 @@ namespace Nashet.Data.Models
         [StringLength(1000)]
         public string RequestReason { get; set; }
         public DateTime RequestDate { get; set; }
-
-
-        
+        public string RequestStatus { get; set; }
 
     }
 }

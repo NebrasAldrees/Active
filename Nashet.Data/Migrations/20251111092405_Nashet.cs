@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Nashet.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class nashet9 : Migration
+    public partial class Nashet : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -270,6 +270,7 @@ namespace Nashet.Data.Migrations
                     ActivityEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ActivityLocation = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     ActivityPoster = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RequestStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -448,6 +449,7 @@ namespace Nashet.Data.Migrations
                     RequestTeam3 = table.Column<int>(type: "int", nullable: true),
                     RequestReason = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     RequestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RequestStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),

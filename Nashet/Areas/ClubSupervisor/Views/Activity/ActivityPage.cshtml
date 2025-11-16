@@ -24,23 +24,23 @@
 
                 <div class="row">
                     <div class="col-lg-4 mb-4">
-                        <!-- poster -->
                         <div class="text-center mb-4">
                             @if (!string.IsNullOrEmpty(Model.ActivityPoster))
                             {
                                 <img src="@Model.ActivityPoster" alt="اعلان النشاط" class="rounded shadow"
-                                     style="width: 400px; height: 400px; object-fit: cover;">
+                                     style="max-width: 100%; height: auto; object-fit: cover;">
                             }
                             else
                             {
                                 <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center"
-                                     style="width: 400px; height: 400px;">
+                                     style="max-width: 100%; height: auto;">
                                     <i class="fas fa-club fa-3x text-muted" onerror="this.onerror=null;this.src='https://placehold.co/80x80/f3f4f6/000000?text=POSTER';"></i>
                                 </div>
                             }
                         </div>
 
-                        
+
+
                     </div>
 
                     <div class="col-lg-8">
@@ -95,7 +95,7 @@
                                 <div class="mb-3">
                                     <strong>تاريخ انتهاء النشاط</strong>
                                     <div class="text-muted">@Model.ActivityEndDate</div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>

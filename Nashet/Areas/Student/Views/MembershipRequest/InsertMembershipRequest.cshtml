@@ -1,9 +1,4 @@
 ﻿@model MembershipRequestViewModel
-@{
-    var teamList = (IEnumerable<TeamViewModel>)ViewBag.Team;
-    var queryGuid = ViewContext.HttpContext.Request.Query["teamGuid"];
-    Guid TeamGuid = Guid.TryParse(queryGuid, out var parsedGuid) ? parsedGuid : Guid.Empty;
-}
 <section class="page_wrap">
     <div class="page_content">
 
@@ -34,28 +29,25 @@
                                 <div class="form-group mb-3">
                                     <label asp-for="RequestTeam1" class="form-label">الرغبة الأولى</label>
                                     <select id="RequestTeam1" name="RequestTeam1" class="form-control">
-                                        <option value="">-- اختر الفريق --</option>
+                                        <option selected disabled value="">-- اختر الفريق --</option>
                                     </select>
                                     <span style="color:red" asp-validation-for="RequestTeam1"></span>
                                 </div>
 
                                 <!-- الفريق الثاني -->
                                 <div class="form-group mb-3">
-                                    <label asp-for="RequestTeam2" class="form-label">الرغبة الثانية</label>
-                                    @Html.DropDownList("RequestTeam2",
-                                    new SelectList(teamList, "Guid", "TeamNameAR", TeamGuid),
-                                    "-- اختر الفريق --",
-                                     new { @class = "form-control", onchange = "this.form.submit()" })
+                                    <select id="RequestTeam2" name="RequestTeam2" class="form-control">
+                                        <option selected disabled value="">-- اختر الفريق --</option>
+                                    </select>
                                     <span style="color:red" asp-validation-for="RequestTeam2"></span>
                                 </div>
 
                                 <!-- الفريق الثالث -->
                                 <div class="form-group mb-3">
                                     <label asp-for="RequestTeam3" class="form-label">الرغبة الثالثة</label>
-                                    @Html.DropDownList("RequestTeam3",
-                                    new SelectList(teamList, "Guid", "TeamNameAR", TeamGuid),
-                                    "-- اختر الفريق --",
-                                     new { @class = "form-control", onchange = "this.form.submit()" })
+                                    <select id="RequestTeam3" name="RequestTeam3" class="form-control">
+                                        <option selected disabled value="">-- اختر الفريق --</option>
+                                    </select>
                                     <span style="color:red" asp-validation-for="RequestTeam3"></span>
 
                                      <!-- سبب التقديم -->
@@ -88,24 +80,57 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="path/to/quicksearch.js"></script>
     <script>
-             $('#ClubGuid').on('change', function () {
-            var clubId = $(this).val();
-            $('#RequestTeam1, #RequestTeam2, #RequestTeam3').empty().append('<option value="">-- اختر الفريق --</option>');
-
-            if (clubId) {
-                       $.getJSON('@Url.Action("GetTeamsByClubGuid", "MembershipRequest", new { area = "Student" })?id=' + clubId
-                       , function (data) {
-                    $.each(data, function (i, team) {
-                        var option = $('<option>', {
-                            value: team.Guid,
-                            text: team.TeamNameAR
-                        });
-                        $('#RequestTeam1').append(option.clone());
-                        $('#RequestTeam2').append(option.clone());
-                        $('#RequestTeam3').append(option.clone());
-                    });
+        @if (ViewBag.Successful != null)
+        {
+            <text>
+                Swal.fire({
+                title: "تم رفع الطلب",
+                icon: "success",
+                confirmButtonText: "موافق",
+                draggable: true
+                }).then(() => {
+                window.location.href = '@Url.Action("StudentHome", "Home")';
                 });
-            }
+            </text>
+        }
+        else if (ViewBag.Error != null)
+        {
+            <text>
+                 Swal.fire({
+                 title: "خطأ",
+                 icon: "error",
+                 confirmButtonText: "موافق"
+                 });
+            </text>
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            showfloorValue($("#ClubGuid").val());
         });
-    </script>
+
+        $("#ClubGuid").on("change", function () {
+            showTeamValue($(this).val());
+        });
+
+        function showTeamValue(val) {
+            $.getJSON('@Url.Action("GetTeamsByClubGuid", "MembershipRequest")/' + val, function (result) {
+                $("#RequestTeam1").html(""); // makes select null before filling process
+                $("#RequestTeam1").append('<option selected disabled>اختر الفريق..</option>');
+                for (var i = 0; i < result.length; i++) {
+                    $("#RequestTeam1").append("<option value='" + result[i].guid + "'>" + result[i].TeamNameAR + "</option>")
+                }
+                $("#RequestTeam2").html(""); // makes select null before filling process
+                $("#RequestTeam2").append('<option selected disabled>اختر الفريق..</option>');
+                for (var i = 0; i < result.length; i++) {
+                    $("#RequestTeam2").append("<option value='" + result[i].guid + "'>" + result[i].TeamNameAR + "</option>")
+                }
+                $("#RequestTeam3").html(""); // makes select null before filling process
+                $("#RequestTeam3").append('<option selected disabled>اختر الفريق..</option>');
+                for (var i = 0; i < result.length; i++) {
+                    $("#RequestTeam3").append("<option value='" + result[i].guid + "'>" + result[i].TeamNameAR + "</option>")
+                }
+            });
+        }
+    </script>
 }

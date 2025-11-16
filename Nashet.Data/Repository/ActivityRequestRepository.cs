@@ -41,7 +41,6 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-
         public virtual async Task<int> updateActivityRequest(tblActivityRequest Request)
         {
             try
