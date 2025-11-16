@@ -1,4 +1,5 @@
 ﻿@{
+    ViewData["Title"] = "غير مصرح";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>نشِط</title>
+    <title>غير مصرح - نظام نشط</title>
     <!---------------------------------CSS------------------------------------------->
     <link rel="apple-touch-icon" sizes="180x180" href="~/assets/imgs/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="~/assets/imgs/favicon/favicon-32x32.png">
@@ -22,9 +23,6 @@
     <link rel="stylesheet" href="~/assets/css/root.css">
 
     <!--------- CSS Liberaries ---------->
-    <!-- Data Table -->
-    <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/select.dataTables.min.css" /> -->
-    <!-- <link rel="stylesheet" href="~/assets/lib/DataTable/css/datatables_customization.css" /> -->
     <!-- customization -->
     <link rel="stylesheet" href="~/assets/css/app_rtl.css">
 </head>
@@ -36,7 +34,7 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-                <!-- lock screen starts -->
+                <!-- access denied starts -->
                 <div class="row" style="margin-bottom:200px"></div>
                 <section class="row flexbox-container">
                     <div class="col-xl-3 col-3 px-0"></div>
@@ -49,25 +47,21 @@
                                     <div class="card disable-rounded-right mb-0 p-2">
                                         <div class="card-header pb-1">
                                             <div class="card-title">
-                                                <h4 class="text-center mb-2">تسجيل الدخول</h4>
+                                                <h4 class="text-center mb-2">غير مصرح بالدخول</h4>
                                             </div>
                                         </div>
                                         <div class="card-content">
-                                            <div class="card-body">
-                                                <p id="Error" class="card-text danger" style="color:red">
-                                                    @ViewData["Login_error"]
+                                            <div class="card-body text-center">
+                                                <div class="mb-3">
+                                                    <i class="bi bi-shield-exclamation text-danger" style="font-size: 4rem;"></i>
+                                                </div>
+                                                <p class="card-text text-muted mb-4">
+                                                    ليس لديك الصلاحية للوصول إلى هذه الصفحة.
                                                 </p>
-                                                <form asp-action="Login">
-                                                    <div class="form-group mb-50">
-                                                        <label class="text-bold-600" for="exampleInputEmail1">اسم المستخدم</label>
-                                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="اسم المستخدم" name="UserName">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="text-bold-600" for="exampleInputPassword1">كلمةالمرور</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="كلمة المرور" name="Password">
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary glow position-relative w-100">تسجيل الدخول<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
-                                                </form>
+                                                <a href="/Home/Login" class="btn btn-primary glow position-relative w-100">
+                                                    العودة لتسجيل الدخول
+                                                    <i class="bi bi-box-arrow-in-right"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +70,7 @@
                         </div>
                     </div>
                 </section>
-                <!-- lock screen ends -->
+                <!-- access denied ends -->
             </div>
         </div>
     </div>

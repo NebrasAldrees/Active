@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
     [Area("ClubSupervisor")]
+    [Authorize(Roles = "ClubSupervisor")]
     public class AnnouncementController : Controller
     {
         private readonly AnnouncementDomain _AnnouncementDomain;

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
 [Area("Student")]
+[Authorize(Roles = "Student")]
 public class MembershipRequestController : Controller
 {
     private readonly MembershipRequestDomain _domain;

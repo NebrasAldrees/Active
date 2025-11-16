@@ -26,12 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Home\add_order.cshtml" />
-    <Content Remove="Views\Home\rules.cshtml" />
-    <Content Remove="Views\Home\users.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -57,9 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Home\add_order.cshtml" />
-    <None Include="Views\Home\rules.cshtml" />
-    <None Include="Views\Home\users.cshtml" />
     <None Include="wwwroot\Assets\.DS_Store" />
     <None Include="wwwroot\Assets\css\.DS_Store" />
     <None Include="wwwroot\Assets\fonts\.DS_Store" />

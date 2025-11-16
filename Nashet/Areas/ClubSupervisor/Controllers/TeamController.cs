@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 using Nashet.Models;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
     [Area("ClubSupervisor")]
+    [Authorize(Roles = "ClubSupervisor")]
     public class TeamController : Controller
     {
         private readonly TeamDomain _TeamDomain;
