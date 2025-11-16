@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = "Student")]
     public class ActivityController : Controller
     {
         private readonly ActivityDomain _ActivityDomain;

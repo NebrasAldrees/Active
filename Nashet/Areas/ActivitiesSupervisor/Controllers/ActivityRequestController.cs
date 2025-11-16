@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
     [Area("ActivitiesSupervisor")]
+    [Authorize(Roles = "ActivitySupervisor")]
+
     public class ActivityRequestController : Controller
     {
         private readonly ActivityRequestDomain _ActivityRequestDomain;

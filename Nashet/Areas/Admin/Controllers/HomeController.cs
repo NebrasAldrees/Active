@@ -19,7 +19,6 @@ namespace Nashet.Areas.Admin.Controllers
         {
             _logger = logger;
         }
-
         public async Task<IActionResult> AdminHome()
         {
             return View();
