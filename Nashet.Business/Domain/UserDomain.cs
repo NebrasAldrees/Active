@@ -89,19 +89,24 @@ namespace Nashet.Business.Domain
         public async Task<UserViewModel> GetUserByUsername(string username)
         {
             var user = await _UserRepository.GetUserByUsername(username);
-            UserViewModel viewModel = new UserViewModel
+            if (user != null)
             {
-                UserId = user.UserId,
-                Username = user.Username,
-                UserNameAR = user.UserNameAR,
-                UserNameEN = user.UserNameEN,
-                UserEmail = user.UserEmail,
-                UserPhone = user.UserPhone,
-                SystemRoleId = user.SystemRoleId,
-                SiteId = user.SiteId,
-                RoleTypeEn = user.SystemRole.RoleTypeEn
-            };
-            return viewModel;
+
+                UserViewModel viewModel = new UserViewModel
+                {
+                    UserId = user.UserId,
+                    Username = user.Username,
+                    UserNameAR = user.UserNameAR,
+                    UserNameEN = user.UserNameEN,
+                    UserEmail = user.UserEmail,
+                    UserPhone = user.UserPhone,
+                    SystemRoleId = user.SystemRoleId,
+                    SiteId = user.SiteId,
+                    RoleTypeEn = user.SystemRole.RoleTypeEn
+                };
+                return viewModel;
+            }
+            return null;
         }
     }
 }

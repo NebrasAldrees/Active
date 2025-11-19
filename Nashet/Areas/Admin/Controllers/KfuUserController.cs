@@ -6,7 +6,7 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles ="Admin,User")]
+    [Authorize(Roles ="Admin")]
     public class KfuUserController : Controller
     {
         private readonly KfuUserDomain _domain;

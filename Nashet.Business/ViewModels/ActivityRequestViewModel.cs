@@ -17,6 +17,7 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "*حقل مطلوب*")]
         [DisplayName("النادي التابع للنشاط")]
         public Guid ClubGuid { get; set; }
+        public string ClubNameAR { get; set; }
         public tblClub Club { get; set; }
 
         [Required(ErrorMessage = "*حقل مطلوب*")]
@@ -50,7 +51,19 @@ namespace Nashet.Business.ViewModels
         [StringLength(1500)]
         [DisplayName("إرفاق صورة")]
         public string ActivityPoster { get; set; }
+        
+        //[Required(ErrorMessage = "هذا الحقل مطلوب")]
+        //[DisplayName("نوع المستخدم")]
+        //public int SystemRoleId { get; set; }
+        //public SystemRoleViewModel SystemRole { get; set; }
+
+        public string StatusTypeAr { get; set; }
+        public int StatusId { get; set; }
+        public Guid StatusGuid { get; set; }
+        public tblStatus status { get; set; }
         public Guid Guid { get; set; }
+
+
 
     }
 }

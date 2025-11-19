@@ -6,7 +6,7 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
+    [Authorize(Roles = "Admin")]
     public class SiteController : Controller
     {
         private readonly SiteDomain _SiteDomain;

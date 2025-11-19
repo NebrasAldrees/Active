@@ -42,6 +42,10 @@ namespace Nashet.Business.ViewModels
         [DisplayName("الجهة")]
         public int SiteId { get; set; }
         public SiteViewModel Site { get; set; }
+        [DisplayName("النادي")]
+        public int? ClubId { get; set; }
+        public ClubViewModel Club { get; set; }
+
         public Guid guid { get; set; }
         
     }

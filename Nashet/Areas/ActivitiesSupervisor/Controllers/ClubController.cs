@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
@@ -6,6 +7,8 @@ using Nashet.Business.ViewModels;
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
     [Area("ActivitiesSupervisor")]
+    [Authorize(Roles = "ActivitySupervisor")]
+
     public class ClubController : Controller
     {
         private readonly ClubDomain _ClubDomain;

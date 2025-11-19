@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
     [Area("ClubSupervisor")]
+    [Authorize(Roles = "ClubSupervisor")]
     public class ClubController : Controller
     {
         private readonly ClubDomain _ClubDomain;

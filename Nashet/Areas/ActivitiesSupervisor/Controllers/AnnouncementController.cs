@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 using Nashet.Models;
@@ -8,6 +9,8 @@ using System.Diagnostics;
 namespace Nashet.Areas.ActivitiesSupervisor.Controllers
 {
     [Area("ActivitiesSupervisor")]
+    [Authorize(Roles = "ActivitySupervisor")]
+
     public class AnnouncementController : Controller
     {
         private readonly AnnouncementDomain _AnnouncementDomain;
@@ -126,7 +129,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     AnnouncementType = entity.AnnouncementType,
                     ClubId = entity.ClubId
                 };
-                TempData["Successful"] = "تم التحديث بنجاح";
+                ViewBag.Successful = "تم تحديث بيانات الإعلان بنجاح";
                 return View(viewModel);
             }
             catch
