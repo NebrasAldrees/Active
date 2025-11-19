@@ -31,6 +31,11 @@ header .comp_name {
     inset: 0px auto auto 0 !important;
     min-width: 200px;
 }
+.dataTables_info,
+.dataTables_paginate {
+    display: none !important;
+}
+
 
 .toggle-vis {
     text-decoration: none;

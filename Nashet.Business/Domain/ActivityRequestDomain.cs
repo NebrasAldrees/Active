@@ -24,8 +24,6 @@ namespace Nashet.Business.Domain
         
         public async Task<IList<ActivityRequestViewModel>> GetActivityRequests()
         {
-            
-
             return _ActivityRequestRepository.GetAllRequests().Result.Select(a => new ActivityRequestViewModel
             {
                 ActivityRequestId = a.ActivityRequestId,
@@ -37,7 +35,8 @@ namespace Nashet.Business.Domain
                 ActivityLocation = a.ActivityLocation,
                 ActivityPoster = a.ActivityPoster,
                 StatusId = a.StatusId,
-                Guid = a.Guid
+                Guid = a.Guid,
+                CreationDate = a.CreationDate
             }).ToList();
         }
         public async Task<IList<ActivityRequestViewModel>> GetRequestsByClubGuid(Guid? clubGuid)
@@ -58,7 +57,6 @@ namespace Nashet.Business.Domain
         public async Task<tblActivityRequest> GetRequestByGuid(Guid guid)
         {
             var Request = await _ActivityRequestRepository.GetRequestByGUID(guid);
-
             if (Request == null)
             {
                 throw new KeyNotFoundException($"بيانات الطلب المطلوب غير متوفرة");
@@ -83,7 +81,7 @@ namespace Nashet.Business.Domain
                     ActivityStartDate = startDateTime,
                     ActivityEndDate = endDateTime,
                     ActivityLocation = viewModel.ActivityLocation,
-                    ActivityPoster = viewModel.ActivityPoster
+                    ActivityPoster = viewModel.ActivityPoster,
                 };
                 int check = await _ActivityRequestRepository.InsertActivityRequest(activity);
                 if (check == 0)
@@ -103,7 +101,7 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public virtual async Task<bool> UpdateActivityRequest(Guid guid)
+        public virtual async Task<bool> AcceptActivityRequest(Guid guid)
         {
             try
             {
@@ -113,7 +111,7 @@ namespace Nashet.Business.Domain
 
                 request.IsActive = false;
                 request.StatusId = 2;
-                await _ActivityRequestRepository.UpdateAsync(request);
+                await _ActivityRequestRepository.AcceptActivityRequest(request);
 
                 return true;
             }
@@ -135,7 +133,7 @@ namespace Nashet.Business.Domain
 
                 request.IsDeleted = true;
                 request.StatusId = 3;
-                await _ActivityRequestRepository.UpdateAsync(request);
+                await _ActivityRequestRepository.DeleteActivityRequest(request);
 
                 return true;
             }

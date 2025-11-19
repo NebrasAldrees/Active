@@ -27,6 +27,7 @@ namespace Nashet.Business.Domain
                 UserPhone = U.UserPhone,
                 SystemRoleId = (int)U.SystemRoleId,
                 SiteId = (int)U.SiteId,
+                ClubId = (int)U.ClubId
             }).ToList();
         }
 
@@ -102,7 +103,8 @@ namespace Nashet.Business.Domain
                     UserPhone = user.UserPhone,
                     SystemRoleId = user.SystemRoleId,
                     SiteId = user.SiteId,
-                    RoleTypeEn = user.SystemRole.RoleTypeEn
+                    RoleTypeEn = user.SystemRole.RoleTypeEn,
+                    ClubId = user.ClubId,
                 };
                 return viewModel;
             }

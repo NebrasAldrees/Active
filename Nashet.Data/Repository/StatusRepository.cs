@@ -16,7 +16,21 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<IList<tblStatus>> GetAllStatusType()
         {
-            return await dbSet.Where(SR => SR.IsDeleted == false).ToListAsync();
+            return await dbSet.Where(status => status.IsDeleted == false).ToListAsync();
+        }
+
+        public virtual async Task<int> InsertStatusType(tblStatus status)
+        {
+            try
+            {
+                await InsertAsync(status);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"خطأ في الإضافة:{ex.Message}");
+                return 0;
+            }
         }
         public virtual async Task<tblStatus> GetAllStatusTypeByIdAsync(int id)
         {

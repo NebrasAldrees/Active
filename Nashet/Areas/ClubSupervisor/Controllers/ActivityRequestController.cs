@@ -12,22 +12,68 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         private readonly ActivityRequestDomain _ActivityRequestDomain;
         private readonly ClubDomain _ClubDomain;
         private readonly IWebHostEnvironment _webHost;
-        public ActivityRequestController(ActivityRequestDomain activityRequestDomain, ClubDomain clubDomain, IWebHostEnvironment webHost)
+        private readonly UserDomain _UserDomain;
+
+        public ActivityRequestController(ActivityRequestDomain activityRequestDomain, ClubDomain clubDomain, UserDomain userDomain,
+            IWebHostEnvironment webHost)
         {
             _ActivityRequestDomain = activityRequestDomain;
             _ClubDomain = clubDomain;
+            _UserDomain = userDomain;
             _webHost = webHost;
         }
+
         public async Task<IActionResult> InsertRequest()
         {
-            ViewBag.Club = await _ClubDomain.GetClub();
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            ViewBag.ClubName = club.ClubNameAR;
+            ViewBag.ClubGuid = club.Guid;
+
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertRequest(ActivityRequestViewModel viewModel, IFormFile ActivityPoster)
         {
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك رفع طلب نشاط بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            viewModel.ClubId = user.ClubId.Value;
+            viewModel.ClubGuid = club.Guid; 
+
+            ViewBag.ClubName = club.ClubNameAR;
             ViewBag.Club = await _ClubDomain.GetClub();
+
+
             if (ModelState.IsValid)
             {
                 try
@@ -60,15 +106,15 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                         return View(viewModel);
                     }
                     else
+                    {
                         ViewBag.Error = "فشل في الإضافة";
-
+                    }
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Error = "فشل في الإضافة";
                 }
             }
-
 
             return View(viewModel);
         }

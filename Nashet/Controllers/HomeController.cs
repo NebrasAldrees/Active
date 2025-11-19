@@ -83,7 +83,8 @@ namespace Nashet.Controllers
             new Claim(ClaimTypes.Role, kfuUser.UserType),
             new Claim(ClaimTypes.NameIdentifier, kfuUser.KFUUserId.ToString()),
             new Claim(ClaimTypes.GivenName, kfuUser.NameAR ?? kfuUser.NameEN),
-            new Claim(ClaimTypes.Email, kfuUser.UserEmail)
+            new Claim(ClaimTypes.Email, kfuUser.UserEmail),
+
         },
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -135,19 +136,6 @@ namespace Nashet.Controllers
             return View();
         }
         public IActionResult InsertUser()
-        {
-            return View();
-        }
-
-        public IActionResult add_order()
-        {
-            return View();
-        }
-        public IActionResult orders()
-        {
-            return View();
-        }
-        public IActionResult rules()
         {
             return View();
         }

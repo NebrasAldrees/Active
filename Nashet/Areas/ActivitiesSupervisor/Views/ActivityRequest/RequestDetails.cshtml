@@ -101,8 +101,14 @@
 
                         <div class="card shadow-sm mt-4">
                             <div class="card-body text-center">
-                                <a asp-action="AcceptRequest" asp-route-guid="@Model.Guid" class="btn btn-sm btn-success">قبول الطلب</a>
-                                <a data-id="@Model.Guid" class="btn btn-sm btn-danger delete-btn">رفض الطلب</a>
+                                <a asp-action="AcceptRequest" class="btn btn-sm btn-success accept-btn" data-id="@Model.Guid">قبول الطلب</a>
+
+                                <form id="deleteForm" method="post" asp-action="DeleteRequest" asp-controller="ActivityRequest" asp-area="ActivitiesSupervisor" style="display:none;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="guid" value="@Model.Guid" />
+                                </form>
+
+                                <button type="button" class="btn btn-sm btn-danger delete-btn">رفض الطلب</button>
                             </div>
                         </div>
                     </div>
@@ -115,14 +121,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
-            // Attach event listener for delete buttons
+            // ✅ Accept Button Confirmation
+            $('.accept-btn').on('click', function (event) {
+                event.preventDefault();
+                var id = $(this).data('id');
+
+                Swal.fire({
+                    title: "هل تريد قبول الطلب؟",
+                    text: "سيتم إنشاء نشاط جديد بناءً على هذا الطلب.",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#28a745",
+                    cancelButtonColor: "#6c757d",
+                    confirmButtonText: "نعم، قبول الطلب",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '@Url.Action("AcceptRequest", "ActivityRequest", new { area = "ActivitiesSupervisor" })' + '?guid=' + id;
+                    }
+                });
+            });
+
+            // ✅ Delete Button Confirmation
             $('.delete-btn').on('click', function (event) {
                 event.preventDefault();
 
-                // Get the GUID from the clicked delete button
-                var id = $(this).data('id');
-
-                // Trigger SweetAlert2 for confirmation
                 Swal.fire({
                     title: "هل أنت متأكد؟",
                     text: "سيتم رفض الطلب ولا يمكن التراجع عن هذا الإجراء!",
@@ -134,21 +157,19 @@
                     cancelButtonText: "إلغاء"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Proceed with the AJAX request to delete the activity
                         $.ajax({
-                            url: '@Url.Action("DeleteRequest", "ActivityRequest")',
+                            url: '@Url.Action("DeleteRequest", "ActivityRequest", new { area = "ActivitiesSupervisor" })',
                             type: 'POST',
-                            data: { guid: id },
+                            data: $('#deleteForm').serialize(),
                             success: function (response) {
                                 if (response.success) {
                                     Swal.fire({
-                                        title: 'تم رفض الطلب !',
+                                        title: 'تم رفض الطلب!',
                                         text: response.message || 'تم رفض الطلب بنجاح',
-                                        icon: 'success',
+                                        icon: 'Success',
                                         confirmButtonText: 'موافق',
                                         timer: 2000
                                     }).then(() => {
-                                        // التوجيه إلى صفحة الأنشطة بعد الحذف
                                         window.location.href = '@Url.Action("ViewRequests", "ActivityRequest", new { area = "ActivitiesSupervisor" })';
                                     });
                                 } else {
@@ -161,7 +182,6 @@
                                 }
                             },
                             error: function (xhr, status, error) {
-                                console.error('Error:', error);
                                 Swal.fire({
                                     title: 'خطأ!',
                                     text: 'حدث خطأ أثناء محاولة الرفض: ' + error,

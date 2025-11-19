@@ -1,4 +1,5 @@
-﻿using Nashet.Business.Domain.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Nashet.Business.Domain.Common;
 using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;

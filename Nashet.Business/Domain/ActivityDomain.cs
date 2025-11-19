@@ -148,7 +148,6 @@ namespace Nashet.Business.Domain
                 if (activity == null)
                     return false;
 
-                // Soft Delete (تغيير حالة IsDeleted)
                 activity.IsDeleted = true;
                 await _ActivityRepository.UpdateAsync(activity);
 

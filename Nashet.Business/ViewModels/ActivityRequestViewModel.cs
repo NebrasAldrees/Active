@@ -62,6 +62,7 @@ namespace Nashet.Business.ViewModels
         public Guid StatusGuid { get; set; }
         public tblStatus status { get; set; }
         public Guid Guid { get; set; }
+        public DateTime CreationDate { get; set; }
 
 
 
