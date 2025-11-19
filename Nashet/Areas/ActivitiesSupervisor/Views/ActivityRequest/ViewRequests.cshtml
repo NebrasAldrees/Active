@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ActivityRequestViewModel>
+
 <!-- Start Page Wrap -->
 <section class="page_wrap">
     <div class="page_content">
@@ -13,6 +14,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="block-body">
                 <table class="table table-hover js-dataTable">
                     <thead>
@@ -20,28 +22,36 @@
                             <th>عنوان الطلب</th>
                             <th>النادي التابع للطلب</th>
                             <th>حالة الطلب</th>
-                            <th class=""></th>
+                            <th>الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @{
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">لا توجد طلبات لعرضها حالياً</td>
+                            </tr>
+                        }
+                        else
+                        {
                             foreach (var item in Model)
                             {
-                                <tr class="cursor-pointer" goto="order_details">
+                                <tr>
                                     <td>@item.ActivityTopic</td>
-                                    <td>@item.@(ViewBag.currentClub?.ClubNameAR ?? "غير محدد")</td>
-                                    <td>@item.ActivityStatus</td>
-                                    <td class="action_td text-end">
-                                        <a href="" class="btn btn-sm btn-primary">عرض التفاصيل</a>
+                                    <td>@(item.ClubNameAR ?? "غير محدد")</td>
+                                    <td>@item.StatusTypeAr</td>
+                                    <td class="text-end">
+                                        <a href="@Url.Action("RequestDetails", "ActivityRequest", new { id = item.Guid })"
+                                           class="btn btn-sm btn-primary">عرض التفاصيل</a>
                                     </td>
                                 </tr>
                             }
                         }
+                    </tbody>
                 </table>
             </div>
         </div>
 
-
-
     </div>
-</section><!-- End Page Wrap -->
+</section>
+<!-- End Page Wrap -->

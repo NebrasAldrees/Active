@@ -28,6 +28,7 @@ namespace Nashet.Data.Models
 
         [StringLength(200)]
         public string ActivityPoster { get; set; }
-        public string RequestStatus { get; set; }
+        public int StatusId { get; set; }
+        public tblStatus Status { get; set; }
     }
 }

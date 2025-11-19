@@ -25,5 +25,7 @@ namespace Nashet.Data.Models
         public string UserPhone { get; set; }
         public int SiteId { get; set; } 
         public tblSite Site { get; set; }
+        public int? ClubId { get; set; } 
+        public tblClub Club { get; set; }
     }
 }

@@ -24,6 +24,8 @@ namespace Nashet.Business.Domain
         
         public async Task<IList<ActivityRequestViewModel>> GetActivityRequests()
         {
+            
+
             return _ActivityRequestRepository.GetAllRequests().Result.Select(a => new ActivityRequestViewModel
             {
                 ActivityRequestId = a.ActivityRequestId,
@@ -34,6 +36,7 @@ namespace Nashet.Business.Domain
                 ActivityEndDate = a.ActivityEndDate,
                 ActivityLocation = a.ActivityLocation,
                 ActivityPoster = a.ActivityPoster,
+                StatusId = a.StatusId,
                 Guid = a.Guid
             }).ToList();
         }
@@ -74,6 +77,7 @@ namespace Nashet.Business.Domain
                 tblActivityRequest activity = new tblActivityRequest
                 {
                     ClubId = club.ClubId,
+                    StatusId = 1,
                     ActivityTopic = viewModel.ActivityTopic,
                     ActivityDescription = viewModel.ActivityDescription,
                     ActivityStartDate = startDateTime,
@@ -108,6 +112,7 @@ namespace Nashet.Business.Domain
                     return false;
 
                 request.IsActive = false;
+                request.StatusId = 2;
                 await _ActivityRequestRepository.UpdateAsync(request);
 
                 return true;
@@ -129,6 +134,7 @@ namespace Nashet.Business.Domain
                     return false;
 
                 request.IsDeleted = true;
+                request.StatusId = 3;
                 await _ActivityRequestRepository.UpdateAsync(request);
 
                 return true;

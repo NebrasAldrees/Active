@@ -46,19 +46,17 @@ public class MembershipRequestDomain : BaseDomain
         var team1 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam1);
         var team2 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam2);
         var team3 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam3);
-        var student = await _StudentRepository.GetByAcademicIdAsync(viewModel.AcademicId);
 
 
         var entity = new tblMembershipRequest
         {
-
             ClubID = club.ClubId,
             RequestTeam1 = team1.TeamId,
             RequestTeam2 = team2.TeamId,
             RequestTeam3 = team3.TeamId,
             RequestReason = viewModel.RequestReason,
             RequestDate = viewModel.RequestDate,
-            StudentID = student.StudentId
+            StudentID = viewModel.StudentID
         };
 
         return await _repo.InsertMembershipRequest(entity);

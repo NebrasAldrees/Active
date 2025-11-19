@@ -23,6 +23,18 @@
                                     </select>
                                     <span style="color:red" asp-validation-for="ClubGuid"></span>
 
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="StudentID" class="mb-1">  </label>
+                                    <select asp-for="StudentID" class="form-control">
+                                        <option value="">-- اختر الطالب --</option>
+                                        @foreach (StudentViewModel st in ViewBag.Student)
+                                        {
+                                            <option value="@st.StudentId">@st.StudentNameAr</option>
+                                        }
+                                    </select>
+                                    <span style="color:red" asp-validation-for="StudentID"></span>
+
                                 </div><!-- END ITEM -->
 
                                 <!-- الفريق الأول -->
@@ -76,9 +88,6 @@
     </div>
 </section><!-- End Page Wrap -->
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="path/to/quicksearch.js"></script>
     <script>
         @if (ViewBag.Successful != null)
         {
@@ -106,7 +115,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            showfloorValue($("#ClubGuid").val());
+            showTeamValue($("#ClubGuid").val());
         });
 
         $("#ClubGuid").on("change", function () {
@@ -114,21 +123,21 @@
         });
 
         function showTeamValue(val) {
-            $.getJSON('@Url.Action("GetTeamsByClubGuid", "MembershipRequest")/' + val, function (result) {
+            $.getJSON('@Url.Action("GetTeamByClubGuid", "MembershipRequest")/' + val, function (result) {
                 $("#RequestTeam1").html(""); // makes select null before filling process
                 $("#RequestTeam1").append('<option selected disabled>اختر الفريق..</option>');
                 for (var i = 0; i < result.length; i++) {
-                    $("#RequestTeam1").append("<option value='" + result[i].guid + "'>" + result[i].TeamNameAR + "</option>")
+                    $("#RequestTeam1").append("<option value='" + result[i].guid + "'>" + result[i].teamNameAR + "</option>")
                 }
                 $("#RequestTeam2").html(""); // makes select null before filling process
                 $("#RequestTeam2").append('<option selected disabled>اختر الفريق..</option>');
                 for (var i = 0; i < result.length; i++) {
-                    $("#RequestTeam2").append("<option value='" + result[i].guid + "'>" + result[i].TeamNameAR + "</option>")
+                    $("#RequestTeam2").append("<option value='" + result[i].guid + "'>" + result[i].teamNameAR + "</option>")
                 }
                 $("#RequestTeam3").html(""); // makes select null before filling process
                 $("#RequestTeam3").append('<option selected disabled>اختر الفريق..</option>');
                 for (var i = 0; i < result.length; i++) {
-                    $("#RequestTeam3").append("<option value='" + result[i].guid + "'>" + result[i].TeamNameAR + "</option>")
+                    $("#RequestTeam3").append("<option value='" + result[i].guid + "'>" + result[i].teamNameAR + "</option>")
                 }
             });
         }
