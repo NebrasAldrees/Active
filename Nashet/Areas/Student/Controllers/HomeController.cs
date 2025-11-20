@@ -10,10 +10,12 @@ namespace Nashet.Areas.Student.Controllers
     public class HomeController : Controller
     {
             private readonly AnnouncementDomain _announcementDomain;
+            private readonly StudentDomain _StudentDomain;
 
-            public HomeController(AnnouncementDomain announcementDomain)
+            public HomeController(AnnouncementDomain announcementDomain, StudentDomain studentDomain)
             {
                 _announcementDomain = announcementDomain;
+                _StudentDomain = studentDomain;
             }
 
         public async Task<IActionResult> StudentHome()
@@ -33,6 +35,8 @@ namespace Nashet.Areas.Student.Controllers
             };
 
             ViewBag.UserInfo = userInfo;
+            ViewBag.studentId =  _StudentDomain.GetByAcademicId(userInfo.Username);
+
             return View();
         }
         public async Task<IActionResult> AnnouncementPage(Guid id)

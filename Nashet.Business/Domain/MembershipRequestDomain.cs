@@ -35,6 +35,23 @@ public class MembershipRequestDomain : BaseDomain
         return Request;
     }
 
+    //public async Task<IList<MembershipRequestViewModel>> GetMembershipRequests()
+    //{
+    //    return _repo.GetAllRequests().Result.Select(m => new MembershipRequestViewModel
+    //    {
+    //        ClubID = (int)m.ClubID,
+    //        RequestTeam1 = m.RequestTeam1.Value,
+    //        RequestTeam2 = m.RequestTeam2,
+    //        RequestTeam3 = m.RequestTeam3,
+    //        RequestReason = m.RequestReason,
+    //        RequestDate = m.RequestDate,
+    //        StudentID = m.StatusId
+    //        StatusId = m.StatusId,
+    //        Guid = m.Guid,
+    //        CreationDate = m.CreationDate
+    //    }).ToList();
+    //}
+
     public async Task<int> InsertMembershipRequest(MembershipRequestViewModel viewModel)
     {
         bool topicExists = await _repo.IsRequestExists(viewModel.ClubID);

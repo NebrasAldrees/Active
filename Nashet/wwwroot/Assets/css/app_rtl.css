@@ -199,7 +199,10 @@ table.dataTable .dropdown-menu {
     margin-left: 15px !important;
 }
 
-
+.dataTables_info,
+.dataTables_paginate {
+    display: none;
+}
 .tooltip-inner {
     background-color: var(--kt-gray-300);
     color: #000;
