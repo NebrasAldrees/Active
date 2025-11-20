@@ -122,12 +122,17 @@ namespace Nashet.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("isSent")
                         .HasColumnType("bit");
 
                     b.HasKey("ActivityRequestId");
 
                     b.HasIndex("ClubId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("tblActivityRequest");
                 });
@@ -553,6 +558,9 @@ namespace Nashet.Data.Migrations
                     b.Property<int?>("RequestTeam3")
                         .HasColumnType("int");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("StudentID")
                         .HasColumnType("int");
 
@@ -565,6 +573,8 @@ namespace Nashet.Data.Migrations
                     b.HasKey("MRId");
 
                     b.HasIndex("ClubID");
+
+                    b.HasIndex("StatusId");
 
                     b.HasIndex("StudentID");
 
@@ -894,6 +904,75 @@ namespace Nashet.Data.Migrations
                             SiteCode = "0930",
                             SiteNameAR = "كلية إدارة الأعمال",
                             SiteNameEn = "College of Business",
+                            isSent = true
+                        });
+                });
+
+            modelBuilder.Entity("Nashet.Data.Models.tblStatus", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("StatusTypeAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusTypeEn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isSent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("tblStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusId = 1,
+                            CreationDate = new DateTime(2025, 11, 17, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("420b839c-af93-46ed-962b-8d6154e48c9c"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            StatusTypeAr = "قيد الانتظار",
+                            StatusTypeEn = "Pending",
+                            isSent = true
+                        },
+                        new
+                        {
+                            StatusId = 2,
+                            CreationDate = new DateTime(2025, 11, 17, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("3c63e5da-1f30-4ffb-a660-28692aaa0a06"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            StatusTypeAr = "تمت الموافقة",
+                            StatusTypeEn = "Approved",
+                            isSent = true
+                        },
+                        new
+                        {
+                            StatusId = 3,
+                            CreationDate = new DateTime(2025, 11, 17, 11, 43, 22, 0, DateTimeKind.Utc),
+                            Guid = new Guid("fa97ca20-b67d-463d-b38e-b8a3732fbc9c"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            StatusTypeAr = "مرفوض",
+                            StatusTypeEn = "Rejected",
                             isSent = true
                         });
                 });
@@ -1259,6 +1338,9 @@ namespace Nashet.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<int?>("ClubId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -1300,6 +1382,8 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("ClubId");
 
                     b.HasIndex("SiteId");
 
@@ -1343,6 +1427,7 @@ namespace Nashet.Data.Migrations
                         new
                         {
                             UserId = 3,
+                            ClubId = 1,
                             CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, 0, DateTimeKind.Utc),
                             Guid = new Guid("3e4b0298-c385-40eb-96a9-5d69d8cbae79"),
                             IsActive = true,
@@ -1377,7 +1462,15 @@ namespace Nashet.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Nashet.Data.Models.tblStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Club");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Nashet.Data.Models.tblAnnouncement", b =>
@@ -1433,6 +1526,12 @@ namespace Nashet.Data.Migrations
                         .HasForeignKey("ClubID")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Nashet.Data.Models.tblStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Nashet.Data.Models.tblStudent", "Student")
                         .WithMany()
                         .HasForeignKey("StudentID")
@@ -1444,6 +1543,8 @@ namespace Nashet.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Club");
+
+                    b.Navigation("Status");
 
                     b.Navigation("Student");
 
@@ -1511,6 +1612,11 @@ namespace Nashet.Data.Migrations
 
             modelBuilder.Entity("Nashet.Data.Models.tblUser", b =>
                 {
+                    b.HasOne("Nashet.Data.Models.tblClub", "Club")
+                        .WithMany()
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Nashet.Data.Models.tblSite", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")
@@ -1522,6 +1628,8 @@ namespace Nashet.Data.Migrations
                         .HasForeignKey("SystemRoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Club");
 
                     b.Navigation("Site");
 

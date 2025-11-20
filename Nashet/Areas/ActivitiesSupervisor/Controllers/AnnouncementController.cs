@@ -129,7 +129,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     AnnouncementType = entity.AnnouncementType,
                     ClubId = entity.ClubId
                 };
-                TempData["Successful"] = "تم التحديث بنجاح";
+                ViewBag.Successful = "تم تحديث بيانات الإعلان بنجاح";
                 return View(viewModel);
             }
             catch

@@ -68,10 +68,6 @@ namespace Nashet.Business.Domain
 
         }
 
-        //public async Task<int> InsertSystemRole(UserViewModel viewModel)
-        //{
-        //    throw new NotImplementedException();
-        //}
         public int DeleteSystemRole(int id)
         {
             try

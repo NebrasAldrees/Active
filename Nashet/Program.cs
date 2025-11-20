@@ -66,10 +66,11 @@ builder.Services.AddScoped<TeamRepository>();
 builder.Services.AddScoped<TeamDomain>();
 builder.Services.AddScoped<ActivityRepository>();
 builder.Services.AddScoped<ActivityDomain>();
-builder.Services.AddScoped<PositionRequestRepository>();
-builder.Services.AddScoped<PositionRequestDomain>();
 builder.Services.AddScoped<MembershipRequestDomain>();
 builder.Services.AddScoped<MembershipRequestRepository>();
+builder.Services.AddScoped<StatusDomain>();
+builder.Services.AddScoped<StatusRepository>();
+
 
 var app = builder.Build();
 

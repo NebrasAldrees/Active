@@ -17,18 +17,16 @@ namespace Nashet.Business.ViewModels
         public int StudentID { get; set; }
         public string AcademicId { get; set; }
         public tblStudent Student { get; set; }
-
         public int ClubID { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("النادي")]
         public Guid ClubGuid { get; set; }
         public tblClub Club { get; set; }
-        public int TeamID { get; set; }
+        public int? TeamID { get; set; }
 
-        [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("الفريق")]
-        public Guid TeamGuid { get; set; }
+        public Guid? TeamGuid { get; set; }
         public tblTeam Team { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("الرغبة الأولى")]
@@ -45,8 +43,12 @@ namespace Nashet.Business.ViewModels
         public string RequestReason { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("تاريخ تقديم الطلب")]
-        public DateTime RequestDate { get; set; }
+        public DateTime RequestDate { get; set; } = DateTime.Now;
         public Guid Guid { get; set; }
+        public string StatusTypeAr { get; set; }
+        public int StatusId { get; set; }
+        public Guid StatusGuid { get; set; }
+        public tblStatus status { get; set; }
 
     }
 }

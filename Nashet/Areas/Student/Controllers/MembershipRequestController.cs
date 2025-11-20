@@ -45,16 +45,24 @@ public class MembershipRequestController : Controller
         ViewBag.Team = await _TeamDomain.GetTeam();
         ViewBag.Student = await _StudentDomain.GetStudent();
 
-        int check = await _domain.InsertMembershipRequest(viewModel);
-        if (check == 1)
+        if (ModelState.IsValid)
         {
-            ViewBag.Successful = "تم رفع الطلب بنجاح";
-            return View(viewModel);
+            try
+            {
+                int check = await _domain.InsertMembershipRequest(viewModel);
+                if (check == 1)
+                {
+                    ViewBag.Successful = "تم رفع الطلب بنجاح";
+                    return View(viewModel);
+                }
+                else
+                    ViewBag.Error = "فشل في الإضافة";
+            }
+            catch
+            {
+                ViewData["Failed"] = "Failed";
+            }
         }
-        else
-            ViewBag.Error = "فشل في الإضافة";
-
-
         return View(viewModel);
     }
 

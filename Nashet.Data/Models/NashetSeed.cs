@@ -22,11 +22,11 @@ namespace Nashet.Data.Models
             AddSite();
             AddClub();
             AddTeam();
-            AddUser();
+            AddStatus();
             AddtStudent();
+            AddUser();
             AddKfuUser();
         }
-
         private static void AddSystemRole()
         {
             _modelBuilder.Entity<tblSystemRole>().HasData(
@@ -75,9 +75,6 @@ namespace Nashet.Data.Models
                      CreationDate = new DateTime(2025, 10, 05, 11, 43, 22, DateTimeKind.Utc)
                  });
         }
-
-
-
         private static void AddSite()
         {
             _modelBuilder.Entity<tblSite>().HasData(
@@ -405,6 +402,46 @@ namespace Nashet.Data.Models
 
 
         }
+        private static void AddStatus()
+        {
+            _modelBuilder.Entity<tblStatus>().HasData(
+               new tblStatus()
+               {
+                   StatusId = 1,
+                   StatusTypeAr = "قيد الانتظار",
+                   StatusTypeEn = "Pending",
+                   IsActive = true,
+                   IsDeleted = false,
+                   isSent = true,
+                   Guid = Guid.Parse("420b839c-af93-46ed-962b-8d6154e48c9c"),
+                   CreationDate = new DateTime(2025, 11, 17, 11, 43, 22, DateTimeKind.Utc)
+
+               },
+               new tblStatus()
+               {
+                   StatusId = 2,
+                   StatusTypeAr = "تمت الموافقة",
+                   StatusTypeEn = "Approved",
+                   IsActive = true,
+                   IsDeleted = false,
+                   isSent = true,
+                   Guid = Guid.Parse("3c63e5da-1f30-4ffb-a660-28692aaa0a06"),
+                   CreationDate = new DateTime(2025, 11, 17, 11, 43, 22, DateTimeKind.Utc)
+
+               },
+               new tblStatus()
+               {
+                   StatusId = 3,
+                   StatusTypeAr = "مرفوض",
+                   StatusTypeEn = "Rejected",
+                   IsActive = true,
+                   IsDeleted = false,
+                   isSent = true,
+                   Guid = Guid.Parse("fa97ca20-b67d-463d-b38e-b8a3732fbc9c"),
+                   CreationDate = new DateTime(2025, 11, 17, 11, 43, 22, DateTimeKind.Utc)
+
+               });
+        }
         private static void AddtStudent()
         {
             _modelBuilder.Entity<tblStudent>().HasData(
@@ -426,7 +463,6 @@ namespace Nashet.Data.Models
 
                });
         }
-
         private static void AddUser()
         {
             _modelBuilder.Entity<tblUser>().HasData(
@@ -474,6 +510,7 @@ namespace Nashet.Data.Models
                     IsDeleted = false,
                     UserPhone = "0509410406",
                     SiteId = 1,
+                    ClubId = 1,
                     UserId = 3,
                     Guid = Guid.Parse("3e4b0298-c385-40eb-96a9-5d69d8cbae79"),
                     CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)

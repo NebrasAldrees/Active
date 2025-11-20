@@ -1,40 +1,6 @@
 ﻿@model SiteViewModel
 <section class="page_wrap">
     <div class="page_content">
-        <!-- START ALERT MESSAGES -->
-        @if (TempData["Successful"] != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <i class="fas fa-check-circle me-2"></i> @TempData["Successful"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-
-        @if (TempData["Duplicate"] != null)
-        {
-            <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
-                <i class="fas fa-exclamation-triangle me-2"></i> @TempData["Duplicate"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-
-        @if (TempData["Failed"] != null)
-        {
-            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                <i class="fas fa-times-circle me-2"></i> @TempData["Failed"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-
-        @if (ViewBag.Message != null)
-        {
-            <div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
-                <i class="fas fa-info-circle me-2"></i> @ViewBag.Message
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-        <!-- END ALERT MESSAGES -->
-
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
                 <h5 class="m-0">تحديث بيانات جهة</h5>
@@ -42,7 +8,7 @@
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="UpdateSite" method="post">
+                        <form id="updateSiteForm" asp-action="UpdateSite" method="post">
                             @Html.AntiForgeryToken()
                             <div class="row">
                                 <input type="hidden" asp-for="Guid" />
@@ -73,3 +39,57 @@
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        // Form submission with confirmation
+        document.getElementById('updateSiteForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: 'سيتم حفظ التعديلات وسيتم نقلك إلى صفحة قائمة الجهات',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم، احفظ وأنتقل',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // أرسل الفورم أولاً
+                    const formData = new FormData(this);
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // بعد الإرسال الناجح، انتقل إلى صفحة الأنشطة
+                            window.location.href = '@Url.Action("ViewSites", "Site", new { area = "Admin" })';
+                        } else {
+                            Swal.fire({
+                                title: 'خطأ!',
+                                text: 'فشل في حفظ التعديلات',
+                                icon: 'error',
+                                confirmButtonText: 'موافق'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'خطأ!',
+                            text: 'حدث خطأ أثناء الحفظ: ' + error,
+                            icon: 'error',
+                            confirmButtonText: 'موافق'
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

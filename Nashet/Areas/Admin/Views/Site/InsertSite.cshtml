@@ -56,3 +56,42 @@
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (ViewBag.Successful != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تمت الإضافة",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                }).then(() => {
+                    window.location.href = '@Url.Action("ViewSites", "Site")';
+                });
+                </text>
+        }
+        else if (ViewBag.Duplicate != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تنبيه",
+                    icon: "warning",
+                    confirmButtonText: "موافق"
+                });
+                </text>
+        }
+        else if (ViewBag.Error != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "خطأ",
+                    icon: "error",
+                    confirmButtonText: "موافق"
+                });
+                </text>
+        }
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

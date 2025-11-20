@@ -20,12 +20,12 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblActivityRequest>> GetAllRequests()
         {
-            return await dbSet.Where(Request => Request.IsActive == true && Request.IsDeleted == false).ToListAsync();
+            return await dbSet.ToListAsync();
         }
 
-        public virtual async Task<tblActivityRequest> GetRequestByGUID(Guid? guid)
+        public virtual async Task<tblActivityRequest> GetRequestByGUID(Guid guid)
         {
-            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.IsDeleted == false && Request.Guid == guid);
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.Guid == guid);
         }
 
         public virtual async Task<int> InsertActivityRequest(tblActivityRequest request)
@@ -41,8 +41,7 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-
-        public virtual async Task<int> updateActivityRequest(tblActivityRequest Request)
+        public virtual async Task<int> AcceptActivityRequest(tblActivityRequest Request)
         {
             try
             {
