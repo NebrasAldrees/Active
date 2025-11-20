@@ -21,7 +21,9 @@
                                         <label class="form-label fw-bold mb-1">اسم المستخدم:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.Identity.Name</p>
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none;
+                                    padding: 0.375rem 0; margin: 0; min-height: auto; 
+                                    border-bottom: 1px solid #dee2e6 !important;">@User.Identity.Name</p>
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
@@ -30,7 +32,9 @@
                                         <label class="form-label fw-bold mb-1">الاسم الكامل:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.GivenName)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent;
+                                    border: none; padding: 0.375rem 0; margin: 0; min-height: auto;
+                                    border-bottom: 1px solid #dee2e6 !important;">@ViewBag.UserInfo.FullName</p>
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
@@ -39,7 +43,11 @@
                                         <label class="form-label fw-bold mb-1">الرقم الأكاديمي:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; 
+                                        border: none; padding: 0.375rem 0; margin: 0; min-height: auto; 
+                                        border-bottom: 1px solid #dee2e6 !important;">@ViewBag.studentId</p>
+                                    </div>
+                                </div><!-- END ITEM -->
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
@@ -48,7 +56,9 @@
                                         <label class="form-label fw-bold mb-1">الايميل:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; 
+                                        border: none; padding: 0.375rem 0; margin: 0; min-height: auto; 
+                                        border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
                                     </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->

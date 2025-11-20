@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
@@ -44,12 +45,13 @@ namespace Nashet.Controllers
         {
             try
             {
-                var kfuUser = await _kfuUserDomain.CheckUser(Username, Password);
-
-                if (kfuUser == null)
-                {
-                    kfuUser = await _kfuUserDomain.CheckUserByEmail(Username, Password);
-                }
+                var usernameSplit = Username.Split("@");
+                var UsernameWithSplit = usernameSplit[0];
+                var kfuUser = await _kfuUserDomain.CheckUser(UsernameWithSplit, Password);
+                UserViewModel user = new UserViewModel();
+                StudentViewModel student = new StudentViewModel();
+                int UserId = 0;
+                string UserRole = "";
 
                 if (kfuUser == null)
                 {
@@ -59,51 +61,54 @@ namespace Nashet.Controllers
 
                 if (kfuUser.UserType != "Student")
                 {
-                    var user = await _UserDomain.GetUserByUsername(kfuUser.Username);
+                    user = await _UserDomain.GetUserByUsername(kfuUser.Username);
                     if (user == null)
                     {
                         ViewData["Login_Error"] = "«·„” Œœ„ €Ì— „”Ã· ›Ì «·‰Ÿ«„";
                         return View();
                     }
+                    UserId = user.UserId;
+                    UserRole = user.RoleTypeEn;
                 }
 
-                if (kfuUser.UserType == "Student")
+                else if (kfuUser.UserType == "Student")
                 {
-                    var student = await _StudentDomain.GetStudentByEmail(kfuUser.UserEmail);
+                    student = await _StudentDomain.GetStudentByEmail(kfuUser.UserEmail);
                     if (student == null)
                     {
                         ViewData["Login_Error"] = "«·ÿ«·» €Ì— „”Ã· ›Ì «·‰Ÿ«„";
                         return View();
                     }
+                    UserId = student.StudentId;
+                    UserRole = "Student";
                 }
 
                 var identity = new ClaimsIdentity(new[]
                 {
-            new Claim(ClaimTypes.Name, kfuUser.Username),
-            new Claim(ClaimTypes.Role, kfuUser.UserType),
-            new Claim(ClaimTypes.NameIdentifier, kfuUser.KFUUserId.ToString()),
-            new Claim(ClaimTypes.GivenName, kfuUser.NameAR ?? kfuUser.NameEN),
-            new Claim(ClaimTypes.Email, kfuUser.UserEmail),
+                new Claim(ClaimTypes.Name, kfuUser.Username),
+                new Claim(ClaimTypes.Role, UserRole),
+                new Claim(ClaimTypes.NameIdentifier, UserId.ToString()),
+                new Claim(ClaimTypes.GivenName, kfuUser.NameAR ?? kfuUser.NameEN),
+                new Claim(ClaimTypes.Email, kfuUser.UserEmail),
 
         },
                 CookieAuthenticationDefaults.AuthenticationScheme);
-
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                if (kfuUser.UserType == "Admin")
+                if (UserRole == "Admin")
                 {
                     return RedirectToAction("AdminHome", "Home", new { area = "Admin" });
                 }
-                else if (kfuUser.UserType == "ActivitySupervisor")
+                else if (UserRole == "ActivitySupervisor")
                 {
                     return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
                 }
-                else if (kfuUser.UserType == "ClubSupervisor")
+                else if (UserRole == "ClubSupervisor")
                 {
                     return RedirectToAction("ClubSupervisorHome", "Home", new { area = "ClubSupervisor" });
                 }
-                else if (kfuUser.UserType == "Student")
+                else if (UserRole == "Student")
                 {
                     return RedirectToAction("StudentHome", "Home", new { area = "Student" });
                 }
