@@ -32,7 +32,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
     options.ExpireTimeSpan = TimeSpan.FromDays(1);
 
-    options.LoginPath = "/accounts/ErrorNotLoggedIn";
+    //options.LoginPath = "/accounts/ErrorNotLoggedIn";
 
     options.LogoutPath = "/account/logout";
 
@@ -107,6 +107,6 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Login}/{id?}");
 
 app.Run();

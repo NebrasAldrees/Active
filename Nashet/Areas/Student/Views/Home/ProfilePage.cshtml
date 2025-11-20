@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "الملف الشخصي";
     Layout = "~/Areas/Student/Views/Shared/_Layout.cshtml";
+
+    var userInfo = ViewBag.UserInfo as dynamic;
+    var studentData = ViewBag.StudentData as tblStudent;
 }
 
 <section class="page_wrap">
@@ -15,60 +18,65 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-8">
-                                <!-- START ITEM -->
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold mb-1">اسم المستخدم:</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.Identity.Name</p>
-                                    </div>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
+                                <!-- الاسم الكامل -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">الاسم الكامل:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.GivenName)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @(studentData?.StudentNameAr ?? userInfo?.FullName ?? "غير محدد")
+                                        </p>
                                     </div>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
+                                </div>
+
+                                <!-- الرقم الأكاديمي -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">الرقم الأكاديمي:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @(studentData?.AcademicId ?? userInfo?.AcademicNumber ?? "غير محدد")
+                                        </p>
                                     </div>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
+                                </div>
+
+                                <!-- الإيميل -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">الايميل:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @(studentData?.StudentEmail ?? userInfo?.Email ?? "غير محدد")
+                                        </p>
                                     </div>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
+                                </div>
+
+                                <!-- رقم الجوال -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">رقم الجوال:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @(studentData?.StudentPhone ?? "غير محدد")
+                                        </p>
                                     </div>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
+                                </div>
+
+                                <!-- التخصص -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">المهارات:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2" style="background: transparent; border: none; padding: 0.375rem 0; margin: 0; min-height: auto; border-bottom: 1px solid #dee2e6 !important;">@User.FindFirst(ClaimTypes.Role)?.Value</p>
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @(studentData?.StudentSkills ?? "غير محدد")
+                                        </p>
                                     </div>
-                                </div><!-- END ITEM -->
+                                </div>
                             </div>
                         </div>
                     </div>
