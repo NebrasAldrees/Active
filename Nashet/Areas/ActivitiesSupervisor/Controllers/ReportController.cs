@@ -19,31 +19,5 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         {
             return View(await _ReportDomain.GetReport());
         }
-
-        //public async Task<IActionResult> InsertReport()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> InseertReport(ReportViewModel viewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            int check = await _ReportDomain.InsertReport(viewModel);
-        //            if (check == 1)
-        //                ViewData["Successful"] = "Successful";
-        //            else
-        //                ViewData["Failed"] = "Failed";
-        //        }
-        //        catch
-        //        {
-        //            ViewData["Failed"] = "Failed";
-        //        }
-        //    }
-        //    return View(viewModel);
-        //}
     }
 }

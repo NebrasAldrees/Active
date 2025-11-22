@@ -13,11 +13,13 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
     {
         private readonly ClubDomain _ClubDomain;
         private readonly SiteDomain _SiteDomain;
+        private readonly TeamDomain _TeamDomain;
         private readonly IWebHostEnvironment _webHost;
-        public ClubController(ClubDomain clubDomain, SiteDomain siteDomain, IWebHostEnvironment webhost)
+        public ClubController(ClubDomain clubDomain, SiteDomain siteDomain, TeamDomain teamDomain, IWebHostEnvironment webhost)
         {
             _ClubDomain = clubDomain;
             _SiteDomain = siteDomain;
+            _TeamDomain = teamDomain;
             _webHost = webhost;
         }
         public async Task<IActionResult> ViewAllClubs(Guid? SiteGuid)
@@ -40,6 +42,9 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 var sites = await _SiteDomain.GetSite();
                 var currentSite = sites.FirstOrDefault(s => s.SiteId == club.SiteId);
                 ViewBag.CurrentSite = currentSite;
+
+                var teams = await _TeamDomain.GetTeamsByClubGuid(guid);
+                ViewBag.Teams = teams;
 
                 return View("ClubPage", club);
             }

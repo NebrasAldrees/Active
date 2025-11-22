@@ -38,6 +38,33 @@
                                         <p class="text-muted fs-6">@(string.IsNullOrEmpty(Model.ClubVision) ? "لا توجد رؤية محددة" : Model.ClubVision)</p>
                                     </div>
                                 </div>
+                                <div class="row mt-3">
+                                    <div class="col-12 mb-3">
+                                        <h6 class="text-primary">الأفرقة التابعة للنادي:</h6>
+
+                                        @if (ViewBag.Teams != null && ((List<TeamViewModel>)ViewBag.Teams).Any())
+                                        {
+                                            <ul class="list-group">
+                                                @foreach (var team in ViewBag.Teams)
+                                                {
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span>
+                                                            <i class="fas fa-users me-2 text-muted"></i>
+                                                            @team.TeamNameAR
+                                                        </span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-info">
+                                                <i class="fas fa-info-circle me-2"></i>
+                                                لا توجد أفرقة تابعة لهذا النادي حالياً
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
 
                                 <div class="row mt-3">
                                     <div class="col-12">
@@ -46,6 +73,10 @@
                                     </div>
                                 </div>
                                 <div class="d-flex gap-2">
+                                    <a asp-action="ViewAllReports" asp-controller="Report" asp-area="ActivitiesSupervisor" asp-route-guid="@Model.Guid"
+                                       class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-edit"></i> التقارير الخاصة بالنادي
+                                    </a>
                                     <a asp-action="UpdateClub" asp-controller="Club" asp-area="ActivitiesSupervisor" asp-route-guid="@Model.Guid"
                                        class="btn btn-success btn-sm">
                                         <i class="fas fa-edit"></i> تعديل النادي

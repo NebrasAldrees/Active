@@ -10,6 +10,14 @@
                     <div class="col-md-8">
                         <form asp-action="InsertReport" method="post" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
+                            <!-- START ITEM -->
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <label class="mb-1">النادي</label>
+                                    <input type="text" class="form-control" value="@ViewBag.ClubName" readonly />
+                                    <input type="hidden" asp-for="ClubGuid" value="@ViewBag.ClubGuid" />
+                                </div>
+                            </div><!-- END ITEM -->
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">

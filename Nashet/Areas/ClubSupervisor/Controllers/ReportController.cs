@@ -12,31 +12,82 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
     public class ReportController : Controller
     {
         private readonly ReportDomain _ReportDomain;
-        public ReportController(ReportDomain reportDomain)
+        private readonly ClubDomain _ClubDomain;
+        private readonly UserDomain _UserDomain;
+
+        public ReportController(ReportDomain reportDomain, ClubDomain clubDomain, UserDomain userDomain)
         {
             _ReportDomain = reportDomain;
+            _ClubDomain = clubDomain;
+            _UserDomain = userDomain;
         }
         public async Task<IActionResult> InsertReport()
         {
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            ViewBag.ClubName = club.ClubNameAR;
+            ViewBag.ClubGuid = club.Guid;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertReport(ReportViewModel viewModel)
         {
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            ViewBag.ClubName = club.ClubNameAR;
+            ViewBag.ClubGuid = club.Guid;
             if (ModelState.IsValid)
             {
                 try
                 {
                     int check = await _ReportDomain.InsertReport(viewModel);
+
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                    {
+                        TempData["Successful"] = "تمت الإضافة بنجاح";
+                        return RedirectToAction("ViewAllReports", "Report", new
+                        {
+                            area = "ActivitiesSupervisor",
+                            guid = club.Guid
+                        });
+                    }
                     else
-                        ViewData["Failed"] = "Failed";
+                    {
+                        ViewData["Failed"] = "فشل في الإضافة";
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    ViewData["Failed"] = "Failed";
+                    ViewData["Failed"] = "فشل: " + ex.Message;
                 }
             }
             return View(viewModel);

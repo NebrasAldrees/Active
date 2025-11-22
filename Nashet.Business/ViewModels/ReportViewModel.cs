@@ -13,6 +13,7 @@ namespace Nashet.Business.ViewModels
     {
         public int ReportId { get; set; }
         public int? ClubId { get; set; }
+        public Guid ClubGuid { get; set; }
         public tblClub Club { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("موضوع التقرير")]
