@@ -210,7 +210,6 @@ namespace Nashet.Business.Domain
             {
                 return false;
             }
-        } 
-        
+        }
     }
 }
