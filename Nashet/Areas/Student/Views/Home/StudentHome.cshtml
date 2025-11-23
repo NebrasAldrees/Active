@@ -45,7 +45,7 @@
                                         @foreach (var (announcement, index) in Model.Select((a, i) => (a, i)))
                                         {
                                             <div class="carousel-item @(index == 0 ? "active" : "")">
-                                                <a href="@Url.Action("AnnouncementPage", "Home", new { area = "Student", id = announcement.Guid })"
+                                                <a href="@Url.Action("AnnouncementPage", "Announcement", new { area = "Student", id = announcement.Guid })"
                                                    class="text-decoration-none">
                                                     <div class="announcement-slide" style="position: relative; height: 400px; overflow: hidden; cursor: pointer;">
                                                         <!-- background -->

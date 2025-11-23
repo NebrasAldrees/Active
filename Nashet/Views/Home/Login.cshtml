@@ -29,56 +29,43 @@
     <link rel="stylesheet" href="~/assets/css/app_rtl.css">
 </head>
 <body class="vertical-layout vertical-menu-modern boxicon-layout no-card-shadow 1-column  navbar-sticky footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="content-wrapper">
-            <div class="content-header row">
+    <div class="login-wrapper d-flex justify-content-center align-items-center min-vh-100 bg-light">
+        <div class="login-card p-4 shadow rounded-4" style="max-width: 420px; width: 100%; background-color: #fff;">
+            <div class="text-center mb-4">
+                <img src="~/Assets/imgs/favicon/logoNA.jpg" alt="شعار الموقع" style="max-height: 120px; max-width: 100%;">
+                <h3 class="fw-bold text-primary">تسجيل الدخول</h3>
+                <p class="text-muted small">يرجى إدخال بياناتك للمتابعة</p>
             </div>
-            <div class="content-body">
-                <!-- lock screen starts -->
-                <div class="row" style="margin-bottom:200px"></div>
-                <section class="row flexbox-container">
-                    <div class="col-xl-3 col-3 px-0"></div>
-                    <div class="col-xl-6 col-6 px-0">
-                        <div class="card bg-authentication ">
-                            <div class="row m-0">
-                                <div class="col-md-3 col-12 px-0"></div>
-                                <!-- left lock screen section -->
-                                <div class="col-md-12 col-12 px-0">
-                                    <div class="card disable-rounded-right mb-0 p-2">
-                                        <div class="card-header pb-1">
-                                            <div class="card-title">
-                                                <h4 class="text-center mb-2">تسجيل الدخول</h4>
-                                            </div>
-                                        </div>
-                                        <div class="card-content">
-                                            <div class="card-body">
-                                                <p id="Error" class="card-text danger" style="color:red">
-                                                    @ViewData["Login_error"]
-                                                </p>
-                                                <form asp-action="Login">
-                                                    <div class="form-group mb-50">
-                                                        <label class="text-bold-600" for="exampleInputEmail1">اسم المستخدم</label>
-                                                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="اسم المستخدم" name="UserName">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="text-bold-600" for="exampleInputPassword1">كلمةالمرور</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="كلمة المرور" name="Password">
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary glow position-relative w-100">تسجيل الدخول<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- lock screen ends -->
-            </div>
+            <form asp-action="Login">
+                @if (ViewData["Login_error"] != null)
+                {
+                    <p id="Error" class="card-text text-danger text-center mb-3" style="color:red">
+                        @ViewData["Login_error"]
+                    </p>
+                }
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" placeholder="اسم المستخدم" name="UserName" required>
+                    <label for="username">اسم المستخدم</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="password" placeholder="كلمة المرور" name="Password" required>
+                    <label for="password">كلمة المرور</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
+                    <i class="bx bx-log-in-circle me-1"></i> تسجيل الدخول
+                </button>
+
+
+            </form>
+
+
         </div>
     </div>
+    <footer class="text-white text-center py-3 px-3" style="background-color: #0f7179;">
+        جميع الحقوق محفوظة لجامعة الملك فيصل 2025 © | تصميم وتطوير عمادة التعلم الإلكتروني وتقنية المعلومات
+    </footer>
 </body>
 </html>

@@ -10,6 +10,17 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <form asp-action="InsertMembershipRequest" asp-controller="MembershipRequest" method="post" enctype="multipart/form-data">
+                            
+                            <!-- START ITEM -->
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <label class="mb-1">الطالب</label>
+                                    <input type="text" class="form-control" value="@ViewBag.StudentNameAr" readonly />
+                                    <input type="hidden" asp-for="AcademicId" value="@ViewBag.AcademicId" />
+                                </div>
+                            </div><!-- END ITEM -->
+
+
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -24,19 +35,7 @@
                                     <span style="color:red" asp-validation-for="ClubGuid"></span>
 
                                 </div>
-                                <div class="col-md-6">
-                                    <label asp-for="StudentID" class="mb-1">  </label>
-                                    <select asp-for="StudentID" class="form-control">
-                                        <option value="">-- اختر الطالب --</option>
-                                        @foreach (StudentViewModel st in ViewBag.Student)
-                                        {
-                                            <option value="@st.StudentId">@st.StudentNameAr</option>
-                                        }
-                                    </select>
-                                    <span style="color:red" asp-validation-for="StudentID"></span>
-
-                                </div><!-- END ITEM -->
-
+                                
                                 <!-- الفريق الأول -->
                                 <div class="form-group mb-3">
                                     <label asp-for="RequestTeam1" class="form-label">الرغبة الأولى</label>
@@ -62,25 +61,18 @@
                                     </select>
                                     <span style="color:red" asp-validation-for="RequestTeam3"></span>
 
-                                     <!-- سبب التقديم -->
+                                    <!-- سبب التقديم -->
                                     <div class="form-group mb-3">
                                         <label asp-for="RequestReason" class="form-label"></label>
                                         <textarea asp-for="RequestReason" class="form-control" rows="3" placeholder=" سبب التقديم"></textarea>
                                         <span asp-validation-for="RequestReason" class="text-danger"></span>
                                     </div>
 
-                                    <!-- التاريخ -->
-                                    <div class="form-group mb-3">
-                                        <label asp-for="RequestDate" class="form-label"></label>
-                                        <input asp-for="RequestDate" type="date" class="form-control" />
-                                        <span asp-validation-for="RequestDate" class="text-danger"></span>
-                                    </div>
-
                                     <button type="submit" class="btn btn-primary w-100 mt-3">إرسال الطلب</button>
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
@@ -91,26 +83,26 @@
     <script>
         @if (ViewBag.Successful != null)
         {
-            <text>
-                Swal.fire({
-                title: "تم رفع الطلب",
-                icon: "success",
-                confirmButtonText: "موافق",
-                draggable: true
-                }).then(() => {
-                window.location.href = '@Url.Action("StudentHome", "Home")';
-                });
-            </text>
+                <text>
+                    Swal.fire({
+                    title: "تم رفع الطلب",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                    }).then(() => {
+                    window.location.href = '@Url.Action("StudentHome", "Home")';
+                    });
+                </text>
         }
         else if (ViewBag.Error != null)
         {
-            <text>
-                 Swal.fire({
-                 title: "خطأ",
-                 icon: "error",
-                 confirmButtonText: "موافق"
-                 });
-            </text>
+                <text>
+                     Swal.fire({
+                     title: "خطأ",
+                     icon: "error",
+                     confirmButtonText: "موافق"
+                     });
+                </text>
         }
     </script>
     <script>

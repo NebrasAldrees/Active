@@ -4,7 +4,7 @@
 
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة عضوية</h5>
+                <h5 class="m-0">إضافة صنف عضوية</h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
@@ -13,14 +13,19 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="RoleTypeAr" class="mb-1"></label>
+                                    <label class="mb-1">نوع العضوية باللغة العربية</label>
                                     <input asp-for="RoleTypeAr" type="text" class="form-control">
-
-                                    <span style="color:red" asp-validation-for="ClubRoleId"></span>
+                                    <span style="color:red" asp-validation-for="RoleTypeAr"></span>
+                                </div><!-- END ITEM -->
+                                <!-- START ITEM -->
+                                <div class="col-md-6">
+                                    <label class="mb-1">نوع العضوية باللغة الإنجليزية</label>
+                                    <input asp-for="RoleTypeEn" type="text" class="form-control">
+                                    <span style="color:red" asp-validation-for="RoleTypeEn"></span>
                                 </div><!-- END ITEM -->
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                                <button type="submit" class="btn btn-primary px-5 insert-btn" title="save">إضافة</button>
                             </div>
                         </form>
                     </div>
@@ -29,3 +34,42 @@
         </div>
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (ViewBag.Successful != null)
+        {
+                    <text>
+                    Swal.fire({
+                        title: "تمت الإضافة",
+                        icon: "success",
+                        confirmButtonText: "موافق",
+                        draggable: true
+                    }).then(() => {
+                            window.location.href = '@Url.Action("ViewClubRole", "ClubRole")';
+                    });
+                    </text>
+        }
+        else if (ViewBag.Duplicate != null)
+        {
+                    <text>
+                    Swal.fire({
+                        title: "تنبيه",
+                        icon: "warning",
+                        confirmButtonText: "موافق"
+                    });
+                    </text>
+        }
+        else if (ViewBag.Error != null)
+        {
+                    <text>
+                    Swal.fire({
+                        title: "خطأ",
+                        icon: "error",
+                        confirmButtonText: "موافق"
+                    });
+                    </text>
+        }
+    </script>
+@await Html.PartialAsync("_ValidationScriptsPartial")
+}

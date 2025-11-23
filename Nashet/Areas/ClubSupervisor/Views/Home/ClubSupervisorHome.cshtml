@@ -46,7 +46,7 @@
                                         @foreach (var (announcement, index) in Model.Select((a, i) => (a, i)))
                                         {
                                             <div class="carousel-item @(index == 0 ? "active" : "")">
-                                                <a href="@Url.Action("AnnouncementPage", "Home", new { area = "ClubSupervisor", id = announcement.Guid })"
+                                                <a href="@Url.Action("AnnouncementPage", "Announcement", new { area = "ClubSupervisor", id = announcement.Guid })"
                                                    class="text-decoration-none">
                                                     <div class="announcement-slide" style="position: relative; height: 400px; overflow: hidden; cursor: pointer;">
                                                         <!-- background -->
@@ -126,11 +126,27 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a asp-area="ClubSupervisor" asp-controller="Membership" asp-action="ViewMembership" class="block layout_icons d-block mb-4">
+                        <a asp-area="ClubSupervisor" asp-controller="Membership" asp-action="ViewMember" class="block layout_icons d-block mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0f7179" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                                 <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
                             </svg>
                             <h5 class="text-dark">عرض معلومات الأعضاء</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-area="ClubSupervisor" asp-controller="Team" asp-action="Teams" class="block layout_icons d-block mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0f7179" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                            </svg>
+                            <h5 class="text-dark">عرض فِرق النادي</h5>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-area="ClubSupervisor" asp-controller="ClubRole" asp-action="ViewClubRole" class="block layout_icons d-block mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0f7179" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                            </svg>
+                            <h5 class="text-dark">عرض أدوار النادي</h5>
                         </a>
                     </div>
                 </div>

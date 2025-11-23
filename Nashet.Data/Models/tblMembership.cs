@@ -11,12 +11,12 @@ namespace Nashet.Data.Models
     {
         [Key]
         public int MembershipId { get; set; }
-        public int? StudentId { get; set; }
+        public int StudentId { get; set; }
         public tblStudent Student { get; set; }
-        public int? ClubRoleId { get; set; }
+        public int ClubRoleId { get; set; }
         public tblClubRole ClubRole { get; set; }
-        public int? TeamId { get;set; }
+        public int TeamId { get;set; }
         public tblTeam Team { get; set; }
-        public DateTime JoinDate { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.Now;
     }
 }

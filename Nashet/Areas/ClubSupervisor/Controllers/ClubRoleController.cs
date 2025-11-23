@@ -5,7 +5,7 @@ using Nashet.Business.ViewModels;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
-    [Area("ClubLeader")]
+    [Area("ClubSupervisor")]
     [Authorize(Roles = "ClubSupervisor")]
     public class ClubRoleController : Controller
     {
@@ -56,7 +56,7 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 var clubrole = await _ClubRoleDomain.GetClubRoleByGuid(Guid);
                 if (clubrole == null)
                 {
-                    TempData["Error"] = "الطالب غير موجود";
+                    ViewData["Error"] = "المنصب غير موجود";
                     return RedirectToAction(nameof(ViewClubRole));
                 }
 
@@ -67,11 +67,12 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                     RoleTypeAr = clubrole.RoleTypeAr,
                     RoleTypeEn = clubrole.RoleTypeEn,
                 };
-
+                ViewData["Successful"] = "تم التحديث بنجاح";
                 return View(viewModel);
             }
             catch
             {
+                ViewData["Failed"] = "فشل في التحديث";
                 return RedirectToAction(nameof(UpdateClubRole));
             }
         }
@@ -86,15 +87,15 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                     int check = await _ClubRoleDomain.UpdateClubRole(viewModel);
                     if (check == 1)
                     {
-                        TempData["Message"] = "تم تعديل بيانات منصب النادي بنجاح";
+                        ViewData["Message"] = "تم تعديل بيانات منصب النادي بنجاح";
                         return RedirectToAction(nameof(UpdateClubRole));
                     }
                     else
-                        TempData["Error"] = "فشل التعديل";
+                        ViewData["Error"] = "فشل التعديل";
                 }
                 catch
                 {
-                    TempData["Error"] = "فشل التعديل";
+                    ViewData["Error"] = "فشل التعديل";
                 }
             }
             return View(viewModel);
@@ -105,14 +106,14 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
 
             if (result == 1)
             {
-                TempData["Success"] = "تم حذف المنصب بنجاح";
+                ViewData["Success"] = "تم حذف المنصب بنجاح";
             }
             else
             {
-                TempData["Error"] = "خطأ في الحذف";
+                ViewData["Error"] = "خطأ في الحذف";
             }
 
-            return RedirectToAction("ClubRole");
+            return RedirectToAction("ViewClubRole");
         }
     }
 }

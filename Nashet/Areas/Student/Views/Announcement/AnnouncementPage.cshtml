@@ -1,0 +1,91 @@
+﻿@model AnnouncementViewModel
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <!-- Header -->
+            <div class="block-header border-bottom px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">نشاط: @Model.AnnouncementTopic</h5>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="block-body p-4">
+                @if (Model == null)
+                {
+                    <div class="alert alert-danger text-center">
+                        ⚠️ لم يتم العثور على الإعلان
+                    </div>
+                    <div class="text-center">
+                        <a asp-action="StudentHome" class="btn btn-primary">العودة للصفحة الرئيسية</a>
+                    </div>
+                    return;
+                }
+
+                <div class="row align-items-center">
+                    <div class="col-lg-4 mb-4">
+                        <!-- poster -->
+                        <div class="text-center mb-4">
+                            @if (!string.IsNullOrEmpty(Model.AnnouncementImage))
+                            {
+                                <img src="@Model.AnnouncementImage" alt="صورة الاعلان" class="rounded shadow"
+                                     style="max-width: 100%; height: auto; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center"
+                                     style="max-width: 100%; height: auto;">
+                                    <i class="fas fa-club fa-3x text-muted" onerror="this.onerror=null;this.src='https://placehold.co/80x80/f3f4f6/000000?text=POSTER';"></i>
+                                </div>
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 ">
+                        <!-- المعلومات الأساسية -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header ">
+                                <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>معلومات الإعلان</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <strong>موضوع الإعلان</strong>
+                                    <div class="text-muted">@(Model.AnnouncementTopic ?? "غير محدد")</div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>نوع الإعلان</strong>
+                                    <div class="text-muted">@Model.AnnouncementType</div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>النادي التابع للإعلان</strong>
+                                    <div class="text-muted">@(ViewBag.CurrentClub?.ClubNameAR ?? "غير محدد")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- تفاصيل الإعلان-->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>تفاصيل الإعلان</h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                                    @if (!string.IsNullOrEmpty(Model.AnnouncementDetails))
+                                    {
+                                        @Model.AnnouncementDetails
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">تفاصيل الإعلان غير متاحة</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -31,7 +31,7 @@ namespace Nashet.Data.Models
         public tblSite Site { get; set; }
 
         [StringLength(250)]
-        public string StudentSkills { get; set; } //update 
+        public string StudentSkills { get; set; } 
 
     }
 }

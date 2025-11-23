@@ -5,15 +5,27 @@ using Nashet.Data.Repository;
 using Nashet.Data.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class MembershipDomain(MembershipRepository Repository) : BaseDomain
+    public class MembershipDomain : BaseDomain
     {
-        private readonly MembershipRepository _MembershipRepository = Repository;
+        private readonly MembershipRepository _MembershipRepository;
+        private readonly TeamRepository _TeamRepository;
+        private readonly StudentRepository _StudentRepository;
+        private readonly ClubRoleRepository _ClubRoleRepository;
+        public MembershipDomain(MembershipRepository membershipRepository, TeamRepository teamRepository, StudentRepository studentRepository, ClubRoleRepository clubRoleRepository)
+        {
+            _MembershipRepository = membershipRepository;
+            _TeamRepository = teamRepository;
+            _StudentRepository = studentRepository;
+            _ClubRoleRepository = clubRoleRepository;
+        }
+
         public async Task<IList<MembershipViewModel>> GetMembership()
         {
             return _MembershipRepository.GetAllMembers().Result.Select(m => new MembershipViewModel
@@ -31,18 +43,42 @@ namespace Nashet.Business.Domain
             }).ToList();
         }
 
+        public async Task<List<MembershipViewModel>> GetMembersByClubGuid(Guid clubGuid)
+        {
+            var members = await _MembershipRepository.GetMembersByClubGuid(clubGuid);
+            return members.Select(t => new MembershipViewModel
+            {
+                Guid = t.Guid,
+                StudentId = t.StudentId,
+
+            }).ToList();
+        }
+        public async Task<tblMembership> GetMembersByGuid(Guid Guid)
+        {
+            var member = await _MembershipRepository.GetMemberByGuid(Guid);
+            if (member == null)
+            {
+                throw new KeyNotFoundException($"العضو المطلوب غير متوفر");
+            }
+
+            return member;
+        }
+
+
+
 
         public async Task<int> InsertMembership(MembershipViewModel viewModel)
         {
             try
             {
+                var team = await _TeamRepository.GetTeamByGuid(viewModel.TeamGuid);
+                var clubRole = await _ClubRoleRepository.GetClubRoleByGuid(viewModel.ClubRoleGuid);
+                var student = await _StudentRepository.GetByAcademicIdAsync(viewModel.AcademicId);
                 tblMembership membership = new tblMembership
                 {
-                   
-                    //Student = viewModel.Student,
-                    ClubRoleId = viewModel.ClubRoleId,
-                    TeamId = viewModel.TeamId,
-                    JoinDate = viewModel.JoinDate,
+                    StudentId = student.StudentId,
+                    ClubRoleId = clubRole.ClubRoleId,
+                    TeamId = team.TeamId,
                 };
                 int check = await _MembershipRepository.InsertMember(membership);
                 if (check == 0)
@@ -72,17 +108,57 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        public int DeleteMembership(int id)
+
+
+        public virtual async Task<int> UpdateMembership(MembershipViewModel viewModel)
         {
             try
             {
-                _MembershipRepository.Delete(id);
-                return 1;
+                var Membership = await _MembershipRepository.GetMemberByGuid(viewModel.Guid);
+                if (Membership == null)
+                {
+                    return 0;
+                }
+                var team = await _TeamRepository.GetTeamByGuid(viewModel.TeamGuid);
+                var student = await _StudentRepository.GetByAcademicIdAsync(viewModel.AcademicId);
+                var role = await _ClubRoleRepository.GetClubRoleByGuid(viewModel.ClubRoleGuid);
+                Membership.TeamId = team.TeamId;
+                Membership.StudentId = student.StudentId;
+                Membership.ClubRoleId = role.ClubRoleId;
+                
+
+                int check = await _MembershipRepository.updateMember(Membership);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {
                 return 0;
             }
+
+        }
+
+        public async Task<bool> DeleteMembership(Guid guid)
+        {
+            try
+            {
+                var member = await _MembershipRepository.GetMemberByGuid(guid);
+                if (member == null)
+                    return false;
+
+                member.IsDeleted = true;
+                await _MembershipRepository.UpdateAsync(member);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            
         }
     }
 }

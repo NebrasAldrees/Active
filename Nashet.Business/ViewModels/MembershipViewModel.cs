@@ -15,29 +15,33 @@ namespace Nashet.Business.ViewModels
         public int MembershipId { get; set; }
 
 
-        [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
         [DisplayName("رقم الطالب المرجعي")]
         public int StudentId { get; set; }
+        [Required(ErrorMessage = "*هذا الحقل مطلوب*")]
+        [DisplayName("الرقم الأكاديمي")]
+        public string AcademicId { get; set; }
+        public string StudentNameAr { get; set; }
         public tblStudent Student { get; set; }
 
         
         [DisplayName("نوع عضوية الطالب")]
         public int ClubRoleId { get; set; }
+        [DisplayName("نوع عضوية الطالب")]
+        public Guid ClubRoleGuid { get; set; }
+        public string ClubRoleType { get; set; }
         public tblClubRole ClubRole { get; set; }
 
         
         [DisplayName("الفريق")]
         public int TeamId { get; set; }
+        [DisplayName("الفريق")]
+        public Guid TeamGuid { get; set; }
+        public string TeamNameAr { get; set; }
         public tblTeam Team { get; set; }
 
-        
+
         [DisplayName("تاريخ الإنضمام")]
         public DateTime JoinDate { get; set; }
         public Guid Guid { get; set; }
-
-
-        [NotMapped]
-        [DisplayName("الرقم الأكاديمي")]
-        public string AcademicId { get; set; }
     }
 }

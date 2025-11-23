@@ -10,39 +10,40 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
     public class AnnouncementController : Controller
     {
         private readonly AnnouncementDomain _AnnouncementDomain;
-        public AnnouncementController(AnnouncementDomain announcementDomain)
+        private readonly ClubDomain _ClubDomain;
+        public AnnouncementController(AnnouncementDomain announcementDomain, ClubDomain clubDomain)
         {
             _AnnouncementDomain = announcementDomain;
+            _ClubDomain = clubDomain;
         }
 
         public async Task<IActionResult> GetAnnouncement()
         {
             return View(await _AnnouncementDomain.GetAnnouncement());
         }
-        public async Task<IActionResult> InsertAnnouncement()
+        
+        
+        [HttpGet]
+        public async Task<IActionResult> AnnouncementPage(Guid id)
         {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertAnnouncement(AnnouncementViewModel viewModel)
-        {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                var announcement = await _AnnouncementDomain.GetAnnouncementByGuid(id);
+                if (announcement == null)
                 {
-                    int check = await _AnnouncementDomain.InsertAnnouncement(viewModel);
-                    if (check == 1)
-                        ViewData["Successful"] = "Successful";
-                    else
-                        ViewData["Failed"] = "Failed";
+                    return NotFound();
                 }
-                catch
-                {
-                    ViewData["Failed"] = "Failed";
-                }
+
+                var clubList = await _ClubDomain.GetClub();
+                var currentClub = clubList.FirstOrDefault(c => c.ClubId == announcement.ClubId);
+                ViewBag.currentClub = currentClub;
+
+                return View(announcement);
             }
-            return View(viewModel);
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

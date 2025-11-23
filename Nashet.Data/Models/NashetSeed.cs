@@ -447,19 +447,19 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblStudent>().HasData(
                new tblStudent()
                {
-                   StudentId = 1,
+                   StudentId = 2,
                    AcademicId = "221422576",
                    StudentNameAr = "نبراس",
                    StudentNameEn = "Nebras",
-                   StudentEmail = "Nebras@gmail.com",
+                   StudentEmail = "221422576@student.kfu.edu.sa",
                    IsActive = true,
                    IsDeleted = false,
                    isSent = true,
                    StudentPhone = "0540345575",
                    SiteId = 10,
-                   StudentSkills = "Fast Learner",
-                   Guid = Guid.Parse("966bf84b-467d-4385-ae94-867f741e75b9"),
-                   CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                   StudentSkills = "Flexibility, Fast Learner",
+                   Guid = Guid.Parse("8cc028e3-bcac-484e-b6a4-36941a618eaa"),
+                   CreationDate = new DateTime(2025, 11, 20, 21, 43, 22, DateTimeKind.Utc)
 
                });
         }
@@ -472,15 +472,15 @@ namespace Nashet.Data.Models
                     UserNameEN = "Muntaha",
                     UserNameAR = "منتهى",
                     Username = "Muntaha_12",
-                    UserEmail = "Muntaha@gmail.com",
+                    UserEmail = "Muntaha_12@gmail.com",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0536763284",
                     SiteId = 1,
-                    UserId = 1,
-                    Guid = Guid.Parse("ca0fad06-8c13-4858-a0a2-4e1115e11ca1"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    UserId = 4,
+                    Guid = Guid.Parse("34b1ede7-f035-41b0-9a4d-bca1808d1b15"),
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblUser()
                 {
@@ -488,15 +488,15 @@ namespace Nashet.Data.Models
                     UserNameEN = "Huda",
                     UserNameAR = "هدى",
                     Username = "Huda1",
-                    UserEmail = "Huda@gmail.com",
+                    UserEmail = "Huda1@gmail.com",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0533924794",
                     SiteId = 1,
-                    UserId = 2,
-                    Guid = Guid.Parse("3072cf40-dc60-41f0-87da-77631050caa3"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    UserId = 5,
+                    Guid = Guid.Parse("bcbe728f-6ae0-4edf-ac9d-1ecb7fb70430"),
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblUser()
                 {
@@ -504,16 +504,16 @@ namespace Nashet.Data.Models
                     UserNameEN = "Safaa",
                     UserNameAR = "صفا",
                     Username = "Safaa2",
-                    UserEmail = "Safaa@gmail.com",
+                    UserEmail = "Safaa2@gmail.com",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0509410406",
                     SiteId = 1,
                     ClubId = 1,
-                    UserId = 3,
-                    Guid = Guid.Parse("3e4b0298-c385-40eb-96a9-5d69d8cbae79"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    UserId = 6,
+                    Guid = Guid.Parse("d71c8b67-a3c5-439b-988a-90036bd296c2"),
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 }
             );
         }
@@ -522,67 +522,67 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblKFUuser>().HasData(
                 new tblKFUuser()
                 {
-                    KFUUserId = 1,
+                    KFUUserId = 5,
                     NameEN = "Muntaha",
                     NameAR = "منتهى",
                     Username = "Muntaha_12",
                     Password = "Muntaha",
-                    UserEmail = "Muntaha@gmail.com",
+                    UserEmail = "Muntaha_12@gmail.com",
                     UserType = "Staff",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0536763284",
                     Guid = Guid.Parse("7f4a5d58-29db-411b-8e3e-dcf0918e5dc7"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 2,
+                    KFUUserId = 6,
                     NameEN = "Huda",
                     NameAR = "هدى",
                     Username = "Huda1",
                     Password = "Huda",
-                    UserType = "Student",
-                    UserEmail = "Huda@gmail.com",
+                    UserType = "Staff",
+                    UserEmail = "Huda1@gmail.com",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0533924794",
-                    Guid = Guid.Parse("9ba46550-b007-48cf-9f21-bc473d2b4393"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    Guid = Guid.Parse("ae75dc8b-2ab9-4ff1-a623-f79e56425e14"),
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 3,
-                    NameEN = "Nebras",
-                    NameAR = "نبراس",
-                    Username = "Nebras2",
+                    KFUUserId = 7,
+                    NameEN = "Nebras Aldrees",
+                    NameAR = " نبراس الدريس",
+                    Username = "221422576",
                     Password = "Nebras",
                     UserType = "Student",
-                    UserEmail = "Nebras@gmail.com",
+                    UserEmail = "221422576@student.kfu.edu.sa",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0540345575",
-                    Guid = Guid.Parse("08d5ea5b-4216-40d6-b166-53c4dfa363e7"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    Guid = Guid.Parse("687b0a3a-06de-499c-a575-f7719b954793"),
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 4,
+                    KFUUserId = 8,
                     NameEN = "Safaa",
                     NameAR = "صفا",
                     Username = "Safaa2",
                     Password = "Safaa",
-                    UserType = "ClubSupervisor",
-                    UserEmail = "Safaa@gmail.com",
+                    UserType = "Staff",
+                    UserEmail = "Safaa2@gmail.com",
                     IsActive = true,
                     isSent = true,
                     IsDeleted = false,
                     UserPhone = "0509410406",
-                    Guid = Guid.Parse("f68717eb-5be7-4a81-bcae-49428ccc52ad"),
-                    CreationDate = new DateTime(2025, 10, 13, 11, 43, 22, DateTimeKind.Utc)
+                    Guid = Guid.Parse("5af5cde5-542c-49c1-a8ab-6c439fcf5d54"),
+                    CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 }
             );
         }

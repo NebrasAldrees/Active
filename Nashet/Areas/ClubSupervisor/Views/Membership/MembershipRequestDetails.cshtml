@@ -1,0 +1,233 @@
+﻿@model MembershipRequestViewModel
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <!-- Header -->
+            <div class="block-header border-bottom px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">اسم الطالب: @Model.StudentNameAr</h5>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="block-body p-4">
+                @if (Model == null)
+                {
+                    <div class="alert alert-danger text-center">⚠️ لم يتم العثور على الطلب</div>
+                    <div class="text-center">
+                        <a asp-action="ViewMembershipRequests" class="btn btn-primary">العودة لقائمة الطلبات</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- معلومات الطلب -->
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>معلومات الطلب</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3"><strong>الرغبة الأولى للفريق</strong><div class="text-muted">@Model.TeamName1</div></div>
+                                    <div class="mb-3"><strong>الرغبة الثانية للفريق</strong><div class="text-muted">@Model.TeamName2</div></div>
+                                    <div class="mb-3"><strong>الرغبة الثالثة للفريق</strong><div class="text-muted">@Model.TeamName3</div></div>
+                                </div>
+                            </div>
+
+                            <!-- بيانات الطالب -->
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>بيانات الطالب</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3"><strong>اسم الطالب</strong><div class="text-muted">@Model.StudentNameAr</div></div>
+                                    <div class="mb-3">
+                                        <strong>مهارات الطالب</strong>
+                                        <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                                            @if (!string.IsNullOrEmpty(Model.StudentSkills))
+                                            {
+                                                @Model.StudentSkills
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">مهارات الطالب غير متاحة</span>
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="mb-3"><strong>سبب التسجيل للعضوية</strong><div class="text-muted">@Model.RequestReason</div></div>
+                                </div>
+                            </div>
+
+                            <!-- قبول الطلب -->
+                            <div class="card shadow-sm mb-4">
+                                <form asp-action="AcceptRequest" method="post" asp-controller="Membership" asp-area="ClubSupervisor">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="Guid" />
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-eye me-2"></i> تفاصيل العضوية في حال القبول</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label>الفريق</label>
+                                            <select asp-for="TeamGuid" class="form-control">
+                                                <option value="">اختر الفريق</option>
+                                                <option value="@Model.RequestTeam1">@Model.TeamName1</option>
+                                                <option value="@Model.RequestTeam2">@Model.TeamName2</option>
+                                                <option value="@Model.RequestTeam3">@Model.TeamName3</option>
+                                            </select>
+                                            <span asp-validation-for="TeamGuid" class="text-danger"></span>
+                                        </div>
+                                    
+                                        <div class="mb-3">
+                                            <label>نوع العضوية</label>
+                                            <select asp-for="ClubRoleGuid" class="form-control">
+                                                <option value="">اختر نوع العضوية</option>
+                                                @if (ViewBag.ClubRole != null)
+                                                {
+                                                    foreach (var role in ViewBag.ClubRole)
+                                                    {
+                                                        <option value="@role.Guid">@role.RoleTypeAr</option>
+                                                    }
+                                                }
+                                            </select>
+                                            <span asp-validation-for="ClubRoleGuid" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <button type="submit" class="btn btn-success">قبول الطلب</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- رفض الطلب -->
+                            <div class="card shadow-sm mt-4">
+                                <div class="card-body text-center">
+                                    <form id="deleteForm" method="post" asp-action="DeleteRequest" asp-controller="Membership" asp-area="ClubSupervisor" style="display:none;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="guid" value="@Model.Guid" />
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-danger delete-btn">رفض الطلب</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(function () {
+            // Accept Button Confirmation
+            $('.accept-btn').on('click', function (event) {
+                event.preventDefault();
+                var id = $(this).data('id');
+
+                Swal.fire({
+                    title: "هل تريد قبول الطلب؟",
+                    text: "سيتم إنشاء عضوية جديدة بناءً على هذا الطلب.",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#28a745",
+                    cancelButtonColor: "#6c757d",
+                    confirmButtonText: "نعم، قبول الطلب",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#acceptForm input[name="guid"]').val(id);
+
+                        $.ajax({
+                            url: '@Url.Action("AcceptRequest", "Membership", new { area = "ClubSupervisor" })',
+                            type: 'POST',
+                            data: $('#acceptForm').serialize(),
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'تم قبول الطلب!',
+                                        text: response.message || 'تم إنشاء عضوية بنجاح',
+                                        icon: 'success', 
+                                        confirmButtonText: 'موافق',
+                                        timer: 2000
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("ViewMembershipRequests", "Membership", new { area = "ClubSupervisor" })';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل القبول!',
+                                        text: response.message || 'لم يتم إنشاء عضوية',
+                                        icon: 'error',
+                                        confirmButtonText: 'موافق'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة القبول: ' + error,
+                                    icon: 'error',
+                                    confirmButtonText: 'موافق'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Delete Button Confirmation
+            $('.delete-btn').on('click', function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "سيتم رفض الطلب ولا يمكن التراجع عن هذا الإجراء!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "نعم، رفض الطلب",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '@Url.Action("RejectRequest", "Membership", new { area = "ClubSupervisor" })',
+                            type: 'POST',
+                            data: $('#deleteForm').serialize(),
+                            success: function (response) {
+                                if (response.Success) {
+                                    Swal.fire({
+                                        title: 'تم رفض الطلب!',
+                                        text: response.message || 'تم رفض الطلب بنجاح',
+                                        icon: 'success', 
+                                        confirmButtonText: 'موافق',
+                                        timer: 2000
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("ViewMembershipRequests", "Membership", new { area = "ClubSupervisor" })';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل الرفض!',
+                                        text: response.message || 'لم يتم رفض الطلب',
+                                        icon: 'error',
+                                        confirmButtonText: 'موافق'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة الرفض: ' + error,
+                                    icon: 'error',
+                                    confirmButtonText: 'موافق'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
