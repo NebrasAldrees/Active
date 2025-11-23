@@ -14,6 +14,7 @@ namespace Nashet.Business.ViewModels
         public int ReportId { get; set; }
         public int? ClubId { get; set; }
         public Guid ClubGuid { get; set; }
+        public string ClubNameAr { get; set; }
         public tblClub Club { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("موضوع التقرير")]
@@ -21,9 +22,12 @@ namespace Nashet.Business.ViewModels
         public string Topic { get; set; }
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("إرفاق التقرير")]
-        [StringLength(50)]
+        [StringLength(1500)]
         public string Path { get; set; } = null;
         public Guid Guid { get; set; }
+        [Display(Name = "ملف التقرير")]
+        [Required(ErrorMessage = "يرجى اختيار ملف التقرير")]
+        public IFormFile File { get; set; }
         public bool IsAdded { get; set; }
     }
 }
