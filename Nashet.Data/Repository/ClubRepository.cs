@@ -66,16 +66,12 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        public virtual async Task<int> DeleteClubByGuid(Guid guid)
+
+        public virtual async Task<int> updateClub(tblClub club)
         {
             try
             {
-                var club = await GetClubByGuid(guid);
-                if (club == null || club.IsDeleted == true)
-                {
-                    return 0;
-                }
-                IsDeleted(club);
+                await UpdateAsync(club);
                 return 1;
             }
             catch
@@ -83,23 +79,11 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        public virtual async Task<int> UpdateClubByGuid(Guid guid, tblClub updatedClub)
+
+        public virtual async Task<int> DeleteClub(tblClub club)
         {
             try
             {
-                var club = await GetClubByGuid(guid);
-                if (club == null)
-                {
-                    return 0;
-                }
-
-                club.siteId = updatedClub.siteId;
-                club.ClubNameAR = updatedClub.ClubNameAR;
-                club.ClubNameEN = updatedClub.ClubNameEN;
-                club.ClubVision = updatedClub.ClubVision;
-                club.ClubOverview = updatedClub.ClubOverview;
-                club.ClubIcon = updatedClub.ClubIcon;
-
                 await UpdateAsync(club);
                 return 1;
             }

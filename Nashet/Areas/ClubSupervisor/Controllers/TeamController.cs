@@ -13,22 +13,49 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
     {
         private readonly TeamDomain _TeamDomain;
         private readonly ClubDomain _ClubDomain;
-        public TeamController(TeamDomain teamDomain, ClubDomain clubDomain)
+        private readonly UserDomain _UserDomain;
+
+        public TeamController(TeamDomain teamDomain, ClubDomain clubDomain, UserDomain userDomain)
         {
             _TeamDomain = teamDomain;
             _ClubDomain = clubDomain;
-        }
-        public IActionResult Index()
-        {
-            return View();
+            _UserDomain = userDomain;
         }
         public async Task<IActionResult> Teams()
         {
-            return View(await _TeamDomain.GetTeam());
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user?.ClubId != null)
+            {
+                var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+                if (club != null)
+                {
+                    ViewBag.Team = await _TeamDomain.GetTeamsByClubGuid(club.Guid);
+                }
+            }
+            return View(ViewBag.Team);
         }
         public async Task<IActionResult> InsertTeam()
         {
-            ViewBag.Club = await _ClubDomain.GetClub();
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            ViewBag.ClubName = club.ClubNameAR;
+            ViewBag.ClubGuid = club.Guid;
 
             return View();
         }
@@ -36,7 +63,24 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertTeam(TeamViewModel viewModel)
         {
-            ViewBag.Club = await _ClubDomain.GetClub();
+            var username = User.Identity?.Name;
+            var user = await _UserDomain.GetUserByUsername(username);
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
+            ViewBag.ClubName = club.ClubNameAR;
+            ViewBag.ClubGuid = club.Guid;
 
             if (ModelState.IsValid)
             {

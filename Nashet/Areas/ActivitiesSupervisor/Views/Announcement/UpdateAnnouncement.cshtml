@@ -3,12 +3,12 @@
     <div class="page_content">
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">تحديث بيانات نشاط</h5>
+                <h5 class="m-0">تحديث بيانات الإعلان</h5>
             </div>
             <div class="block-body py-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="UpdateAnnouncement" method="post" enctype="multipart/form-data">
+                        <form id="updateForm" asp-action="UpdateAnnouncement" method="post" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             <div class="row">
                                 <input type="hidden" asp-for="Guid" />
@@ -62,8 +62,8 @@
                                 </div><!-- END ITEM -->
 
                                 <div class="form-group mt-4">
-                                    <button type="submit" id="showAlertBtn" class="btn btn-success update-btn">حفظ التعديلات</button>
-                                    <a asp-action="Activities" asp-controller="Activity" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
+                                    <button type="submit" class="btn btn-success update-btn">حفظ التعديلات</button>
+                                    <a asp-action="ActivitiesSupervisorHome" asp-controller="Home" asp-area="ActivitiesSupervisor" class="btn btn-secondary">إلغاء</a>
                                 </div>
                             </div>
                         </form>
@@ -127,7 +127,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: @Url.Action("ActivitiesSupervisorHome", "Home"),
+                        url: '@Url.Action("UpdateAnnouncement", "Announcement")',
                         type: 'POST',
                         data: $('#yourFormId').serialize(),
                         success: function (response) {

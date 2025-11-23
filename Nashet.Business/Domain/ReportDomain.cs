@@ -47,7 +47,7 @@ namespace Nashet.Business.Domain
             {
                 tblReport Report = new tblReport
                 {
-                    ClubId = viewModel.ClubId,
+                    ClubId = (int)viewModel.ClubId,
                     Topic = viewModel.Topic,
                     Path = viewModel.Path
                 };

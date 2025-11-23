@@ -36,6 +36,17 @@ namespace Nashet.Business.Domain
 
             return Site;
         }
+        public async Task<tblSite> GetSiteByID(int id)
+        {
+            var Site = await _SiteRepository.GetSiteByID(id);
+
+            if (Site == null)
+            {
+                throw new KeyNotFoundException($"Site request with site Id {id} was not found.");
+            }
+
+            return Site;
+        }
         public virtual async Task<int> InsertSite(SiteViewModel viewModel)
         {
             try

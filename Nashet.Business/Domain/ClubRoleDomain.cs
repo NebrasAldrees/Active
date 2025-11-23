@@ -19,6 +19,10 @@ namespace Nashet.Business.Domain
         {
             return await _ClubRoleRepository.GetClubRoleByGuid(Guid);
         }
+        public async Task<tblClubRole> GetClubRoleById(int id)
+        {
+            return await _ClubRoleRepository.GetClubRoleByIdAsync(id);
+        }
         public async Task<IList<ClubRoleViewModel>> GetClubRole()
         {
             return _ClubRoleRepository.GetAllClubRole().Result.Select(c => new ClubRoleViewModel

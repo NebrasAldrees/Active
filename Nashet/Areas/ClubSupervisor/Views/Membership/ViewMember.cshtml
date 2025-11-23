@@ -18,20 +18,34 @@
                         <tr>
                             <th>اسم الفريق</th>
                             <th>اسم العضو</th>
+                            <th>المنصب</th>
                             <th class=""></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @{
-                            foreach (var item in Model)
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">لا توجد بيانات اعضاء لعرضها حالياً</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
                             {
-                                <tr class="cursor-pointer" goto="order_details.cshtml">
-                                    <td>@item.TeamId</td>
-                                    <td>@item.Student.StudentNameAr</td>
+                                var formId = $"deleteForm_{item.Guid}";
+                                <tr>
+                                    <td>@item.TeamNameAr</td>
+                                    <td>@item.StudentNameAr</td>
+                                    <td>@item.ClubRoleType</td>
                                     <td class="action_td text-end">
-                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="UpdateMembership" asp-route-guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+
+                                        <form id="@formId" method="post" asp-action="DeleteMember" asp-controller="Membership" asp-area="ClubSupervisor" style="display:inline;">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="guid" value="@item.Guid" />
+                                            <button type="button" class="btn btn-sm btn-danger delete-btn" data-form-id="@formId">إلغاء العضوية</button>
+                                        </form>
                                     </td>
                                 </tr>
                             }
@@ -40,8 +54,64 @@
                 </table>
             </div>
         </div>
-
-
-
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(function () {
+            $('.delete-btn').on('click', function (event) {
+                event.preventDefault();
+                const formId = $(this).data('form-id');
+
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "سيتم إلغاء العضوية ولا يمكن التراجع عن هذا الإجراء!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "نعم، إلغاء العضوية",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '@Url.Action("DeleteMember", "Membership", new { area = "ClubSupervisor" })',
+                            type: 'POST',
+                            data: $('#' + formId).serialize(),
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'تم إلغاء العضوية!',
+                                        text: response.message || 'تم إلغاء العضوية بنجاح',
+                                        icon: 'success',
+                                        confirmButtonText: 'موافق',
+                                        timer: 2000
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("ViewMember", "Membership", new { area = "ClubSupervisor" })';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل إلغاء العضوية!',
+                                        text: response.message || 'لم يتم إلغاء العضوية',
+                                        icon: 'error',
+                                        confirmButtonText: 'موافق'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة إلغاء العضوية: ' + error,
+                                    icon: 'error',
+                                    confirmButtonText: 'موافق'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

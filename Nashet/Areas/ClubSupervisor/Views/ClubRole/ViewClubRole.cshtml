@@ -9,29 +9,36 @@
                         <input type="text" class="form-control table__quick_search"
                                placeholder="البحث السريع ...">
                     </div>
-                    <a asp-action="InsertClubRole" asp-controller="ClubRole" asp-area="ClubLeader" class="btn btn-primary">إضافة نوع عضوية</a>
+                    <a asp-action="InsertClubRole" asp-controller="ClubRole" asp-area="ClubSupervisor" class="btn btn-primary">إضافة نوع عضوية</a>
                 </div>
             </div>
             <div class="block-body">
                 <table class="table table-hover js-dataTable">
                     <thead>
                         <tr>
-                            <th>رقم العضوية المرجعي</th>
-                            <th>نوع العضوية</th>
+                            <th>نوع العضوية باللغة العربية</th>
+                            <th>نوع العضوية باللغة الإنجليزية</th>
                             <th class=""></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @{
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">لا توجد اصناف عضويات لعرضها حالياً</td>
+                            </tr>
+                        }
+                        else
+                        {
+                        
                             foreach (var item in Model)
                             {
                                 <tr class="cursor-pointer" goto="order_details">
-                                    <td>@item.ClubRoleId</td>
                                     <td>@item.RoleTypeAr</td>
+                                    <td>@item.RoleTypeEn</td>
                                     <td class="action_td text-end">
-                                     @* <a href="" class="btn btn-sm btn-primary">عرض</a>*@
-                                        <a asp-action="UpdateStudent" asp-route-Guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
-                                        <a asp-action="DeleteStudent" asp-route-Guid="@item.Guid" class="btn btn-sm btn-danger">حذف</a>
+                                        <a asp-action="UpdateClubRole" asp-route-guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a asp-action="DeleteClubRole" asp-route-Guid="@item.Guid" class="btn btn-sm btn-danger">حذف</a>
                                     </td>
                                 </tr>
                             }

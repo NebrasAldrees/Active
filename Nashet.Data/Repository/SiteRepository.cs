@@ -36,6 +36,11 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(site => site.IsDeleted == false && site.Guid == guid)
                             .FirstOrDefaultAsync();
         }
+        public virtual async Task<tblSite> GetSiteByID(int id)
+        {
+            return await dbSet.Where(site => site.IsDeleted == false && site.SiteId == id)
+                            .FirstOrDefaultAsync();
+        }
         public virtual async Task<int> DeleteSite(tblSite site)
         {
             try

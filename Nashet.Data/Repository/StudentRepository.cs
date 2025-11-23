@@ -24,6 +24,10 @@ namespace Nashet.Data.Repository
         {
             return await dbSet.FirstOrDefaultAsync(student => student.Guid == Guid && student.IsDeleted == false);
         }
+        public async Task<tblStudent> GetStudentById(int Id)
+        {
+            return await dbSet.FirstOrDefaultAsync(student => student.StudentId == Id && student.IsDeleted == false);
+        }
 
         public virtual async Task<IList<tblStudent>> GetAllStudents()
         {

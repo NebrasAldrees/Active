@@ -41,6 +41,36 @@ namespace Nashet.Business.Domain
                 TeamNameAR = t.TeamNameAR
             }).ToList();
         }
+        public async Task<TeamViewModel> GetTeamByGuid(Guid Guid)
+        {
+            var team = await _TeamRepository.GetTeamByGuid(Guid);
+
+            if (team == null)
+            {
+                throw new KeyNotFoundException($"team with GUID {Guid} was not found.");
+            }
+
+            return new TeamViewModel
+            {
+                TeamId = team.TeamId,
+                ClubId = team.ClubId,
+                TeamNameAR= team.TeamNameAR,
+                TeamNameEn = team.TeamNameEn,
+                Guid = team.Guid
+            };
+
+        }
+        public async Task<tblTeam> GetTeamById(int id)
+        {
+            var Team = await _TeamRepository.GetTeamByIdAsync(id);
+
+            if (Team == null)
+            {
+                throw new KeyNotFoundException($"الفريق المطلوب غير متوفر");
+            }
+
+            return Team;
+        }
 
 
         public async Task<int> InsertTeam(TeamViewModel viewModel)

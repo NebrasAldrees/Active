@@ -12,10 +12,10 @@ namespace Nashet.Data.Models
         [Key]
         public int ClubRoleId { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string RoleTypeAr { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string RoleTypeEn { get; set; }
     }
 }
