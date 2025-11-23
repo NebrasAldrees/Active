@@ -41,15 +41,11 @@
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label for="" class="mb-1"> النادي </label>
-                                    <select asp-for="ClubGuid" class="form-control">
-                                        <option value=""> اختر النادي</option>
-                                        @foreach (ClubViewModel club in ViewBag.Club)
-                                        {
-                                            <option value="@club.Guid">@club.ClubNameAR</option>
-                                        }
-                                    </select>
-                                    <span style="color:red" asp-validation-for="ClubGuid"></span>
+                                    <div class="col-md-6">
+                                        <label class="mb-1">النادي</label>
+                                        <input type="text" class="form-control" value="@ViewBag.ClubName" readonly />
+                                        <input type="hidden" asp-for="ClubGuid" value="@ViewBag.ClubGuid" />
+                                    </div>
                                 </div><!-- END ITEM -->
                             </div>
                             <div class="row">

@@ -17,11 +17,11 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<IList<tblMembershipRequest>> GetAllRequests()
         {
-            return await dbSet.Where(Request => Request.IsActive == true && Request.IsDeleted == false).ToListAsync();
+            return await dbSet.ToListAsync();
         }
         public virtual async Task<tblMembershipRequest> GetRequestByGUID(Guid? guid)
         {
-            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.IsDeleted == false && Request.Guid == guid);
+            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.Guid == guid);
         }
         public async Task<int> InsertMembershipRequest(tblMembershipRequest request)
         {
@@ -49,7 +49,7 @@ namespace Nashet.Data.Repository
             return await query.AnyAsync(request => request.ClubID == ClubID);
         }
 
-        public virtual async Task<int> updateRequest(tblMembershipRequest request)
+        public virtual async Task<int> AcceptRequest(tblMembershipRequest request)
         {
             try
             {

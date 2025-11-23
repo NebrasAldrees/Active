@@ -115,8 +115,8 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 var entity = await _AnnouncementDomain.GetAnnouncementByGuid(guid);
                 if (entity == null)
                 {
-                    ViewBag.Error = "الإعلان غير موجود";
-                    return RedirectToAction(nameof(AnnouncementPage));
+                    TempData["Error"] = "الإعلان غير موجود";
+                    return RedirectToAction("ActivitiesSupervisorHome", "Home");
                 }
                 ViewBag.Club = await _ClubDomain.GetClub();
 
@@ -127,15 +127,15 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     AnnouncementDetails = entity.AnnouncementDetails,
                     AnnouncementImage = entity.AnnouncementImage,
                     AnnouncementType = entity.AnnouncementType,
-                    ClubId = entity.ClubId
+                    ClubGuid = entity.ClubGuid
                 };
-                ViewBag.Successful = "تم تحديث بيانات الإعلان بنجاح";
+                ViewBag.Success = "تم تحديث بيانات الإعلان بنجاح";
                 return View(viewModel);
             }
             catch
             {
                 TempData["Error"] = "حدث خطأ أثناء التحديث";
-                return RedirectToAction(nameof(AnnouncementPage));
+                return RedirectToAction("ActivitiesSupervisorHome", "Home");
             }
         }
         [HttpPost]
@@ -169,11 +169,11 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                         ViewBag.Message = " تم الرفع بنجاح";
                     }
 
-                    int check = await _AnnouncementDomain.InsertAnnouncement(viewModel);
+                    int check = await _AnnouncementDomain.UpdateAnnouncement(viewModel);
                     if (check == 1)
                     {
-                        ViewBag.Successful = "تم تحديث بيانات الإعلان بنجاح";
-                        return View(viewModel);
+                        TempData["Success"] = "تم تحديث بيانات الإعلان بنجاح";
+                        return RedirectToAction("ActivitiesSupervisorHome", "Home");
                     }
 
                     else if (check == -1)
@@ -202,12 +202,12 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "فشل في الحذف" });
+                    return Json(new { error = false, message = "فشل في الحذف" });
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "حدث خطأ: " + ex.Message });
+                return Json(new { error = false, message = "حدث خطأ: " + ex.Message });
             }
         }
     }

@@ -26,7 +26,7 @@ namespace Nashet.Data.Models
         [StringLength(300)]
         public string ActivityLocation { get; set; }
 
-        [StringLength(200)]
+        [StringLength(1500)]
         public string ActivityPoster { get; set; }
         public int StatusId { get; set; }
         public tblStatus Status { get; set; }

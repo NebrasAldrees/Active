@@ -28,7 +28,6 @@ namespace Nashet.Data.Models
         public DbSet<tblSystemRole> tblSystemRole { get; set; }
         public DbSet<tblUser> tblUser { get; set; }
         public DbSet<tblMembershipRequest> TblMembershipRequest { get; set; }
-        public DbSet<tblPositionRequest> tblPositionRequest { get; set; }
         public DbSet<tblActivityRequest> tblActivityRequest { get; set; }
       
 

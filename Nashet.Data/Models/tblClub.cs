@@ -14,9 +14,9 @@ namespace Nashet.Data.Models
         public int siteId{ get; set; }
         public tblSite Site { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string ClubNameAR { get; set; }
-       [StringLength(50)]
+       [StringLength(150)]
         public string ClubNameEN { get; set; }
 
         [StringLength(500)]

@@ -24,15 +24,44 @@ public class MembershipRequestDomain : BaseDomain
         _TeamRepository = teamRepository;
         _StudentRepository = studentRepository;
     }
-    public async Task<tblMembershipRequest> GetRequestByGuid(Guid guid)
+    public async Task<MembershipRequestViewModel> GetRequestByGuid(Guid guid)
     {
-        var Request = await _repo.GetRequestByGUID(guid);
-
-        if (Request == null)
+        var request = await _repo.GetRequestByGUID(guid);
+        if (request == null)
         {
-            throw new KeyNotFoundException($"طلب العضوية المطلوب غير متوفر");
+            throw new KeyNotFoundException("طلب العضوية المطلوب غير متوفر");
         }
-        return Request;
+
+        return new MembershipRequestViewModel
+        {
+            ClubID = (int)request.ClubID,
+            RequestTeam1 = request.RequestTeam1,
+            RequestTeam2 = request.RequestTeam2,
+            RequestTeam3 = request.RequestTeam3,
+            RequestReason = request.RequestReason,
+            CreationDate = request.CreationDate,
+            StudentID = request.StudentID,
+            StatusId = request.StatusId,
+            Guid = request.Guid,
+        };
+
+
+    }
+
+    public async Task<IList<MembershipRequestViewModel>> GetMembershipRequests()
+    {
+        return _repo.GetAllRequests().Result.Select(m => new MembershipRequestViewModel
+        {
+            ClubID = (int)m.ClubID,
+            RequestTeam1 = m.RequestTeam1,
+            RequestTeam2 = m.RequestTeam2,
+            RequestTeam3 = m.RequestTeam3,
+            RequestReason = m.RequestReason,
+            CreationDate = m.CreationDate,
+            StudentID = m.StudentID,
+            StatusId = m.StatusId,
+            Guid = m.Guid,
+        }).ToList();
     }
 
     public async Task<int> InsertMembershipRequest(MembershipRequestViewModel viewModel)
@@ -43,6 +72,7 @@ public class MembershipRequestDomain : BaseDomain
             return -1;
         }
         var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
+        var student = await _StudentRepository.GetByAcademicIdAsync(viewModel.AcademicId);
         var team1 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam1);
         var team2 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam2);
         var team3 = await _TeamRepository.GetTeamByGuid(viewModel.RequestTeam3);
@@ -51,38 +81,55 @@ public class MembershipRequestDomain : BaseDomain
         var entity = new tblMembershipRequest
         {
             ClubID = club.ClubId,
-            RequestTeam1 = team1.TeamId,
-            RequestTeam2 = team2.TeamId,
-            RequestTeam3 = team3.TeamId,
+            RequestTeam1 = team1.Guid,
+            RequestTeam2 = team2.Guid,
+            RequestTeam3 = team3.Guid,
             RequestReason = viewModel.RequestReason,
-            RequestDate = viewModel.RequestDate,
-            StudentID = viewModel.StudentID
+            StudentID = student.StudentId,
+            StatusId = 1
         };
 
         return await _repo.InsertMembershipRequest(entity);
     }
 
-
-    public virtual async Task<int> DeleteRequest(Guid guid)
+    public virtual async Task<bool> AcceptMembershipRequest(Guid guid)
     {
         try
         {
-            var Request = await _repo.GetRequestByGUID(guid);
-            if (Request == null)
-            {
-                return 0; // Site not found
-            }
-            Request.IsDeleted = true;
-            int check = await _repo.DeleteRequest(Request);
-            if (check == null)
-                return 0;
-            else
-                return 1;
+            var request = await _repo.GetRequestByGUID(guid);
+            if (request == null)
+                return false;
 
+            request.IsActive = false;
+            request.StatusId = 2;
+            await _repo.AcceptRequest(request);
+
+            return true;
         }
-        catch
+        catch (Exception)
         {
-            return 0;
+            return false;
+        }
+
+    }
+
+    public async Task<bool> DeleteRequest(Guid guid)
+    {
+        try
+        {
+            var request = await _repo.GetRequestByGUID(guid);
+            if (request == null)
+                return false;
+
+            request.IsDeleted = true;
+            request.StatusId = 3;
+            await _repo.DeleteRequest(request);
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
         }
     }
 }

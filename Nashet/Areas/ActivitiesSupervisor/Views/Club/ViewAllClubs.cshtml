@@ -1,128 +1,130 @@
 ﻿@using Nashet.Business.ViewModels
 @model IEnumerable<ClubViewModel>
-<section class="page_wrap">
-    <div class="page_content">
-        <div class="block mb-4">
-            <div class="block-header border-bottom px-4 py-3">
-                <h5 class="m-0">الأندية</h5>
-                <div class="d-flex gap-2">
-                    <div class="form-group">
-                        <input type="text" id="searchInput" class="form-control table__quick_search"
-                               placeholder="البحث عن نادي ...">
-                    </div>
-                    <a asp-action="InsertClub" asp-controller="Club" asp-area="ActivitiesSupervisor" class="btn btn-primary">إضافة نادي</a>
+@{
+    var queryGuid = ViewContext.HttpContext.Request.Query["SiteGuid"];
+    Guid selectedSiteGuid = Guid.Empty;
+
+    if (!string.IsNullOrEmpty(queryGuid) && Guid.TryParse(queryGuid, out Guid parsedGuid))
+    {
+        selectedSiteGuid = parsedGuid;
+    }
+
+    var siteList = (IEnumerable<SiteViewModel>)ViewBag.Sites;
+    var selectedSite = siteList?.FirstOrDefault(s => s.Guid == selectedSiteGuid);
+
+    string[] headerColors = new[] { "#0f7179" }; // for colors diversity
+    int colorIndex = 0;
+}
+
+<section class="page_wrap" style="background:linear-gradient(135deg,#f8f9fa,#ffffff);padding:40px 0;display:flex;justify-content:center;">
+    <!-- Narrower box -->
+    <div class="page_content" style="max-width:900px;width:100%;">
+        <div class="block mb-4" style="border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.1);">
+
+            <!-- Header -->
+            <div class="block-header px-4 py-3"
+                 style="background:linear-gradient(to right,#3fa7b6, #0f7179);color:#fff;border-radius:12px 12px 0 0;display:flex;justify-content-between;align-items-center;">
+                <h5 class="m-0" style="font-weight:600;letter-spacing:0.5px;">الأندية الطلابية</h5>
+                <!-- Search Form -->
+                <form method="get" asp-action="ViewAllClubs" asp-controller="Club" asp-area="ActivitiesSupervisor" class="d-flex gap-2">
+                    <input type="text" name="searchText" class="form-control" placeholder=" البحث السريع ..."
+                           style="border-radius:8px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);">
+                    <button type="submit" class="btn btn-primary"
+                            style="background:#fff; color:#0f7179; border:none;border-radius:8px;padding:6px 16px;font-weight:500;">
+                        بحث
+                    </button>
+                </form>
+            </div>
+
+            <!-- فلترة الجهة -->
+            <div class="block-body mx-auto px-4 py-4" style="background:#ffffff;">
+                <div class="col-md-6">
+                    <form method="get" asp-action="ViewAllClubs" asp-controller="Club" asp-area="ActivitiesSupervisor">
+                        <div style="display:flex;align-items:center;background:#fdfdfd;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.05);padding:12px;">
+                            <label for="selectedSite" style="font-weight:600;color:#0f7179;margin-right:10px;">اختر الجهة:</label>
+                            @{
+                                var siteList = (IEnumerable<SiteViewModel>)ViewBag.Site;
+                                var queryGuid = ViewContext.HttpContext.Request.Query["siteGuid"];
+                                Guid SiteGuid = Guid.TryParse(queryGuid, out var parsedGuid) ? parsedGuid : Guid.Empty;
+                            }
+                            @Html.DropDownList("siteGuid",
+                            new SelectList(siteList, "Guid", "SiteNameAR", SiteGuid),
+                                                        "-- اختر الجهة --",
+                                                        new { @class = "form-control", style = "border-radius:8px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);", onchange = "this.form.submit()" })
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="block-body mx-auto px-4 py-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center">
 
-                    <div class="row" id="ClubContainer">
-                        <!-- Filter by site -->
-                        <form method="get" asp-action="Sites" asp-controller="Site" asp-area="ActivitiesSupervisor" class="mb-10 w-full">
-                            <div class="flex items-stretch md:items-center bg-white rounded shadow-sm p-3 input-shadow border border-gray-200">
-                                <div class="flex items-center space-x-2 space-x-reverse mb-3 md:mb-0 md:ml-4 flex-shrink-0">
-                                    <label for="selectedClub" class="text-lg font-semibold text-gray-700 whitespace-nowrap">النادي</label>
-                                    @{
-                                        var clubList = (IEnumerable<ClubViewModel>)ViewBag.Club;
-                                        var queryGuid = ViewContext.HttpContext.Request.Query["clubGuid"];
-                                        Guid ClubGuid = Guid.TryParse(queryGuid, out var parsedGuid) ? parsedGuid : Guid.Empty;
-                                    }
-                                    @Html.DropDownList("clubGuid",
-                                    new SelectList(clubList, "Guid", "ClubNameAR", ClubGuid),
-                                                                        "-- اختر النادي --",
-                                                                        new { @class = "form-control", onchange = "this.form.submit()" })
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- view activities -->
-@*                     <div class="row border-active-dark px-4 py-3" id="activitiesList">
-                        @foreach (var item in Model)
-                        {
-                            <div class="border-hover-gray-300 col-12 col-sm-6 col-md-4 col-lg-3 mb-4 activity-item"
-                                 data-search="@item.ActivityTopic.ToLower() @item.ActivityDescription?.ToLower()">
-                                <a asp-action="ActivityPage" asp-route-guid="@item.Guid" asp-controller="Activity" asp-area="ActivitiesSupervisor"
-                                   class="d-block bg-white rounded shadow-sm text-center p-3 h-100">
-                                    <img src="@item.ActivityPoster"
-                                         alt="@item.ActivityTopic Poster"
-                                         class="w-24 h-24 img-fluid mb-2"
-                                         style="max-height: 100px; object-fit: contain;"
-                                         onerror="this.src='https://placehold.co/100x100/f3f4f6/000000?text=No+Image'" />
-                                    <h6 class="text-dark">@item.ActivityTopic</h6>
-                                    @if (!string.IsNullOrEmpty(item.ActivityDescription))
-                                    {
-                                        <p class="text-muted small activity-description" style="display: none;">
-                                            @item.ActivityDescription
-                                        </p>
-                                    }
+            <!-- بداية البطاقات -->
+            <div class="row px-4 pb-4" id="clubsContainer">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        var headerColor = headerColors[colorIndex % headerColors.Length];
+                        colorIndex++;
+
+                        <div class="col-md-6 col-lg-4 mb-5 club-card">
+                            <div class="card h-100 shadow-sm"
+                                 style="background: linear-gradient(135deg,#eee,#ffffff); border:none;border-radius:12px;transition:transform 0.2s ease,box-shadow 0.2s ease;">
+                                <a asp-action="ClubPage" asp-controller="Club" asp-area="ActivitiesSupervisor" asp-route-guid="@item.Guid"
+                                   class="text-decoration-none text-dark">
+                                    <!-- Club header with dynamic color -->
+                                    <div class="card-header d-flex justify-content-between align-items-center"
+                                         style="background:@headerColor;color:#fff;border-radius:12px 12px 0 0;padding:12px 16px;">
+                                        <h6 class="mb-0" style="font-weight:600;">@item.ClubNameAR</h6>
+                                        <span class="badge bg-light text-dark" style="border-radius:6px;">#@item.ClubId</span>
+                                    </div>
+                                    <div class="card-body" style="padding:20px;text-align:center;">
+                                        <!-- صورة الشعار -->
+                                        <div class="mb-3">
+                                            @if (!string.IsNullOrEmpty(item.ClubIcon))
+                                            {
+                                                <img src="@item.ClubIcon" alt="شعار النادي"
+                                                     style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:3px solid @headerColor;box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                                            }
+                                            else
+                                            {
+                                                <div style="width:90px;height:90px;background:#f8f9fa;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 4px rgba(0,0,0,0.1);">
+                                                    <i class="fas fa-image text-muted"></i>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <!-- معلومات النادي -->
+                                        <div class="mb-2" style="text-align:center;">
+                                            <strong style="color:@headerColor;">الاسم الإنجليزي:</strong>
+                                            <p class="mb-1 text-muted">@item.ClubNameEN</p>
+                                        </div>
+
+                                    </div>
                                 </a>
                             </div>
-                        }
-                    </div> *@
-                </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center text-muted py-5">
+                        <p>اختر الجهة أو ابحث لعرض الأندية</p>
+                    </div>
+                }
             </div>
+            <!-- نهاية البطاقات -->
         </div>
-
     </div>
 </section>
 
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const activityItems = document.querySelectorAll('.activity-item');
-
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase().trim();
-
-                activityItems.forEach(item => {
-                    const searchData = item.getAttribute('data-search');
-                    const activityTopic = item.querySelector('h6').textContent.toLowerCase();
-                    const activityDescription = item.querySelector('.activity-description')?.textContent.toLowerCase() || '';
-
-                    // البحث في العنوان والوصف
-                    const matches = activityTopic.includes(searchTerm) ||
-                                   activityDescription.includes(searchTerm) ||
-                                   searchData.includes(searchTerm);
-
-                    if (matches || searchTerm === '') {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-
-            // Clear search when club filter changes
-            document.querySelector('select[name="clubGuid"]').addEventListener('change', function() {
-                searchInput.value = '';
-                activityItems.forEach(item => {
-                    item.style.display = 'block';
-                });
-            });
-        });
-    </script>
-}
-
 <style>
-    a {
-        text-decoration: none;
+    .club-card .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .activity-item {
-        transition: all 0.3s ease;
-    }
+        .club-card .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            cursor: pointer;
 
-    .table__quick_search {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 8px 12px;
-        width: 300px;
-    }
-
-        .table__quick_search:focus {
-            border-color: #0f7179;
-            box-shadow: 0 0 0 0.2rem rgba(15, 113, 121, 0.25);
-            outline: none;
         }
 </style>

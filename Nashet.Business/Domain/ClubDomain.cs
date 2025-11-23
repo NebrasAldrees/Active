@@ -155,47 +155,57 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
-        //public virtual async Task<int> UpdateClubByGuid(Guid guid, ClubViewModel viewModel)
-        //{
-        //    try
-        //    {
-        //        bool nameExists = await _ClubRepository.IsClubNameExistsInSameSite(viewModel.ClubNameAR, viewModel.ClubNameEN, guid);
-        //        if (nameExists)
-        //        {
-        //            return -1;
-        //        }
-
-        //        var updatedClub = new tblClub
-        //        {
-        //            siteId = viewModel.SiteId,
-        //            ClubNameAR = viewModel.ClubNameAR,
-        //            ClubNameEN = viewModel.ClubNameEN,
-        //            ClubVision = viewModel.ClubVision,
-        //            ClubOverview = viewModel.ClubOverview,
-        //            ClubIcon = viewModel.ClubIcon
-        //        };
-
-        //        int check = await _ClubRepository.UpdateClubByGuid(guid, updatedClub);
-        //        return check == 0 ? 0 : 1;
-        //    }
-        //    catch
-        //    {
-        //        return 0;
-        //    }
-        //}
-        public virtual async Task<int> DeleteClubByGuid(Guid guid)
+       
+        public virtual async Task<int> UpdateClub(ClubViewModel viewModel)
         {
             try
             {
-                int check = await _ClubRepository.DeleteClubByGuid(guid);
-                return check == 0 ? 0 : 1;
+                var club = await _ClubRepository.GetClubByGuid(viewModel.Guid);
+                if (club == null)
+                {
+                    return 0;
+                }
+                var site = await _SiteRepository.GetSiteByGUID(viewModel.SiteGuid);
+
+                club.ClubNameAR = viewModel.ClubNameAR;
+                club.ClubNameEN = viewModel.ClubNameEN;
+                club.ClubVision = viewModel.ClubVision;
+                club.ClubOverview = viewModel.ClubOverview;
+                club.ClubIcon = viewModel.ClubIcon;
+                club.siteId = site.SiteId;
+                
+                int check = await _ClubRepository.updateClub(club);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
             }
             catch
             {
                 return 0;
             }
+
         }
-        
+
+
+        public async Task<bool> DeleteClub(Guid guid)
+        {
+            try
+            {
+                var club = await _ClubRepository.GetClubByGuid(guid);
+                if (club == null)
+                    return false;
+
+                club.IsDeleted = true;
+                await _ClubRepository.UpdateAsync(club);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        } 
         
     }
 }

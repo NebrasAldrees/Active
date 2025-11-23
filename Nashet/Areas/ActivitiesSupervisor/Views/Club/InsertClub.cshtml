@@ -25,15 +25,11 @@
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
-                                    <label asp-for="SiteGuid" class="mb-1">الجهة</label>
-                                    <select asp-for="SiteGuid" class="form-control">
-                                        <option value="">-- اختر الجهة --</option>
-                                        @foreach (SiteViewModel site in ViewBag.Site)
-                                        {
-                                            <option value="@site.Guid">@site.SiteNameAR</option>
-                                        }
-                                    </select>
-                                    <span style="color:red" asp-validation-for="SiteId"></span>
+                                    <div class="col-md-6">
+                                        <label class="mb-1">الجهة</label>
+                                        <input type="text" class="form-control" value="@ViewBag.SiteName" readonly />
+                                        <input type="hidden" asp-for="SiteGuid" value="@ViewBag.SiteGuid" />
+                                    </div>
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
                                 <div class="col-md-6">

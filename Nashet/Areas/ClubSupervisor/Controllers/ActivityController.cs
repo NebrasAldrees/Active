@@ -18,11 +18,25 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             _ClubDomain = clubDomain;
         }
         [HttpGet]
-        public async Task<IActionResult> Activities(Guid? clubGuid)
+        public async Task<IActionResult> Activities(Guid? clubGuid, string? searchText)
         {
-            var Activities = await _ActivityDomain.GetActivitiesByClubGuid(clubGuid);
+            IList<ActivityViewModel> activities;
+
+            if (clubGuid.HasValue && clubGuid.Value != Guid.Empty)
+            {
+                // Filter by club
+                activities = await _ActivityDomain.GetActivitiesByClubGuid(clubGuid);
+            }
+            else
+            {
+                // Show all activities if no club selected
+                activities = await _ActivityDomain.GetActivity();
+            }
+
+
+
             ViewBag.Club = await _ClubDomain.GetClub();
-            return View(Activities);
+            return View(activities);
         }
 
         [HttpGet]
@@ -51,8 +65,8 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 ClubId = activity.ClubId
             };
 
-
             return View(viewModel);
         }
+
     }
 }

@@ -11,19 +11,17 @@ namespace Nashet.Data.Models
     {
         [Key] public int MRId { get; set; }
         
-        public int? StudentID { get; set; }
+        public int StudentID { get; set; }
         public tblStudent Student { get; set; }
-        public int? ClubID { get; set; }
+        public int ClubID { get; set; }
         public tblClub Club { get; set; }
         public int? TeamID { get; set; }
         public tblTeam Team { get; set; }
-
-        public int? RequestTeam1 { get; set; }
-        public int? RequestTeam2 { get; set; }
-        public int? RequestTeam3 { get; set; }
+        public Guid RequestTeam1 { get; set; }
+        public Guid RequestTeam2 { get; set; }
+        public Guid RequestTeam3 { get; set; }
         [StringLength(1000)]
         public string RequestReason { get; set; }
-        public DateTime RequestDate { get; set; }
         public int StatusId { get; set; }
         public tblStatus Status { get; set; }
 

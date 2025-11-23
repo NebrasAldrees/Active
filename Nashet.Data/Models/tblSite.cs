@@ -13,9 +13,9 @@ namespace Nashet.Data.Models
         public int SiteId { get; set; }
         [StringLength(10)]
         public string SiteCode { get; set; }
-        [StringLength(100)]
+        [StringLength(200)]
         public string SiteNameAR { get; set; }
-        [StringLength(100)]
+        [StringLength(200)]
         public string SiteNameEn { get; set; }
     }
 }

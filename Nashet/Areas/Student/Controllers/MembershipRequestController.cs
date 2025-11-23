@@ -24,9 +24,14 @@ public class MembershipRequestController : Controller
 
     public async Task<IActionResult> InsertMembershipRequest()
     {
+        var username = User.Identity?.Name;
+        var student = await _StudentDomain.GetByAcademicId(username);
+
         ViewBag.Club = await _ClubDomain.GetClub();
         ViewBag.Team = await _TeamDomain.GetTeam();
-        ViewBag.Student = await _StudentDomain.GetStudent();
+        ViewBag.StudentNameAr = student.StudentNameAr;
+        ViewBag.AcademicId = student.AcademicId;
+
         return View();
     }
 

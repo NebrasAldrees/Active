@@ -25,6 +25,10 @@ namespace Nashet.Business.Domain
         {
             return await _StudentRepository.GetStudentByGuid(Guid);
         }
+        public async Task<tblStudent> GetStudentById(int Id)
+        {
+            return await _StudentRepository.GetStudentById(Id);
+        }
 
         public async Task<IList<StudentViewModel>> GetStudent()
         {

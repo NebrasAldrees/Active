@@ -14,7 +14,7 @@ namespace Nashet.Data.Models
         public int ClubId { get; set; }
         public tblClub Club { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string ActivityTopic { get; set; }
 
         [StringLength(500)]
@@ -25,7 +25,7 @@ namespace Nashet.Data.Models
         [StringLength(300)]
         public string ActivityLocation { get; set; }
 
-        [StringLength(200)]
+        [StringLength(1500)]
         public string ActivityPoster { get; set; }
     }
 }
