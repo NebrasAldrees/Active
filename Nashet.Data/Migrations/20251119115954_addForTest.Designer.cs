@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nashet.Data.Models;
 
@@ -11,9 +12,11 @@ using Nashet.Data.Models;
 namespace Nashet.Data.Migrations
 {
     [DbContext(typeof(NashetContext))]
-    partial class NashetContextModelSnapshot : ModelSnapshot
+    [Migration("20251119115954_addForTest")]
+    partial class addForTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -665,6 +668,9 @@ namespace Nashet.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("isSent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("test")
                         .HasColumnType("bit");
 
                     b.HasKey("ReportId");
