@@ -63,7 +63,6 @@ namespace Nashet.Business.Domain
 
                 if (SiteGuid.HasValue)
                 {
-                    // 1. الحصول على الـ SiteId من الـ SiteGuid
                     var site = await _SiteRepository.GetSiteByGUID(SiteGuid.Value);
                     if (site == null)
                     {
@@ -73,12 +72,10 @@ namespace Nashet.Business.Domain
 
                     Console.WriteLine($"Found site: {site.SiteNameAR} with ID: {site.SiteId}");
 
-                    // 2. الحصول على الأندية الخاصة بهذا الـ SiteId مباشرة من الـ Repository
                     var clubs = await _ClubRepository.GetClubsBySiteId(site.SiteId);
 
                     Console.WriteLine($"Found {clubs?.Count ?? 0} clubs for site ID: {site.SiteId}");
 
-                    // 3. تحويل إلى ViewModel
                     var result = clubs?.Select(a => new ClubViewModel
                     {
                         ClubId = a.ClubId,
@@ -95,7 +92,6 @@ namespace Nashet.Business.Domain
                 }
                 else
                 {
-                    // إذا لم يتم تحديد جهة، أرجع جميع الأندية
                     return await GetClub();
                 }
             }
@@ -132,11 +128,10 @@ namespace Nashet.Business.Domain
             {
                 var site = await _SiteRepository.GetSiteByGUID(viewModel.SiteGuid);
 
-                // التحقق من التكرار في نفس الجهة فقط - باستخدام الـ Repository
                 bool nameExists = await _ClubRepository.IsClubNameExistsInSameSite(viewModel.ClubNameAR, viewModel.ClubNameEN, site.SiteId);
                 if (nameExists)
                 {
-                    return -1; // إرجاع -1 في حالة التكرار في نفس الجهة
+                    return -1;
                 }
 
                 tblClub Club = new tblClub

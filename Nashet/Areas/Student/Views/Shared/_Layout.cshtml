@@ -217,8 +217,11 @@
                 cancelButtonText: "إلغاء"
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // تنظيف التخزين المحلي أولاً (اختياري)
                     localStorage.clear();
                     sessionStorage.clear();
+
+                    // التوجيه المباشر إلى صفحة Login
                     window.location.href = '/Home/Login';
                 }
             });

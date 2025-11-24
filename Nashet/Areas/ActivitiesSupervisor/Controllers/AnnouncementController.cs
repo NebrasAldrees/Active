@@ -58,7 +58,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertAnnouncement(AnnouncementViewModel viewModel, IFormFile AnnouncementImage)
+        public async Task<IActionResult> InsertAnnouncement(AnnouncementViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile AnnouncementImage)
         {
             ViewBag.Club = await _ClubDomain.GetClub();
             if (ModelState.IsValid)
@@ -140,7 +140,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateAnnouncement(AnnouncementViewModel viewModel, IFormFile AnnouncementImage)
+        public async Task<IActionResult> UpdateAnnouncement(AnnouncementViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile AnnouncementImage)
         {
             ViewBag.Club = await _ClubDomain.GetClub();
 

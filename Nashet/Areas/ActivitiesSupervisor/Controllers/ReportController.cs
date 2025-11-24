@@ -11,39 +11,45 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
     public class ReportController : Controller
     {
         private readonly ReportDomain _ReportDomain;
-        public ReportController(ReportDomain reportDomain)
+        private readonly ClubDomain _ClubDomain;
+        public ReportController(ReportDomain reportDomain, ClubDomain clubDomain)
         {
             _ReportDomain = reportDomain;
+            _ClubDomain = clubDomain;
         }
-        public async Task<IActionResult> ViewAllReports()
+        public async Task<IActionResult> ViewAllReports(Guid clubGuid)
         {
-            return View(await _ReportDomain.GetReport());
-        }
+            try
+            {
+                Console.WriteLine($"ClubGuid received: {clubGuid}");
 
-        //public async Task<IActionResult> InsertReport()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> InseertReport(ReportViewModel viewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            int check = await _ReportDomain.InsertReport(viewModel);
-        //            if (check == 1)
-        //                ViewData["Successful"] = "Successful";
-        //            else
-        //                ViewData["Failed"] = "Failed";
-        //        }
-        //        catch
-        //        {
-        //            ViewData["Failed"] = "Failed";
-        //        }
-        //    }
-        //    return View(viewModel);
-        //}
+                // جلب النادي باستخدام الـ Guid
+                var club = await _ClubDomain.GetClubByGuid(clubGuid);
+                if (club == null)
+                {
+                    TempData["Error"] = "تعذر العثور على النادي";
+                    return RedirectToAction("ActivitiesSupervisorHome", "Home", new { area = "ActivitiesSupervisor" });
+                }
+
+                Console.WriteLine($"Club found: {club.ClubNameAR}, ClubId: {club.ClubId}");
+
+                // جلب جميع التقارير الخاصة بهذا النادي باستخدام الـ ClubId الحقيقي
+                var reports = await _ReportDomain.GetReportsByClubId(club.ClubId);
+
+                Console.WriteLine($"Number of reports retrieved: {reports?.Count ?? 0}");
+
+                ViewBag.ClubName = club.ClubNameAR;
+                ViewBag.ClubId = club.ClubId;
+                ViewBag.ClubGuid = clubGuid;
+
+                return View(reports);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in ViewAllReports: {ex.Message}");
+                TempData["Error"] = "حدث خطأ أثناء تحميل التقارير";
+                return View(new List<ReportViewModel>());
+            }
+        }
     }
 }
