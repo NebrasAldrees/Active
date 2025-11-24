@@ -42,6 +42,7 @@
                                 <div class="col-md-6">
                                     <label asp-for="ActivityStartDate"></label>
                                     <input asp-for="ActivityStartDate" type="date" class="form-control" />
+                                    <label asp-for="ActivityEndDate">وقت بدء النشاط</label>
                                     <input asp-for="ActivityStartTime" type="time" class="form-control" />
                                     <span style="color:red" asp-validation-for="ActivityStartDate"></span>
                                 </div><!-- END ITEM -->
@@ -49,6 +50,7 @@
                                 <div class="col-md-6">
                                     <label asp-for="ActivityEndDate"></label>
                                     <input asp-for="ActivityEndDate" type="date" class="form-control" />
+                                    <label asp-for="ActivityEndDate">وقت انتهاء النشاط</label>
                                     <input asp-for="ActivityEndTime" type="time" class="form-control" />
                                     <span style="color:red" asp-validation-for="ActivityEndDate" ></span>
                                 </div><!-- END ITEM -->
