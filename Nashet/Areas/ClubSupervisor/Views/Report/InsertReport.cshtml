@@ -43,7 +43,6 @@
         </div>
     </div>
 </section>
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -115,12 +114,12 @@
                 Swal.fire({
                     title: "تم إضافة التقرير بنجاح!",
                     icon: "success",
-                    draggable: true
-                }).then(() => {
-                    window.location.href = '@Url.Action("Index", "Report", new { area = "ClubSupervisor" })';
+                    draggable: true,
+                    confirmButtonText: "موافق"
                 });
                 </text>
         }
+
         @if (ViewBag.Duplicate != null)
         {
                 <text>
@@ -133,6 +132,7 @@
                 });
                 </text>
         }
+
         @if (ViewBag.Error != null)
         {
                 <text>

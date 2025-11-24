@@ -55,15 +55,15 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
 
             if (user == null || user.ClubId == null)
             {
-                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
-                return RedirectToAction("AccessDenied", "Home");
+                ViewBag.Error = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return View(viewModel);
             }
 
             var club = await _ClubDomain.GetClubById(user.ClubId.Value);
             if (club == null)
             {
-                TempData["Error"] = "تعذر العثور على بيانات النادي";
-                return RedirectToAction("AccessDenied", "Home");
+                ViewBag.Error = "تعذر العثور على بيانات النادي";
+                return View(viewModel);
             }
 
             ViewBag.ClubName = club.ClubNameAR;
@@ -91,30 +91,27 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                         }
 
                         viewModel.Path = "/uploads/" + fileName;
-                        ViewBag.Message = fileName + " تم الرفع بنجاح";
                     }
 
                     int check = await _ReportDomain.InsertReport(viewModel);
                     if (check == 1)
                     {
-                        TempData["Successful"] = "تم إضافة التقرير بنجاح";
                         ViewBag.Successful = "تم إضافة التقرير بنجاح";
-                        return RedirectToAction("ClubSupervisorHome", "Home");
+                        ModelState.Clear();
+                        var newViewModel = new ReportViewModel();
+                        return View(newViewModel);
                     }
                     else if (check == -1)
                     {
-                        TempData["Duplicate"] = "عنوان التقرير موجود مسبقاً";
                         ViewBag.Duplicate = "عنوان التقرير موجود مسبقاً";
                     }
                     else
                     {
-                        TempData["Failed"] = "فشل إضافة التقرير";
                         ViewBag.Error = "فشل إضافة التقرير";
                     }
                 }
                 catch (Exception ex)
                 {
-                    TempData["Failed"] = "فشل إضافة التقرير: " + ex.Message;
                     ViewBag.Error = "فشل إضافة التقرير: " + ex.Message;
                 }
             }

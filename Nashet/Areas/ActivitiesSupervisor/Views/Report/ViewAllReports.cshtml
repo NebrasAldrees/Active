@@ -55,30 +55,5 @@
             });
         });
 
-        @if (ViewBag.Successful != null)
-        {
-                <text>
-                Swal.fire({
-                    title: "تم بنجاح!",
-                    text: "@ViewBag.Successful",
-                    icon: "success",
-                    confirmButtonText: "موافق",
-                    draggable: true
-                });
-                </text>
-        }
-
-        @if (TempData["Successful"] != null)
-        {
-                <text>
-                Swal.fire({
-                    title: "تم بنجاح!",
-                    text: "@TempData["Successful"]",
-                    icon: "success",
-                    confirmButtonText: "موافق",
-                    draggable: true
-                });
-                </text>
-        }
     </script>
 }
