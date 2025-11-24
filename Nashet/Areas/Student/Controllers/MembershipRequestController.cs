@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
+using Nashet.Data.Models;
+using System.Security.Claims;
 
 [Area("Student")]
 [Authorize(Roles = "Student")]
@@ -69,6 +71,32 @@ public class MembershipRequestController : Controller
             }
         }
         return View(viewModel);
+    }
+    public async Task<IActionResult> ViewAllRequests()
+    {
+        try
+        {
+            var academicNumber = User.FindFirst("AcademicNumber")?.Value ??
+                               User.FindFirst(ClaimTypes.Name)?.Value ??
+                               User.Identity.Name;
+
+            if (string.IsNullOrEmpty(academicNumber))
+            {
+                TempData["Error"] = "تعذر العثور على الرقم الأكاديمي";
+                return RedirectToAction("ProfilePage");
+            }
+
+            var requests = await _domain.GetStudentRequestsAsync(academicNumber);
+
+            ViewBag.StudentAcademicId = academicNumber;
+
+            return View(requests);
+        }
+        catch (Exception ex)
+        {
+            TempData["Error"] = "حدث خطأ أثناء تحميل الطلبات";
+            return View(new List<tblMembershipRequest>());
+        }
     }
 
 }

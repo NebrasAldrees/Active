@@ -37,17 +37,19 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 {
                     int check = await _ClubRoleDomain.InsertClubRole(viewModel);
                     if (check == 1)
-                        return Json(new { Success = true, message = "تمت الإضافة بنجاح" });
+                        return Json(new { success = true, message = "تمت الإضافة بنجاح" });
+                    else if (check == -1)
+                        return Json(new { success = false, duplicate = true, message = "نوع العضوية موجود مسبقاً" });
                     else
-                        return Json(new { success = false, duplicate = true });
+                        return Json(new { success = false, message = "فشل في الإضافة" });
                 }
                 catch
                 {
-                    return Json(new { Success = false, message = "فشل في الإضافة" });
+                    return Json(new { success = false, message = "حدث خطأ أثناء الإضافة" });
                 }
             }
 
-            return Json(new { Success = false, message = "حدث خطأ أثناء الإضافة: "});
+            return Json(new { success = false, message = "البيانات غير صالحة" });
         }
 
         public async Task<IActionResult> UpdateClubRole(Guid Guid)

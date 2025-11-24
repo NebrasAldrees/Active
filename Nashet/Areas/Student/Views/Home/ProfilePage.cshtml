@@ -5,6 +5,7 @@
 
     var userInfo = ViewBag.UserInfo as dynamic;
     var studentData = ViewBag.StudentData as tblStudent;
+    var membershipData = ViewBag.MembershipData as tblMembership;
 }
 
 <section class="page_wrap">
@@ -18,7 +19,7 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-8">
-                                
+
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">الاسم الكامل:</label>
@@ -63,18 +64,81 @@
                                     </div>
                                 </div>
 
-                                @* <!-- رقم الجوال -->
+                                <!-- النادي التابع -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">النادي التابع:</label>
                                     </div>
                                     <div class="col-md-8">
                                         <p class="form-control-plaintext border-bottom pb-2">
-                                            @( ?? "غير محدد")
+                                            @if (membershipData?.Team?.Club != null)
+                                            {
+                                                @membershipData.Team.Club.ClubNameAR
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">لا توجد عضوية في أي نادي</span>
+                                            }
                                         </p>
                                     </div>
-                                    //membership table
-                                </div> *@
+                                </div>
+
+                                <!-- الدور في النادي -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">الدور في النادي:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @if (membershipData?.ClubRole != null)
+                                            {
+                                                @membershipData.ClubRole.RoleTypeAr
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">لا يوجد دور محدد</span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- الفريق -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">الفريق:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @if (membershipData?.Team != null)
+                                            {
+                                                @membershipData.Team.TeamNameAR
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">لا يوجد فريق محدد</span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- تاريخ الانضمام -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">تاريخ الانضمام:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @if (membershipData?.JoinDate != null && membershipData.JoinDate != DateTime.MinValue)
+                                            {
+                                                @membershipData.JoinDate.ToString("yyyy/MM/dd")
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">غير محدد</span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-4">

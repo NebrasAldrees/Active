@@ -73,8 +73,28 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
-        
 
-        
+        public virtual async Task<tblMembership> GetStudentMembershipAsync(string academicId)
+        {
+            try
+            {
+                var membership = await dbSet
+                    .Include(m => m.Student)
+                    .Include(m => m.ClubRole)
+                    .Include(m => m.Team)
+                    .ThenInclude(t => t.Club)
+                    .Where(m => m.Student.AcademicId == academicId &&
+                               m.Student.IsDeleted == false &&
+                               m.IsDeleted == false)
+                    .FirstOrDefaultAsync();
+
+                return membership;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }

@@ -55,7 +55,17 @@ public class MembershipRequestDomain : BaseDomain
 
 
     }
-
+    public virtual async Task<List<tblMembershipRequest>> GetStudentRequestsAsync(string academicId)
+    {
+        try
+        {
+            return await _repo.GetStudentRequestsAsync(academicId);
+        }
+        catch
+        {
+            return new List<tblMembershipRequest>();
+        }
+    }
     public async Task<IList<MembershipRequestViewModel>> GetMembershipRequests()
     {
         return _repo.GetAllRequests().Result.Select(m => new MembershipRequestViewModel

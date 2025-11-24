@@ -36,7 +36,28 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+        public virtual async Task<List<tblMembershipRequest>> GetStudentRequestsAsync(string academicId)
+        {
+            try
+            {
+                var requests = await dbSet
+                    .Include(r => r.Student)
+                    .Include(r => r.Club)
+                    .Include(r => r.Team)
+                    .Include(r => r.Status)
+                    .Where(r => r.Student.AcademicId == academicId &&
+                               r.Student.IsDeleted == false &&
+                               r.IsDeleted == false)
+                    .OrderByDescending(r => r.MRId)
+                    .ToListAsync();
 
+                return requests;
+            }
+            catch
+            {
+                return new List<tblMembershipRequest>();
+            }
+        }
         public virtual async Task<bool> IsRequestExists(int ClubID, Guid? excludeRequestGuid = null)
         {
             var query = dbSet.Where(request => request.IsDeleted == false);

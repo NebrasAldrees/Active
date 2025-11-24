@@ -1,0 +1,132 @@
+﻿@model List<tblMembershipRequest>
+@{
+    ViewData["Title"] = "طلبات العضوية";
+    Layout = "~/Areas/Student/Views/Shared/_Layout.cshtml";
+}
+
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">طلبات العضوية</h5>
+                    <a asp-action="ProfilePage" class="btn btn-secondary">العودة للملف الشخصي</a>
+                </div>
+            </div>
+            <div class="block-body">
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle me-2"></i>
+                        لا توجد طلبات عضوية مرفوعة
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>النادي</th>
+                                    <th>الفريق</th>
+                                    <th>سبب الطلب</th>
+                                    <th>الحالة</th>
+                                    <th>تاريخ الطلب</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int counter = 1;
+                                    foreach (var request in Model)
+                                    {
+                                        <tr>
+                                            <td>@counter</td>
+                                            <td>@request.Club?.ClubNameAR</td>
+                                            <td>@request.Team?.TeamNameAR</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(request.RequestReason))
+                                                {
+                                                    <span title="@request.RequestReason">
+                                                        @(request.RequestReason.Length > 50 ? request.RequestReason.Substring(0, 50) + "..." : request.RequestReason)
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">لا يوجد سبب</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (request.Status != null)
+                                                {
+                                                    <span class="badge
+                                                                        @(request.Status.StatusTypeAr.Contains("مقبول") ? "bg-success" :
+                                                                                                                                                                              request.Status.StatusTypeAr.Contains("مرفوض") ? "bg-danger" :
+                                                                                                                                                                              request.Status.StatusTypeAr.Contains("معلق") ? "bg-warning" : "bg-secondary")">
+                                        @request.Status.StatusTypeAr
+                                    </span>
+                                                                        }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">غير محدد</span>
+                                                }
+                                            </td>
+                                            <td>@request.CreationDate.ToString("yyyy/MM/dd")</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-info view-request"
+                                                        data-request-id="@request.MRId"
+                                                        title="عرض التفاصيل">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        counter++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal لعرض التفاصيل -->
+<div class="modal fade" id="requestDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تفاصيل طلب العضوية</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="requestDetailsContent">
+                <!-- سيتم تحميل المحتوى هنا -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // عرض تفاصيل الطلب
+            $('.view-request').on('click', function () {
+                var requestId = $(this).data('request-id');
+
+                $('#requestDetailsContent').html('<div class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i></div>');
+
+                $.get('@Url.Action("GetRequestDetails", "Student")', { id: requestId }, function (data) {
+                    $('#requestDetailsContent').html(data);
+                    $('#requestDetailsModal').modal('show');
+                }).fail(function () {
+                    $('#requestDetailsContent').html('<div class="alert alert-danger">حدث خطأ أثناء تحميل التفاصيل</div>');
+                });
+            });
+        });
+    </script>
+}

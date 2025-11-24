@@ -67,8 +67,17 @@ namespace Nashet.Business.Domain
             return member;
         }
 
-
-
+        public virtual async Task<tblMembership> GetStudentMembershipAsync(string academicId)
+        {
+            try
+            {
+                return await _MembershipRepository.GetStudentMembershipAsync(academicId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public async Task<int> InsertMembership(MembershipViewModel viewModel)
         {
