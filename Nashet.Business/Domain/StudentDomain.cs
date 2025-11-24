@@ -163,10 +163,23 @@ namespace Nashet.Business.Domain
         {
             try
             {
-                return await _StudentRepository.UpdateStudentSkillsAsync(academicId, studentSkills);
+                // تحقق من البيانات المدخلة
+                if (string.IsNullOrEmpty(academicId) || studentSkills == null)
+                    return false;
+
+                var result = await _StudentRepository.UpdateStudentSkillsAsync(academicId, studentSkills);
+
+                if (!result)
+                {
+                    // تسجيل للتصحيح
+                    Console.WriteLine($"Failed to update skills for student: {academicId}");
+                }
+
+                return result;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Domain Error: {ex.Message}");
                 return false;
             }
         }

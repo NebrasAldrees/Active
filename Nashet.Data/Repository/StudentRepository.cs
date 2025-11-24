@@ -91,15 +91,31 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<bool> UpdateStudentSkillsAsync(string academicId, string studentSkills)
         {
-            var student = await GetByAcademicIdAsync(academicId);
+            try
+            {
+                var student = await GetByAcademicIdAsync(academicId);
 
-            if (student == null)
+                if (student == null)
+                {
+                    // تسجيل للتصحيح
+                    Console.WriteLine($"Student with academicId {academicId} not found");
+                    return false;
+                }
+
+                student.StudentSkills = studentSkills;
+
+                var result = await updateStudent(student);
+
+                // تحقق من أن النتيجة هي عدد الصفوف المتأثرة
+                Console.WriteLine($"Update result: {result} rows affected");
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                // تسجيل الخطأ للتصحيح
+                Console.WriteLine($"Error in UpdateStudentSkillsAsync: {ex.Message}");
                 return false;
-
-            student.StudentSkills = studentSkills;
-
-            var result = await updateStudent(student);
-            return result == 1;
+            }
         }
     }
 }
