@@ -54,19 +54,6 @@ namespace Nashet.Areas.Student.Controllers
 
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateSkills(string studentSkills)
-        {
-            var academicNumber = User.Identity.Name; 
-
-            var result = await _studentDomain.UpdateStudentSkillsAsync(academicNumber, studentSkills);
-
-            if (result)
-                return Json(new { success = true, message = "تم التحديث بنجاح" });
-            else
-                return Json(new { success = false, message = "فشل في التحديث" });
-        }
         public async Task<IActionResult> AnnouncementPage(Guid id)
         {
             try

@@ -24,8 +24,7 @@
                 }
                 else
                 {
-
-                    <div class="row align-items-center">
+                    <div class="row">
                         <div class="col-lg-4 mb-4">
                             <!-- poster -->
                             <div class="text-center mb-4">
@@ -36,21 +35,18 @@
                                 }
                                 else
                                 {
-                                    <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center"
+                                    <div class="bg-light rounded shadow d-inline-flex align-items-center justify-content-center p-4"
                                          style="max-width: 100%; height: auto;">
-                                        <i class="fas fa-club fa-3x text-muted" onerror="this.onerror=null;this.src='https://placehold.co/80x80/f3f4f6/000000?text=POSTER';"></i>
+                                        <i class="fas fa-bullhorn fa-3x text-muted"></i>
                                     </div>
                                 }
                             </div>
-
-
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-8 ">
+
+                        <div class="col-lg-8">
                             <!-- المعلومات الأساسية -->
                             <div class="card shadow-sm mb-4">
-                                <div class="card-header ">
+                                <div class="card-header">
                                     <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>معلومات الإعلان</h6>
                                 </div>
                                 <div class="card-body">
@@ -68,6 +64,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-- تفاصيل الإعلان-->
                             <div class="card shadow-sm mb-4">
                                 <div class="card-header">
@@ -87,10 +84,10 @@
                                 </div>
                             </div>
 
+                            <!-- أزرار التحكم -->
                             <div class="card shadow-sm mt-4">
                                 <div class="card-body text-center">
-                                    <a asp-action="UpdateAnnouncement"
-                                    asp-route-guid="@Model.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                    <a asp-action="UpdateAnnouncement" asp-route-guid="@Model.Guid" class="btn btn-sm btn-success">تعديل</a>
                                     <a data-id="@Model.Guid" class="btn btn-sm btn-danger delete-btn">حذف</a>
                                 </div>
                             </div>
@@ -101,6 +98,7 @@
         </div>
     </div>
 </section>
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -111,7 +109,6 @@
 
                 // Get the GUID from the clicked delete button
                 var id = $(this).data('id');
-                console.log('Deleting announcement with GUID:', id); // للتصحيح
 
                 // Trigger SweetAlert2 for confirmation
                 Swal.fire({
@@ -131,7 +128,6 @@
                             type: 'POST',
                             data: { guid: id },
                             success: function (response) {
-                                console.log('Response:', response); // للتصحيح
                                 if (response.success) {
                                     Swal.fire({
                                         title: 'تم الحذف!',
@@ -151,10 +147,9 @@
                                 }
                             },
                             error: function (xhr, status, error) {
-                                console.error('Error:', error); // للتصحيح
                                 Swal.fire({
                                     title: 'خطأ!',
-                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
+                                    text: 'حدث خطأ أثناء محاولة الحذف',
                                     icon: 'error'
                                 });
                             }

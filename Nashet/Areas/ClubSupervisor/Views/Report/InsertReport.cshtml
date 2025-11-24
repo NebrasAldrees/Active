@@ -19,11 +19,6 @@
                                     <input type="hidden" asp-for="ClubGuid" value="@ViewBag.ClubGuid" />
                                 </div><!-- END ITEM -->
                                 <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label for="" class="mb-1">الرقم المرجعي للنادي</label>
-                                    <input type="text" class="form-control" value="@ViewBag.ClubGuid" readonly />
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
                                 <div class="col-md-12">
                                     <label for="" class="mb-1">عنوان التقرير</label>
                                     <input asp-for="Topic" type="text" class="form-control" placeholder="أدخل عنوان التقرير">
@@ -48,7 +43,6 @@
         </div>
     </div>
 </section>
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -120,12 +114,12 @@
                 Swal.fire({
                     title: "تم إضافة التقرير بنجاح!",
                     icon: "success",
-                    draggable: true
-                }).then(() => {
-                    window.location.href = '@Url.Action("Index", "Report", new { area = "ClubSupervisor" })';
+                    draggable: true,
+                    confirmButtonText: "موافق"
                 });
                 </text>
         }
+
         @if (ViewBag.Duplicate != null)
         {
                 <text>
@@ -138,6 +132,7 @@
                 });
                 </text>
         }
+
         @if (ViewBag.Error != null)
         {
                 <text>

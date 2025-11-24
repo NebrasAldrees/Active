@@ -1,0 +1,57 @@
+﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+@model IEnumerable<ActivityRequestViewModel>
+
+<!-- Start Page Wrap -->
+<section class="page_wrap">
+    <div class="page_content">
+
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-3">
+                <h5 class="m-0">حالة الطلبات</h5>
+                <div class="d-flex gap-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control table__quick_search"
+                               placeholder="البحث السريع ...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-body">
+                
+
+                <table class="table table-hover js-dataTable">
+                    <thead>
+                        <tr>
+                            <th>عنوان الطلب</th>
+                            <th>حالة الطلب <i class="fas fa-sort text-muted"></i></th>
+                            <th>زمن رفع الطلب <i class="fas fa-sort text-muted"></i></th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">لا توجد طلبات لعرضها حالياً</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ActivityTopic</td>
+                                    <td>@item.StatusTypeAr</td>
+                                    <td>@item.CreationDate</td>
+                                    
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- End Page Wrap -->
