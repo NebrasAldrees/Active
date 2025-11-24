@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Nashet.Areas.ClubSupervisor.Controllers
 {
@@ -13,13 +15,15 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         private readonly ClubDomain _ClubDomain;
         private readonly IWebHostEnvironment _webHost;
         private readonly UserDomain _UserDomain;
+        private readonly StatusDomain _statusDomain;
 
-        public ActivityRequestController(ActivityRequestDomain activityRequestDomain, ClubDomain clubDomain, UserDomain userDomain,
+        public ActivityRequestController(ActivityRequestDomain activityRequestDomain, ClubDomain clubDomain, UserDomain userDomain,StatusDomain statusDomain,
             IWebHostEnvironment webHost)
         {
             _ActivityRequestDomain = activityRequestDomain;
             _ClubDomain = clubDomain;
             _UserDomain = userDomain;
+            _statusDomain = statusDomain;
             _webHost = webHost;
         }
 
@@ -45,6 +49,53 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             ViewBag.ClubGuid = club.Guid;
 
             return View();
+        }
+
+        public async Task<IActionResult> ViewRequests()
+        {
+            var username = User.Identity?.Name;
+             var user = await _UserDomain.GetUserByUsername(username);
+           
+
+            if (user == null || user.ClubId == null)
+            {
+                TempData["Error"] = "لا يمكنك الوصول إلى هذه الصفحة بدون الانتماء إلى نادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+            
+
+            var club = await _ClubDomain.GetClubById(user.ClubId.Value);
+            if (club == null)
+            {
+                TempData["Error"] = "تعذر العثور على بيانات النادي";
+                return RedirectToAction("AccessDenied", "Home");
+            }
+            var activity = await _ActivityRequestDomain.GetRequestsByClubGuid(club.Guid);
+            var statuses = await _statusDomain.GetStatus();
+            var enrichedRequests = new List<ActivityRequestViewModel>();
+            foreach (var req in activity.Where(r => r.ClubId == user.ClubId))
+            {
+                var status = statuses.FirstOrDefault(s => s.StatusId == req.StatusId);
+                
+
+                enrichedRequests.Add(new ActivityRequestViewModel
+                {
+                    Guid = req.Guid,
+                    ActivityRequestId = req.ActivityRequestId,
+                    ActivityTopic = req.ActivityTopic,
+                    StatusId = req.StatusId,
+                    StatusTypeAr = status?.StatusTypeAr,
+                    ClubId = req.ClubId,
+                    ClubNameAR = club?.ClubNameAR,
+                    CreationDate = req.CreationDate
+                });
+            }
+           
+            
+
+            return View(enrichedRequests);
+
+            
         }
 
         [HttpPost]
