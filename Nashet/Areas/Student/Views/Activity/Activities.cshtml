@@ -51,7 +51,7 @@
                              data-search="@item.ActivityTopic.ToLower() @item.ActivityDescription?.ToLower()">
                             <div class="card h-100 shadow-sm"
                                  style="border:none;border-radius:12px;transition:transform 0.3s ease,box-shadow 0.3s ease;">
-                                <a asp-action="ActivityPage" asp-route-guid="@item.Guid" asp-controller="Activity" asp-area="ClubSupervisor"
+                                <a asp-action="ActivityPage" asp-route-guid="@item.Guid" asp-controller="Activity" asp-area="Student"
                                    class="text-decoration-none text-dark d-block text-center p-3 h-100">
                                     <div class="mb-3">
                                         <img src="@item.ActivityPoster"

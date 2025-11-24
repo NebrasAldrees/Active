@@ -41,16 +41,23 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(site => site.IsDeleted == false && site.SiteId == id)
                             .FirstOrDefaultAsync();
         }
+
+
+        public virtual async Task<bool> IsSiteNameExists(string siteNameAr, string siteNameEn, string sitecode)
+        {
+            return await dbSet.AnyAsync(site =>
+                site.IsDeleted == false &&
+                site.SiteCode == sitecode &&
+                (site.SiteNameAR.ToLower() == siteNameAr.ToLower() ||
+                 site.SiteNameEn.ToLower() == siteNameEn.ToLower())
+            );
+        }
+
         public virtual async Task<int> DeleteSite(tblSite site)
         {
             try
             {
-                if (site == null || site.IsDeleted == true)
-                {
-                    Console.WriteLine($"خطأ في الحذف");
-                }
-
-                IsDeleted(site);
+                await UpdateAsync(site);
                 return 1;
             }
             catch

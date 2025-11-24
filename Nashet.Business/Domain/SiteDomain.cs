@@ -51,14 +51,19 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                bool nameExists = await _SiteRepository.IsSiteNameExists(viewModel.SiteNameAR, viewModel.SiteNameEn , viewModel.SiteCode);
+
+                if (nameExists)
+                {
+                    return -1;
+                }
                 tblSite site = new tblSite
                 {
-                    Guid = Guid.NewGuid(),
-                    SiteId = viewModel.SiteId,
                     SiteCode = viewModel.SiteCode,
                     SiteNameAR = viewModel.SiteNameAR,
                     SiteNameEn = viewModel.SiteNameEn
                 };
+
                 int check = await _SiteRepository.InsertSite(site);
                 if (check == 0)
                 {
@@ -121,15 +126,11 @@ namespace Nashet.Business.Domain
                 {
                     return 0; // Site not found
                 }
-
-                int check = await _SiteRepository.DeleteSite(site);
-                if (check == null)
-                    return 0;
-                else
-                    return 1;
-                
+                site.IsDeleted = true;
+                await _SiteRepository.DeleteSite(site);
+                return 1;
             }
-            catch
+            catch (Exception)
             {
                 return 0;
             }

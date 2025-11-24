@@ -4,6 +4,7 @@ using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,13 @@ namespace Nashet.Business.Domain
 
             }).ToList() ?? new List<SystemRoleViewModel>();
         }
+
+
+        public async Task<tblSystemRole> GetSystemRoleByGuid(Guid Guid)
+        {
+            return await _SystemRoleRepository.GetSystemRoleByGuid(Guid);
+        }
+
         public async Task<int> InsertSystemRole(SystemRoleViewModel viewModel)
         {
             try
@@ -68,11 +76,40 @@ namespace Nashet.Business.Domain
 
         }
 
-        public int DeleteSystemRole(int id)
+        public virtual async Task<int> UpdateSystemRole(SystemRoleViewModel viewModel)
         {
             try
             {
-                _SystemRoleRepository.Delete(id); 
+                var role = await _SystemRoleRepository.GetSystemRoleByGuid(viewModel.guid);
+                if (role == null)
+                {
+                    return 0; // Site not found
+                }
+
+                role.RoleTypeEn = viewModel.RoleTypeEn;
+                role.RoleTypeAr = viewModel.RoleTypeAr;
+                int check = await _SystemRoleRepository.UpdateAsync(role);
+                if (check == 0)
+                    return 0;
+                else
+                    return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public virtual async Task<int> DeleteSystemRole(Guid guid)
+        {
+            try
+            {
+                var role = await _SystemRoleRepository.GetSystemRoleByGuid(guid);
+                if (role == null)
+                {
+                    return 0; // Site not found
+                }
+                role.IsDeleted = true;
+                await _SystemRoleRepository.UpdateAsync(role); 
                 return 1;
             }
             catch

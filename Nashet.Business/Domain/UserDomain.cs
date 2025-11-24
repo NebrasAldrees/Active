@@ -25,9 +25,9 @@ namespace Nashet.Business.Domain
                 UserNameEN = U.UserNameEN,
                 UserEmail = U.UserEmail,
                 UserPhone = U.UserPhone,
-                SystemRoleId = (int)U.SystemRoleId,
-                SiteId = (int)U.SiteId,
-                ClubId = (int)U.ClubId
+                SystemRoleId = U.SystemRoleId,
+                SiteId = U.SiteId,
+                ClubId = U.ClubId
             }).ToList();
         }
 

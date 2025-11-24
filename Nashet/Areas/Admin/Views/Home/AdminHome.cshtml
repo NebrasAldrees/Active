@@ -1,15 +1,118 @@
-﻿@{
+﻿@model DashboardViewModel
+@{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "الرئيسية";
 }
+
+<style>
+    .kpi-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 6px 24px rgba(13, 110, 253, 0.08);
+    }
+
+        .kpi-card .card-header {
+            border-bottom: none;
+            font-weight: 600;
+            letter-spacing: .2px;
+        }
+
+        .kpi-card .card-body .card-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+    /* Compact chart containers */
+    #sitesChart {
+        max-height: 160px;
+    }
+
+    #clubsChart {
+        max-height: 240px;
+    }
+
+    /* Panels for charts */
+    .panel {
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    }
+
+    .section-title {
+        font-weight: 700;
+        color: #212529;
+        margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+        color: var(--muted);
+        font-size: .9rem;
+    }
+</style>
+
 <section class="page_wrap">
     <div class="page_content">
 
+        <!-- KPIs -->
+        <div class="row d-flex justify-content-center align-items-center mb-4">
+            <div class="col-md-3">
+                <div class="card text-white kpi-card" style="background-color:#0f7179;">
+                    <div class="card-header">عدد الجهات</div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.TotalSites</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card  kpi-card" style="background-color:#D5E0E0">
+                    <div class="card-header">عدد الطلاب</div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.TotalStudents</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card kpi-card" style="background: #D5E0E0;">
+                    <div class="card-header">عدد مستخدمي الجامعة</div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.TotalKfuUsers</h3>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Activities KPI -->
+        <div class="row d-flex justify-content-center align-items-center mb-4">
+            <div class="col-md-3 ">
+                <div class="card  kpi-card" style="background-color:#D5E0E0">
+                    <div class="card-header">عدد الأندية</div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.TotalClubs</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card  kpi-card" style="background-color:#D5E0E0">
+                    <div class="card-header">عدد الأنشطة</div>
+                    <div class="card-body">
+                        <h3 class="card-title">@Model.TotalActivities</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+
+
+        <!-- Icons (existing) -->
         <div class="row justify-content-md-center mb-3">
             <div class="col">
-                <!-- icons -->
                 <div class="row justify-content-md-center mb-3">
-
                     <div class="col-md-4">
                         <a asp-action="Index" asp-controller="KfuUser" asp-area="Admin" class="block layout_icons d-block mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="0f7179" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
@@ -19,7 +122,7 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a asp-action="InsertUser" asp-controller="User" asp-area="Admin" class="block layout_icons d-block mb-4">
+                        <a asp-action="ViewUser" asp-controller="User" asp-area="Admin" class="block layout_icons d-block mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="0f7179" class="bi bi-person-gear" viewBox="0 0 16 16">
                                 <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
                             </svg>
@@ -28,28 +131,136 @@
                     </div>
                 </div>
                 <div class="row justify-content-md-center mb-3">
-
                     <div class="col-md-4">
                         <a asp-action="ViewSites" asp-controller="Site" asp-area="Admin" class="block layout_icons d-block mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="0f7179" class="bi bi-buildings" viewBox="0 0 16 16">
-                                <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z" />
-                                <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z" />
+                                <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309ل-7 3.5z" />
+                                <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0ه1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2ه1v1H8zm2 0ه1v1h-1zm2-2ه1v1h-1zm0 2ه1v1h-1zM8 7ه1v1H8zm2 0ه1v1h-1zm2 0ه1v1h-1zM8 5ه1v1H8zm2 0ه1v1h-1zm2 0ه1v1h-1zm0-2ه1v1h-1z" />
                             </svg>
                             <h5 class="text-dark">  جهات الجامعة</h5>
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a asp-action="Insert" asp-controller="SystemRole" asp-area="Admin" class="block layout_icons d-block mb-4">
-
+                        <a asp-action="ViewSystemRole" asp-controller="SystemRole" asp-area="Admin" class="block layout_icons d-block mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="0f7179" class="bi bi-person-gear" viewBox="0 0 16 16">
-                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1zm3.63-4.54c.18-.613 1.048-.613 1.229 0ل.043.148a.64.64 0 0 0 .921.382ل.136-.074c.561-.306 1.175.308.87.869ل-.075.136a.64.64 0 0 0 .382.92ل.149.045c.612.18.612 1.048 0 1.229ل-.15.043a.64.64 0 0 0-.38.921ل.074.136c.305.561-.309 1.175-.87.87ل-.136-.075a.64.64 0 0 0-.92.382ل-.045.149c-.18.612-1.048.612-1.229 0ل-.043-.15a.64.64 0 0 0-.921-.38ل-.136.074c-.561.305-1.175-.309-.87-.87ل.075-.136a.64.64 0 0 0-.382-.92ل-.148-.045c-.613-.18-.613-1.048 0-1.229ل.148-.043a.64.64 0 0 0 .382-.921ل-.074-.136c-.306-.561.308-1.175.869-.87ل.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
                             </svg>
-                            <h5 class="text-dark">إضافة أدوار للنظام</h5>
+                            <h5 class="text-dark">أدوار للنظام</h5>
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Sites comparison pie -->
+            <div class="col-md-6">
+                <div class="block mb-4">
+                    <div class="block-header border-bottom mb-3 p-3">
+                        <h6 class="m-0">احصائيات الجهات</h6>
+                    </div>
+                    <div style="height: 350px;width: 100%;" class="p-3">
+                        <div>
+                            <div class="section-title">مقارنة الجهات</div>
+                            <div class="section-subtitle">بها أندية / بدون أندية</div>
+                        </div>
+                        <canvas id="sitesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Most active clubs (bar) -->
+            <div class="col-md-6">
+                <div class="block mb-4">
+                    <div class="block-header border-bottom mb-3 p-3">
+                        <h6 class="m-0">احصائيات الأندية</h6>
+                    </div>
+                    <div style="height: 350px;width: 100%;" class="p-3">
+                        <div>
+                            <div class="section-title">الأندية الأكثر نشاطًا</div>
+                            <div class="section-subtitle">حسب عدد الأنشطة</div>
+                        </div>
+                        <canvas id="clubsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sites comparison pie -->
+        <div class="col-md-6">
+            <div class="block mb-4">
+                <div class="block-header border-bottom mb-3 p-3">
+                    <h6 class="m-0">احصائيات الطلاب</h6>
+                </div>
+                <div style="height: 350px;width: 100%;" class="p-3">
+                    <div>
+                        <div class="section-title">مقارنة الطلاب</div>
+                        <div class="section-subtitle">مع عضوية في نادي / بدون عضوية</div>
+                    </div>
+                    <canvas id="studentsChart"></canvas>
                 </div>
             </div>
         </div>
 
     </div>
 </section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctxSites = document.getElementById('sitesChart').getContext('2d');
+        new Chart(ctxSites, {
+            type: 'pie',
+            data: {
+                labels: ['جهات بها أندية', 'جهات بدون أندية'],
+                datasets: [{
+                    data: [@Model.SitesWithClubs, @Model.SitesWithoutClubs],
+                    backgroundColor: ['#0f7179', '#D5E0E0'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        
+
+        const ctxClubs = document.getElementById('clubsChart').getContext('2d');
+        new Chart(ctxClubs, {
+            type: 'bar',
+            data: {
+                labels: [@Html.Raw(string.Join(",", Model.ClubActivityStats.Select(c => $"'{c.ClubName}'")))],
+                datasets: [{
+                    label: 'عدد الأنشطة',
+                    data: [@string.Join(",", Model.ClubActivityStats.Select(c => c.ActivityCount))],
+                    backgroundColor: '#0d6efd',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(13,110,253,0.08)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+        const ctxStudents = document.getElementById('studentsChart').getContext('2d');
+        new Chart(ctxSites, {
+            type: 'pie',
+            data: {
+                labels: ['مع عضوية في نادي', 'بدون عضوية'],
+                datasets: [{
+                    data: [@Model.StudentsWithMemberships, @Model.StudentsWithoutMemberships],
+                    backgroundColor: ['#0f7179', '#D5E0E0'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+        
+    </script>
+}

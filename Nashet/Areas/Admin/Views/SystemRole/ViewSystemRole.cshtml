@@ -1,0 +1,117 @@
+﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+@using Nashet.Business.ViewModels
+@model IEnumerable<SystemRoleViewModel>
+<section class="page_wrap">
+    <div class="page_content">
+        <div class="block mb-4">
+            <div class="block-header border-bottom px-4 py-3">
+                <h5 class="m-0"> ادوار مستخدمين النظام</h5>
+                <div class="d-flex gap-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control table__quick_search"
+                               placeholder="البحث السريع ...">
+                    </div>
+                    <a asp-action="Insert" asp-controller="SystemRole" asp-area="Admin" class="btn btn-primary">إضافة نوع عضوية</a>
+                </div>
+            </div>
+            <div class="block-body">
+                <table class="table table-hover js-dataTable">
+                    <thead>
+                        <tr>
+                            <th>نوع الدور باللغة العربية</th>
+                            <th>نوع الدور باللغة الإنجليزية</th>
+                            <th class=""></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="2" class="text-center text-muted">لا توجد اصناف لعرضها حالياً</td>
+                            </tr>
+                        }
+                        else
+                        {
+                        
+                            foreach (var item in Model)
+                            {
+                                <tr class="cursor-pointer" goto="order_details">
+                                    <td>@item.RoleTypeAr</td>
+                                    <td>@item.RoleTypeEn</td>
+                                    <td class="action_td text-end">
+                                        <a asp-action="UpdateSystemRole" asp-route-guid="@item.guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a data-id="@item.guid" class="btn btn-sm btn-danger delete-btn">حذف</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Attach event listener for delete buttons
+            $('.delete-btn').on('click', function (event) {
+                event.preventDefault();
+
+                // Get the GUID from the clicked delete button
+                var id = $(this).data('id');
+
+                // Trigger SweetAlert2 for confirmation
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "سيتم حذف الدور ولا يمكن التراجع عن هذا الإجراء!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "نعم، احذف الجهة",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            url: '@Url.Action("DeleteSystemRole", "SystemRole")',
+                            type: 'POST',
+                            data: { guid: id },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'تم الحذف!',
+                                        text: response.message || 'تم حذف الدور بنجاح',
+                                        icon: 'success',
+                                        confirmButtonText: 'موافق',
+                                        timer: 2000
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("ViewSystemRole", "SystemRole", new { area = "Admin" })';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل الحذف!',
+                                        text: response.message || 'لم يتم حذف الدور',
+                                        icon: 'error',
+                                        confirmButtonText: 'موافق'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
+                                    icon: 'error',
+                                    confirmButtonText: 'موافق'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

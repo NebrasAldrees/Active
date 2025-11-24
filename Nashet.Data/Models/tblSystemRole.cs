@@ -9,7 +9,8 @@ namespace Nashet.Data.Models
 {
     public class tblSystemRole : Common
     {
-        [Key] public int SystemRoleId { get; set; }
+        [Key] 
+        public int SystemRoleId { get; set; }
         [StringLength(30)]
         public string RoleTypeAr { get; set; }
 
