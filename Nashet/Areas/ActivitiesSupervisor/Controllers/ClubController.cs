@@ -40,7 +40,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             }
 
 
-            if (!string.IsNullOrEmpty(searchText) && clubs.Any()) //fliting search
+            if (!string.IsNullOrEmpty(searchText) && clubs.Any())
             {
                 clubs = clubs.Where(c =>
                     (!string.IsNullOrEmpty(c.ClubNameAR) && c.ClubNameAR.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
@@ -126,22 +126,18 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
             {
                 try
                 {
-                    // معالجة رفع الصورة إذا تم رفع ملف
                     if (ClubIcon != null && ClubIcon.Length > 0)
                     {
                         string uploadFolder = Path.Combine(_webHost.WebRootPath, "uploads");
 
-                        // إنشاء المجلد إذا لم يكن موجوداً
                         if (!Directory.Exists(uploadFolder))
                         {
                             Directory.CreateDirectory(uploadFolder);
                         }
 
-                        // إنشاء اسم فريد للملف
                         string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ClubIcon.FileName);
                         string fileSavePath = Path.Combine(uploadFolder, fileName);
 
-                        // حفظ الملف
                         using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                         {
                             await ClubIcon.CopyToAsync(stream);
@@ -258,17 +254,14 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
                     {
                         string uploadFolder = Path.Combine(_webHost.WebRootPath, "uploads");
 
-                        // إنشاء المجلد إذا لم يكن موجوداً
                         if (!Directory.Exists(uploadFolder))
                         {
                             Directory.CreateDirectory(uploadFolder);
                         }
 
-                        // إنشاء اسم فريد للملف
                         string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ClubIcon.FileName);
                         string fileSavePath = Path.Combine(uploadFolder, fileName);
 
-                        // حفظ الملف
                         using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                         {
                             await ClubIcon.CopyToAsync(stream);

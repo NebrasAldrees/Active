@@ -15,27 +15,52 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly AnnouncementDomain _announcementDomain;
         private readonly ClubDomain _ClubDomain;
+        private readonly UserDomain _UserDomain;
+        private readonly SiteDomain _SiteDomain;
 
 
-        public HomeController(ILogger<HomeController> logger, AnnouncementDomain announcementDomain, ClubDomain clubDomain)
+        public HomeController(ILogger<HomeController> logger, AnnouncementDomain announcementDomain, ClubDomain clubDomain, UserDomain userDomain, SiteDomain siteDomain)
         {
             _announcementDomain = announcementDomain;
             _logger = logger;
             _ClubDomain = clubDomain;
+            _UserDomain = userDomain;
+            _SiteDomain = siteDomain;
         }
-        public IActionResult ProfilePage()
+        [HttpGet]
+        public async Task<IActionResult> ProfilePage()
         {
-            var userInfo = new
+            try
             {
-                Username = User.Identity.Name,
-                FullName = User.FindFirst(ClaimTypes.GivenName)?.Value,
-                Role = User.FindFirst(ClaimTypes.Role)?.Value,
-                UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
-                Email = User.FindFirst(ClaimTypes.Email)?.Value ?? User.Identity.Name
-            };
+                var username = User.Identity?.Name;
+                var user = await _UserDomain.GetUserByUsername(username);
 
-            ViewBag.UserInfo = userInfo;
-            return View();
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                string siteName = "غير محدد";
+                if (user.SiteId != null)
+                {
+                    var site = await _SiteDomain.GetSiteByID(user.SiteId);
+                    if (site != null)
+                    {
+                        siteName = site.SiteNameAR;
+                    }
+                }
+
+                ViewBag.SiteName = siteName;
+                ViewBag.SiteId = user.SiteId;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.SiteName = "غير محدد";
+                ViewBag.SiteId = "غير متوفر";
+                return View();
+            }
         }
         public async Task<IActionResult> ActivitiesSupervisorHome()
         {

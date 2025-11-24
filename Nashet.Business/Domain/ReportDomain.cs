@@ -69,15 +69,11 @@ namespace Nashet.Business.Domain
         {
             try
             {
-                Console.WriteLine($"GetReportsByClubId called with clubId: {clubId}");
 
                 var reports = await _ReportRepository.GetReportsByClubId(clubId);
 
-                Console.WriteLine($"Raw reports count from repository: {reports?.Count ?? 0}");
-
                 if (reports == null || !reports.Any())
                 {
-                    Console.WriteLine($"No reports found for clubId: {clubId}");
                     return new List<ReportViewModel>();
                 }
 
@@ -92,20 +88,10 @@ namespace Nashet.Business.Domain
                     ClubNameAr = r.Club?.ClubNameAR
                 }).ToList();
 
-                Console.WriteLine($"Mapped {reportViewModels.Count} reports for clubId: {clubId}");
-
-                // طباعة بعض البيانات للتأكد
-                foreach (var report in reportViewModels.Take(3))
-                {
-                    Console.WriteLine($"Report: Id={report.ReportId}, Topic={report.Topic}, ClubId={report.ClubId}");
-                }
-
                 return reportViewModels;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetReportsByClubId: {ex.Message}");
-                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return new List<ReportViewModel>();
             }
         }

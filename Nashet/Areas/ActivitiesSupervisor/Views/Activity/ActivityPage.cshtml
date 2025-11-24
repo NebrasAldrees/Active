@@ -24,7 +24,6 @@
 
                 <div class="row">
                     <div class="col-lg-4 mb-4">
-                        <!-- poster -->
                         <div class="text-center mb-4">
                             @if (!string.IsNullOrEmpty(Model.ActivityPoster))
                             {
@@ -39,8 +38,6 @@
                                 </div>
                             }
                         </div>
-
-                        
                     </div>
 
                     <div class="col-lg-8">
@@ -95,10 +92,11 @@
                                 <div class="mb-3">
                                     <strong>تاريخ انتهاء النشاط</strong>
                                     <div class="text-muted">@Model.ActivityEndDate</div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
 
+                        <!-- أزرار التعديل والحذف -->
                         <div class="card shadow-sm mt-4">
                             <div class="card-body text-center">
                                 <a asp-action="UpdateActivity" asp-route-guid="@Model.Guid" class="btn btn-sm btn-success">تعديل</a>
@@ -111,6 +109,7 @@
         </div>
     </div>
 </section>
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

@@ -66,15 +66,39 @@
                                     </div>
                                 </div>
 
-                                <!-- التخصص -->
+                                @* <!-- رقم الجوال -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold mb-1">النادي التابع:</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="form-control-plaintext border-bottom pb-2">
+                                            @( ?? "غير محدد")
+                                        </p>
+                                    </div>
+                                    //membership table
+                                </div> *@
+
+                                <!-- المهارات (قابلة للتعديل) -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold mb-1">المهارات:</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <p class="form-control-plaintext border-bottom pb-2">
-                                            @(studentData?.StudentSkills ?? "غير محدد")
-                                        </p>
+                                        <textarea id="studentSkills" class="form-control" rows="4"
+                                                  placeholder="أدخل مهاراتك هنا...">@(studentData?.StudentSkills ?? "")</textarea>
+                                        <small class="text-muted">يمكنك تعديل مهاراتك وحفظها</small>
+                                    </div>
+                                </div>
+
+                                <!-- زر الحفظ -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-8">
+                                        <button type="button" id="saveSkillsBtn" class="btn btn-success">
+                                            <i class="fas fa-save me-1"></i>حفظ المهارات
+                                        </button>
+                                        <span id="saveMessage" class="text-success ms-2" style="display: none;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -85,3 +109,77 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // حفظ المهارات
+            $('#saveSkillsBtn').on('click', function () {
+                var skills = $('#studentSkills').val();
+                var $btn = $(this);
+                var $message = $('#saveMessage');
+
+                // تعطيل الزر أثناء الحفظ
+                $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i>جاري الحفظ...');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateSkills", "Student")',
+                    type: 'POST',
+                    data: {
+                        studentSkills: skills,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $message.text(response.message).removeClass('text-danger').addClass('text-success').show();
+
+                            Swal.fire({
+                                title: 'تم بنجاح!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'موافق',
+                                timer: 2000
+                            });
+                        } else {
+                            $message.text(response.message).removeClass('text-success').addClass('text-danger').show();
+
+                            Swal.fire({
+                                title: 'خطأ!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'موافق'
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $message.text('حدث خطأ أثناء الحفظ').removeClass('text-success').addClass('text-danger').show();
+
+                        Swal.fire({
+                            title: 'خطأ!',
+                            text: 'حدث خطأ أثناء حفظ المهارات',
+                            icon: 'error',
+                            confirmButtonText: 'موافق'
+                        });
+                    },
+                    complete: function () {
+                        // إعادة تمكين الزر
+                        $btn.prop('disabled', false).html('<i class="fas fa-save me-1"></i>حفظ المهارات');
+
+                        // إخفاء الرسالة بعد 3 ثواني
+                        setTimeout(function() {
+                            $message.hide();
+                        }, 3000);
+                    }
+                });
+            });
+
+            // إظهار/إخفاء رسالة التوضيح عند التركيز على حقل المهارات
+            $('#studentSkills').on('focus', function() {
+                $(this).next('small').show();
+            }).on('blur', function() {
+                $(this).next('small').hide();
+            });
+        });
+    </script>
+}
