@@ -27,6 +27,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
+                Report.Guid = Guid.NewGuid();
                 await InsertAsync(Report);
                 return 1;
             }

@@ -14,9 +14,11 @@ namespace Nashet.Business.Domain
     public class ReportDomain : BaseDomain
     {
         private readonly ReportRepository _ReportRepository;
-        public ReportDomain(ReportRepository Repository)
+        private readonly ClubRepository _ClubRepository;
+        public ReportDomain(ReportRepository Repository, ClubRepository clubRepository)
         {
             _ReportRepository = Repository;
+            _ClubRepository = clubRepository;
         }
         public async Task<IList<ReportViewModel>> GetReport()
         {
@@ -45,34 +47,17 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                var club = await _ClubRepository.GetClubByGuid(viewModel.ClubGuid);
+
                 tblReport Report = new tblReport
                 {
-                    ClubId = (int)viewModel.ClubId,
+                    ClubId = club.ClubId, // Use null-coalescing instead of cast
                     Topic = viewModel.Topic,
-                    Path = viewModel.Path
+                    Path = viewModel.Path,
                 };
+
                 int check = await _ReportRepository.InsertReport(Report);
-                if (check == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblReport",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
-                    return 1;
-                }
-              
+                return check;
             }
             catch
             {

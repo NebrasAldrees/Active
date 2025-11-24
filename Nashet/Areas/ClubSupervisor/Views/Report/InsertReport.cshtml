@@ -1,38 +1,263 @@
 ﻿@model ReportViewModel
+
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
-            <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">رفع التقارير</h5>
+            <div class="block-header border-bottom px-4 py-3">
+                <h5 class="m-0">إضافة تقرير جديد</h5>
+                <a asp-action="Index" asp-controller="Report" asp-area="ClubSupervisor" class="btn btn-secondary">العودة إلى القائمة</a>
             </div>
-            <div class="block-body py-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <form asp-action="InsertReport" method="post" enctype="multipart/form-data">
-                            @Html.AntiForgeryToken()
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label for="" class="mb-1">موضوع التقرير</label>
-                                    <input asp-for="Topic" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="Topic"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <div class="mb-4">
-                                        <label for="FileUpload" class="mb-1">إرفاق الملف</label>
-                                        <input type="file" id="FileUpload" name="File" accept=".pdf,.docx,.doc" class="form-control">
-                                        <span style="color:red" id="fileValidation"></span>
-                                    </div>
-                                </div><!-- END ITEM -->
+            <div class="block-body">
+                <form asp-action="InsertReport" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    @Html.AntiForgeryToken()
+
+                    <!-- معلومات النادي -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">اسم النادي</label>
+                                <input type="text" class="form-control" value="@ViewBag.ClubName" readonly>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary px-5" title="save">حفظ</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">الرقم المرجعي للنادي</label>
+                                <input type="text" class="form-control" value="@ViewBag.ClubGuid" readonly>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+
+                    <!-- عنوان التقرير -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Topic" class="form-label">عنوان التقرير *</label>
+                        <input asp-for="Topic" class="form-control" placeholder="أدخل عنوان التقرير" required>
+                        <span asp-validation-for="Topic" class="text-danger"></span>
+                        <div class="invalid-feedback">يرجى إدخال عنوان التقرير</div>
+                    </div>
+
+                    <!-- رفع الملف -->
+                    <div class="form-group mb-4">
+                        <label for="FileUpload" class="form-label">رفع ملف التقرير *</label>
+                        <input type="file" class="form-control" id="FileUpload" name="File" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" required>
+                        <div class="form-text">الملفات المسموحة: PDF, Word, Excel, Images (الحجم الأقصى: 10MB)</div>
+                        <span asp-validation-for="File"
+                              class="text-danger"></span>
+                        <div class="invalid-feedback">يرجى اختيار ملف التقرير</div>
+                    </div>
+
+                    <!-- معاينة الملف -->
+                    <div id="filePreview" class="mt-3" style="display: none;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">معاينة الملف المحدد:</h6>
+                                <div id="fileInfo" class="d-flex align-items-center gap-3">
+                                    <i id="fileIcon" class="fas fa-file fs-2 text-primary"></i>
+                                    <div>
+                                        <div id="fileName" class="fw-bold"></div>
+                                        <div id="fileSize" class="text-muted small"></div>
+                                        <div id="fileType" class="text-muted small"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أزرار -->
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-upload me-1"></i> رفع التقرير
+                        </button>
+                        <a asp-action="Index" asp-controller="Report" asp-area="ClubSupervisor" class="btn btn-secondary">
+                            <i class="fas fa-times me-1"></i> إلغاء
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</section><!-- End Page Wrap -->
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // معاينة الملف قبل الرفع
+        document.getElementById('FileUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('filePreview');
+            const fileIcon = document.getElementById('fileIcon');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const fileType = document.getElementById('fileType');
+
+            if (file) {
+                // التحقق من حجم الملف (10MB كحد أقصى)
+                const maxSize = 10 * 1024 * 1024; // 10MB
+                if (file.size > maxSize) {
+                    Swal.fire({
+                        title: 'حجم الملف كبير جداً!',
+                        text: 'الحد الأقصى المسموح به هو 10MB',
+                        icon: 'error',
+                        confirmButtonText: 'موافق'
+                    });
+                    e.target.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                // التحقق من نوع الملف
+                const allowedTypes = [
+                    'application/pdf',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'image/jpeg',
+                    'image/png',
+                    'image/jpg'
+                ];
+
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire({
+                        title: 'نوع الملف غير مسموح!',
+                        text: 'الرجاء اختيار ملف من الأنواع المسموحة (PDF, Word, Excel, Images)',
+                        icon: 'error',
+                        confirmButtonText: 'موافق'
+                    });
+                    e.target.value = '';
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                // تحديد أيقونة الملف حسب النوع
+                const fileTypeIcons = {
+                    'pdf': 'fa-file-pdf',
+                    'word': 'fa-file-word',
+                    'excel': 'fa-file-excel',
+                    'image': 'fa-file-image'
+                };
+
+                let iconClass = 'fa-file';
+                if (file.type.includes('pdf')) {
+                    iconClass = 'fa-file-pdf text-danger';
+                } else if (file.type.includes('word')) {
+                    iconClass = 'fa-file-word text-primary';
+                } else if (file.type.includes('excel') || file.type.includes('sheet')) {
+                    iconClass = 'fa-file-excel text-success';
+                } else if (file.type.includes('image')) {
+                    iconClass = 'fa-file-image text-warning';
+                }
+
+                fileIcon.className = `fas ${iconClass} fs-2`;
+
+                // عرض معلومات الملف
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                fileType.textContent = getFileTypeDescription(file.type);
+
+                // إظهار معاينة الملف
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        // دالة لتنسيق حجم الملف
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // دالة لوصف نوع الملف
+        function getFileTypeDescription(fileType) {
+            const types = {
+                'application/pdf': 'ملف PDF',
+                'application/msword': 'ملف Word',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'ملف Word',
+                'application/vnd.ms-excel': 'ملف Excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'ملف Excel',
+                'image/jpeg': 'صورة JPEG',
+                'image/png': 'صورة PNG',
+                'image/jpg': 'صورة JPG'
+            };
+            return types[fileType] || 'ملف';
+        }
+
+        // التحقق من صحة النموذج
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // SweetAlert للإشعارات
+        @if (ViewBag.Successful != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تم رفع التقرير بنجاح!",
+                    text: "تم حفظ التقرير في النظام",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                }).then(() => {
+                    window.location.href = '@Url.Action("Index", "Report", new { area = "ClubSupervisor" })';
+                });
+                </text>
+        }
+
+        @if (ViewBag.Error != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "فشل رفع التقرير!",
+                    text: "@ViewBag.Error",
+                    icon: "error",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                });
+                </text>
+        }
+
+        @if (TempData["Successful"] != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تم بنجاح!",
+                    text: "@TempData["Successful"]",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                }).then(() => {
+                    window.location.href = '@Url.Action("Index", "Report", new { area = "ClubSupervisor" })';
+                });
+                </text>
+        }
+
+        @if (TempData["Failed"] != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "فشل العملية!",
+                    text: "@TempData["Failed"]",
+                    icon: "error",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                });
+                </text>
+        }
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
