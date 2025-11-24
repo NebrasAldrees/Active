@@ -21,7 +21,7 @@ namespace Nashet.Areas.Admin.Controllers
             _siteDomain = siteDomain;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ViewUser()
         {
             return View(await _domain.GetUser());
         }

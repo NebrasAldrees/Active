@@ -24,6 +24,12 @@ namespace Nashet.Data.Repository
             return await dbSet.Where(SR => SR.IsDeleted == false && SR.SystemRoleId == id)
                             .FirstOrDefaultAsync();
         }
+        public virtual async Task<tblSystemRole> GetSystemRoleByGuid(Guid guid)
+        {
+            return await dbSet.Where(SR => SR.IsDeleted == false && SR.Guid == guid)
+                            .FirstOrDefaultAsync();
+        }
+
         public virtual async Task<int> InsertSystemRole(tblSystemRole SystemRole)
         {
             try

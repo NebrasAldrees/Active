@@ -93,23 +93,12 @@
                                         </div>
 
                                         <!-- معلومات النادي -->
-                                        <div class="mb-2" style="text-align:left;">
+                                        <div class="mb-2" style="text-align:center;">
                                             <strong style="color:@headerColor;">الاسم الإنجليزي:</strong>
                                             <p class="mb-1 text-muted">@item.ClubNameEN</p>
                                         </div>
 
-                                        <div class="mb-2" style="text-align:left;">
-                                            <strong style="color:@headerColor;">الجهة:</strong>
-                                            @{
-                                                var siteName = "غير محدد";
-                                                if (siteList != null && item.SiteId > 0)
-                                                {
-                                                    var site = siteList.FirstOrDefault(s => s.SiteId == item.SiteId);
-                                                    siteName = site?.SiteNameAR ?? "غير محدد";
-                                                }
-                                            }
-                                            <p class="mb-1 text-muted">@siteName</p>
-                                        </div>
+                                        
                                     </div>
                                 </a>
                             </div>

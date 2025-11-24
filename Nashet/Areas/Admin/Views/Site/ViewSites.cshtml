@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SiteViewModel>
+﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+@model IEnumerable<SiteViewModel>
 <section class="page_wrap">
     <div class="page_content">
         @if (TempData["Message"] != null)
@@ -34,7 +35,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @{
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">لا توجد جهات لعرضها حالياً</td>
+                            </tr>
+                        }
+                        else
+                        {
                             foreach (var item in Model)
                             {
                                 <tr class="cursor-pointer" goto="order_details.cshtml">
@@ -84,9 +92,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a asp-action="UpdateSite" asp-route-id="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
-                                        <a asp-action="DeleteSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-danger"
-                                           onclick="return confirm('هل أنت متأكد من أنك تريد حذف الجهة؟')">حذف </a>
+                                        <a asp-action="UpdateSite" asp-route-guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>
+                                        <a data-id="@item.Guid" class="btn btn-sm btn-danger delete-btn">حذف </a>
                                     </td>
                                 </tr>
                             }
@@ -100,3 +107,67 @@
 
     </div>
 </section><!-- End Page Wrap -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Attach event listener for delete buttons
+            $('.delete-btn').on('click', function (event) {
+                event.preventDefault();
+
+                // Get the GUID from the clicked delete button
+                var id = $(this).data('id');
+
+                // Trigger SweetAlert2 for confirmation
+                Swal.fire({
+                    title: "هل أنت متأكد؟",
+                    text: "سيتم حذف الجهة ولا يمكن التراجع عن هذا الإجراء!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "نعم، احذف الجهة",
+                    cancelButtonText: "إلغاء"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            url: '@Url.Action("DeleteSite", "Site")',
+                            type: 'POST',
+                            data: { guid: id },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: 'تم الحذف!',
+                                        text: response.message || 'تم حذف الجهة بنجاح',
+                                        icon: 'success',
+                                        confirmButtonText: 'موافق',
+                                        timer: 2000
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("ViewSites", "Site", new { area = "Admin" })';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'فشل الحذف!',
+                                        text: response.message || 'لم يتم حذف الجهة',
+                                        icon: 'error',
+                                        confirmButtonText: 'موافق'
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء محاولة الحذف: ' + error,
+                                    icon: 'error',
+                                    confirmButtonText: 'موافق'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

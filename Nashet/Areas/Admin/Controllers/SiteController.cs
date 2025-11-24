@@ -32,22 +32,32 @@ namespace Nashet.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InsertSite(SiteViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
+                return Json(new { error = true, message = "البيانات غير صالحة" });
+            }
+
+            try
+            {
+                int check = await _SiteDomain.InsertSite(viewModel);
+
+                if (check == 1)
                 {
-                    int check = await _SiteDomain.InsertSite(viewModel);
-                    if (check == 1)
-                        TempData["Message"] = "تم اضافة الجهة بنجاح";
-                    else
-                        TempData["Error"] = "فشل في الإضافة";
+                    return Json(new { success = true, message = "تم اضافة الجهة بنجاح" });
                 }
-                catch
+                else if (check == -1) 
                 {
-                    TempData["Error"] = "فشل في العمليات";
+                    return Json(new { duplicate = true, message = "البيانات موجودة مسبقًا" });
+                }
+                else
+                {
+                    return Json(new { error = true, message = "فشل في الإضافة" });
                 }
             }
-            return RedirectToAction("ViewSites");
+            catch (Exception ex)
+            {
+                return Json(new { error = true, message = "فشل في العمليات: " + ex.Message });
+            }
         }
 
         public async Task<IActionResult> UpdateSite(Guid guid)
@@ -81,40 +91,54 @@ namespace Nashet.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateSite(SiteViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
+                return Json(new { success = false, message = "البيانات غير صالحة" });
+            }
+
+            try
+            {
+                int check = await _SiteDomain.UpdateSite(viewModel);
+
+                if (check == 1)
                 {
-                    int check = await _SiteDomain.UpdateSite( viewModel);
-                    if (check == 1)
-                    {
-                        TempData["Message"] = "تم تعديل بيانات الجهة بنجاح";
-                        return RedirectToAction(nameof(ViewSites));
-                    }
-                    else
-                        TempData["Error"] = "فشل التعديل";
+                    return Json(new { success = true, message = "تم تعديل بيانات الجهة بنجاح" });
                 }
-                catch
+                else if (check == -1) // optional: duplicate or conflict case
                 {
-                    TempData["Error"] = "فشل التعديل";
+                    return Json(new { success = false, duplicate = true, message = "الجهة موجودة مسبقًا" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "فشل التعديل" });
                 }
             }
-            return View(viewModel);
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "حدث خطأ أثناء التعديل: " + ex.Message });
+            }
         }
-        public async Task<ActionResult> DeleteSite(Guid guid)
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSite(Guid guid)
         {
-            int result = await _SiteDomain.DeleteSite(guid);
-
-            if (result == 1)
+            try
             {
-                TempData["Success"] = "تم حذف الجهة بنجاح";
-            }
-            else
-            {
-                TempData["Error"] = "خطأ في الحذف";
-            }
+                int result = await _SiteDomain.DeleteSite(guid);
 
-            return RedirectToAction("ViewSites");
+                if (result == 1)
+                {
+                    return Json(new { success = true, message = "تم حذف الجهة بنجاح" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "لم يتم العثور على الجهة أو فشل الحذف" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "حدث خطأ أثناء الحذف: " + ex.Message });
+            }
         }
 
 
