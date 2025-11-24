@@ -39,7 +39,6 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // سويت ألرت عند النقر على زر التنزيل
         document.querySelectorAll('.download-btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 const fileName = this.getAttribute('data-filename');
@@ -56,7 +55,6 @@
             });
         });
 
-        // SweetAlert للإشعارات الأخرى
         @if (ViewBag.Successful != null)
         {
                 <text>

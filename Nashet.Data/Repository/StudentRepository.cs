@@ -88,5 +88,18 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+
+        public virtual async Task<bool> UpdateStudentSkillsAsync(string academicId, string studentSkills)
+        {
+            var student = await GetByAcademicIdAsync(academicId);
+
+            if (student == null)
+                return false;
+
+            student.StudentSkills = studentSkills;
+
+            var result = await updateStudent(student);
+            return result == 1;
+        }
     }
 }

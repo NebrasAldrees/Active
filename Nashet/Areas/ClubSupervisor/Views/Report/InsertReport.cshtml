@@ -52,7 +52,6 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // عرض معاينة الملف قبل الرفع
         document.getElementById('FileUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -63,7 +62,6 @@
                     return;
                 }
 
-                // التحقق من نوع الملف
                 const allowedTypes = [
                     'application/pdf',
                     'application/msword',
@@ -81,7 +79,6 @@
                     return;
                 }
 
-                // عرض معاينة الملف
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const oldPreview = document.getElementById('filePreview');
@@ -109,7 +106,6 @@
             }
         });
 
-        // دالة لتنسيق حجم الملف
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
@@ -118,7 +114,6 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        // SweetAlert للإضافة الناجحة فقط
         @if (ViewBag.Successful != null)
         {
                 <text>

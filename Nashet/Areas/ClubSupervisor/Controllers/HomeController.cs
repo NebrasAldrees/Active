@@ -10,10 +10,16 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
     public class HomeController : Controller
     {
         private readonly AnnouncementDomain _announcementDomain;
+        private readonly UserDomain _UserDomain;
+        private readonly SiteDomain _SiteDomain;
+        private readonly ClubDomain _ClubDomain;
 
-        public HomeController(AnnouncementDomain announcementDomain)
+        public HomeController(AnnouncementDomain announcementDomain, UserDomain userDomain, SiteDomain siteDomain, ClubDomain clubDomain)
         {
             _announcementDomain = announcementDomain;
+            _UserDomain = userDomain;
+            _SiteDomain = siteDomain;
+            _ClubDomain = clubDomain;
         }
 
         public async Task<IActionResult> ClubsupervisorHome()
@@ -21,19 +27,55 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             var latestAnnouncements = await _announcementDomain.GetLatestAnnouncements(3);
             return View(latestAnnouncements);
         }
-        public IActionResult ProfilePage()
+        public async Task<IActionResult> ProfilePage()
         {
-            var userInfo = new
+            try
             {
-                Username = User.Identity.Name,
-                FullName = User.FindFirst(ClaimTypes.GivenName)?.Value,
-                Role = User.FindFirst(ClaimTypes.Role)?.Value,
-                UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
-                Email = User.FindFirst(ClaimTypes.Email)?.Value ?? User.Identity.Name
-            };
+                var username = User.Identity?.Name;
+                var user = await _UserDomain.GetUserByUsername(username);
 
-            ViewBag.UserInfo = userInfo;
-            return View();
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                string clubName = "غير محدد";
+                string siteName = "غير محدد";
+
+                // جلب بيانات النادي
+                if (user.ClubId != null && user.ClubId != 0)
+                {
+                    var club = await _ClubDomain.GetClubById((int)user.ClubId);
+                    if (club != null)
+                    {
+                        clubName = club.ClubNameAR;
+
+                        // جلب بيانات الجهة من خلال النادي
+                        if (club.SiteId != null && club.SiteId != 0)
+                        {
+                            var site = await _SiteDomain.GetSiteByID(club.SiteId);
+                            if (site != null)
+                            {
+                                siteName = site.SiteNameAR;
+                            }
+                        }
+                    }
+                }
+
+                ViewBag.ClubName = clubName;
+                ViewBag.SiteName = siteName;
+                ViewBag.ClubId = user.ClubId;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // في حالة الخطأ، استخدم قيم افتراضية
+                ViewBag.ClubName = "غير محدد";
+                ViewBag.SiteName = "غير محدد";
+                ViewBag.ClubId = "غير متوفر";
+                return View();
+            }
         }
         public async Task<IActionResult> AnnouncementPage(Guid id)
         {

@@ -158,6 +158,18 @@ namespace Nashet.Business.Domain
                 return 0;
             }
         }
+
+        public virtual async Task<bool> UpdateStudentSkillsAsync(string academicId, string studentSkills)
+        {
+            try
+            {
+                return await _StudentRepository.UpdateStudentSkillsAsync(academicId, studentSkills);
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
 

@@ -11,12 +11,12 @@ namespace Nashet.Areas.Student.Controllers
     public class HomeController : Controller
     {
         private readonly AnnouncementDomain _announcementDomain;
-        private readonly StudentRepository _studentRepository;
+        private readonly StudentDomain _studentDomain;
 
-            public HomeController(AnnouncementDomain announcementDomain, StudentRepository studentRepository)
+            public HomeController(AnnouncementDomain announcementDomain, StudentDomain studentDomain)
             {
                 _announcementDomain = announcementDomain;
-                _studentRepository = studentRepository;
+                _studentDomain = studentDomain;
             }
 
         public async Task<IActionResult> StudentHome()
@@ -27,7 +27,8 @@ namespace Nashet.Areas.Student.Controllers
         public async Task<IActionResult> ProfilePage()
         {
             var academicNumber = User.FindFirst("AcademicNumber")?.Value ??
-                               User.FindFirst(ClaimTypes.Role)?.Value;
+                               User.FindFirst(ClaimTypes.Name)?.Value ??
+                               User.Identity.Name;
 
             var userInfo = new
             {
@@ -43,7 +44,7 @@ namespace Nashet.Areas.Student.Controllers
 
             if (!string.IsNullOrEmpty(academicNumber))
             {
-                var studentData = await _studentRepository.GetByAcademicIdAsync(academicNumber);
+                var studentData = await _studentDomain.GetByAcademicId(academicNumber);
                 ViewBag.StudentData = studentData;
             }
             else
@@ -52,6 +53,19 @@ namespace Nashet.Areas.Student.Controllers
             }
 
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateSkills(string studentSkills)
+        {
+            var academicNumber = User.Identity.Name; 
+
+            var result = await _studentDomain.UpdateStudentSkillsAsync(academicNumber, studentSkills);
+
+            if (result)
+                return Json(new { success = true, message = "تم التحديث بنجاح" });
+            else
+                return Json(new { success = false, message = "فشل في التحديث" });
         }
         public async Task<IActionResult> AnnouncementPage(Guid id)
         {

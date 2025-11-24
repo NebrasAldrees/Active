@@ -52,34 +52,6 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-12 mb-3">
-                                        <h6 class="text-primary">الأفرقة التابعة للنادي:</h6>
-
-                                        @if (ViewBag.Teams != null && ((List<TeamViewModel>)ViewBag.Teams).Any())
-                                        {
-                                            <ul class="list-group">
-                                                @foreach (var team in ViewBag.Teams)
-                                                {
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        <span>
-                                                            <i class="fas fa-users me-2 text-muted"></i>
-                                                            @team.TeamNameAR
-                                                        </span>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        }
-                                        else
-                                        {
-                                            <div class="alert alert-info">
-                                                <i class="fas fa-info-circle me-2"></i>
-                                                لا توجد أفرقة تابعة لهذا النادي حالياً
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
                                     <div class="col-12">
                                         <h6 class="text-primary" style="font-weight:600;color:#0d6efd;">
                                             نبذة عن النادي:
@@ -91,7 +63,6 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <!-- الفرق التابعة للنادي -->
 
                                     <h6 class="text-primary" style="font-weight:600;color:#0d6efd;">
                                         الأفرقة التابعة للنادي
@@ -141,7 +112,6 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // حذف النادي من صفحة التفاصيل
         document.getElementById('deleteClubBtn').addEventListener('click', function() {
             Swal.fire({
                 title: 'هل أنت متأكد؟',
@@ -155,7 +125,6 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // إرسال طلب الحذف
                     fetch('@Url.Action("DeleteClub", "Club", new { area = "ActivitiesSupervisor" })?guid=@Model.Guid', {
                         method: 'POST',
                         headers: {

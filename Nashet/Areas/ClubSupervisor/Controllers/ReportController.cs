@@ -73,22 +73,18 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             {
                 try
                 {
-                    // معالجة رفع الملف إذا تم رفع ملف
                     if (File != null && File.Length > 0)
                     {
                         string uploadFolder = Path.Combine(_webHost.WebRootPath, "uploads");
 
-                        // إنشاء المجلد إذا لم يكن موجوداً
                         if (!Directory.Exists(uploadFolder))
                         {
                             Directory.CreateDirectory(uploadFolder);
                         }
 
-                        // إنشاء اسم فريد للملف
                         string fileName = Guid.NewGuid().ToString() + Path.GetExtension(File.FileName);
                         string fileSavePath = Path.Combine(uploadFolder, fileName);
 
-                        // حفظ الملف
                         using (FileStream stream = new FileStream(fileSavePath, FileMode.Create))
                         {
                             await File.CopyToAsync(stream);
