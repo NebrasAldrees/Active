@@ -4,13 +4,6 @@
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-3">
                 <h5 class="m-0">التقارير</h5>
-                <div class="d-flex gap-2">
-                    <div class="form-group">
-                        <input type="text" class="form-control table__quick_search"
-                               placeholder="البحث السريع ...">
-                    </div>
-                    <a asp-action="InsertReport" asp-controller="Report" asp-area="ClubSupervisor" class="btn btn-primary">إضافة تقرير</a>
-                </div>
             </div>
             <div class="block-body">
                 <table class="table table-hover js-dataTable">
@@ -29,9 +22,9 @@
                                     <td>@item.ReportId</td>
                                     <td>@item.Topic</td>
                                     <td class="action_td text-end">
-                                        <a href="" class="btn btn-sm btn-primary">عرض</a>
-                                        <a href="" class="btn btn-sm btn-success">تعديل</a>
-                                        <a href="" class="btn btn-sm btn-danger">حذف</a>
+                                        <a href="@item.Path" download class="btn btn-sm btn-success download-btn" title="تنزيل التقرير" data-filename="@item.Topic">
+                                            <i class="fas fa-download me-1"></i>تنزيل التقرير
+                                        </a>
                                     </td>
                                 </tr>
                             }
@@ -39,5 +32,55 @@
                     </tbody>
                 </table>
             </div>
+        </div>
     </div>
-</section><!-- End Page Wrap -->
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // سويت ألرت عند النقر على زر التنزيل
+        document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const fileName = this.getAttribute('data-filename');
+
+                Swal.fire({
+                    title: "تم تنزيل الملف بنجاح!",
+                    text: `تم تنزيل التقرير: ${fileName}`,
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    timer: 3000,
+                    timerProgressBar: true,
+                    draggable: true
+                });
+            });
+        });
+
+        // SweetAlert للإشعارات الأخرى
+        @if (ViewBag.Successful != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تم بنجاح!",
+                    text: "@ViewBag.Successful",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                });
+                </text>
+        }
+
+        @if (TempData["Successful"] != null)
+        {
+                <text>
+                Swal.fire({
+                    title: "تم بنجاح!",
+                    text: "@TempData["Successful"]",
+                    icon: "success",
+                    confirmButtonText: "موافق",
+                    draggable: true
+                });
+                </text>
+        }
+    </script>
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
 using Nashet.Models;
@@ -66,7 +67,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertActivity(ActivityViewModel viewModel, IFormFile ActivityPoster)
+        public async Task<IActionResult> InsertActivity(ActivityViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile ActivityPoster)
         {
             ViewBag.Club = await _ClubDomain.GetClub();
             if (ModelState.IsValid)
@@ -152,7 +153,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateActivity(ActivityViewModel viewModel, IFormFile ActivityPoster)
+        public async Task<IActionResult> UpdateActivity(ActivityViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile ActivityPoster)
         {
             ViewBag.Club = await _ClubDomain.GetClub();
 

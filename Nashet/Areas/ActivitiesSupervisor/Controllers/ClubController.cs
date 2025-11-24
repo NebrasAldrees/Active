@@ -100,7 +100,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertClub(ClubViewModel viewModel, IFormFile ClubIcon)
+        public async Task<IActionResult> InsertClub(ClubViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile ClubIcon)
         {
             var username = User.Identity?.Name;
             var user = await _UserDomain.GetUserByUsername(username);
@@ -229,7 +229,7 @@ namespace Nashet.Areas.ActivitiesSupervisor.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateClub(ClubViewModel viewModel, IFormFile ClubIcon)
+        public async Task<IActionResult> UpdateClub(ClubViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile ClubIcon)
         {
             var username = User.Identity?.Name;
             var user = await _UserDomain.GetUserByUsername(username);

@@ -49,7 +49,7 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InsertRequest(ActivityRequestViewModel viewModel, IFormFile ActivityPoster)
+        public async Task<IActionResult> InsertRequest(ActivityRequestViewModel viewModel, Microsoft.AspNetCore.Http.IFormFile ActivityPoster)
         {
             var username = User.Identity?.Name;
             var user = await _UserDomain.GetUserByUsername(username);

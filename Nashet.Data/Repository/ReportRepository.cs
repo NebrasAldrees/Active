@@ -11,8 +11,10 @@ namespace Nashet.Data.Repository
 {
     public class ReportRepository : BaseRepository<tblReport>
     {
+        private readonly NashetContext _context;
         public ReportRepository(NashetContext dbContext) : base(dbContext)
         {
+            _context = dbContext;
         }
         public virtual async Task<IList<tblReport>> GetAllReports()
         {
@@ -27,13 +29,49 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                Report.Guid = Guid.NewGuid();
                 await InsertAsync(Report);
                 return 1;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error inserting report: {ex.Message}");
                 return 0;
+            }
+        }
+        public virtual async Task<List<tblReport>> GetReportsByClubId(int clubId)
+        {
+            try
+            {
+                Console.WriteLine($"Repository GetReportsByClubId called with clubId: {clubId}");
+
+                // تحقق من أن dbSet ليس null
+                if (dbSet == null)
+                {
+                    Console.WriteLine("dbSet is NULL!");
+                    return new List<tblReport>();
+                }
+
+                var reports = await dbSet
+                    .Where(r => r.ClubId == clubId && r.IsDeleted == false)
+                    .Include(r => r.Club)
+                    .OrderByDescending(r => r.ReportId)
+                    .ToListAsync();
+
+                Console.WriteLine($"Repository found {reports.Count} reports");
+
+                // طباعة بعض البيانات للتأكد
+                foreach (var report in reports.Take(3))
+                {
+                    Console.WriteLine($"DB Report: Id={report.ReportId}, Topic={report.Topic}, ClubId={report.ClubId}, IsDeleted={report.IsDeleted}");
+                }
+
+                return reports;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Repository GetReportsByClubId: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+                return new List<tblReport>();
             }
         }
     }
