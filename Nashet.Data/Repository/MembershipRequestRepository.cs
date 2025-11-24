@@ -17,11 +17,11 @@ namespace Nashet.Data.Repository
         }
         public virtual async Task<IList<tblMembershipRequest>> GetAllRequests()
         {
-            return await dbSet.ToListAsync();
+            return await dbSet.Include(s=>s.Student).ToListAsync();
         }
         public virtual async Task<tblMembershipRequest> GetRequestByGUID(Guid? guid)
         {
-            return await dbSet.AsNoTracking().FirstOrDefaultAsync(Request => Request.Guid == guid);
+            return await dbSet.Include(s => s.Student).AsNoTracking().FirstOrDefaultAsync(Request => Request.Guid == guid);
         }
         public async Task<int> InsertMembershipRequest(tblMembershipRequest request)
         {

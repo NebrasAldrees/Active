@@ -246,7 +246,7 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             
             foreach (var req in requests.Where(r => r.ClubID == user.ClubId))
             {
-                var student = students.FirstOrDefault(s => s.AcademicId == req.AcademicId);
+                //var student = students.FirstOrDefault(s => s.AcademicId == req.AcademicId);
                 var status = statuses.FirstOrDefault(s => s.StatusId == req.StatusId);
                 var club = clubs.FirstOrDefault(c => c.ClubId == req.ClubID);
                 var team1 = teams.FirstOrDefault(t => t.Guid == req.RequestTeam1);
@@ -259,13 +259,14 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                     MRId = req.MRId,
                     StatusTypeAr = status?.StatusTypeAr,
                     AcademicId = req.AcademicId,
-                    StudentNameAr = student?.StudentNameAr,
+                    //StudentNameAr = student?.StudentNameAr,
                     ClubNameAR = club?.ClubNameAR,
                     TeamName1 = team1?.TeamNameAR,
                     TeamName2 = team2?.TeamNameAR,
                     TeamName3 = team3?.TeamNameAR,
                     RequestReason = req.RequestReason,
                     CreationDate = req.CreationDate,
+                    Student = req.Student
                 });
             }
 
@@ -282,25 +283,32 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 return RedirectToAction("ViewMembershipRequests");
             }
 
-            var student = await _StudentDomain.GetByAcademicId(request.AcademicId);
+            //var student = await _StudentDomain.GetByAcademicId(request.AcademicId);
             var status = await _StatusDomain.GetStatusById(request.StatusId); 
             var team1 = await _TeamDomain.GetTeamByGuid(request.RequestTeam1); 
             var team2 = await _TeamDomain.GetTeamByGuid(request.RequestTeam2); 
             var team3 = await _TeamDomain.GetTeamByGuid(request.RequestTeam3);
+
+            if (request.Student == null)
+            {
+                var student = await _StudentDomain.GetByAcademicId(request.AcademicId);
+                request.Student = student;
+            }
 
             ViewBag.ClubRole = await _ClubRoleDomain.GetClubRole();
 
             var viewModel = new MembershipRequestViewModel
             {
                 Guid = request.Guid,
-                StudentNameAr = student?.StudentNameAr,
-                StudentSkills = student?.StudentSkills,
+                //StudentNameAr = student?.StudentNameAr,
+                //StudentSkills = student?.StudentSkills,
                 StatusTypeAr = status?.StatusTypeAr,
                 TeamName1 = team1?.TeamNameAR,
                 TeamName2 = team2?.TeamNameAR,
                 TeamName3 = team3?.TeamNameAR,
                 RequestReason = request.RequestReason,
                 CreationDate = request.CreationDate,
+                Student = request.Student
             };
 
             return View(viewModel);

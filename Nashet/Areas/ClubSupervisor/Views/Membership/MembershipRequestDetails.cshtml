@@ -6,7 +6,10 @@
             <!-- Header -->
             <div class="block-header border-bottom px-4 py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="m-0">اسم الطالب: @Model.StudentNameAr</h5>
+                    <h5 class="m-0">
+                        اسم الطالب:
+                        @(Model?.Student?.StudentNameAr ?? "غير متوفر")
+                    </h5>
                 </div>
             </div>
 
@@ -41,21 +44,32 @@
                                     <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>بيانات الطالب</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="mb-3"><strong>اسم الطالب</strong><div class="text-muted">@Model.StudentNameAr</div></div>
-                                    <div class="mb-3">
-                                        <strong>مهارات الطالب</strong>
-                                        <p class="text-muted" style="line-height: 1.8; text-align: justify;">
-                                            @if (!string.IsNullOrEmpty(Model.StudentSkills))
-                                            {
-                                                @Model.StudentSkills
-                                            }
-                                            else
-                                            {
-                                                <span class="text-muted">مهارات الطالب غير متاحة</span>
-                                            }
-                                        </p>
-                                    </div>
-                                    <div class="mb-3"><strong>سبب التسجيل للعضوية</strong><div class="text-muted">@Model.RequestReason</div></div>
+                                    @if (Model?.Student != null)
+                                    {
+                                        <div class="mb-3"><strong>اسم الطالب</strong><div class="text-muted">@Model.Student.StudentNameAr</div></div>
+                                        <div class="mb-3">
+                                            <strong>مهارات الطالب</strong>
+                                            <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                                                @if (!string.IsNullOrEmpty(Model.Student.StudentSkills))
+                                                {
+                                                    @Model.Student.StudentSkills
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">مهارات الطالب غير متاحة</span>
+                                                }
+                                            </p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <strong>سبب التسجيل للعضوية</strong><div class="text-muted">@Model.RequestReason</div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning">⚠️ بيانات الطالب غير متوفرة</div>
+                                    }
+
                                 </div>
                             </div>
 

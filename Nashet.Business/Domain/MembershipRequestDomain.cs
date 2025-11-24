@@ -43,6 +43,8 @@ public class MembershipRequestDomain : BaseDomain
             StudentID = request.StudentID,
             StatusId = request.StatusId,
             Guid = request.Guid,
+            Student = request.Student,
+
         };
 
 
@@ -61,6 +63,7 @@ public class MembershipRequestDomain : BaseDomain
             StudentID = m.StudentID,
             StatusId = m.StatusId,
             Guid = m.Guid,
+            Student = m.Student,
         }).ToList();
     }
 
