@@ -11,9 +11,16 @@ using System.Threading.Tasks;
 
 namespace Nashet.Business.Domain
 {
-    public class UserDomain(UserRepository Repository) : BaseDomain
+    public class UserDomain : BaseDomain
     {
-        private readonly UserRepository _UserRepository = Repository;
+        private readonly UserRepository _UserRepository;
+        private readonly SiteRepository _SiteRepository;
+
+        public UserDomain(UserRepository Repository, SiteRepository siteRepository)
+        {
+            _SiteRepository = siteRepository;
+            _UserRepository = Repository;
+        }
         public async Task<IList<UserViewModel>> GetUser()
         {
             return _UserRepository.GetAllUsers().Result.Select(U => new UserViewModel
@@ -35,6 +42,8 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                var site = await _SiteRepository.GetSiteByGUID(viewModel.SiteGuid);
+
                 tblUser User = new tblUser
                 {
                     Username = viewModel.Username,
@@ -43,7 +52,7 @@ namespace Nashet.Business.Domain
                     UserEmail = viewModel.UserEmail,
                     UserPhone = viewModel.UserPhone,
                     SystemRoleId = viewModel.SystemRoleId,
-                    SiteId = viewModel.SiteId
+                    SiteId = site.SiteId
                 };
                 int check = await _UserRepository.InsertUser(User);
                 if (check == 0)
@@ -74,16 +83,23 @@ namespace Nashet.Business.Domain
             }
         }
 
-        public int DeleteUser(int id)
+        
+        public async Task<bool> DeleteUser(int id)
         {
             try
             {
-                _UserRepository.Delete(id);
-                return 1;
+                var user = await _UserRepository.GetUserByIdAsync(id);
+                if (user == null)
+                    return false;
+
+                user.IsDeleted = true;
+                await _UserRepository.UpdateAsync(user);
+
+                return true;
             }
-            catch
+            catch (Exception)
             {
-                return 0;
+                return false;
             }
         }
 

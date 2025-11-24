@@ -12,17 +12,23 @@ using System.Threading.Tasks;
 public class MembershipRequestDomain : BaseDomain
 {
     private readonly MembershipRequestRepository _repo;
+    private readonly MembershipRepository _MembershipRepository;
     private readonly ClubRepository _ClubRepository;
+    private readonly ClubRoleRepository _ClubRoleRepository;
     private readonly TeamRepository _TeamRepository;
     private readonly StudentRepository _StudentRepository;
 
 
-    public MembershipRequestDomain(MembershipRequestRepository repo, ClubRepository clubRepository, TeamRepository teamRepository, StudentRepository studentRepository)
+    public MembershipRequestDomain(MembershipRequestRepository repo, ClubRepository clubRepository,
+        TeamRepository teamRepository, StudentRepository studentRepository, MembershipRepository membershipRepository,
+        ClubRoleRepository clubRoleRepository)
     {
         _repo = repo;
         _ClubRepository = clubRepository;
         _TeamRepository = teamRepository;
         _StudentRepository = studentRepository;
+        _MembershipRepository = membershipRepository;
+        _ClubRoleRepository = clubRoleRepository;
     }
     public async Task<MembershipRequestViewModel> GetRequestByGuid(Guid guid)
     {
@@ -35,9 +41,9 @@ public class MembershipRequestDomain : BaseDomain
         return new MembershipRequestViewModel
         {
             ClubID = (int)request.ClubID,
-            RequestTeam1 = request.RequestTeam1,
-            RequestTeam2 = request.RequestTeam2,
-            RequestTeam3 = request.RequestTeam3,
+            RequestTeam1 = (Guid)request.RequestTeam1,
+            RequestTeam2 = (Guid)request.RequestTeam2,
+            RequestTeam3 = (Guid)request.RequestTeam3,
             RequestReason = request.RequestReason,
             CreationDate = request.CreationDate,
             StudentID = request.StudentID,
@@ -55,9 +61,9 @@ public class MembershipRequestDomain : BaseDomain
         return _repo.GetAllRequests().Result.Select(m => new MembershipRequestViewModel
         {
             ClubID = (int)m.ClubID,
-            RequestTeam1 = m.RequestTeam1,
-            RequestTeam2 = m.RequestTeam2,
-            RequestTeam3 = m.RequestTeam3,
+            RequestTeam1 = (Guid)m.RequestTeam1,
+            RequestTeam2 = (Guid)m.RequestTeam2,
+            RequestTeam3 = (Guid)m.RequestTeam3,
             RequestReason = m.RequestReason,
             CreationDate = m.CreationDate,
             StudentID = m.StudentID,
@@ -95,17 +101,36 @@ public class MembershipRequestDomain : BaseDomain
         return await _repo.InsertMembershipRequest(entity);
     }
 
-    public virtual async Task<bool> AcceptMembershipRequest(Guid guid)
+    public virtual async Task<bool> AcceptMembershipRequest(MembershipRequestViewModel viewModel)
     {
         try
         {
-            var request = await _repo.GetRequestByGUID(guid);
+            if (viewModel == null || viewModel.Guid == Guid.Empty)
+                return false;
+
+            // Fetch the full request from the database
+            var request = await _repo.GetRequestByGUID(viewModel.Guid);
             if (request == null)
                 return false;
 
+            // Update status
             request.IsActive = false;
             request.StatusId = 2;
-            await _repo.AcceptRequest(request);
+
+            var team = await _TeamRepository.GetTeamByGuid(viewModel.TeamGuid);
+            var role = await _ClubRoleRepository.GetClubRoleByGuid(viewModel.ClubRoleGuid);
+
+            // Create membership entity using full request data
+            var entity = new tblMembership
+            {
+                StudentId = request.StudentID, // from the fetched request
+                ClubRoleId = role.ClubRoleId,
+                TeamId = team.TeamId
+            };
+
+            // Save changes
+            await _repo.AcceptRequest(request); // updates the request
+            await _MembershipRepository.InsertAsync(entity); // inserts the membership
 
             return true;
         }
@@ -113,7 +138,6 @@ public class MembershipRequestDomain : BaseDomain
         {
             return false;
         }
-
     }
 
     public async Task<bool> DeleteRequest(Guid guid)

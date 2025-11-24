@@ -59,7 +59,9 @@ namespace Nashet.Business.ViewModels
         public int StatusId { get; set; }
         public Guid StatusGuid { get; set; }
         public tblStatus status { get; set; }
+        public int ClubRoleId { get; set; }
         public Guid ClubRoleGuid { get; set; }
+        public tblClubRole ClubRole { get; set; }
 
     }
 }

@@ -41,6 +41,7 @@ namespace Nashet.Business.ViewModels
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
         [DisplayName("الجهة")]
         public int SiteId { get; set; }
+        public Guid SiteGuid { get; set; }
         public SiteViewModel Site { get; set; }
         [DisplayName("النادي")]
         public int? ClubId { get; set; }

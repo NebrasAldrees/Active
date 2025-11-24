@@ -17,9 +17,9 @@ namespace Nashet.Data.Models
         public tblClub Club { get; set; }
         public int? TeamID { get; set; }
         public tblTeam Team { get; set; }
-        public Guid RequestTeam1 { get; set; }
-        public Guid RequestTeam2 { get; set; }
-        public Guid RequestTeam3 { get; set; }
+        public Guid? RequestTeam1 { get; set; }
+        public Guid? RequestTeam2 { get; set; }
+        public Guid? RequestTeam3 { get; set; }
         [StringLength(1000)]
         public string RequestReason { get; set; }
         public int StatusId { get; set; }

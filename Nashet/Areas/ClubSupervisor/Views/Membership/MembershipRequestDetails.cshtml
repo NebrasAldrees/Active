@@ -1,5 +1,4 @@
 ﻿@model MembershipRequestViewModel
-
 <section class="page_wrap">
     <div class="page_content">
         <div class="block mb-4">
@@ -75,9 +74,10 @@
 
                             <!-- قبول الطلب -->
                             <div class="card shadow-sm mb-4">
-                                <form asp-action="AcceptRequest" method="post" asp-controller="Membership" asp-area="ClubSupervisor">
+                                <form id="acceptForm" asp-action="AcceptRequest" method="post" asp-controller="Membership" asp-area="ClubSupervisor">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" asp-for="Guid" />
+                                    <input type="hidden" asp-for="StudentID" />
                                     <div class="card-header">
                                         <h6 class="mb-0"><i class="fas fa-eye me-2"></i> تفاصيل العضوية في حال القبول</h6>
                                     </div>
@@ -107,6 +107,12 @@
                                             </select>
                                             <span asp-validation-for="ClubRoleGuid" class="text-danger"></span>
                                         </div>
+                                        <div class="mb-3">
+                                            <label asp-for="RequestReason">سبب التسجيل للعضوية</label>
+                                            <textarea asp-for="RequestReason" class="form-control" rows="3"></textarea>
+                                            <span asp-validation-for="RequestReason" class="text-danger"></span>
+                                        </div>
+
                                     </div>
                                     <div class="card-footer text-center">
                                         <button type="submit" class="btn btn-success">قبول الطلب</button>
@@ -137,9 +143,10 @@
     <script>
         $(function () {
             // Accept Button Confirmation
-            $('.accept-btn').on('click', function (event) {
+            $('.btn-success').on('click', function (event) {
                 event.preventDefault();
-                var id = $(this).data('id');
+
+                const form = $('#acceptForm');
 
                 Swal.fire({
                     title: "هل تريد قبول الطلب؟",
@@ -152,22 +159,21 @@
                     cancelButtonText: "إلغاء"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('#acceptForm input[name="guid"]').val(id);
-
                         $.ajax({
-                            url: '@Url.Action("AcceptRequest", "Membership", new { area = "ClubSupervisor" })',
+                            url: form.attr('action'),
                             type: 'POST',
-                            data: $('#acceptForm').serialize(),
+                            data: form.serialize(),
                             success: function (response) {
                                 if (response.success) {
                                     Swal.fire({
                                         title: 'تم قبول الطلب!',
                                         text: response.message || 'تم إنشاء عضوية بنجاح',
-                                        icon: 'success', 
+                                        icon: 'success',
                                         confirmButtonText: 'موافق',
-                                        timer: 2000
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false
                                     }).then(() => {
-                                        window.location.href = '@Url.Action("ViewMembershipRequests", "Membership", new { area = "ClubSupervisor" })';
+                                        window.location.href = '@Url.Action("ViewMember", "Membership", new { area = "ClubSupervisor" })';
                                     });
                                 } else {
                                     Swal.fire({
@@ -211,13 +217,14 @@
                             type: 'POST',
                             data: $('#deleteForm').serialize(),
                             success: function (response) {
-                                if (response.Success) {
+                                if (response.success) {
                                     Swal.fire({
                                         title: 'تم رفض الطلب!',
                                         text: response.message || 'تم رفض الطلب بنجاح',
-                                        icon: 'success', 
+                                        icon: 'success',
                                         confirmButtonText: 'موافق',
-                                        timer: 2000
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false
                                     }).then(() => {
                                         window.location.href = '@Url.Action("ViewMembershipRequests", "Membership", new { area = "ClubSupervisor" })';
                                     });

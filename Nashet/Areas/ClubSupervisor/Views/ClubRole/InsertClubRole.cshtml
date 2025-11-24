@@ -38,12 +38,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById('arabicName').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^\u0600-\u06FF\s]/g, '');
-            });
+            this.value = this.value.replace(/[^\u0600-\u06FF\s]/g, '');
+        });
 
-            document.getElementById('englishName').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^A-Za-z\s]/g, '');
-            });
+        document.getElementById('englishName').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+        });
+
         document.getElementById('insertForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -59,6 +60,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const formData = new FormData(this);
+                    formData.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
 
                     fetch(this.action, {
                         method: 'POST',
@@ -68,7 +70,7 @@
                     .then(data => {
                         if (data.success) {
                             Swal.fire({
-                                title: 'تمت الإضافة',
+                                title: data.message || 'تمت الإضافة',
                                 icon: 'success',
                                 confirmButtonText: 'موافق'
                             }).then(() => {
@@ -84,7 +86,7 @@
                         } else {
                             Swal.fire({
                                 title: 'خطأ',
-                                text: 'فشل في إضافة الجهة',
+                                text: data.message || 'فشل في إضافة الجهة',
                                 icon: 'error',
                                 confirmButtonText: 'موافق'
                             });
@@ -102,5 +104,5 @@
             });
         });
     </script>
-@await Html.PartialAsync("_ValidationScriptsPartial")
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

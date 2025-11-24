@@ -447,7 +447,7 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblStudent>().HasData(
                new tblStudent()
                {
-                   StudentId = 2,
+                   StudentId = 1,
                    AcademicId = "221422576",
                    StudentNameAr = "نبراس",
                    StudentNameEn = "Nebras",
@@ -478,7 +478,7 @@ namespace Nashet.Data.Models
                     IsDeleted = false,
                     UserPhone = "0536763284",
                     SiteId = 1,
-                    UserId = 4,
+                    UserId = 1,
                     Guid = Guid.Parse("34b1ede7-f035-41b0-9a4d-bca1808d1b15"),
                     CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
@@ -494,7 +494,7 @@ namespace Nashet.Data.Models
                     IsDeleted = false,
                     UserPhone = "0533924794",
                     SiteId = 1,
-                    UserId = 5,
+                    UserId = 2,
                     Guid = Guid.Parse("bcbe728f-6ae0-4edf-ac9d-1ecb7fb70430"),
                     CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 },
@@ -511,7 +511,7 @@ namespace Nashet.Data.Models
                     UserPhone = "0509410406",
                     SiteId = 1,
                     ClubId = 1,
-                    UserId = 6,
+                    UserId = 3,
                     Guid = Guid.Parse("d71c8b67-a3c5-439b-988a-90036bd296c2"),
                     CreationDate = new DateTime(2025, 11, 20, 11, 43, 22, DateTimeKind.Utc)
                 }
@@ -522,7 +522,7 @@ namespace Nashet.Data.Models
             _modelBuilder.Entity<tblKFUuser>().HasData(
                 new tblKFUuser()
                 {
-                    KFUUserId = 5,
+                    KFUUserId = 1,
                     NameEN = "Muntaha",
                     NameAR = "منتهى",
                     Username = "Muntaha_12",
@@ -538,7 +538,7 @@ namespace Nashet.Data.Models
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 6,
+                    KFUUserId = 2,
                     NameEN = "Huda",
                     NameAR = "هدى",
                     Username = "Huda1",
@@ -554,7 +554,7 @@ namespace Nashet.Data.Models
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 7,
+                    KFUUserId = 3,
                     NameEN = "Nebras Aldrees",
                     NameAR = " نبراس الدريس",
                     Username = "221422576",
@@ -570,7 +570,7 @@ namespace Nashet.Data.Models
                 },
                 new tblKFUuser()
                 {
-                    KFUUserId = 8,
+                    KFUUserId = 4,
                     NameEN = "Safaa",
                     NameAR = "صفا",
                     Username = "Safaa2",

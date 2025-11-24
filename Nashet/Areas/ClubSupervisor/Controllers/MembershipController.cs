@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nashet.Business.Domain;
 using Nashet.Business.ViewModels;
+using Nashet.Data.Models;
 using Nashet.Data.Repository;
 using System;
 using System.Linq;
@@ -41,7 +42,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         {
             var members = await _MembershipDomain.GetMembership();
             var teams = await _TeamDomain.GetTeam();
-            var students = await _StudentDomain.GetStudent();
             var roles = await _ClubRoleDomain.GetClubRole();
 
             var enrichedMembers = new List<MembershipViewModel>();
@@ -49,7 +49,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             foreach (var req in members)
             {
 
-                var student = students.FirstOrDefault(s => s.StudentId == req.StudentId);
                 var clubRole = roles.FirstOrDefault(s => s.ClubRoleId == req.ClubRoleId);
                 var team = teams.FirstOrDefault(t => t.TeamId == req.TeamId);
 
@@ -58,7 +57,7 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                     Guid = req.Guid,
                     MembershipId = req.MembershipId,
                     JoinDate = req.JoinDate,
-                    StudentNameAr = student?.StudentNameAr ?? "—",
+                    Student = req.Student,
                     ClubRoleType = clubRole?.RoleTypeAr ?? "—",
                     TeamNameAr = team?.TeamNameAR ?? "—",
 
@@ -236,7 +235,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
 
             
             var requests = await _MembershipRequestDomain.GetMembershipRequests();
-            var students = await _StudentDomain.GetStudent();
             var statuses = await _StatusDomain.GetStatus();
             var clubs = await _ClubDomain.GetClub();
             var teams = await _TeamDomain.GetTeam();
@@ -246,7 +244,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
             
             foreach (var req in requests.Where(r => r.ClubID == user.ClubId))
             {
-                //var student = students.FirstOrDefault(s => s.AcademicId == req.AcademicId);
                 var status = statuses.FirstOrDefault(s => s.StatusId == req.StatusId);
                 var club = clubs.FirstOrDefault(c => c.ClubId == req.ClubID);
                 var team1 = teams.FirstOrDefault(t => t.Guid == req.RequestTeam1);
@@ -259,7 +256,6 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                     MRId = req.MRId,
                     StatusTypeAr = status?.StatusTypeAr,
                     AcademicId = req.AcademicId,
-                    //StudentNameAr = student?.StudentNameAr,
                     ClubNameAR = club?.ClubNameAR,
                     TeamName1 = team1?.TeamNameAR,
                     TeamName2 = team2?.TeamNameAR,
@@ -304,8 +300,11 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 //StudentSkills = student?.StudentSkills,
                 StatusTypeAr = status?.StatusTypeAr,
                 TeamName1 = team1?.TeamNameAR,
+                RequestTeam1 = (Guid)team1?.Guid,
                 TeamName2 = team2?.TeamNameAR,
+                RequestTeam2 = (Guid)team2?.Guid,
                 TeamName3 = team3?.TeamNameAR,
+                RequestTeam3 = (Guid)team3?.Guid,
                 RequestReason = request.RequestReason,
                 CreationDate = request.CreationDate,
                 Student = request.Student
@@ -318,52 +317,28 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AcceptRequest(MembershipRequestViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                TempData["Error"] = "البيانات غير مكتملة";
-                return RedirectToAction("ViewMembershipRequests");
-            }
+                if (!ModelState.IsValid)
+                {
+                    return Json(new { success = false, message = "البيانات غير مكتملة" });
+                }
 
-            var request = await _MembershipRequestDomain.GetRequestByGuid(model.Guid);
-            if (request == null)
-            {
-                TempData["Error"] = "تعذر العثور على بيانات الطلب";
-                return RedirectToAction("ViewMembershipRequests");
-            }
+                var accepted = await _MembershipRequestDomain.AcceptMembershipRequest(model);
 
-            var accepted = await _MembershipRequestDomain.AcceptMembershipRequest(request.Guid);
-            if (!accepted)
-            {
-                return Json(new { error = false, message = "فشل في قبول الطلب" });
+                if (accepted)
+                {
+                    return Json(new { success = true, message = "تم قبول الطلب وإنشاء عضوية للطالب بنجاح" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "فشل في قبول الطلب أو إنشاء العضوية" });
+                }
             }
-
-            var team = await _TeamDomain.GetTeamByGuid(model.TeamGuid);
-            var student = await _StudentDomain.GetByAcademicId(request.AcademicId);
-            var clubRole = await _ClubRoleDomain.GetClubRoleByGuid(model.ClubRoleGuid);
-
-            if (team == null || student == null || clubRole == null)
+            catch (Exception ex)
             {
-                return Json(new { error = false, message = "فشل في جلب البيانات " });
+                return Json(new { success = false, message = "حدث خطأ أثناء القبول: " + ex.Message });
             }
-
-            var membership = new MembershipViewModel
-            {
-                StudentId = student.StudentId,
-                TeamId = team.TeamId,
-                ClubRoleId = clubRole.ClubRoleId
-            };
-
-            var inserted = await _MembershipDomain.InsertMembership(membership);
-            if (inserted == 1)
-            {
-                TempData["success"] = "تم قبول الطلب وإنشاء عضوية للطالب بنجاح";
-                return RedirectToAction("ViewMembershipRequests");
-            }
-            else
-            {
-                TempData["Error"] = "تم قبول الطلب ولكن فشل إنشاء العضوية" ;
-            }
-            return RedirectToAction("ViewMembershipRequests");
         }
 
         [HttpPost]
@@ -375,16 +350,16 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
 
                 if (result)
                 {
-                    return Json(new { Success = true, message = "تم رفض الطلب بنجاح" });
+                    return Json(new { success = true, message = "تم رفض الطلب بنجاح" });
                 }
                 else
                 {
-                    return Json(new { Success = false, message = "فشل في رفض الطلب" });
+                    return Json(new { success = false, message = "فشل في رفض الطلب" });
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { Success = false, message = "حدث خطأ أثناء الرفض: " + ex.Message });
+                return Json(new { success = false, message = "حدث خطأ أثناء الرفض: " + ex.Message });
             }
         }
 
@@ -396,16 +371,16 @@ namespace Nashet.Areas.ClubSupervisor.Controllers
                 bool deleted = await _MembershipDomain.DeleteMembership(guid);
                 if (deleted)
                 {
-                    return Json(new { Success = true, message = "تم إلغاء العضوية بنجاح" });
+                    return Json(new { success = true, message = "تم إلغاء العضوية بنجاح" });
                 }
                 else
                 {
-                    return Json(new { Success = false, message = "لم يتم العثور على العضوية أو فشل الحذف" });
+                    return Json(new { success = false, message = "لم يتم العثور على العضوية أو فشل الحذف" });
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { Success = false, message = "حدث خطأ أثناء الحذف: " + ex.Message });
+                return Json(new { success = false, message = "حدث خطأ أثناء الحذف: " + ex.Message });
             }
         }
     }

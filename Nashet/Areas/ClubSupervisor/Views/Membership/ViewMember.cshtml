@@ -36,7 +36,7 @@
                                 var formId = $"deleteForm_{item.Guid}";
                                 <tr>
                                     <td>@item.TeamNameAr</td>
-                                    <td>@item.StudentNameAr</td>
+                                    <td>@item.Student.StudentNameAr</td>
                                     <td>@item.ClubRoleType</td>
                                     <td class="action_td text-end">
                                         <a asp-action="UpdateMembership" asp-route-guid="@item.Guid" class="btn btn-sm btn-success">تعديل</a>

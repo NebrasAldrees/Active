@@ -17,22 +17,22 @@ namespace Nashet.Data.Repository
 
         public virtual async Task<IList<tblMembership>> GetAllMembers()
         {
-            return await dbSet.Where(member => member.IsDeleted == false).ToListAsync(); 
+            return await dbSet.Where(member => member.IsDeleted == false).Include(s => s.Student).ToListAsync(); 
         }
         public virtual async Task<tblMembership> GetMemberByIdAsync(int id)
         {
-            return await dbSet.Where(member => member.IsDeleted == false && member.MembershipId == id)
+            return await dbSet.Include(s => s.Student).Where(member => member.IsDeleted == false && member.MembershipId == id)
                             .FirstOrDefaultAsync();
         }
         public virtual async Task<tblMembership> GetMemberByGuid(Guid guid)
         {
-            return await dbSet.AsNoTracking().FirstOrDefaultAsync(member => member.IsDeleted == false && member.Guid == guid);
+            return await dbSet.Include(s => s.Student).AsNoTracking().FirstOrDefaultAsync(member => member.IsDeleted == false && member.Guid == guid);
             
         }
 
         public virtual async Task<IList<tblMembership>> GetMembersByClubGuid(Guid Guid)
         {
-            return await dbSet.Where(member => member.IsDeleted == false && member.Team.Club.Guid == Guid)
+            return await dbSet.Include(s => s.Student).Where(member => member.IsDeleted == false && member.Team.Club.Guid == Guid)
                             .ToListAsync();
         }
 

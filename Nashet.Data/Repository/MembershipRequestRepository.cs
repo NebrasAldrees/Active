@@ -53,7 +53,7 @@ namespace Nashet.Data.Repository
         {
             try
             {
-                await UpdateAsync(request);
+                await UpdateAsync(request);   // update request status
                 return 1;
             }
             catch
@@ -61,6 +61,7 @@ namespace Nashet.Data.Repository
                 return 0;
             }
         }
+
         public virtual async Task<int> DeleteRequest(tblMembershipRequest request)
         {
             try

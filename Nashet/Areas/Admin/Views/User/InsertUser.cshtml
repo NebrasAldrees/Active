@@ -1,105 +1,89 @@
-﻿@model UserViewModel
-<section class="page_wrap">
-    <div class="page_content">
-        <div class="block mb-4">
-            <div class="block-header border-bottom px-4 py-4">
-                <h5 class="m-0">إضافة مستخدم</h5>
+﻿@model Nashet.Business.ViewModels.UserViewModel
+
+<section class="page_wrap" style="background:linear-gradient(135deg,#f8f9fa,#ffffff);padding:40px 0;display:flex;justify-content:center;">
+    <div class="page_content" style="max-width:700px;width:100%;">
+        <div class="card shadow-sm" style="border-radius:12px;overflow:hidden;">
+
+            <!-- Header -->
+            <div class="card-header"
+                 style="background:linear-gradient(to right,#3fa7b6,#0f7179);color:#fff;padding:16px;">
+                <h5 class="m-0"> إضافة مستخدم جديد</h5>
             </div>
-            <div class="block-body py-5">
 
-                <!-- Success/Error Messages -->
-                @if (TempData["Successful"] != null)
-                {
-                    <div class="alert alert-success">
-                        @TempData["Successful"]
-                    </div>
-                }
-                @if (TempData["Failed"] != null)
-                {
-                    <div class="alert alert-danger">
-                        @TempData["Failed"]
-                    </div>
-                }
+            <!-- Form -->
+            <div class="card-body p-4">
+                <form asp-action="InsertUser" asp-controller="User" asp-area="Admin" method="post">
 
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <form asp-action="InsertUser" method="post">
-                            @Html.AntiForgeryToken()
-                            
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="UserNameAR" class="mb-1">اسم المستخدم بالعربية</label>
-                                    <input asp-for="UserNameAR" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserNameAR"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="UserNameEN" class="mb-1">اسم المستخدم بالأنجليزية</label>
-                                    <input asp-for="UserNameEN" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserNameEN"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="Username" class="mb-1">اسم المستخدم</label>
-                                    <input asp-for="Username" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="Username"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="UserEmail" class="mb-1">البريد الالكتروني</label>
-                                    <input asp-for="UserEmail" type="email" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserEmail"></span>
-                                </div><!-- END ITEM -->
-                            </div>
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="UserPhone" class="mb-1">رقم الجوال </label>
-                                    <input asp-for="UserPhone" type="text" class="form-control">
-                                    <span style="color:red" asp-validation-for="UserPhone"></span>
-                                </div><!-- END ITEM -->
-                            </div>
-                            <div class="row">
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="SiteId" class="mb-1"> الجهة </label>
-                                    <select asp-for="SiteId" class="form-control">
-                                        <option value="">-- اختر الجهة --</option>
-                                        @if (ViewBag.Site != null)
-                                        {
-                                            @foreach (SiteViewModel site in ViewBag.Site)
-                                            {
-                                                <option value="@site.SiteId">@site.SiteNameAR</option>
-                                            }
-                                        }
-                                    </select>
-                                    <span style="color:red" asp-validation-for="SiteId"></span>
-                                </div><!-- END ITEM -->
-                                <!-- START ITEM -->
-                                <div class="col-md-6">
-                                    <label asp-for="SystemRoleId" class="mb-1">نوع المستخدم </label>
-                                    <select asp-for="SystemRoleId" class="form-control">
-                                        <option value="">-- اختر نوع المستخدم --</option>
-                                        @if (ViewBag.SystemRole != null)
-                                        {
-                                            @foreach (SystemRoleViewModel role in ViewBag.SystemRole)
-                                            {
-                                                <option value="@role.SystemRoleId">@role.RoleTypeAr</option>
-                                            }
-                                        }
-                                    </select>
-                                    <span style="color:red" asp-validation-for="SystemRoleId"></span>
-                                </div><!-- END ITEM -->
-                            </div>
+                    @Html.AntiForgeryToken()
 
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="submit" class="btn btn-primary">حفظ</button>
-                            </div>
-                        </form>
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label fw-bold">اسم الدخول</label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
-                </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UserNameAR" class="form-label fw-bold">الاسم بالعربي</label>
+                        <input asp-for="UserNameAR" class="form-control" />
+                        <span asp-validation-for="UserNameAR" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UserNameEN" class="form-label fw-bold">الاسم بالإنجليزي</label>
+                        <input asp-for="UserNameEN" class="form-control" />
+                        <span asp-validation-for="UserNameEN" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UserEmail" class="form-label fw-bold">البريد الإلكتروني</label>
+                        <input asp-for="UserEmail" class="form-control" type="email" />
+                        <span asp-validation-for="UserEmail" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UserPhone" class="form-label fw-bold">رقم الجوال</label>
+                        <input asp-for="UserPhone" class="form-control" />
+                        <span asp-validation-for="UserPhone" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SystemRoleId" class="form-label fw-bold">الدور</label>
+
+                        @Html.DropDownList("SystemRoleId", new SelectList(ViewBag.SystemRole, "SystemRoleId", "RoleTypeAr"),
+
+                        "-- اختر الدور --", new { @class = "form-control" })
+                        <span asp-validation-for="SystemRoleId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SiteGuid" class="form-label fw-bold">الجهة</label>
+                        <select asp-for="SiteGuid" class="form-control">
+                            <option value="">-- اختر الجهة --</option>
+                            @foreach (SiteViewModel site in ViewBag.Site)
+                            {
+                                <option value="@site.Guid">@site.SiteNameAR</option>
+                            }
+                        </select>
+                        <span style="color:red" asp-validation-for="SiteGuid"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="ViewUser" asp-controller="User" asp-area="Admin"
+                           class="btn btn-secondary">رجوع للقائمة</a>
+                        <button type="submit" class="btn btn-primary">حفظ</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+
+    @{
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+
+}

@@ -1,4 +1,5 @@
-﻿using Nashet.Business.Domain.Common;
+﻿using Azure.Core;
+using Nashet.Business.Domain.Common;
 using Nashet.Business.ViewModels;
 using Nashet.Data.Models;
 using Nashet.Data.Repository;
@@ -50,6 +51,8 @@ namespace Nashet.Business.Domain
             {
                 Guid = t.Guid,
                 StudentId = t.StudentId,
+                Student = t.Student,
+
 
             }).ToList();
         }
