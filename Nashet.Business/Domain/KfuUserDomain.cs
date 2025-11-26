@@ -44,6 +44,10 @@ namespace Nashet.Business.Domain
         {
             try
             {
+                // تحقق من البيانات الأساسية
+                if (viewModel == null || string.IsNullOrEmpty(viewModel.Username))
+                    return 0;
+
                 tblKFUuser user = new tblKFUuser
                 {
                     UserType = viewModel.UserType,
@@ -54,31 +58,13 @@ namespace Nashet.Business.Domain
                     Username = viewModel.Username,
                     UserPhone = viewModel.UserPhone
                 };
+
                 int check = await _KFUuserRepository.InsertKfuUser(user);
-                if (check == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    var systemLog = new tblSystemLogs
-                    {
-                        UserId = 23456,
-                        username = "najd",
-                        RecordId = 17,
-                        Table = "tblKFUuser",
-                        operation_date = DateTime.Now,
-                        operation_type = "Insert",
-                        OldValue = null,
-                        // NewValue=
-                    };
-                    //await _SystemLogsRepository.InsertLog(systemLog);
-                    return 1;
-                }
-                
+                return check;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error in InsertKfuUser: {ex.Message}");
                 return 0;
             }
         }

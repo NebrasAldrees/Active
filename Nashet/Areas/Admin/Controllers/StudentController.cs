@@ -49,17 +49,26 @@ namespace Nashet.Areas.Admin.Controllers
                 {
                     int check = await _StudentDomain.InsertStudent(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                    {
+                        ViewData["Successful"] = "تمت إضافة الطالب بنجاح ✅";
+                        return View(new StudentViewModel()); // إرجاع نموذج جديد
+                    }
                     else
-                        ViewData["Failed"] = "Failed";
+                    {
+                        ViewData["Failed"] = "فشل في إضافة الطالب ❌";
+                    }
                 }
                 catch
                 {
-                    ViewData["Failed"] = "Failed";
+                    ViewData["Failed"] = "حدث خطأ أثناء الإضافة ❌";
                 }
             }
-            return RedirectToAction("ViewStudents");
+            else
+            {
+                ViewData["Failed"] = "البيانات المدخلة غير صالحة ❌";
+            }
 
+            return View(viewModel);
         }
 
         public async Task<IActionResult> UpdateStudent(Guid Guid)
