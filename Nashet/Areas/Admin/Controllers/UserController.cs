@@ -41,74 +41,38 @@ public class UserController : Controller
         return View(await _domain.GetUser());
 
     }
-
     [HttpGet]
-
     public async Task<IActionResult> InsertUser()
-
     {
-
         ViewBag.Site = await _siteDomain.GetSite();
-
         ViewBag.SystemRole = await _systemRoleDomain.GetSystemRole();
-
         return View();
-
     }
-
     [HttpPost]
-
     [ValidateAntiForgeryToken]
-
     public async Task<IActionResult> InsertUser(UserViewModel viewModel)
-
     {
-
         ViewBag.Site = await _siteDomain.GetSite();
-
         ViewBag.SystemRole = await _systemRoleDomain.GetSystemRole();
-
         if (ModelState.IsValid)
         {
-
             int check = await _domain.InsertUser(viewModel);
-
             if (check == 1)
-
             {
-
                 TempData["Successful"] = "تمت الإضافة بنجاح ✅";
-
-                return RedirectToAction("ViewUser"); // ✅ يرجع للقائمة
-
+                return RedirectToAction("ViewUser");
             }
-
             TempData["Failed"] = "فشلت العملية ❌";
-
         }
-
         else
-
         {
-
-            // اطبع الأخطاء عشان تعرف السبب
-
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-
             TempData["Failed"] = "البيانات غير صالحة ❌: " + string.Join(", ", errors);
-
         }
-
         return View(viewModel);
-
     }
-
-
-
     [HttpPost]
-
     [ValidateAntiForgeryToken]
-
     public async Task<IActionResult> Delete(int id)
 
     {

@@ -1,15 +1,35 @@
 ﻿@model KfuUserViewModel
 <section class="page_wrap">
     <div class="page_content">
-
         <div class="block mb-4">
             <div class="block-header border-bottom px-4 py-4">
                 <h5 class="m-0">إضافة مستخدم</h5>
             </div>
             <div class="block-body py-5">
+
+                <!-- عرض الرسائل -->
+                @if (TempData["Successful"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>
+                        @TempData["Successful"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @if (TempData["Failed"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        @TempData["Failed"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form asp-action="InsertKfuUser" method="post">
+                        <form id="insertKfuUserForm" asp-action="InsertKfuUser" method="post">
+                            @Html.AntiForgeryToken()
                             <div class="row">
                                 <!-- START ITEM -->
                                 <div class="col-md-6">
@@ -63,11 +83,8 @@
                                 <div class="col-md-6">
                                     <label for="" class="mb-1"> نوع المستخدم</label>
                                     <select asp-for="UserType" class="form-control">
-                                        <option value="4">طالب</option>
-                                        <option value="5">مشرف الأنشطة</option>
-                                        <option value="6">مشرف النادي</option>
-                                        <option value="7">مدير النادي</option>
-                                        <option value="8">قائد النادي</option>
+                                        <option value="1">طالب</option>
+                                        <option value="2">طاقم عمل</option>
                                     </select>
                                     <span style="color:red" asp-validation-for="UserType"></span>
                                 </div><!-- END ITEM -->

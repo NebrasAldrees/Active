@@ -34,14 +34,18 @@ namespace Nashet.Areas.Admin.Controllers
                 {
                     int check = await _domain.InsertKfuUser(viewModel);
                     if (check == 1)
-                        ViewData["Successful"] = "Successful";
+                        TempData["Successful"] = "تمت الإضافة بنجاح";
                     else
-                        ViewData["Failed"] = "Failed";
+                        TempData["Failed"] = "فشل في الإضافة";
                 }
                 catch
                 {
-                    ViewData["Failed"] = "Failed";
+                    TempData["Failed"] = "حدث خطأ أثناء الإضافة";
                 }
+            }
+            else
+            {
+                TempData["Failed"] = "البيانات المدخلة غير صالحة";
             }
             return RedirectToAction("InsertKfuUser");
         }
