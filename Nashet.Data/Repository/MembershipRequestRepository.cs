@@ -66,7 +66,6 @@ namespace Nashet.Data.Repository
             {
                 query = query.Where(request => request.Guid != excludeRequestGuid.Value);
             }
-
             return await query.AnyAsync(request => request.ClubID == ClubID);
         }
 
